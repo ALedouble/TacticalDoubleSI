@@ -22,7 +22,7 @@ public static class IAUtils
     /*
      * Trouve le plus court chemin depuis "startPosition" a "objectif", calculer par la fonction de l'IA
      */
-    public static List<TileData> FindShortestPath(Vector2Int startPosition, List<List<TileData>> map, Vector2Int objectif, int range, bool fullPath = false)
+    public static ReachableTiles FindShortestPath(Vector2Int startPosition, List<List<TileData>> map, Vector2Int objectif, int range, bool fullPath = false)
     {
         List<ReachableTiles> reachablePlaces = new List<ReachableTiles>() { new ReachableTiles(startPosition, new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
         List<Vector2Int> deletedPlaces = new List<Vector2Int>();
@@ -56,7 +56,7 @@ public static class IAUtils
         }
         else
         {
-            return shortest.path;
+            return shortest;
         }
         
     }
@@ -188,21 +188,23 @@ public static class IAUtils
     /*
      * Cut le path de "shortest" dans la limite "range" donner
      */
-    private static List<TileData> CutPathInRange(ReachableTiles shortest, int range)
+    private static ReachableTiles CutPathInRange(ReachableTiles shortest, int range)
     {
         List<TileData> path = new List<TileData>(shortest.path);
         int lenght = -1;
         int cost = 0;
 
-        foreach (TileData elem in path)
+        for (int i = 0; i < path.Count; i++)
         {
             lenght++;
-            cost += elem.Cost;
+            cost += path[i].Cost;
             if (cost > range)
                 break;
         }
 
-        return path.Take(lenght).ToList();
+        shortest.path = path.Take(lenght).ToList();
+
+        return shortest;
     }
 
 

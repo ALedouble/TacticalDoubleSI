@@ -27,7 +27,7 @@ public class CustomEditorUtils : MonoBehaviour
         tileArea.arraySize = 0;
         for (int i = 0; i < areaBuffer.GetLength(0); i++)
         {
-            for (int j = 0; j < areaBuffer.GetLength(1); j++)
+            for (int j = 0; j < areaBuffer.GetLength(0); j++)
             {
                 tileArea.arraySize += areaBuffer[j, i] ? 1 : 0;
                 if (!areaBuffer[j, i])

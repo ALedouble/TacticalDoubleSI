@@ -5,7 +5,7 @@ using UnityEngine;
 public class ReachableTiles : IComparable
 {
     public Vector2Int coordPosition { get; }
-    public List<TileData> path { get; }
+    public List<TileData> path { get; set;  }
     public int cost { get; }
 
     public ReachableTiles(Vector2Int coordPosition, List<TileData> path, int cout)

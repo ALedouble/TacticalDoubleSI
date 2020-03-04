@@ -19,11 +19,14 @@ public class DebugMapManager : MonoBehaviour
     private bool havePath = false;
     private Vector2Int start;
     private Vector2Int end;
-    List<TileData> path;
+    ReachableTiles path;
     private List<ReachableTiles> tiles;
     MapRaycastHit tileSelect;
 
     [Header("Attack")]
+
+
+    private TileArea tileArea;
 
     public static DebugMapManager Instance;
 
@@ -40,6 +43,18 @@ public class DebugMapManager : MonoBehaviour
     {
         Init();
         saveFullPath = fullPath;
+
+        tileArea = new TileArea();
+
+        tileArea.size = 5;
+        tileArea.area.Add(new Vector2Int(0, 2));
+        tileArea.area.Add(new Vector2Int(1, 1));
+        tileArea.area.Add(new Vector2Int(2, 0));
+        tileArea.area.Add(new Vector2Int(3, 1));
+        tileArea.area.Add(new Vector2Int(4, 2));
+        tileArea.area.Add(new Vector2Int(3, 3));
+        tileArea.area.Add(new Vector2Int(2, 4));
+        tileArea.area.Add(new Vector2Int(1, 3));
     }
 
     private void Init()
@@ -58,14 +73,91 @@ public class DebugMapManager : MonoBehaviour
 
     private void Update()
     {
-        AreaAndPath();
-        //Attack();
+        //AreaAndPath();
+        Attack();
     }
 
     private void Attack()
     {
+        tileSelect = SelectionUtils.MapRaycast();
+        if (tileSelect.tile != null && Input.GetMouseButtonDown(0))
+        {
+            if (firstClick)
+            {
+                firstClick = false;
+                start = tileSelect.position;
+                tileSelect.tile.TileType = TileType.ClickStart;
 
+                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, Instance.map.map, range);
+
+                foreach (ReachableTiles tile in tiles)
+                {
+                    GetTile(tile.coordPosition).TileType = TileType.Fast;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Instance.map.size; i++)
+                {
+                    for (int j = 0; j < Instance.map.size; j++)
+                    {
+                        if (!Instance.map.map[i][j].TileType.Equals(TileType.ClickStart))
+                            Instance.map.map[i][j].TileType = TileType.Normal;
+                    }
+                }
+
+                foreach (ReachableTiles tile in tiles)
+                {
+                    GetTile(tile.coordPosition).TileType = TileType.Fast;
+                }
+
+                end = tileSelect.position;
+                tileSelect.tile.TileType = TileType.ClickEnd;
+
+                List<ReachableTiles> canCast = ValidCastFromTile();
+                canCast.Sort();
+
+                if (canCast.Count > 0)
+                {
+                    GetTile(canCast[0].coordPosition).TileType = TileType.Slow;
+
+                    for (int i = 1; i < canCast.Count; i++)
+                    {
+                        GetTile(canCast[i].coordPosition).TileType = TileType.Solid;
+                    }
+                }
+                else
+                {
+                    path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
+
+                    path.path[path.path.Count - 1].TileType = TileType.Solid;
+                }
+                    
+
+            }
+        }
     }
+
+    private List<ReachableTiles> ValidCastFromTile()
+    {
+        List<ReachableTiles> canCast = new List<ReachableTiles>();
+        List<Vector2Int> attackRange = tileArea.RelativeArea();
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            for (int j = 0; j < attackRange.Count; j++)
+            {
+                if ((tiles[i].coordPosition + attackRange[j]).Equals(end))
+                {
+                    canCast.Add(tiles[i]);
+                    break;
+                }
+            }
+        }
+
+        return canCast;
+    }
+
 
     private void AreaAndPath()
     { 
@@ -102,7 +194,7 @@ public class DebugMapManager : MonoBehaviour
 
                         path = IAUtils.FindShortestPath(start, Instance.map.map, tileSelect.position, range, fullPath);
 
-                        foreach (TileData tileData in path)
+                        foreach (TileData tileData in path.path)
                         {
                             tileData.TileType = TileType.Slow;
                         }
@@ -129,7 +221,7 @@ public class DebugMapManager : MonoBehaviour
 
             if (havePath)
             {
-                foreach (TileData tileData in path)
+                foreach (TileData tileData in path.path)
                 {
                     if (tileData.TileType == TileType.Slow)
                         tileData.TileType = TileType.Normal;
@@ -161,7 +253,7 @@ public class DebugMapManager : MonoBehaviour
             {
                 path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
 
-                foreach (TileData tileData in path)
+                foreach (TileData tileData in path.path)
                 {
                     if (tileData.TileType != TileType.ClickEnd)
                     {
@@ -180,7 +272,7 @@ public class DebugMapManager : MonoBehaviour
 
         if (saveFullPath != fullPath)
         {
-            foreach (TileData tileData in path)
+            foreach (TileData tileData in path.path)
             {
                 if (tileData.TileType == TileType.Slow)
                     tileData.TileType = TileType.Normal;
@@ -188,7 +280,7 @@ public class DebugMapManager : MonoBehaviour
 
             path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
 
-            foreach (TileData tileData in path)
+            foreach (TileData tileData in path.path)
             {
                 if (tileData.TileType != TileType.ClickEnd)
                 {
