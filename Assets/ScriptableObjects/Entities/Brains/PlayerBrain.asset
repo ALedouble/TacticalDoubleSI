@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c81287856b9dfa47bf2cfa8feeee7a6, type: 3}
-  m_Name: Entity_Debug
+  m_Script: {fileID: 11500000, guid: 64755798eec364542aee8b4031ec8c0d, type: 3}
+  m_Name: PlayerBrain
   m_EditorClassIdentifier: 
-  displayName: 
-  maxHealth: 0
-  abilities: []
-  brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
-  alignement: 0

@@ -20,9 +20,8 @@ public static class SelectionUtils
 
             Vector2Int position = new Vector2Int(Mathf.RoundToInt(hitPoint.x), Mathf.RoundToInt(hitPoint.z));
 
-            // TODO : implement tile fetching
             TileData tile = null;
-            if (DebugMapManager.Instance != null) tile = DebugMapManager.GetTile(position);
+            if (MapManager.Instance != null) tile = MapManager.GetTile(position);
             return new MapRaycastHit(tile, position);
         }
         else

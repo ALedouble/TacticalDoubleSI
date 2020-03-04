@@ -19,8 +19,8 @@ public class DebugMapManager : MonoBehaviour
     private bool havePath = false;
     private Vector2Int start;
     private Vector2Int end;
-    ReachableTiles path;
-    private List<ReachableTiles> tiles;
+    ReachableTile path;
+    private List<ReachableTile> tiles;
     MapRaycastHit tileSelect;
 
     [Header("Attack")]
@@ -90,7 +90,7 @@ public class DebugMapManager : MonoBehaviour
 
                 tiles = IAUtils.FindAllReachablePlace(tileSelect.position, Instance.map.map, range);
 
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     GetTile(tile.coordPosition).TileType = TileType.Fast;
                 }
@@ -106,7 +106,7 @@ public class DebugMapManager : MonoBehaviour
                     }
                 }
 
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     GetTile(tile.coordPosition).TileType = TileType.Fast;
                 }
@@ -114,7 +114,7 @@ public class DebugMapManager : MonoBehaviour
                 end = tileSelect.position;
                 tileSelect.tile.TileType = TileType.ClickEnd;
 
-                List<ReachableTiles> canCast = ValidCastFromTile();
+                List<ReachableTile> canCast = ValidCastFromTile();
                 canCast.Sort();
 
                 if (canCast.Count > 0)
@@ -138,9 +138,9 @@ public class DebugMapManager : MonoBehaviour
         }
     }
 
-    private List<ReachableTiles> ValidCastFromTile()
+    private List<ReachableTile> ValidCastFromTile()
     {
-        List<ReachableTiles> canCast = new List<ReachableTiles>();
+        List<ReachableTile> canCast = new List<ReachableTile>();
         List<Vector2Int> attackRange = tileArea.RelativeArea();
 
         for (int i = 0; i < tiles.Count; i++)
@@ -172,7 +172,7 @@ public class DebugMapManager : MonoBehaviour
 
                 tiles = IAUtils.FindAllReachablePlace(tileSelect.position, Instance.map.map, range);
 
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     GetTile(tile.coordPosition).TileType = TileType.Fast;
                 }
@@ -183,11 +183,11 @@ public class DebugMapManager : MonoBehaviour
                 end = tileSelect.position;
                 havePath = true;
 
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     if (tile.coordPosition.Equals(tileSelect.position))
                     {
-                        foreach (ReachableTiles tile2 in tiles)
+                        foreach (ReachableTile tile2 in tiles)
                         {
                             GetTile(tile2.coordPosition).TileType = TileType.Fast;
                         }
@@ -230,7 +230,7 @@ public class DebugMapManager : MonoBehaviour
 
             if (!firstClick)
             {
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     if (GetTile(tile.coordPosition).TileType == TileType.Fast)
                     {
@@ -240,7 +240,7 @@ public class DebugMapManager : MonoBehaviour
 
                 tiles = IAUtils.FindAllReachablePlace(start, Instance.map.map, range);
 
-                foreach (ReachableTiles tile in tiles)
+                foreach (ReachableTile tile in tiles)
                 {
                     if (GetTile(tile.coordPosition).TileType != TileType.ClickEnd)
                     {

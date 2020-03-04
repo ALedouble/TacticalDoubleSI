@@ -13,11 +13,19 @@ public class TileData
 {
     TileType typeOfTile;
     int cost;
-
+    Vector2Int position;
+    
     public TileData(TileType type, int cost)
     {
         this.typeOfTile = type;
         this.cost = cost;
+    }
+
+    public TileData(TileType type, int cost, Vector2Int position)
+    {
+        this.typeOfTile = type;
+        this.cost = cost;
+        this.Position = position;
     }
 
     public bool IsWalkable
@@ -49,6 +57,8 @@ public class TileData
             this.typeOfTile = value;
         }
     }
+
+    public Vector2Int Position { get => position; set => position = value; }
 
     public List<EntityBehaviour> entities;
 }
