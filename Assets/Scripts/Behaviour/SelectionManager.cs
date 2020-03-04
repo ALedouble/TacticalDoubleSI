@@ -20,7 +20,7 @@ public class SelectionManager : MonoBehaviour
         {
             for (int x = 0; x < 10; x++)
             {
-                DebugUtils.DrawTile(new Vector2Int(x,y));
+                DebugUtils.DrawTile(new Vector2Int(x, y));
             }
         }
 

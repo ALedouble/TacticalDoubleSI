@@ -16,10 +16,10 @@ public struct EntityPosition
 [CreateAssetMenu(fileName = "Map", menuName = "ScriptableObjects/Map", order = 1)]
 public class Map : ScriptableObject
 {
-    public List<List<TileData>> map;
+    public List<List<TileData>> map = new List<List<TileData>>();
 
     public List<EntityPosition> entityStartPositions;
 
-    int heigth;
-    int width;
+    public int size;
+
 }

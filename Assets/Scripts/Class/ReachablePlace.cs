@@ -1,32 +1,31 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReachablePlace : IComparer
+public class ReachableTiles : IComparable
 {
-    public Vector2 coordPosition { get; }
+    public Vector2Int coordPosition { get; }
     public List<TileData> path { get; }
-    public int cout { get; }
+    public int cost { get; }
 
-    public ReachablePlace(Vector2 coordPosition, List<TileData> path, int cout)
+    public ReachableTiles(Vector2Int coordPosition, List<TileData> path, int cout)
     {
         this.coordPosition = coordPosition;
         this.path = path;
-        this.cout = cout;
+        this.cost = cout;
     }
-
-    public int Compare(object x, object y)
+    public bool IsBetterThat(ReachableTiles tile)
     {
-        ReachablePlace tile1 = (ReachablePlace)x;
-        ReachablePlace tile2 = (ReachablePlace)y;
-
-        if (tile1.cout < tile2.cout) return -1;
-        if (tile1.cout > tile2.cout) return 1;
-        return 0;
-    }
-    public bool IsBetterThat(ReachablePlace tile)
-    {
-        if (this.cout < tile.cout) return true;
+        if (this.cost < tile.cost) return true;
         return false;
+    }
+
+    public int CompareTo(object obj)
+    {
+        ReachableTiles tile2 = (ReachableTiles)obj;
+
+        if (this.cost < tile2.cost) return -1;
+        if (this.cost > tile2.cost) return 1;
+        return 0;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using System;
 
 /// <summary>
 /// Holds the map data and provides static methods to access its contents
 /// </summary>
+
 public class MapManager : MonoBehaviour
 {
     public Map map;
@@ -22,6 +22,19 @@ public class MapManager : MonoBehaviour
 
     public static TileData GetTile(Vector2Int position)
     {
-        throw new NotImplementedException();
+        if (position.x >= 0 && position.x < GetSize() && position.y >= 0 && position.y < GetSize())
+            return Instance.map.map[position.x][position.y];
+
+        return null;
+    }
+
+    public static int GetSize()
+    {
+        return Instance.map.size;
+    }
+
+    public static Map GetMap()
+    {
+        return Instance.map;
     }
 }
