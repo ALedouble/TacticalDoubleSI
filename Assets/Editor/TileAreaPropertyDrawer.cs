@@ -61,13 +61,31 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
 
             if (GUI.Button(rectAdd, "+") && sizeProperty.intValue < 19)
             {
+
+                
+                int size = property.FindPropertyRelative("size").intValue;
+                List<Vector2Int> area = CustomEditorUtils.PropertyToVector2Int(property);
+
                 sizeProperty.intValue++;
+                /*
+                for (int xx = 0; xx < size; xx++)
+                {
+                    for (int yy = 0; yy < size; yy++)
+                    {
+                        if (area.Contains(new Vector2Int(xx, yy)))
+                        {
+                            areaBuffer[xx + 1, yy + 1 ] = true;
+                        }
+                    }
+                }
+                */
+                
+
             }
 
             if (GUI.Button(rectDelete, "-") && sizeProperty.intValue > 3)
             {
                 sizeProperty.intValue -= 2;
-
                 areaBuffer = new bool[20, 20];
             }
 
