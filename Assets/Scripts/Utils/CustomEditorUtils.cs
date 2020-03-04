@@ -17,17 +17,31 @@ public class CustomEditorUtils : MonoBehaviour
         return newArea;
     }
 
-    public static void FillPropertyWithVector2Int(SerializedProperty property, List<Vector2Int> vectors)
+    public static void FillPropertyWithVector2Int(SerializedProperty property, bool[,] areaBuffer)
     {
         SerializedProperty tileArea = property.FindPropertyRelative("area");
 
-        tileArea.ClearArray();
-        tileArea.arraySize = vectors.Count;
+        List<Vector2Int> vectorsBuffer = new List<Vector2Int>();
 
-        for (int i = 0; i < vectors.Count; i++)
+        tileArea.ClearArray();
+        tileArea.arraySize = 0;
+        for (int i = 0; i < areaBuffer.GetLength(0); i++)
         {
-            tileArea.InsertArrayElementAtIndex(i);
-            tileArea.GetArrayElementAtIndex(i).vector2IntValue = vectors[i];
+            for (int j = 0; j < areaBuffer.GetLength(1); j++)
+            {
+                tileArea.arraySize += areaBuffer[j, i] ? 1 : 0;
+                if (!areaBuffer[j, i])
+                    continue;
+
+                vectorsBuffer.Add(new Vector2Int(j, i));
+            }
+        }
+
+        
+
+        for (int i = 0; i < tileArea.arraySize; i++)
+        {
+            tileArea.GetArrayElementAtIndex(i).vector2IntValue = vectorsBuffer[i];
         }
     }
 
