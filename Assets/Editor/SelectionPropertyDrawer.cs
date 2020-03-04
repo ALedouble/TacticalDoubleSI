@@ -11,15 +11,30 @@ public class SelectionPropertyDrawer : PropertyDrawer {
    	Vector2 intSize = new Vector2(30,30);
 	Vector2 labelSize = new Vector2 (100, 15);
     
-    public override float GetPropertyHeight (SerializedProperty property, GUIContent label) {
+    public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
+    {
 		return 200; //Temporary
 	}
 
-	public override void OnGUI (Rect position, SerializedProperty property, GUIContent label) {
-		Texture boxText = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Textures/T_Square_D.jpg");
+    private bool initialized = false;
+    bool[,] areaBuffer;
+    private void Init(SerializedProperty property)
+    {
+        initialized = true;
 
+        int size = property.FindPropertyRelative("size").intValue;
+        areaBuffer = new bool[size, size];
 
-        
+        // TODO : fill bool 2d array with area values for faster lookup time
+    }
+
+    public override void OnGUI (Rect position, SerializedProperty property, GUIContent label)
+    {
+        if (!initialized)
+            Init(property);
+
+        Texture boxText = AssetDatabase.LoadAssetAtPath<Texture>("Assets/Textures/T_Square_D.jpg");
+
 		EditorGUI.BeginProperty (position, label, property);
 
 		//Draw small label with variable name
@@ -32,11 +47,11 @@ public class SelectionPropertyDrawer : PropertyDrawer {
 
         //Store value of x and y in SelectionProperty.cs
         int x = property.FindPropertyRelative ("size").intValue;
-		int y = property.FindPropertyRelative ("size").intValue;
+        int y = x;
 
 
         //Calculate position of the grid and anchored
-		float positionAnchored = position.xMax - (x + 1) * 65;
+        float positionAnchored = position.xMax - (x + 1) * 65;
 		if (positionAnchored < position.xMin) positionAnchored = position.xMin;
 
 		Vector2 start = new Vector2 (positionAnchored, position.yMin + 20f);
@@ -60,7 +75,7 @@ public class SelectionPropertyDrawer : PropertyDrawer {
                 {
                     EditorGUI.DrawRect(rectPos, Color.red);
 
-                    if (Event.current.button == 0 && Event.current.type == EventType.MouseDown && Event.current.type == EventType.Layout)
+                    if (Event.current.button == 0 && Event.current.type == EventType.MouseDown)
                     {
                         if (area.Contains(new Vector2Int(j, i)))
                         {
@@ -71,11 +86,14 @@ public class SelectionPropertyDrawer : PropertyDrawer {
                             area.Add(new Vector2Int(j, i));
                         }
                         CustomEditorUtils.FillPropertyWithVector2Int(property, area);
+                        property.serializedObject.ApplyModifiedProperties();
+
                     }
 
                 }
                 else
                 {
+                    // Remove contains and replace with areaBuffer lookup
                     EditorGUI.DrawRect(rectPos, area.Contains(new Vector2Int(j, i)) ? Color.green :  new Color(0.8f, 0.8f, 0.8f));
                 }
 
@@ -83,8 +101,8 @@ public class SelectionPropertyDrawer : PropertyDrawer {
 			}
 		}
 
-        //EditorUtility.SetDirty(property.serializedObject.targetObject);
 
+        CustomEditorUtils.RepaintInspector(property.serializedObject);
         EditorGUI.EndProperty ();
 	}
 }
