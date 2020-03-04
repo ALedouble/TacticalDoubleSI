@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomPropertyDrawer(typeof(TileArea))]
-public class SelectionPropertyDrawer : PropertyDrawer {
+public class TileAreaPropertyDrawer : PropertyDrawer {
 
 
 	//Sizes
@@ -106,34 +106,43 @@ public class SelectionPropertyDrawer : PropertyDrawer {
                     Rect rectPos = new Rect(start + offset, intSize);
                     Rect centerRect = new Rect(start + centerPos, intSize);
 
-                    EditorGUI.DrawRect(centerRect, new Color(0.6f, 0.6f, 0.6f));
+                    
 
                     GUI.color = Color.white;
 
                     if (rectPos.Contains(Event.current.mousePosition))
                     {
-                        EditorGUI.DrawRect(rectPos, Color.red);
+                        EditorGUI.DrawRect(rectPos, Color.blue);
 
                         if (Event.current.button == 0 && Event.current.type == EventType.MouseDown)
                         {
                             if (areaBuffer[i, j])
                             {
                                 areaBuffer[i, j] = false;
-                                
                             }
                             else
                             {
                                 areaBuffer[i, j] = true;
                             }
-
                             CustomEditorUtils.FillPropertyWithVector2Int(property, areaBuffer);
                             property.serializedObject.ApplyModifiedProperties();
                         }
                     }
                     else
                     {
-                        EditorGUI.DrawRect(rectPos, areaBuffer[i, j] ? Color.green : new Color(0.8f, 0.8f, 0.8f));
+                        EditorGUI.DrawRect(rectPos, areaBuffer[i, j] ? Color.green : new Color(0.8f, 0.8f, 0.8f));    
                     }
+
+                    if (centerRect.Contains(Event.current.mousePosition))
+                    {
+
+                    }
+                    else
+                    {
+                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? Color.green : new Color(0.6f, 0.6f, 0.6f));
+                    }
+
+                    
 
                     n++;
                 }
