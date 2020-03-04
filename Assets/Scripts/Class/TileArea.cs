@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SelectionProperty
+public class TileArea 
 {
-	public int x = 5;
-	public int y = 5;
-	public int[] sizeArray = new int[5*5];
+    public int size = 5;
+
+    public List<Vector2Int> area = new List<Vector2Int>();
 }
 
