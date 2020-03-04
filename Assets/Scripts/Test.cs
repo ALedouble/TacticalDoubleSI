@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public TileArea sp;
+    public TileArea sp; 
 }
