@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class RoundManager : MonoBehaviour
 {
@@ -27,5 +28,10 @@ public class RoundManager : MonoBehaviour
         {
             currentMovementSequence.Kill(true);
         }
+    }
+
+    internal static void EndTurn(EntityBehaviour minion)
+    {
+        throw new NotImplementedException();
     }
 }
