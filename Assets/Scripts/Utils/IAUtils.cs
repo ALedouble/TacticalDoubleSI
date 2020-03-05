@@ -15,7 +15,7 @@ public static class IAUtils
     /*
      * Trouve l'ensemble des positions atteignables depuis "startPosition"
      */
-    public static List<ReachableTile> FindAllReachablePlace(Vector2Int startPosition, List<List<TileData>> map, int range, bool ignoreWalkable = false, bool ignoreWeightMove = false)
+    public static List<ReachableTile> FindAllReachablePlace(Vector2Int startPosition, List<List<TileData>> map, int range, bool ignoreWeightMove = false, bool ignoreWalkable = false)
     {
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
 

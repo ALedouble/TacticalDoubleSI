@@ -11,15 +11,15 @@ public class DebugEntityAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MapManager.GetMap().map = new List<List<TileData>>();
-        MapManager.GetMap().size = 10;
+        MapManager.SetMap(new List<List<TileData>>());
+        MapManager.SetSize(10);
 
-        for (int x = 0; x < MapManager.GetMap().size; x++)
+        for (int x = 0; x < MapManager.GetSize(); x++)
         {
-            MapManager.GetMap().map.Add(new List<TileData>());
-            for (int y = 0; y < MapManager.GetMap().size; y++)
+            MapManager.GetMap().Add(new List<TileData>());
+            for (int y = 0; y < MapManager.GetSize(); y++)
             {
-                MapManager.GetMap().map[x].Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
+                MapManager.GetMap()[x].Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
             }
         }
 
@@ -35,9 +35,9 @@ public class DebugEntityAttack : MonoBehaviour
 
         if (Application.isPlaying && MapManager.Instance != null)
         {
-            for (int x = 0; x < MapManager.GetMap().size; x++)
+            for (int x = 0; x < MapManager.GetSize(); x++)
             {
-                for (int y = 0; y < MapManager.GetMap().size; y++)
+                for (int y = 0; y < MapManager.GetSize(); y++)
                 {
                     DebugUtils.DrawTile(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
 

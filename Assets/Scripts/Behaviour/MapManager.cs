@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Holds the map data and provides static methods to access its contents
@@ -33,8 +34,18 @@ public class MapManager : MonoBehaviour
         return Instance.map.size;
     }
 
-    public static Map GetMap()
+    public static void SetSize(int value)
     {
-        return Instance.map;
+        Instance.map.size = value;
+    }
+
+    public static List<List<TileData>> GetMap()
+    {
+        return Instance.map.map;
+    }
+
+    public static void SetMap(List<List<TileData>> map)
+    {
+        Instance.map.map = map;
     }
 }

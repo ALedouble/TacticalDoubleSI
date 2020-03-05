@@ -25,9 +25,9 @@ public class DebugMapVisualizer : MonoBehaviour
 
         if (Application.isPlaying && MapManager.Instance != null)
         {
-            for (int x = 0; x < MapManager.GetMap().size; x++)
+            for (int x = 0; x < MapManager.GetSize(); x++)
             {
-                for (int y = 0; y < MapManager.GetMap().size; y++)
+                for (int y = 0; y < MapManager.GetSize(); y++)
                 {
                     DebugUtils.DrawTile(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
 
