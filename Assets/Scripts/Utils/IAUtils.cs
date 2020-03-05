@@ -34,17 +34,20 @@ public static class IAUtils
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { MapManager.GetTile(startPosition) }, 0) };
         List<Vector2Int> deletedPlaces = new List<Vector2Int>();
 
-        while (reachableTiles.Count > 0 && !LookAround(NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target))
+        if (!startPosition.Equals(target))
         {
-            deletedPlaces.Add(reachableTiles[0].GetCoordPosition());
-            reachableTiles.RemoveAt(0);
-            reachableTiles.Sort();
-
-            for (int i = 0; i < reachableTiles.Count; i++)
+            while (reachableTiles.Count > 0 && !LookAround(NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target))
             {
-                if (deletedPlaces.Contains(reachableTiles[i].GetCoordPosition()))
+                deletedPlaces.Add(reachableTiles[0].GetCoordPosition());
+                reachableTiles.RemoveAt(0);
+                reachableTiles.Sort();
+
+                for (int i = 0; i < reachableTiles.Count; i++)
                 {
-                    reachableTiles.RemoveAt(i--);
+                    if (deletedPlaces.Contains(reachableTiles[i].GetCoordPosition()))
+                    {
+                        reachableTiles.RemoveAt(i--);
+                    }
                 }
             }
         }
@@ -258,19 +261,18 @@ public static class IAUtils
     private static ReachableTile CutPathInRange(ReachableTile shortest, int range)
     {
         List<TileData> path = new List<TileData>(shortest.path);
-        int lenght = -1;
+        int lenght = 0;
         int cost = 0;
 
         for (int i = 0; i < path.Count; i++)
         {
-            lenght++;
             cost += (int)path[i].tileType;
             if (cost > range)
                 break;
+            lenght++;
         }
 
         shortest.path = path.Take(lenght).ToList();
-
         return shortest;
     }
 }

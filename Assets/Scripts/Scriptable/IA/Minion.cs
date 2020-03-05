@@ -55,10 +55,38 @@ public class Minion : Brain
      */
     private bool CheckEndTurn(bool pass = false)
     {
-        if (pass || minion.CurrentActionPoints.Equals(0))
+        if (pass || !CanMakeAction())
         {
-            //RoundManager.EndTurn(minion);
+            RoundManager.EndTurn(minion);
             return true;
+        }
+
+        return false;
+    }
+
+    private bool CanMakeAction()
+    {
+        List<TileData> around = IAUtils.TilesAround(minion.currentTile);
+        for (int i = 0; i < around.Count; i++)
+        {
+            if (around[i].IsWalkable && (int)around[i].tileType <= minion.CurrentActionPoints)
+            {
+                return true;
+            }
+
+            else if (!around[i].IsWalkable)
+            {
+                for (int j = 0; j < around[i].entities.Count; j++)
+                {
+                    if (around[i].entities[j].data.alignement.Equals(Alignement.Player))
+                    {
+                        if (minion.data.abilities[0].cost <= minion.CurrentActionPoints)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
 
         return false;
