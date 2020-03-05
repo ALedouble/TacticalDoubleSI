@@ -11,7 +11,7 @@ public class EntityBehaviour : MonoBehaviour
 {
     public Entity data;
 
-    TileData currentTile;
+    public TileData currentTile;
 
     int currentHealth;
     public int CurrentHealth { get => currentHealth; }
