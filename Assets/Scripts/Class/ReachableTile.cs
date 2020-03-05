@@ -31,4 +31,9 @@ public class ReachableTile : IComparable
     {
         return path[path.Count - 1].position;
     }
+
+    public TileData GetLastTile()
+    {
+        return path[path.Count - 1];
+    }
 }

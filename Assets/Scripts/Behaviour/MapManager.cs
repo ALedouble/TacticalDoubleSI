@@ -9,6 +9,8 @@ public class MapManager : MonoBehaviour
 {
     public Map map;
 
+    private List<EntityBehaviour> listOfEntityOnTheMap;
+
     // Static fields should be in CamelCase
     public static MapManager Instance;
 
@@ -23,10 +25,12 @@ public class MapManager : MonoBehaviour
 
     public static TileData GetTile(Vector2Int position)
     {
-        if (position.x >= 0 && position.x < GetSize() && position.y >= 0 && position.y < GetSize())
-            return Instance.map.map[position.x][position.y];
+        return Instance.map.GetTile(position);
+    }
 
-        return null;
+    public static TileData GetTile(int x, int y)
+    {
+        return Instance.map.GetTile(x, y);
     }
 
     public static int GetSize()
@@ -39,13 +43,18 @@ public class MapManager : MonoBehaviour
         Instance.map.size = value;
     }
 
-    public static List<List<TileData>> GetMap()
+    public static List<TileData> GetMap()
     {
         return Instance.map.map;
     }
 
-    public static void SetMap(List<List<TileData>> map)
+    public static void SetMap(List<TileData> map)
     {
         Instance.map.map = map;
+    }
+
+    public static List<EntityBehaviour> GetListOfEntity()
+    {
+        return Instance.listOfEntityOnTheMap;
     }
 }
