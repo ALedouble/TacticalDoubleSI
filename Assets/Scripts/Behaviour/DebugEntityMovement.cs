@@ -11,15 +11,14 @@ public class DebugEntityMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MapManager.Instance.map.map = new List<List<TileData>>();
+        MapManager.Instance.map.map = new List<TileData>();
         MapManager.Instance.map.size = 10;
 
         for (int x = 0; x < MapManager.Instance.map.size; x++)
         {
-            MapManager.Instance.map.map.Add(new List<TileData>());
             for (int y = 0; y < MapManager.Instance.map.size; y++)
             {
-                MapManager.Instance.map.map[x].Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
+                MapManager.Instance.map.map.Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
             }
         }
 

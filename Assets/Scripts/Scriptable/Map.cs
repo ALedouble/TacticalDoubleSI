@@ -16,7 +16,7 @@ public struct EntityPosition
 [CreateAssetMenu(fileName = "Map", menuName = "ScriptableObjects/Map", order = 1)]
 public class Map : ScriptableObject
 {
-    public List<List<TileData>> map = new List<List<TileData>>();
+    public List<TileData> map = new List<TileData>();
 
     public List<EntityPosition> entityStartPositions;
 
@@ -28,14 +28,13 @@ public class Map : ScriptableObject
 
         Debug.Log("Initializing map");
 
-        map = new List<List<TileData>>();
+        map = new List<TileData>();
 
         for (int x = 0; x < size; x++)
         {
-            map.Add(new List<TileData>());
             for (int y = 0; y < size; y++)
             {
-                map[x].Add(new TileData(TileType.Normal));
+                map.Add(new TileData(TileType.Normal));
             }
         }
     }
@@ -43,7 +42,15 @@ public class Map : ScriptableObject
     public TileData GetTile(Vector2Int position)
     {
         if (position.x >= 0 && position.x < size && position.y >= 0 && position.y < size)
-            return map[position.x][position.y];
+            return map[position.x * size + position.y];
+
+        return null;
+    }
+
+    public TileData GetTile(int x, int y)
+    {
+        if (x >= 0 && x < size && y >= 0 && y < size)
+            return map[x * size + y];
 
         return null;
     }

@@ -55,33 +55,32 @@ public class DebugMapManager : MonoBehaviour
     {
         Random rand = new Random();
 
-        MapManager.Instance.map.map = new List<List<TileData>>();
+        MapManager.SetMap(new List<TileData>());
 
-        for (int x = 0; x < MapManager.Instance.map.size; x++)
+        for (int x = 0; x < MapManager.GetSize(); x++)
         {
-            MapManager.Instance.map.map.Add(new List<TileData>());
-            for (int y = 0; y < MapManager.Instance.map.size; y++)
+            for (int y = 0; y < MapManager.GetSize(); y++)
             {
                 switch (rand.Next(0,4))
                 {
                     case 0:
-                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Solid));
-                        MapManager.Instance.map.map[x][y].color = wall;
+                        MapManager.GetMap().Add(new TileData(TileType.Solid));
+                        MapManager.GetTile(x, y).color = wall;
                         break;
 
                     case 1:
-                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Fast));
-                        MapManager.Instance.map.map[x][y].color = normal;
+                        MapManager.GetMap().Add(new TileData(TileType.Fast));
+                        MapManager.GetTile(x, y).color = normal;
                         break;
 
                     case 2:
-                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Normal));
-                        MapManager.Instance.map.map[x][y].color = normal;
+                        MapManager.GetMap().Add(new TileData(TileType.Normal));
+                        MapManager.GetTile(x, y).color = normal;
                         break;
 
                     case 3:
-                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Slow));
-                        MapManager.Instance.map.map[x][y].color = normal;
+                        MapManager.GetMap().Add(new TileData(TileType.Slow));
+                        MapManager.GetTile(x, y).color = normal;
                         break;
                 }
             }
@@ -90,8 +89,8 @@ public class DebugMapManager : MonoBehaviour
 
     private void Update()
     {
-        AreaAndPath();
-        //Attack();
+        //AreaAndPath();
+        Attack();
     }
 
     private void Attack()
@@ -105,8 +104,8 @@ public class DebugMapManager : MonoBehaviour
                 start = tileSelect.position;
                 tileSelect.tile.color = player;
 
-                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, MapManager.Instance.map.map, range);
-
+                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, range);
+                Debug.Log(tiles.Count);
                 foreach (ReachableTile tile in tiles)
                 {
                     MapManager.GetTile(tile.GetCoordPosition()).color = area;
@@ -118,8 +117,8 @@ public class DebugMapManager : MonoBehaviour
                 {
                     for (int y = 0; y < MapManager.Instance.map.size; y++)
                     {
-                        if (MapManager.Instance.map.map[x][y].color != player)
-                            MapManager.Instance.map.map[x][y].color = normal;
+                        if (MapManager.GetTile(x, y).color != player)
+                            MapManager.GetTile(x, y).color = normal;
                     }
                 }
 
@@ -146,7 +145,7 @@ public class DebugMapManager : MonoBehaviour
                 }
                 else
                 {
-                    path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
+                    path = IAUtils.FindShortestPath(start, end, range, fullPath);
 
                     path.path[path.path.Count - 1].color = chemin;
                 }
@@ -168,7 +167,7 @@ public class DebugMapManager : MonoBehaviour
                 start = tileSelect.position;
                 tileSelect.tile.color = player;
 
-                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, MapManager.Instance.map.map, range);
+                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, range);
 
                 foreach (ReachableTile tile in tiles)
                 {
@@ -185,8 +184,8 @@ public class DebugMapManager : MonoBehaviour
                 {
                     for (int y = 0; y < MapManager.Instance.map.size; y++)
                     {
-                        if (MapManager.Instance.map.map[x][y].color != player && MapManager.Instance.map.map[x][y].color != wall)
-                            MapManager.Instance.map.map[x][y].color = normal;
+                        if (MapManager.GetTile(x, y).color != player && MapManager.GetTile(x, y).color != wall)
+                            MapManager.GetTile(x, y).color = normal;
                     }
                 }
 
@@ -195,7 +194,7 @@ public class DebugMapManager : MonoBehaviour
                     MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
-                path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, tileSelect.position, range, fullPath);
+                path = IAUtils.FindShortestPath(start, tileSelect.position, range, fullPath);
 
                 if (path != null)
                     foreach (TileData tileData in path.path)
@@ -240,7 +239,7 @@ public class DebugMapManager : MonoBehaviour
                     }
                 }
 
-                tiles = IAUtils.FindAllReachablePlace(start, MapManager.Instance.map.map, range);
+                tiles = IAUtils.FindAllReachablePlace(start, range);
 
                 foreach (ReachableTile tile in tiles)
                 {
@@ -253,7 +252,7 @@ public class DebugMapManager : MonoBehaviour
 
             if (havePath)
             {
-                path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
+                path = IAUtils.FindShortestPath(start, end, range, fullPath);
 
                 foreach (TileData tileData in path.path)
                 {
@@ -280,7 +279,7 @@ public class DebugMapManager : MonoBehaviour
                     tileData.color = normal;
             }
 
-            path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
+            path = IAUtils.FindShortestPath(start, end, range, fullPath);
 
             if (path != null)
                 foreach (TileData tileData in path.path)
@@ -306,9 +305,9 @@ public class DebugMapManager : MonoBehaviour
             {
                 for (int y = 0; y < MapManager.Instance.map.size; y++)
                 {
-                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.Instance.map.map[x][y].color);
+                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.GetTile(x, y).color);
 
-                    Handles.Label(new Vector3(x, .25f, y), MapManager.Instance.map.map[x][y].tileType.ToString());
+                    Handles.Label(new Vector3(x, .25f, y), MapManager.GetTile(x, y).tileType.ToString());
                 }
             }
         }

@@ -14,6 +14,9 @@ public class EntityBehaviour : MonoBehaviour
 
     public TileData currentTile;
 
+    bool channelingBurst;
+    public bool IsChannelingBurst { get => channelingBurst; }
+
     int currentHealth;
     public int CurrentHealth { get => currentHealth; }
 
