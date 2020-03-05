@@ -10,6 +10,8 @@ public class PlayerBrain : Brain
     {
         base.OnTurnStart(entityBehaviour);
 
+
+
         SelectionManager.Instance.OnClick += OnMovement;
 
     }
@@ -31,7 +33,5 @@ public class PlayerBrain : Brain
         {
             SelectionManager.Instance.OnClick += OnMovement;
         });
-
-        RoundManager.Instance.currentMovementSequence = moveSequence;
     }
 }
