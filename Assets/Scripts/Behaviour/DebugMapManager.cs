@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = System.Random;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -7,12 +9,10 @@ using UnityEditor;
 
 public class DebugMapManager : MonoBehaviour
 {
-    public Map map;
-
     [Header("AreaAndPath")]
     public bool drawDebug;
     public bool fullPath;
-    public int range = 150;
+    public int range = 15;
 
     private bool saveFullPath;
     private bool firstClick = true;
@@ -22,23 +22,17 @@ public class DebugMapManager : MonoBehaviour
     ReachableTile path;
     private List<ReachableTile> tiles;
     MapRaycastHit tileSelect;
-
-    [Header("Attack")]
-
-
+       
+    private Color normal = new Color(.9f, .9f, .9f, .5f);
+    private Color player = new Color(1, 0.9f, 0, .5f);
+    private Color target = new Color(1, 0, 0.8f, .5f);
+    private Color chemin = new Color(0, 0, .9f, .5f);
+    private Color wall = new Color(.9f, 0, 0, .5f);
+    private Color area = new Color(0, .9f, 0, .5f);
+    private Color attack = new Color(0, 0, 0, .5f);
+    private Color attackBest = new Color(0, 1, 1, .5f);
     private TileArea tileArea;
-
-    public static DebugMapManager Instance;
-
-    private void Awake()
-    {
-        // No need to check if the instance is null because the MapManager will always be destroyed at the end of the level
-        Instance = this;
-
-        // Create a copy of map since ScriptableObjects are persistent and we don't want to change the map in the project while in the editor
-        map = Instantiate(map);
-    }
-
+    
     private void Start()
     {
         Init();
@@ -59,22 +53,45 @@ public class DebugMapManager : MonoBehaviour
 
     private void Init()
     {
-        Instance.map.map = new List<List<TileData>>();
+        Random rand = new Random();
 
-        for (int x = 0; x < Instance.map.size; x++)
+        MapManager.Instance.map.map = new List<List<TileData>>();
+
+        for (int x = 0; x < MapManager.Instance.map.size; x++)
         {
-            Instance.map.map.Add(new List<TileData>());
-            for (int y = 0; y < Instance.map.size; y++)
+            MapManager.Instance.map.map.Add(new List<TileData>());
+            for (int y = 0; y < MapManager.Instance.map.size; y++)
             {
-                Instance.map.map[x].Add(new TileData(TileType.Normal, 10 * x + y));
+                switch (rand.Next(0,4))
+                {
+                    case 0:
+                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Solid));
+                        MapManager.Instance.map.map[x][y].color = wall;
+                        break;
+
+                    case 1:
+                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Fast));
+                        MapManager.Instance.map.map[x][y].color = normal;
+                        break;
+
+                    case 2:
+                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Normal));
+                        MapManager.Instance.map.map[x][y].color = normal;
+                        break;
+
+                    case 3:
+                        MapManager.Instance.map.map[x].Add(new TileData(TileType.Slow));
+                        MapManager.Instance.map.map[x][y].color = normal;
+                        break;
+                }
             }
         }
     }
 
     private void Update()
     {
-        //AreaAndPath();
-        Attack();
+        AreaAndPath();
+        //Attack();
     }
 
     private void Attack()
@@ -86,76 +103,57 @@ public class DebugMapManager : MonoBehaviour
             {
                 firstClick = false;
                 start = tileSelect.position;
-                tileSelect.tile.TileType = TileType.ClickStart;
+                tileSelect.tile.color = player;
 
-                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, Instance.map.map, range);
+                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, MapManager.Instance.map.map, range);
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    GetTile(tile.coordPosition).TileType = TileType.Fast;
+                    MapManager.GetTile(tile.coordPosition).color = area;
                 }
             }
             else
             {
-                for (int i = 0; i < Instance.map.size; i++)
+                for (int x = 0; x < MapManager.Instance.map.size; x++)
                 {
-                    for (int j = 0; j < Instance.map.size; j++)
+                    for (int y = 0; y < MapManager.Instance.map.size; y++)
                     {
-                        if (!Instance.map.map[i][j].TileType.Equals(TileType.ClickStart))
-                            Instance.map.map[i][j].TileType = TileType.Normal;
+                        if (MapManager.Instance.map.map[x][y].color != player)
+                            MapManager.Instance.map.map[x][y].color = normal;
                     }
                 }
 
+
                 foreach (ReachableTile tile in tiles)
                 {
-                    GetTile(tile.coordPosition).TileType = TileType.Fast;
+                    MapManager.GetTile(tile.coordPosition).color = area;
                 }
 
                 end = tileSelect.position;
-                tileSelect.tile.TileType = TileType.ClickEnd;
+                tileSelect.tile.color = target;
 
-                List<ReachableTile> canCast = ValidCastFromTile();
+                List<ReachableTile> canCast = IAUtils.ValidCastFromTile(tileArea, tiles, end);
                 canCast.Sort();
 
                 if (canCast.Count > 0)
                 {
-                    GetTile(canCast[0].coordPosition).TileType = TileType.Slow;
+                    MapManager.GetTile(canCast[0].coordPosition).color = attackBest;
 
                     for (int i = 1; i < canCast.Count; i++)
                     {
-                        GetTile(canCast[i].coordPosition).TileType = TileType.Solid;
+                        MapManager.GetTile(canCast[i].coordPosition).color = attack;
                     }
                 }
                 else
                 {
-                    path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
+                    path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
 
-                    path.path[path.path.Count - 1].TileType = TileType.Solid;
+                    path.path[path.path.Count - 1].color = chemin;
                 }
                     
 
             }
         }
-    }
-
-    private List<ReachableTile> ValidCastFromTile()
-    {
-        List<ReachableTile> canCast = new List<ReachableTile>();
-        List<Vector2Int> attackRange = tileArea.RelativeArea();
-
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            for (int j = 0; j < attackRange.Count; j++)
-            {
-                if ((tiles[i].coordPosition + attackRange[j]).Equals(end))
-                {
-                    canCast.Add(tiles[i]);
-                    break;
-                }
-            }
-        }
-
-        return canCast;
     }
 
 
@@ -168,13 +166,13 @@ public class DebugMapManager : MonoBehaviour
             {
                 firstClick = false;
                 start = tileSelect.position;
-                tileSelect.tile.TileType = TileType.ClickStart;
+                tileSelect.tile.color = player;
 
-                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, Instance.map.map, range);
+                tiles = IAUtils.FindAllReachablePlace(tileSelect.position, MapManager.Instance.map.map, range);
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    GetTile(tile.coordPosition).TileType = TileType.Fast;
+                    MapManager.GetTile(tile.coordPosition).color = area;
                 }
             }
 
@@ -183,48 +181,52 @@ public class DebugMapManager : MonoBehaviour
                 end = tileSelect.position;
                 havePath = true;
 
-                foreach (ReachableTile tile in tiles)
+                for (int x = 0; x < MapManager.Instance.map.size; x++)
                 {
-                    if (tile.coordPosition.Equals(tileSelect.position))
+                    for (int y = 0; y < MapManager.Instance.map.size; y++)
                     {
-                        foreach (ReachableTile tile2 in tiles)
-                        {
-                            GetTile(tile2.coordPosition).TileType = TileType.Fast;
-                        }
-
-                        path = IAUtils.FindShortestPath(start, Instance.map.map, tileSelect.position, range, fullPath);
-
-                        foreach (TileData tileData in path.path)
-                        {
-                            tileData.TileType = TileType.Slow;
-                        }
-
-                        break;
+                        if (MapManager.Instance.map.map[x][y].color != player && MapManager.Instance.map.map[x][y].color != wall)
+                            MapManager.Instance.map.map[x][y].color = normal;
                     }
                 }
 
-                tileSelect.tile.TileType = TileType.ClickEnd;
+                foreach (ReachableTile tile in tiles)
+                {
+                    MapManager.GetTile(tile.coordPosition).color = area;
+                }
+
+                path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, tileSelect.position, range, fullPath);
+
+                if (path != null)
+                    foreach (TileData tileData in path.path)
+                    {
+                        tileData.color = chemin;
+                    }
+
+                tileSelect.tile.color = target;
             }
             
         }
 
         if (tileSelect.tile != null && Input.GetMouseButtonDown(2))
         {
-            if (GetTile(tileSelect.position).TileType != TileType.Solid)
+            if (MapManager.GetTile(tileSelect.position).tileType != TileType.Solid)
             {
-                GetTile(tileSelect.position).TileType = TileType.Solid;
+                MapManager.GetTile(tileSelect.position).tileType = TileType.Solid;
+                MapManager.GetTile(tileSelect.position).color = wall;
             }
             else
             {
-                GetTile(tileSelect.position).TileType = TileType.Normal;
+                MapManager.GetTile(tileSelect.position).tileType = TileType.Normal;
+                MapManager.GetTile(tileSelect.position).color = normal;
             }
 
             if (havePath)
             {
                 foreach (TileData tileData in path.path)
                 {
-                    if (tileData.TileType == TileType.Slow)
-                        tileData.TileType = TileType.Normal;
+                    if (tileData.color == chemin)
+                        tileData.color = normal;
                 }
             }
 
@@ -232,32 +234,32 @@ public class DebugMapManager : MonoBehaviour
             {
                 foreach (ReachableTile tile in tiles)
                 {
-                    if (GetTile(tile.coordPosition).TileType == TileType.Fast)
+                    if (MapManager.GetTile(tile.coordPosition).color == area)
                     {
-                        GetTile(tile.coordPosition).TileType = TileType.Normal;
+                        MapManager.GetTile(tile.coordPosition).color = normal;
                     }
                 }
 
-                tiles = IAUtils.FindAllReachablePlace(start, Instance.map.map, range);
+                tiles = IAUtils.FindAllReachablePlace(start, MapManager.Instance.map.map, range);
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    if (GetTile(tile.coordPosition).TileType != TileType.ClickEnd)
+                    if (MapManager.GetTile(tile.coordPosition).color != target)
                     {
-                        GetTile(tile.coordPosition).TileType = TileType.Fast;
+                        MapManager.GetTile(tile.coordPosition).color = area;
                     }
                 }
             }
 
             if (havePath)
             {
-                path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
+                path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
 
                 foreach (TileData tileData in path.path)
                 {
-                    if (tileData.TileType != TileType.ClickEnd)
+                    if (tileData.color != target)
                     {
-                        tileData.TileType = TileType.Slow;
+                        tileData.color = chemin;
                     }
                 }
             }
@@ -274,19 +276,20 @@ public class DebugMapManager : MonoBehaviour
         {
             foreach (TileData tileData in path.path)
             {
-                if (tileData.TileType == TileType.Slow)
-                    tileData.TileType = TileType.Normal;
+                if (tileData.color == chemin)
+                    tileData.color = normal;
             }
 
-            path = IAUtils.FindShortestPath(start, Instance.map.map, end, range, fullPath);
+            path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, end, range, fullPath);
 
-            foreach (TileData tileData in path.path)
-            {
-                if (tileData.TileType != TileType.ClickEnd)
+            if (path != null)
+                foreach (TileData tileData in path.path)
                 {
-                    tileData.TileType = TileType.Slow;
+                    if (tileData.color != target)
+                    {
+                        tileData.color = chemin;
+                    }
                 }
-            }
 
             saveFullPath = fullPath;
         }
@@ -297,46 +300,19 @@ public class DebugMapManager : MonoBehaviour
     {
         if (!drawDebug) return;
 
-        if (Instance != null)
+        if (MapManager.Instance != null)
         {
-            for (int x = 0; x < Instance.map.size; x++)
+            for (int x = 0; x < MapManager.Instance.map.size; x++)
             {
-                for (int y = 0; y < Instance.map.size; y++)
+                for (int y = 0; y < MapManager.Instance.map.size; y++)
                 {
-                    DebugUtils.DrawTile(new Vector2Int(x, y), Instance.map.map[x][y].TileType.Equals(TileType.Solid) ? new Color(.9f, 0, 0, .5f) :
-                                                                Instance.map.map[x][y].TileType.Equals(TileType.Fast) ? new Color(0, .9f, 0, .5f) :
-                                                                Instance.map.map[x][y].TileType.Equals(TileType.Slow) ? new Color(0, 0, .9f, .5f) :
-                                                                Instance.map.map[x][y].TileType.Equals(TileType.ClickStart) ? new Color(1, 0.9f, 0, .5f) :
-                                                                Instance.map.map[x][y].TileType.Equals(TileType.ClickEnd) ? new Color(1, 0, 0.8f, .5f) :
-                                                                 new Color(.9f, .9f, .9f, .5f));
+                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.Instance.map.map[x][y].color);
 
-
-                    Handles.Label(new Vector3(x, .25f, y), Instance.map.map[x][y].Cost.ToString());
-
+                    Handles.Label(new Vector3(x, .25f, y), MapManager.Instance.map.map[x][y].tileType.ToString());
                 }
             }
         }
 
-
-
         DebugUtils.DrawTile(tileSelect.position, new Color(.2f, .2f, .5f, .5f));
-    }
-
-    public static TileData GetTile(Vector2Int position)
-    {
-        if (position.x >= 0 && position.x < GetSize() && position.y >= 0 && position.y < GetSize())
-            return Instance.map.map[position.x][position.y];
-
-        return null;
-    }
-
-    public static int GetSize()
-    {
-        return Instance.map.size;
-    }
-
-    public static Map GetMap()
-    {
-        return Instance.map;
     }
 }
