@@ -13,9 +13,10 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
     private bool initialized = false;
     bool[,] areaBuffer;
 
+    int n = 0;
     public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
     {
-        return property.isExpanded ? 50 + property.FindPropertyRelative("size").intValue * 31 : 16;
+        return property.isExpanded ? 70 + property.FindPropertyRelative("size").intValue * 31 : 16;
     }
 
     private void Init(SerializedProperty property)
@@ -42,6 +43,9 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
     public override void OnGUI (Rect position, SerializedProperty property, GUIContent label)
     {
         position.height = 16;
+        //EditorGUI.LabelField(position, label);
+
+        label = EditorGUI.BeginProperty(position, label, property);
         property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label); 
         if (property.isExpanded)
         {
@@ -58,44 +62,36 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
             Rect rectAdd = new Rect(position.min + new Vector2(0, 20), intSize);
             Rect rectDelete = new Rect(position.min + new Vector2(40, 20), intSize);
 
-
+            //Green color
+            Color greenColor = new Color(0.5703646f, 1f, 0.3632075f);
+            GUI.color = greenColor;
+            
+            //Button + to increment size
             if (GUI.Button(rectAdd, "+") && sizeProperty.intValue < 19)
             {
-
-                
                 int size = property.FindPropertyRelative("size").intValue;
                 List<Vector2Int> area = CustomEditorUtils.PropertyToVector2Int(property);
-
+                 
                 sizeProperty.intValue++;
-                /*
-                for (int xx = 0; xx < size; xx++)
-                {
-                    for (int yy = 0; yy < size; yy++)
-                    {
-                        if (area.Contains(new Vector2Int(xx, yy)))
-                        {
-                            areaBuffer[xx + 1, yy + 1 ] = true;
-                        }
-                    }
-                }
-                */
-                
-
             }
 
+            //Red color
+            GUI.color = new Color(0.8773585f, 0.1f, 0.2184366f);
+
+            //Button + to decrement size
             if (GUI.Button(rectDelete, "-") && sizeProperty.intValue > 3)
             {
-                sizeProperty.intValue -= 2;
-                areaBuffer = new bool[20, 20];
-            }
+                List<Vector2Int> area = CustomEditorUtils.PropertyToVector2Int(property);
+                area.Clear();
 
+                sizeProperty.intValue -= 2;
+                areaBuffer = new bool[20, 20];   
+            }
 
             if (sizeProperty.intValue % 2 == 0)
             {
                 sizeProperty.intValue++;
             }
-
-            //EditorGUI.PropertyField(rectL, sizeProperty);
 
             int x = property.FindPropertyRelative("size").intValue;
             int y = x;
@@ -104,7 +100,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
             float positionAnchored = position.xMax - (x + 10) * 45 + 200;
             if (positionAnchored < position.xMax) positionAnchored = position.xMin;
 
-            Vector2 start = new Vector2(positionAnchored, position.yMin + 50f);
+            Vector2 start = new Vector2(positionAnchored, position.yMin + 70f);
 
             //Draw global square with all value.
             Vector2 cellSize = new Vector2(31, 31);
@@ -112,7 +108,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
 
             start += Vector2.one;
 
-            int n = 0;
+            
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < x; j++)
@@ -123,8 +119,6 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
                     Vector2 centerPos = new Vector2(cellSize.x * Mathf.Round(x / 2), cellSize.y * Mathf.Round(x / 2));
                     Rect rectPos = new Rect(start + offset, intSize);
                     Rect centerRect = new Rect(start + centerPos, intSize);
-
-                    
 
                     GUI.color = Color.white;
 
@@ -148,29 +142,18 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
                     }
                     else
                     {
-                        EditorGUI.DrawRect(rectPos, areaBuffer[i, j] ? Color.green : new Color(0.8f, 0.8f, 0.8f));    
+                        EditorGUI.DrawRect(rectPos, areaBuffer[i, j] ? greenColor : new Color(0.8f, 0.8f, 0.8f));    
                     }
 
-                    if (centerRect.Contains(Event.current.mousePosition))
+                    if (!centerRect.Contains(Event.current.mousePosition))
                     {
-
+                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? greenColor : new Color(0.6f, 0.6f, 0.6f));
                     }
-                    else
-                    {
-                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? Color.green : new Color(0.6f, 0.6f, 0.6f));
-                    }
-
-                    
 
                     n++;
                 }
             }
         }
-		
-
-
-
         CustomEditorUtils.RepaintInspector(property.serializedObject);
-        //EditorGUI.EndProperty ();
 	}
 }
