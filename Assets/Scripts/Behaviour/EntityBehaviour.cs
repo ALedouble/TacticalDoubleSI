@@ -28,6 +28,8 @@ public class EntityBehaviour : MonoBehaviour
 
     List<Vector2Int> tiles;
 
+    
+
     private void Start()
     {
         GetTileForCast(data.abilities[0].castArea);   
@@ -108,6 +110,8 @@ public class EntityBehaviour : MonoBehaviour
             if (SelectionUtils.MapRaycast().position == tiles[i])
             {
                 GetTileForEffect(data.abilities[0].effectArea);
+                Debug.Log(tiles[i] - currentTile.position);
+                RoundVector(tiles[i] - currentTile.position);
             }
         }
         
@@ -124,6 +128,7 @@ public class EntityBehaviour : MonoBehaviour
         for(int i = 0; i < tiles.Count; i++)
         {
            TileData tile = MapManager.GetTile(tiles[i] + currentTile.position);
+            Debug.Log(tiles[i]);
             if (tile != null)
             {
                 tile.color = Color.blue;
@@ -134,19 +139,28 @@ public class EntityBehaviour : MonoBehaviour
 
     public List<Vector2Int> GetTileForEffect(TileArea area)
     {
-        List<Vector2Int> newtiles = area.RelativeArea();
+        List<Vector2Int> newTiles = area.RelativeArea();
         List<Vector2Int> tileNoRelative = area.area;
 
-        for (int i = 0; i < newtiles.Count; i++)
+        for (int i = 0; i < newTiles.Count; i++)
         {
-            TileData tile = MapManager.GetTile(newtiles[i] + currentTile.position);
-            Debug.Log(tileNoRelative[i]);
-            Debug.Log(newtiles[i]);
+            TileData tile = MapManager.GetTile(newTiles[i] + currentTile.position);
+            tile.position *= -2;
             if (tile != null)
             {
                 tile.color = Color.red;
             }
         }
-        return tiles;
+        return newTiles;
+    }
+
+    public Vector2 RoundVector(Vector2 vectorToRound)
+    {
+        Vector2 roundedVector = Vector2.zero;
+
+        if(vectorToRound.x > currentTile.position.x)
+        {
+            
+        }
     }
 }
