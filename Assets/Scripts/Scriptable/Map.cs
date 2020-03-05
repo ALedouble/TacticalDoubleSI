@@ -26,8 +26,6 @@ public class Map : ScriptableObject
     {
         if (size == map.Count) return;
 
-        Debug.Log("Initializing map");
-
         map = new List<TileData>();
 
         for (int x = 0; x < size; x++)

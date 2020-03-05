@@ -11,12 +11,6 @@ public class MovementEffect : AbilityEffect
     [Tooltip("Si oui, ma ligne de vue sera bloqué")]
     public bool blockMyself;
 
-    [Tooltip("Zone ou la capcité pourra être lancé, à définir par sélection des tiles (gris foncé = notre position)")]
-    public TileArea castArea;
-
-    [Tooltip("Zone d'effet de la capacité, à définir par sélection des tiles (gris foncé = notre position)")]
-    public TileArea effectArea;
-
     [Tooltip("SFX quand l'attaque touche")]
     public AudioSource sfxHit;
 

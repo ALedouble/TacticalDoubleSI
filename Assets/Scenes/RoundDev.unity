@@ -519,6 +519,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
+  currentTile:
+    entities: []
+    position: {x: 0, y: 0}
+    tileType: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1887648245
 GameObject:
   m_ObjectHideFlags: 0

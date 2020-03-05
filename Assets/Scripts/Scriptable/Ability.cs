@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AnimationType{ Jump, Thrust, Movement, };
+
+
 [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability", order = 1)]
 /// <summary>
 /// Holds all of the data regarding an Ability
 /// </summary>
 public class Ability : ScriptableObject
 {
+    public AnimationType animationType;
+
     [Tooltip("Le nom de la capacité")]
     public string displayName;
 

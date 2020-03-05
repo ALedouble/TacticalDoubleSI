@@ -35,8 +35,10 @@ public class MapEditorWindow : EditorWindow
 
     private void OnGUI()
     {
+        EditorGUILayout.Space();
+
         EditorGUI.BeginChangeCheck();
-        map = EditorGUILayout.ObjectField(map, typeof(Map), false) as Map;
+        map = EditorGUILayout.ObjectField("Map",map, typeof(Map), false) as Map;
         if (EditorGUI.EndChangeCheck())
         {
             if (map != null)
@@ -49,19 +51,18 @@ public class MapEditorWindow : EditorWindow
         if (map == null) return;
 
         EditorGUI.BeginChangeCheck();
-        map.size = EditorGUILayout.IntField(map.size);
+        map.size = EditorGUILayout.IntField("Map Size", map.size);
+        if (map.size > 100) map.size = 100;
         if (EditorGUI.EndChangeCheck())
         {
             map.Init(); 
             EditorUtility.SetDirty(map);
         }
 
-        EditorGUILayout.LabelField(map.size.ToString());
-        EditorGUILayout.LabelField(map.map.Count.ToString());
 
-        selectedTileType = GUILayout.Toolbar(selectedTileType, tileTypeDisplayNames.ToArray(), GUILayout.MinHeight(35));
+        EditorGUILayout.Space(20);
+
     }
-
 
     void OnScene(SceneView scene)
     {
@@ -71,16 +72,39 @@ public class MapEditorWindow : EditorWindow
 
         Event currentEvent = Event.current;
 
+
         PlaceTile(currentEvent, controlID);
 
         DrawDebugMap();
-         
+
+        SceneToolbar();
+
         SceneView.RepaintAll();
+    }
+
+    void SceneToolbar()
+    {
+
+        Handles.BeginGUI();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space(20);
+        EditorGUILayout.LabelField("Tile brush", EditorStyles.whiteBoldLabel);
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space(20);
+        selectedTileType = GUILayout.Toolbar(selectedTileType, tileTypeDisplayNames.ToArray(), GUILayout.MinHeight(35));
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+
+        Handles.EndGUI();
+
     }
 
     void PlaceTile(Event e, int controlID)
     {
-        if (e.type == EventType.MouseDown && e.button == 0 && e.modifiers != EventModifiers.Control && e.modifiers != EventModifiers.Alt)
+        if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0 && e.modifiers != EventModifiers.Control && e.modifiers != EventModifiers.Alt)
         {
             TileData hoveredTile = SelectionUtils.MapRaycastEditor(map, e).tile;
 
@@ -125,20 +149,20 @@ public class MapEditorWindow : EditorWindow
          
         Event currentEvent = Event.current;
 
-        for (int x = 0; x < map.map.Count; x++)
+        for (int x = 0; x < map.size; x++)
         {
-            for (int y = 0; y < map.map.Count; y++)
+            for (int y = 0; y < map.size; y++)
             {
-                DebugUtils.DrawTileEditor(new Vector2Int(x, y), map.GetTile(new Vector2Int(x,y)).TypeOfTyle == TileType.Normal ? normal :
-                    map.GetTile(new Vector2Int(x, y)).TypeOfTyle == TileType.Solid ? solid :
-                    map.GetTile(new Vector2Int(x, y)).TypeOfTyle == TileType.Fast ? fast : slow);
+                DebugUtils.DrawTileEditor(new Vector2Int(x, y), map.GetTile(new Vector2Int(x,y)).TileType == TileType.Normal ? normal :
+                    map.GetTile(new Vector2Int(x, y)).TileType == TileType.Solid ? solid :
+                    map.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
 
                 Vector2Int mousePosOnMap = SelectionUtils.MapRaycastEditor(map, currentEvent).position;
 
                 if (mousePosOnMap == new Vector2Int(x,y)) DebugUtils.DrawTileEditor(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
             }
         }
-
+         
     }
 
     private void OnDisable()
