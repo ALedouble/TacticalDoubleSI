@@ -12,8 +12,8 @@ public class PlayerBrain : Brain
 
 
 
-        //SelectionManager.Instance.OnClick += OnMovement;
-	SelectionManager.Instance.OnClick += OnUseAbility;
+        SelectionManager.Instance.OnClick += OnMovement;
+	    //SelectionManager.Instance.OnClick += OnUseAbility;
     }
 
     void OnMovement(MapRaycastHit hit)

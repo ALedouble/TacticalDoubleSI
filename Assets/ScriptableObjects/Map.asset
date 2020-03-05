@@ -12,4 +12,405 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897e9af87297f294ab5fd2b471acfb31, type: 3}
   m_Name: Map
   m_EditorClassIdentifier: 
-  size: 7
+  map:
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
+    position: {x: 0, y: 0}
+    tileType: 2
+    color: {r: 0, g: 0, b: 0, a: 0}
+  size: 10
