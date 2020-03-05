@@ -63,7 +63,8 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
             Rect rectDelete = new Rect(position.min + new Vector2(40, 20), intSize);
 
             //Green color
-            Color greenColor = new Color(0.5703646f, 1f, 0.3632075f);
+            Color greenColor = new Color(0.0803646f, 0.75f, 0.1932075f);
+            Color blueColor = new Color(0.5f, 0.5f, 0.95f);
             GUI.color = greenColor;
             
             //Button + to increment size
@@ -124,7 +125,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
 
                     if (rectPos.Contains(Event.current.mousePosition))
                     {
-                        EditorGUI.DrawRect(rectPos, Color.blue);
+                        EditorGUI.DrawRect(rectPos, blueColor);
 
                         if (Event.current.button == 0 && Event.current.type == EventType.MouseDown)
                         {
@@ -147,7 +148,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
 
                     if (!centerRect.Contains(Event.current.mousePosition))
                     {
-                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? new Color(0.1703646f, 1f, 0.3632075f) : new Color(0.6f, 0.6f, 0.6f));
+                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? new Color(0.0803646f, 0.75f, 0.1932075f) : new Color(0.6f, 0.6f, 0.6f));
                     }
 
                     n++;
