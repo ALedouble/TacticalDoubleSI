@@ -22,4 +22,29 @@ public class Map : ScriptableObject
 
     public int size;
 
+    public void Init()
+    {
+        if (size == map.Count) return;
+
+        Debug.Log("Initializing map");
+
+        map = new List<List<TileData>>();
+
+        for (int x = 0; x < size; x++)
+        {
+            map.Add(new List<TileData>());
+            for (int y = 0; y < size; y++)
+            {
+                map[x].Add(new TileData(TileType.Normal));
+            }
+        }
+    }
+
+    public TileData GetTile(Vector2Int position)
+    {
+        if (position.x >= 0 && position.x < size && position.y >= 0 && position.y < size)
+            return map[position.x][position.y];
+
+        return null;
+    }
 }

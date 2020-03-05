@@ -31,4 +31,10 @@ public class Ability : ScriptableObject
 
     [Tooltip("Les effets que la capacité va appeller")]
     public List<AbilityEffect> numberOfEffects;
+
+    [Tooltip("Zone ou la capcité pourra être lancé, à définir par sélection des tiles (gris foncé = notre position)")]
+    public TileArea castArea;
+
+    [Tooltip("Zone d'effet de la capacité, à définir par sélection des tiles (gris foncé = notre position)")]
+    public TileArea effectArea;
 }
