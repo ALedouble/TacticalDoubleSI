@@ -25,7 +25,7 @@ public class PlayerBrain : Brain
         EntityBehaviour selectedEntity = SelectionManager.Instance.selectedEntity;
 
         // TODO : Get entity position properly
-        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)selectedEntity.transform.position.x, (int)selectedEntity.transform.position.z), MapManager.GetMap().map, hit.position, 999);
+        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)selectedEntity.transform.position.x, (int)selectedEntity.transform.position.z), hit.position, 999);
 
         Sequence moveSequence = selectedEntity.MoveTo(reachableTile);
 
