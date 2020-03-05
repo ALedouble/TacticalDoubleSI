@@ -12,7 +12,8 @@ public class PlayerBrain : Brain
 
 
 
-        SelectionManager.Instance.OnClick += OnMovement;
+       // SelectionManager.Instance.OnClick += OnMovement;
+        SelectionManager.Instance.OnClick += OnUseAbility;
 
     }
 
@@ -33,5 +34,23 @@ public class PlayerBrain : Brain
         {
             SelectionManager.Instance.OnClick += OnMovement;
         });
+    }
+
+    void OnUseAbility(MapRaycastHit hit)
+    {
+      /*  Debug.Log("OnUseAbility");
+        if (hit.tile == null) return;
+
+        SelectionManager.Instance.OnClick -= OnUseAbility;
+
+        EntityBehaviour selectedEntity = SelectionManager.Instance.selectedEntity;
+
+        //Sequence attackSequence = selectedEntity.UseAbility();
+
+        attackSequence.OnComplete(() =>
+        {
+            SelectionManager.Instance.OnClick += OnUseAbility;
+        });
+        */
     }
 }
