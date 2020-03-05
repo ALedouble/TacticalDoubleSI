@@ -1,30 +1,33 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /// <summary>
 /// Handles entity and navigation data
 /// </summary>
 
-public enum TileType { Normal, Slow, Fast, Solid, ClickStart, ClickEnd }
+public enum TileType { Solid = 0, Fast = 1, Normal = 2, Slow = 3 }
 
 [System.Serializable]
 public class TileData
 {
-    TileType typeOfTile;
-    int cost;
-    Vector2Int position;
-    
-    public TileData(TileType type, int cost)
+    public List<EntityBehaviour> entities;
+    public Vector2Int position;
+    public TileType tileType;
+
+    // ********* Debug **********
+    public Color color;
+
+    public Vector2Int Position { get => position; set => position = value; }
+
+
+    public TileData(TileType type)
     {
-        this.typeOfTile = type;
-        this.cost = cost;
+        this.tileType = type;
     }
 
-    public TileData(TileType type, int cost, Vector2Int position)
+    public TileData(TileType type, Vector2Int position)
     {
-        this.typeOfTile = type;
-        this.cost = cost;
+        this.tileType = type;
         this.Position = position;
     }
 
@@ -33,32 +36,20 @@ public class TileData
         get
         {
             // TODO : Return a bool that is a compound of multiple parameters, such as if one of the entities on this tile is solid or if the tile is marked as solid
-            if (this.typeOfTile != TileType.Solid) return true;
+            if (this.tileType != TileType.Solid) return true;
             return false;
         }
     }
-    public int Cost
-    {
-        get
-        {
-            // TODO : Return the cost of the tile
-            return this.cost;
-        }
-    }
-    public TileType TileType
-    {
-        get
-        {
-            return this.typeOfTile;
-        }
 
+    public TileType TypeOfTyle
+    {
+        get
+        {
+            return tileType;
+        }
         set
         {
-            this.typeOfTile = value;
+            tileType = value;
         }
     }
-
-    public Vector2Int Position { get => position; set => position = value; }
-
-    public List<EntityBehaviour> entities;
 }
