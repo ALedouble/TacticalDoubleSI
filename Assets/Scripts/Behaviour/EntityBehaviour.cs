@@ -58,4 +58,12 @@ public class EntityBehaviour : MonoBehaviour
 
         return moveSequence;
     }
+
+    public Sequence UseAbility()
+    {
+        Sequence abilitySequence = DOTween.Sequence();
+        
+
+        return abilitySequence;
+    }
 }
