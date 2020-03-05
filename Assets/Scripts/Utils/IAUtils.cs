@@ -6,48 +6,54 @@ enum NavigationQueryType { Area, Path };
 
 public static class IAUtils
 {
+    //#################################################################################################################################################################################################
+    //#################################################################################################################################################################################################
+    //############################################################################################ PUBLIC #############################################################################################
+    //#################################################################################################################################################################################################
+    //#################################################################################################################################################################################################
+
     /*
      * Trouve l'ensemble des positions atteignables depuis "startPosition"
      */
     public static List<ReachableTile> FindAllReachablePlace(Vector2Int startPosition, List<List<TileData>> map, int range, bool ignoreWalkable = false, bool ignoreWeightMove = false)
     {
-        List<ReachableTile> reachablePlaces = new List<ReachableTile>() { new ReachableTile(startPosition, new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
+        List<ReachableTile> recheableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
 
-        LookAround(NavigationQueryType.Area, ref reachablePlaces, reachablePlaces[0], Vector2Int.zero, map, range, ignoreWalkable, ignoreWeightMove);
+        LookAround(NavigationQueryType.Area, ref recheableTiles, recheableTiles[0], Vector2Int.zero, map, range, ignoreWalkable, ignoreWeightMove);
 
-        reachablePlaces.RemoveAt(0);
-        return reachablePlaces;
+        recheableTiles.RemoveAt(0);
+        return recheableTiles;
     }
 
     /*
-     * Trouve le plus court chemin depuis "startPosition" a "objectif", calculer par la fonction de l'IA
+     * Trouve le plus court chemin depuis "startPosition" a "target", calculer par la fonction de l'IA
      */
-    public static ReachableTile FindShortestPath(Vector2Int startPosition, List<List<TileData>> map, Vector2Int objectif, int range, bool fullPath = false)
+    public static ReachableTile FindShortestPath(Vector2Int startPosition, List<List<TileData>> map, Vector2Int target, int range, bool fullPath = false)
     {
-        List<ReachableTile> reachablePlaces = new List<ReachableTile>() { new ReachableTile(startPosition, new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
+        List<ReachableTile> recheableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { map[startPosition.x][startPosition.y] }, 0) };
         List<Vector2Int> deletedPlaces = new List<Vector2Int>();
 
-        while (reachablePlaces.Count > 0 && !LookAround(NavigationQueryType.Path, ref reachablePlaces, reachablePlaces[0], objectif, map))
+        while (recheableTiles.Count > 0 && !LookAround(NavigationQueryType.Path, ref recheableTiles, recheableTiles[0], target, map))
         {
-            deletedPlaces.Add(reachablePlaces[0].coordPosition);
-            reachablePlaces.RemoveAt(0);
-            reachablePlaces.Sort();
+            deletedPlaces.Add(recheableTiles[0].GetCoordPosition());
+            recheableTiles.RemoveAt(0);
+            recheableTiles.Sort();
 
-            for (int i = 0; i < reachablePlaces.Count; i++)
+            for (int i = 0; i < recheableTiles.Count; i++)
             {
-                if (deletedPlaces.Contains(reachablePlaces[i].coordPosition))
+                if (deletedPlaces.Contains(recheableTiles[i].GetCoordPosition()))
                 {
-                    reachablePlaces.RemoveAt(i--);
+                    recheableTiles.RemoveAt(i--);
                 }
             }
         }
 
-        if (reachablePlaces.Count <= 0)
+        if (recheableTiles.Count <= 0)
         {
             return null;
         }
 
-        ReachableTile shortest = reachablePlaces[reachablePlaces.Count - 1];
+        ReachableTile shortest = recheableTiles[recheableTiles.Count - 1];
         shortest.path.RemoveAt(0);
 
         if (!fullPath)
@@ -58,21 +64,49 @@ public static class IAUtils
         {
             return shortest;
         }
-        
+    }
+
+    /*
+     * Regarde dans "recheableTiles" quels sont les Tiles desquelles on peut lancer l'attaque "attackArea" et toucher "target".
+     * 
+     * return l'ensemble de ces Tiles.
+     */
+    public static List<ReachableTile> ValidCastFromTile(TileArea attackArea, List<ReachableTile> recheableTiles, Vector2Int target)
+    {
+        List<ReachableTile> canCastAndHitTarget = new List<ReachableTile>();
+        List<Vector2Int> attackRange = attackArea.RelativeArea();
+
+        for (int i = 0; i < recheableTiles.Count; i++)
+        {
+            for (int j = 0; j < attackRange.Count; j++)
+            {
+                if ((recheableTiles[i].GetCoordPosition() + attackRange[j]).Equals(target))
+                {
+                    canCastAndHitTarget.Add(recheableTiles[i]);
+                    break;
+                }
+            }
+        }
+
+        return canCastAndHitTarget;
     }
 
 
 
-
+    //#################################################################################################################################################################################################
+    //#################################################################################################################################################################################################
+    //############################################################################################ PRIVATE ############################################################################################
+    //#################################################################################################################################################################################################
+    //#################################################################################################################################################################################################
 
     /*
      * Regarde si les 4 Place entourant "position" existe
      * Si oui, on regarde si la Place est atteignable
      */
-    private static bool LookAround(NavigationQueryType navigationType, ref List<ReachableTile> reachablePlaces, ReachableTile precedentPlace,
-                            Vector2Int objectif, List<List<TileData>> map, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
+    private static bool LookAround(NavigationQueryType navigationType, ref List<ReachableTile> recheableTiles, ReachableTile precedentPlace,
+                            Vector2Int target, List<List<TileData>> map, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
     {
-        Vector2Int position = precedentPlace.coordPosition;
+        Vector2Int position = precedentPlace.GetCoordPosition();
 
         TileData lookingTileData;
         Vector2Int lookingPosition;
@@ -82,8 +116,8 @@ public static class IAUtils
             lookingTileData = map[position.x - 1][position.y];
             lookingPosition = new Vector2Int(position.x - 1, position.y);
 
-            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif, map, range, ignoreWalkable, ignoreWeightMove);
-            else if (IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif)) return true;
+            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target, map, range, ignoreWalkable, ignoreWeightMove);
+            else if (IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target)) return true;
 
         }
 
@@ -92,8 +126,8 @@ public static class IAUtils
             lookingTileData = map[position.x][position.y + 1];
             lookingPosition = new Vector2Int(position.x, position.y + 1);
 
-            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif, map, range, ignoreWalkable, ignoreWeightMove);
-            else if (IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif)) return true;
+            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target, map, range, ignoreWalkable, ignoreWeightMove);
+            else if (IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target)) return true;
 
         }
 
@@ -102,8 +136,8 @@ public static class IAUtils
             lookingTileData = map[position.x + 1][position.y];
             lookingPosition = new Vector2Int(position.x + 1, position.y);
 
-            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif, map, range, ignoreWalkable, ignoreWeightMove);
-            else if (IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif)) return true;
+            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target, map, range, ignoreWalkable, ignoreWeightMove);
+            else if (IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target)) return true;
 
         }
 
@@ -112,8 +146,8 @@ public static class IAUtils
             lookingTileData = map[position.x][position.y - 1];
             lookingPosition = new Vector2Int(position.x, position.y - 1);
 
-            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif, map, range, ignoreWalkable, ignoreWeightMove);
-            else if (IsMovementPossible(navigationType, ref reachablePlaces, precedentPlace, lookingTileData, lookingPosition, objectif)) return true;
+            if (navigationType.Equals(NavigationQueryType.Area)) IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target, map, range, ignoreWalkable, ignoreWeightMove);
+            else if (IsMovementPossible(navigationType, ref recheableTiles, precedentPlace, lookingTileData, lookingPosition, target)) return true;
 
         }
 
@@ -128,30 +162,30 @@ public static class IAUtils
      * 
      * Si toutes les verifications sont passer, alors on regarde pour ajouter la Place
      */
-    private static bool IsMovementPossible(NavigationQueryType navigationType, ref List<ReachableTile> reachablePlaces, ReachableTile precedentPlace, TileData lookingTileData, Vector2Int lookingPosition,
-                                     Vector2Int objectif, List<List<TileData>> map = null, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
+    private static bool IsMovementPossible(NavigationQueryType navigationType, ref List<ReachableTile> recheableTiles, ReachableTile precedentPlace, TileData lookingTileData, Vector2Int lookingPosition,
+                                     Vector2Int target, List<List<TileData>> map = null, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
     {
         if (ignoreWalkable || lookingTileData.IsWalkable) // Si l'on peut marcher sur la prochaine TileData OU si cela ne nous interesse pas
         {
-            ReachableTile currentPlaceAlreadyFind = reachablePlaces.Where(elem => elem.coordPosition.Equals(lookingPosition)).FirstOrDefault();
+            ReachableTile currentPlaceAlreadyFind = recheableTiles.Where(elem => elem.GetCoordPosition().Equals(lookingPosition)).FirstOrDefault();
 
             if (navigationType.Equals(NavigationQueryType.Area))
             {
                 int cout;
                 if (ignoreWeightMove) cout = precedentPlace.cost + 1;
-                else cout = precedentPlace.cost + lookingTileData.Cost;
+                else cout = precedentPlace.cost + (int)lookingTileData.tileType;
 
                 if (cout <= range) // S'il nous reste assez de points de deplacement pour aller sur lookingTileData
                 {
-                    ReachableTile currentPlace = new ReachableTile(lookingPosition, new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
-                    AddPlaceInList(navigationType, ref reachablePlaces, currentPlaceAlreadyFind, currentPlace, objectif, map, range, ignoreWalkable, ignoreWeightMove);
+                    ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
+                    AddPlaceInList(navigationType, ref recheableTiles, currentPlaceAlreadyFind, currentPlace, target, map, range, ignoreWalkable, ignoreWeightMove);
                 }
             }
 
             else
             {
-                ReachableTile currentPlace = new ReachableTile(lookingPosition, new List<TileData>(precedentPlace.path) { lookingTileData }, precedentPlace.cost + lookingTileData.Cost);
-                return AddPlaceInList(navigationType, ref reachablePlaces, currentPlaceAlreadyFind, currentPlace, objectif);
+                ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, precedentPlace.cost + (int)lookingTileData.tileType);
+                return AddPlaceInList(navigationType, ref recheableTiles, currentPlaceAlreadyFind, currentPlace, target);
             }
         }
 
@@ -161,25 +195,25 @@ public static class IAUtils
     /*
      * Ajoute la nouvelle Place atteignable a la List ou modifie la preexistante
      */
-    private static bool AddPlaceInList(NavigationQueryType navigationType, ref List<ReachableTile> reachablePlaces, ReachableTile currentPlaceAlreadyFind, ReachableTile currentPlace,
-                                Vector2Int objectif, List<List<TileData>> map = null, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
+    private static bool AddPlaceInList(NavigationQueryType navigationType, ref List<ReachableTile> recheableTiles, ReachableTile currentPlaceAlreadyFind, ReachableTile currentPlace,
+                                Vector2Int target, List<List<TileData>> map = null, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
     {
         if (currentPlaceAlreadyFind != null) // Si le TileData est deja dans la liste des points atteignable
         {
             if (currentPlace.IsBetterThat(currentPlaceAlreadyFind)) // Si le chemin actuel est meilleur que le precedent
             {
-                reachablePlaces.Remove(currentPlaceAlreadyFind);
-                reachablePlaces.Add(currentPlace);
+                recheableTiles.Remove(currentPlaceAlreadyFind);
+                recheableTiles.Add(currentPlace);
 
-                if (navigationType.Equals(NavigationQueryType.Area)) LookAround(navigationType, ref reachablePlaces, currentPlace, objectif, map, range, ignoreWalkable, ignoreWeightMove);
+                if (navigationType.Equals(NavigationQueryType.Area)) LookAround(navigationType, ref recheableTiles, currentPlace, target, map, range, ignoreWalkable, ignoreWeightMove);
             }
         }
 
         else // Si le TileData na pas encore ete atteint
         {
-            reachablePlaces.Add(currentPlace);
-            if (navigationType.Equals(NavigationQueryType.Area)) LookAround(navigationType, ref reachablePlaces, currentPlace, objectif, map, range, ignoreWalkable, ignoreWeightMove);
-            else if (currentPlace.coordPosition.Equals(objectif)) return true;
+            recheableTiles.Add(currentPlace);
+            if (navigationType.Equals(NavigationQueryType.Area)) LookAround(navigationType, ref recheableTiles, currentPlace, target, map, range, ignoreWalkable, ignoreWeightMove);
+            else if (currentPlace.GetCoordPosition().Equals(target)) return true;
         }
 
         return false;
@@ -197,7 +231,7 @@ public static class IAUtils
         for (int i = 0; i < path.Count; i++)
         {
             lenght++;
-            cost += path[i].Cost;
+            cost += (int)path[i].tileType;
             if (cost > range)
                 break;
         }
@@ -205,16 +239,5 @@ public static class IAUtils
         shortest.path = path.Take(lenght).ToList();
 
         return shortest;
-    }
-
-
-
-
-
-    private static Vector2Int MaFctIa()
-    {
-        // TO - DO
-
-        return Vector2Int.zero;
     }
 }

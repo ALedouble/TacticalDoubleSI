@@ -12,9 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: Ability
   m_EditorClassIdentifier: 
+  displayName: 
+  description: 
+  cost: 0
+  damage: 0
+  damageMultiplicator: 0
+  displaySprite: {fileID: 0}
+  vfxCast: {fileID: 0}
+  vfxHit: {fileID: 0}
+  sfxCast: {fileID: 0}
+  sfxHit: {fileID: 0}
+  cooldown: 0
   castArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}
+    - {x: 1, y: 2}
   effectArea:
     size: 3
     area: []

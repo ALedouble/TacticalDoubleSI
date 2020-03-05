@@ -19,7 +19,7 @@ public class DebugEntityMovement : MonoBehaviour
             MapManager.GetMap().map.Add(new List<TileData>());
             for (int y = 0; y < MapManager.GetMap().size; y++)
             {
-                MapManager.GetMap().map[x].Add(new TileData(TileType.Normal, 1, new Vector2Int(x, y)));
+                MapManager.GetMap().map[x].Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
             }
         }
 
