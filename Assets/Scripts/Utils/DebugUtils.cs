@@ -26,9 +26,14 @@ public static class DebugUtils
 #if UNITY_EDITOR
     public static void DrawTileEditor(Vector2Int position, Color color)
     {
+        DrawTileEditor(position, color, 1);
+    }
+
+    public static void DrawTileEditor(Vector2Int position, Color color, float sizeMultiplier)
+    {
         Vector3 pos = new Vector3(position.x, 0, position.y);
 
-        float size = (-debugTileSpacing * .5f) + .5f;
+        float size = ((-debugTileSpacing * .5f) + .5f) * sizeMultiplier;
 
         Vector3[] verts = new Vector3[]
         {

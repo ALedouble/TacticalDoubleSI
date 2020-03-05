@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c81287856b9dfa47bf2cfa8feeee7a6, type: 3}
-  m_Name: Entity_Debug
+  m_Name: Entity_MapEditorTest
   m_EditorClassIdentifier: 
-  displayName: Debug
+  displayName: Editor test
   maxHealth: 0
   abilities:
   - {fileID: 11400000, guid: c43551cf92975534bba80816fc62552a, type: 2}

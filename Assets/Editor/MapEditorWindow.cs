@@ -6,6 +6,7 @@ using System;
 
 public class MapEditorWindow : EditorWindow
 {
+
     [MenuItem("Tools/Map Editor Window")]
     static void Init()
     {
@@ -16,10 +17,30 @@ public class MapEditorWindow : EditorWindow
 
     }
 
+    List<Entity> entities = new List<Entity>();
+    string[] entitiesNames;
+
     private void OnEnable()
     {
         PopulateTileTypeDictionary();
         SceneView.duringSceneGui += OnScene;
+
+        string[] entitiesGUIDs = AssetDatabase.FindAssets("t:Entity");
+
+        entities.Clear();
+        for (int i = 0; i < entitiesGUIDs.Length; i++)
+        {
+            Entity entityBuffer = (AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(entitiesGUIDs[i]), typeof(Entity)) as Entity);
+
+            if (entityBuffer.alignement != Alignement.Player) entities.Add(entityBuffer);
+        }
+
+
+        entitiesNames = new string[entities.Count];
+        for (int i = 0; i < entities.Count; i++)
+        {
+            entitiesNames[i] = entities[i].name;
+        }
     }
 
     public Map map;
@@ -28,10 +49,10 @@ public class MapEditorWindow : EditorWindow
     Dictionary<int, TileType> tileTypeDictionary = new Dictionary<int, TileType>();
     List<string> tileTypeDisplayNames = new List<string>();
 
-    private void OnProjectChange()
-    {
-        
-    }
+    int selectedEntity;
+
+    int brushMode;
+    int selectedEntityBrush;
 
     private void OnGUI()
     {
@@ -59,9 +80,6 @@ public class MapEditorWindow : EditorWindow
             EditorUtility.SetDirty(map);
         }
 
-
-        EditorGUILayout.Space(20);
-
     }
 
     void OnScene(SceneView scene)
@@ -73,23 +91,49 @@ public class MapEditorWindow : EditorWindow
         Event currentEvent = Event.current;
 
 
-        PlaceTile(currentEvent, controlID);
+        OnClick(currentEvent, controlID);
 
         DrawDebugMap();
 
-        SceneToolbar();
+        if (brushMode == 0) TileToolbar();
+        else EntityToolbar();
+
+        BrushModeToolbar();
 
         SceneView.RepaintAll();
     }
 
-    void SceneToolbar()
+    void BrushModeToolbar()
     {
+        if (!focused) return;
+
+        Handles.BeginGUI();
+
+        GUILayout.FlexibleSpace();
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.LabelField("Brush mode", EditorStyles.whiteLargeLabel, GUILayout.MaxWidth(100));
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        brushMode = GUILayout.Toolbar(brushMode, new string[]{"Tile","Entities"}, GUILayout.MinHeight(35));
+        EditorGUILayout.Space(20);
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.Space(40);
+        Handles.EndGUI();
+
+    }
+
+    void TileToolbar()
+    {
+        if (!focused) return;
 
         Handles.BeginGUI();
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.Space(20);
-        EditorGUILayout.LabelField("Tile brush", EditorStyles.whiteBoldLabel);
+        EditorGUILayout.LabelField("Brush selection", EditorStyles.whiteLargeLabel);
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
@@ -102,27 +146,83 @@ public class MapEditorWindow : EditorWindow
 
     }
 
-    void PlaceTile(Event e, int controlID)
+    void EntityToolbar()
     {
-        if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0 && e.modifiers != EventModifiers.Control && e.modifiers != EventModifiers.Alt)
+        if (!focused) return;
+
+        Handles.BeginGUI();
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space(20);
+        EditorGUILayout.LabelField("Brush selection", EditorStyles.whiteLargeLabel);
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space(20);
+        selectedEntityBrush = GUILayout.Toolbar(selectedEntityBrush, new string[]{"Place","Remove"}, GUILayout.MinHeight(35));
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+
+
+
+        EditorGUILayout.Space(10);
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space(20);
+        selectedEntity = EditorGUILayout.Popup(selectedEntity, entitiesNames);
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
+
+        Handles.EndGUI();
+
+    }
+
+    void OnClick(Event e, int controlID)
+    {
+        if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && e.button == 0 && e.modifiers != EventModifiers.Control && e.modifiers != EventModifiers.Alt && focused)
         {
             TileData hoveredTile = SelectionUtils.MapRaycastEditor(map, e).tile;
 
             if (hoveredTile != null)
             {
-                switch (selectedTileType)
+                switch (brushMode)
                 {
                     case 0:
-                        hoveredTile.tileType = TileType.Normal;
+
+                        // TILE MODE
+
+                        if (selectedTileType < 4) hoveredTile.tileType = tileTypeDictionary[selectedTileType];
+                        else
+                        {
+                            hoveredTile.canPlacePlayerEntity = !hoveredTile.canPlacePlayerEntity;
+                        }
                         break;
                     case 1:
-                        hoveredTile.tileType = TileType.Solid;
-                        break;
-                    case 2:
-                        hoveredTile.tileType = TileType.Fast;
-                        break;
-                    case 3:
-                        hoveredTile.tileType = TileType.Slow;
+
+                        // ENTITY MODE
+
+                        if (e.type != EventType.MouseDown) break;
+
+                        switch (selectedEntityBrush)
+                        {
+                            case 0:
+                                map.entityStartPositions.Add(new EntityPosition(entities[selectedEntity], hoveredTile.position));
+
+                                break;
+                            case 1:
+
+                                for (int i = 0; i < map.entityStartPositions.Count; i++)
+                                {
+                                    if (map.entityStartPositions[i].position != hoveredTile.position) continue;
+
+                                    map.entityStartPositions.RemoveAt(i);
+                                    break;
+                                }
+
+                                break;
+                            default:
+                                break;
+                        }
+
                         break;
                     default:
                         break;
@@ -138,10 +238,11 @@ public class MapEditorWindow : EditorWindow
         }
     }
 
-    private Color normal = new Color(.9f, .9f, .9f, .5f);
+    private Color normal = new Color(.9f, .9f, .9f, .1f);
     private Color solid = new Color(.1f, .1f, .1f, .5f);
-    private Color fast = new Color(1, .8f, 0.8f, .5f);
-    private Color slow = new Color(.5f, 0f, .5f, .5f);
+    private Color fast = new Color(1, .5f, 0.8f, .1f);
+    private Color slow = new Color(.5f, 0f, .5f, .1f);
+    private Color playerPlacement = new Color(.0f, 0f, .8f, .2f);
 
     void DrawDebugMap()
     {
@@ -157,12 +258,39 @@ public class MapEditorWindow : EditorWindow
                     map.GetTile(new Vector2Int(x, y)).TileType == TileType.Solid ? solid :
                     map.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
 
+                // Player placement
+                if (map.GetTile(x, y).canPlacePlayerEntity) DebugUtils.DrawTileEditor(new Vector2Int(x, y), playerPlacement, .5f);
+
+
+                // Mouse tile
                 Vector2Int mousePosOnMap = SelectionUtils.MapRaycastEditor(map, currentEvent).position;
 
-                if (mousePosOnMap == new Vector2Int(x,y)) DebugUtils.DrawTileEditor(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
+                if (mousePosOnMap == new Vector2Int(x, y) && focused)
+                {
+                    DebugUtils.DrawTileEditor(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
+                }
+
             }
         }
-         
+
+
+        for (int x = 0; x < map.size; x++)
+        {
+            for (int y = 0; y < map.size; y++)
+            {
+                // Entities
+                for (int i = 0; i < map.entityStartPositions.Count; i++)
+                {
+                    if (map.entityStartPositions[i].position == new Vector2Int(x, y))
+                    {
+                        GUIStyle newStyle = new GUIStyle(EditorStyles.whiteLargeLabel);
+                        newStyle.alignment = TextAnchor.MiddleCenter;
+                        Handles.Label(new Vector3(map.entityStartPositions[i].position.x, .2f, map.entityStartPositions[i].position.y), map.entityStartPositions[i].entity.displayName,
+                        newStyle);
+                    }
+                }
+            }
+        }
     }
 
     private void OnDisable()
@@ -178,6 +306,18 @@ public class MapEditorWindow : EditorWindow
         }
     }
 
+    bool focused;
+
+    private void OnBecameVisible()
+    {
+        focused = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        focused = false;
+    }
+
     void PopulateTileTypeDictionary()
     {
         tileTypeDictionary.Clear();
@@ -191,5 +331,8 @@ public class MapEditorWindow : EditorWindow
         tileTypeDisplayNames.Add(tileTypeDictionary[2].ToString());
         tileTypeDictionary.Add(3, TileType.Slow);
         tileTypeDisplayNames.Add(tileTypeDictionary[3].ToString());
+
+        tileTypeDisplayNames.Add("PlayerPlacement");
+
     }
 }

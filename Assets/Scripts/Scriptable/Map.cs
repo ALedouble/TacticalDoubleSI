@@ -4,10 +4,17 @@ using UnityEngine;
 /// <summary>
 /// Contains the positions of all entities at the start of the level
 /// </summary>
+[System.Serializable]
 public struct EntityPosition
 {
-    Entity entity;
-    Vector2 position;
+    public Entity entity;
+    public Vector2 position;
+
+    public EntityPosition(Entity entity, Vector2 position)
+    {
+        this.entity = entity;
+        this.position = position;
+    }
 }
 
 /// <summary>
@@ -18,13 +25,13 @@ public class Map : ScriptableObject
 {
     public List<TileData> map = new List<TileData>();
 
-    public List<EntityPosition> entityStartPositions;
+    public List<EntityPosition> entityStartPositions = new List<EntityPosition>();
 
     public int size;
 
     public void Init()
     {
-        if (size == map.Count) return;
+        if (size*size == map.Count) return;
 
         map = new List<TileData>();
 

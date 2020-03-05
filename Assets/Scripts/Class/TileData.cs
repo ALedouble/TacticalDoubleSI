@@ -13,6 +13,7 @@ public class TileData
     public List<EntityBehaviour> entities;
     public Vector2Int position;
     public TileType tileType;
+    public bool canPlacePlayerEntity;
 
     // ********* Debug **********
     public Color color;
