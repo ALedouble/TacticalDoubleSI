@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 
 /// <summary>
@@ -11,7 +12,7 @@ public class EntityBehaviour : MonoBehaviour
 {
     public Entity data;
 
-    TileData currentTile;
+    public TileData currentTile;
 
     int currentHealth;
     public int CurrentHealth { get => currentHealth; }
@@ -54,5 +55,29 @@ public class EntityBehaviour : MonoBehaviour
         RoundManager.Instance.currentMovementSequence = moveSequence;
 
         return moveSequence;
+    }
+
+    public Sequence UseAbility(Ability ability, TileData targetTile)
+    {
+        Sequence abilitySequence = DOTween.Sequence();
+        Ease attackEase = Ease.InBack;
+        Ease returnAttackEase = Ease.InOutExpo;
+
+        abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f)
+            .SetEase(attackEase, 10)
+            .OnComplete(() => 
+            {
+                PlayEffects(ability.numberOfEffects, targetTile);
+            }));
+            
+        abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
+
+        return abilitySequence;
+    }
+
+    public Sequence PlayEffects(List<AbilityEffect> effects, TileData targetTile)
+    {
+        Sequence effectSequence = DOTween.Sequence();
+        return null;
     }
 }
