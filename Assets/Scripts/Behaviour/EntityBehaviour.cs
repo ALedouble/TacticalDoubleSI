@@ -48,7 +48,7 @@ public class EntityBehaviour : MonoBehaviour
             // second half
             moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
         }
-        moveSequence.Append(transform.DOMove(new Vector3(reachableTile.coordPosition.x, 0, reachableTile.coordPosition.y), tileMovementSpeed)
+        moveSequence.Append(transform.DOMove(new Vector3(reachableTile.GetCoordPosition().x, 0, reachableTile.GetCoordPosition().y), tileMovementSpeed)
             .SetEase(movementEase));
 
         // first half of the jump

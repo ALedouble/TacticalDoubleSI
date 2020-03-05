@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class ReachableTile : IComparable
 {
-    public Vector2Int coordPosition { get; }
     public List<TileData> path { get; set;  }
     public int cost { get; }
 
-    public ReachableTile(Vector2Int coordPosition, List<TileData> path, int cout)
+    public ReachableTile(List<TileData> path, int cout)
     {
-        this.coordPosition = coordPosition;
         this.path = path;
         this.cost = cout;
     }
@@ -27,5 +25,10 @@ public class ReachableTile : IComparable
         if (this.cost < tile2.cost) return -1;
         if (this.cost > tile2.cost) return 1;
         return 0;
+    }
+
+    public Vector2Int GetCoordPosition()
+    {
+        return path[path.Count - 1].position;
     }
 }

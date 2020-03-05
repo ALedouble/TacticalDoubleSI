@@ -109,7 +109,7 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.coordPosition).color = area;
+                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
             }
             else
@@ -126,7 +126,7 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.coordPosition).color = area;
+                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
                 end = tileSelect.position;
@@ -137,11 +137,11 @@ public class DebugMapManager : MonoBehaviour
 
                 if (canCast.Count > 0)
                 {
-                    MapManager.GetTile(canCast[0].coordPosition).color = attackBest;
+                    MapManager.GetTile(canCast[0].GetCoordPosition()).color = attackBest;
 
                     for (int i = 1; i < canCast.Count; i++)
                     {
-                        MapManager.GetTile(canCast[i].coordPosition).color = attack;
+                        MapManager.GetTile(canCast[i].GetCoordPosition()).color = attack;
                     }
                 }
                 else
@@ -172,7 +172,7 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.coordPosition).color = area;
+                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
             }
 
@@ -192,7 +192,7 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.coordPosition).color = area;
+                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
                 path = IAUtils.FindShortestPath(start, MapManager.Instance.map.map, tileSelect.position, range, fullPath);
@@ -234,9 +234,9 @@ public class DebugMapManager : MonoBehaviour
             {
                 foreach (ReachableTile tile in tiles)
                 {
-                    if (MapManager.GetTile(tile.coordPosition).color == area)
+                    if (MapManager.GetTile(tile.GetCoordPosition()).color == area)
                     {
-                        MapManager.GetTile(tile.coordPosition).color = normal;
+                        MapManager.GetTile(tile.GetCoordPosition()).color = normal;
                     }
                 }
 
@@ -244,9 +244,9 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    if (MapManager.GetTile(tile.coordPosition).color != target)
+                    if (MapManager.GetTile(tile.GetCoordPosition()).color != target)
                     {
-                        MapManager.GetTile(tile.coordPosition).color = area;
+                        MapManager.GetTile(tile.GetCoordPosition()).color = area;
                     }
                 }
             }
