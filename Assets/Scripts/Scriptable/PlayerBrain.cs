@@ -10,11 +10,8 @@ public class PlayerBrain : Brain
     {
         base.OnTurnStart(entityBehaviour);
 
-
-
-       // SelectionManager.Instance.OnClick += OnMovement;
+      //  SelectionManager.Instance.OnClick += OnMovement;
         SelectionManager.Instance.OnClick += OnUseAbility;
-
     }
 
     void OnMovement(MapRaycastHit hit)
@@ -36,21 +33,21 @@ public class PlayerBrain : Brain
         });
     }
 
-    void OnUseAbility(MapRaycastHit hit)
+    public static void OnUseAbility(MapRaycastHit hit)
     {
-      /*  Debug.Log("OnUseAbility");
+        Debug.Log("OnUseAbility");
         if (hit.tile == null) return;
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
-
+        
         EntityBehaviour selectedEntity = SelectionManager.Instance.selectedEntity;
 
-        //Sequence attackSequence = selectedEntity.UseAbility();
+        Sequence attackSequence = selectedEntity.UseAbility(selectedEntity.data.abilities[0], selectedEntity.currentTile);
 
         attackSequence.OnComplete(() =>
         {
             SelectionManager.Instance.OnClick += OnUseAbility;
         });
-        */
+        
     }
 }

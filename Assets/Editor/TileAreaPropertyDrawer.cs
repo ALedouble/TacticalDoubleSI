@@ -115,7 +115,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
                 for (int j = 0; j < x; j++)
                 {
                     //Cell Drawing
-                    Vector2 offset = new Vector2(cellSize.x * j, cellSize.y * i);
+                    Vector2 offset = new Vector2(cellSize.x * i, cellSize.y * j);
 
                     Vector2 centerPos = new Vector2(cellSize.x * Mathf.Round(x / 2), cellSize.y * Mathf.Round(x / 2));
                     Rect rectPos = new Rect(start + offset, intSize);

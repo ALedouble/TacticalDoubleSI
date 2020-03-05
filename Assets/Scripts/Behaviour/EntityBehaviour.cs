@@ -23,9 +23,11 @@ public class EntityBehaviour : MonoBehaviour
     int currentArmor;
     public int CurrentArmor { get => currentArmor; }
 
+    List<Vector2Int> tiles;
+
     private void Start()
     {
-        
+        GetTileForCast(data.abilities[0].castArea);   
     }
 
     public void OnTurn()
@@ -60,17 +62,37 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         Sequence abilitySequence = DOTween.Sequence();
-        Ease attackEase = Ease.InBack;
-        Ease returnAttackEase = Ease.InOutExpo;
+        if (ability.animationType == AnimationType.Movement)
+        {
+            Ease attackEase = Ease.InBack;
+            Ease returnAttackEase = Ease.InOutExpo;
 
-        abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f)
+            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f)
             .SetEase(attackEase, 10)
-            .OnComplete(() => 
+            .OnComplete(() =>
             {
                 PlayEffects(ability.numberOfEffects, targetTile);
             }));
-            
-        abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
+
+            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
+        }
+
+        if (ability.animationType == AnimationType.Jump)
+        {
+            Ease healEase = Ease.OutQuad;
+            Ease returnHealEase = Ease.InQuad;
+
+            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x , transform.position.y + 0.5f, transform.position.z), .25f)
+            .SetEase(healEase, 2)
+            .OnComplete(() =>
+            {
+                tiles.Clear();
+                PlayEffects(ability.numberOfEffects, targetTile);
+            }));
+
+            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnHealEase, 10));
+        }
+
 
         return abilitySequence;
     }
@@ -78,6 +100,50 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence PlayEffects(List<AbilityEffect> effects, TileData targetTile)
     {
         Sequence effectSequence = DOTween.Sequence();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            if (SelectionUtils.MapRaycast().position == tiles[i])
+            {
+                GetTileForEffect(data.abilities[0].effectArea);
+            }
+        }
+        
+        
+
         return null;
+    }
+
+    public List<Vector2Int> GetTileForCast(TileArea area)
+    {
+       tiles = area.RelativeArea();
+        List<Vector2Int> tileNoRelative = area.area;
+        
+        for(int i = 0; i < tiles.Count; i++)
+        {
+           TileData tile = MapManager.GetTile(tiles[i] + currentTile.position);
+            if (tile != null)
+            {
+                tile.color = Color.blue;
+            }
+        }
+        return tiles;
+    }
+
+    public List<Vector2Int> GetTileForEffect(TileArea area)
+    {
+        List<Vector2Int> newtiles = area.RelativeArea();
+        List<Vector2Int> tileNoRelative = area.area;
+
+        for (int i = 0; i < newtiles.Count; i++)
+        {
+            TileData tile = MapManager.GetTile(newtiles[i] + currentTile.position);
+            Debug.Log(tileNoRelative[i]);
+            Debug.Log(newtiles[i]);
+            if (tile != null)
+            {
+                tile.color = Color.red;
+            }
+        }
+        return tiles;
     }
 }

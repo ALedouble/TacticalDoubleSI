@@ -29,7 +29,7 @@ public class DebugMapVisualizer : MonoBehaviour
             {
                 for (int y = 0; y < MapManager.GetSize(); y++)
                 {
-                    DebugUtils.DrawTile(new Vector2Int(x, y), new Color(.9f, .9f, .9f, .5f));
+                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.GetTile(new Vector2Int(x, y)).color);//new Color(.9f, .9f, .9f, .5f));
 
                 }
             }
