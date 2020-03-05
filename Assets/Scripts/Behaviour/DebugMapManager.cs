@@ -64,22 +64,22 @@ public class DebugMapManager : MonoBehaviour
                 switch (rand.Next(0,4))
                 {
                     case 0:
-                        MapManager.GetMap().Add(new TileData(TileType.Solid));
+                        MapManager.GetMap().Add(new TileData(TileType.Solid, x, y));
                         MapManager.GetTile(x, y).color = wall;
                         break;
 
                     case 1:
-                        MapManager.GetMap().Add(new TileData(TileType.Fast));
+                        MapManager.GetMap().Add(new TileData(TileType.Fast, x, y));
                         MapManager.GetTile(x, y).color = normal;
                         break;
 
                     case 2:
-                        MapManager.GetMap().Add(new TileData(TileType.Normal));
+                        MapManager.GetMap().Add(new TileData(TileType.Normal, x, y));
                         MapManager.GetTile(x, y).color = normal;
                         break;
 
                     case 3:
-                        MapManager.GetMap().Add(new TileData(TileType.Slow));
+                        MapManager.GetMap().Add(new TileData(TileType.Slow, x, y));
                         MapManager.GetTile(x, y).color = normal;
                         break;
                 }
@@ -89,8 +89,8 @@ public class DebugMapManager : MonoBehaviour
 
     private void Update()
     {
-        //AreaAndPath();
-        Attack();
+        AreaAndPath();
+        //Attack();
     }
 
     private void Attack()
@@ -105,10 +105,11 @@ public class DebugMapManager : MonoBehaviour
                 tileSelect.tile.color = player;
 
                 tiles = IAUtils.FindAllReachablePlace(tileSelect.position, range);
-                Debug.Log(tiles.Count);
+
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
+                    if (!MapManager.GetTile(tile.GetCoordPosition()).color.Equals(player))
+                        MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
             }
             else
@@ -117,7 +118,7 @@ public class DebugMapManager : MonoBehaviour
                 {
                     for (int y = 0; y < MapManager.Instance.map.size; y++)
                     {
-                        if (MapManager.GetTile(x, y).color != player)
+                        if (MapManager.GetTile(x, y).color != player && MapManager.GetTile(x, y).color != wall)
                             MapManager.GetTile(x, y).color = normal;
                     }
                 }
@@ -125,7 +126,8 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
+                    if (!MapManager.GetTile(tile.GetCoordPosition()).color.Equals(player))
+                        MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
                 end = tileSelect.position;
@@ -147,7 +149,8 @@ public class DebugMapManager : MonoBehaviour
                 {
                     path = IAUtils.FindShortestPath(start, end, range, fullPath);
 
-                    path.path[path.path.Count - 1].color = chemin;
+                    if (path != null)
+                        path.path[path.path.Count - 1].color = chemin;
                 }
                     
 
@@ -171,7 +174,8 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
+                    if (!MapManager.GetTile(tile.GetCoordPosition()).color.Equals(player))
+                        MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
             }
 
@@ -191,7 +195,8 @@ public class DebugMapManager : MonoBehaviour
 
                 foreach (ReachableTile tile in tiles)
                 {
-                    MapManager.GetTile(tile.GetCoordPosition()).color = area;
+                    if (!MapManager.GetTile(tile.GetCoordPosition()).color.Equals(player))
+                        MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
                 path = IAUtils.FindShortestPath(start, tileSelect.position, range, fullPath);
@@ -206,7 +211,7 @@ public class DebugMapManager : MonoBehaviour
             }
             
         }
-
+        
         if (tileSelect.tile != null && Input.GetMouseButtonDown(2))
         {
             if (MapManager.GetTile(tileSelect.position).tileType != TileType.Solid)
@@ -292,6 +297,7 @@ public class DebugMapManager : MonoBehaviour
 
             saveFullPath = fullPath;
         }
+        
     }
 
 

@@ -22,7 +22,9 @@ MonoBehaviour:
   numberOfEffects: []
   castArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}

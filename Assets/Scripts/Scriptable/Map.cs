@@ -32,7 +32,7 @@ public class Map : ScriptableObject
         {
             for (int y = 0; y < size; y++)
             {
-                map.Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
+                map.Add(new TileData(TileType.Normal, x, y));
             }
         }
     }

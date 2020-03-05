@@ -258,7 +258,7 @@ public static class IAUtils
     private static ReachableTile CutPathInRange(ReachableTile shortest, int range)
     {
         List<TileData> path = new List<TileData>(shortest.path);
-        int lenght = 0;
+        int lenght = -1;
         int cost = 0;
 
         for (int i = 0; i < path.Count; i++)
