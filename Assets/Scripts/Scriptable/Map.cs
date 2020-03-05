@@ -34,7 +34,7 @@ public class Map : ScriptableObject
         {
             for (int y = 0; y < size; y++)
             {
-                map.Add(new TileData(TileType.Normal));
+                map.Add(new TileData(TileType.Normal, x, y));
             }
         }
     }
