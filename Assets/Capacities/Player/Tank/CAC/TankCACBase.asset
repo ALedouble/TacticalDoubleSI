@@ -19,10 +19,17 @@ MonoBehaviour:
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
-  numberOfEffects: []
+  numberOfEffects:
+  - {fileID: 0}
+  - {fileID: 0}
   castArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 2, y: 1}
+    - {x: 1, y: 2}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}

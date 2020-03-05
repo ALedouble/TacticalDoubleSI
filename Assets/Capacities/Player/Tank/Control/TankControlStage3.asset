@@ -21,8 +21,15 @@ MonoBehaviour:
   cooldown: 0
   numberOfEffects: []
   castArea:
-    size: 3
-    area: []
+    size: 7
+    area:
+    - {x: 3, y: 2}
+    - {x: 2, y: 3}
+    - {x: 4, y: 3}
+    - {x: 3, y: 4}
   effectArea:
-    size: 3
-    area: []
+    size: 5
+    area:
+    - {x: 0, y: 2}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}
