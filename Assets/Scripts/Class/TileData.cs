@@ -41,7 +41,7 @@ public class TileData
         }
     }
 
-    public TileType TypeOfTyle
+    public TileType TileType
     {
         get
         {

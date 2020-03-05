@@ -26,15 +26,13 @@ public class Map : ScriptableObject
     {
         if (size == map.Count) return;
 
-        Debug.Log("Initializing map");
-
         map = new List<TileData>();
 
         for (int x = 0; x < size; x++)
         {
             for (int y = 0; y < size; y++)
             {
-                map.Add(new TileData(TileType.Normal));
+                map.Add(new TileData(TileType.Normal, new Vector2Int(x, y)));
             }
         }
     }
