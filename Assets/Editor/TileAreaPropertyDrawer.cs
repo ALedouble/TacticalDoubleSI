@@ -147,7 +147,7 @@ public class TileAreaPropertyDrawer : PropertyDrawer {
 
                     if (!centerRect.Contains(Event.current.mousePosition))
                     {
-                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? greenColor : new Color(0.6f, 0.6f, 0.6f));
+                        EditorGUI.DrawRect(centerRect, areaBuffer[i / 2, j / 2] ? new Color(0.1703646f, 1f, 0.3632075f) : new Color(0.6f, 0.6f, 0.6f));
                     }
 
                     n++;
