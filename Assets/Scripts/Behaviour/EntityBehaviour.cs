@@ -11,6 +11,8 @@ public class EntityBehaviour : MonoBehaviour
 {
     public Entity data;
 
+    TileData currentTile;
+
     int currentHealth;
     public int CurrentHealth { get => currentHealth; }
 
@@ -48,13 +50,8 @@ public class EntityBehaviour : MonoBehaviour
             // second half
             moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
         }
-        moveSequence.Append(transform.DOMove(new Vector3(reachableTile.GetCoordPosition().x, 0, reachableTile.GetCoordPosition().y), tileMovementSpeed)
-            .SetEase(movementEase));
 
-        // first half of the jump
-        moveSequence.Insert(reachableTile.path.Count * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
-        // second half
-        moveSequence.Insert(reachableTile.path.Count * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
+        RoundManager.Instance.currentMovementSequence = moveSequence;
 
         return moveSequence;
     }
