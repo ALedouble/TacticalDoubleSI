@@ -57,7 +57,7 @@ public class Minion : Brain
     {
         if (pass || !CanMakeAction())
         {
-            RoundManager.EndTurn(minion);
+            RoundManager.Instance.EndTurn(minion);
             return true;
         }
 

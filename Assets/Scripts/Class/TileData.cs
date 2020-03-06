@@ -37,7 +37,7 @@ public class TileData
         get
         {
             // TODO : Return a bool that is a compound of multiple parameters, such as if one of the entities on this tile is solid or if the tile is marked as solid
-            if (this.tileType != TileType.Solid) return true;
+            if (this.tileType != TileType.Solid && entities.Count == 0) return true;
             return false;
         }
     }

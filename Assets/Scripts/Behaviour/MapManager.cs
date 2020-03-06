@@ -21,7 +21,10 @@ public class MapManager : MonoBehaviour
 
         // Create a copy of map since ScriptableObjects are persistent and we don't want to change the map in the project while in the editor
         map = Instantiate(map);
+    }
 
+    public void Init()
+    {
         InstantiateEntities();
     }
 
@@ -36,6 +39,12 @@ public class MapManager : MonoBehaviour
 
             entityBehaviour.data = map.entityStartPositions[i].entity;
             entityBehaviour.heldCrystalValue = map.entityStartPositions[i].heldCrystalValue;
+            entityBehaviour.currentTile = MapManager.GetTile(new Vector2Int((int)map.entityStartPositions[i].position.x, (int)map.entityStartPositions[i].position.y));
+            entityBehaviour.currentTile.entities.Add(entityBehaviour);
+
+            entityBehaviour.Init();
+
+            RoundManager.Instance.roundEntities.Add(entityBehaviour);
         }
     }
 
