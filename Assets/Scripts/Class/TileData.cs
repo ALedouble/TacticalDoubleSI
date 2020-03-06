@@ -18,18 +18,16 @@ public class TileData
     // ********* Debug **********
     public Color color;
 
-    public Vector2Int Position { get => position; set => position = value; }
-
     public TileData(TileType type, Vector2Int position)
     {
         this.tileType = type;
-        this.Position = position;
+        this.position = position;
     }
 
     public TileData(TileType type, int x, int y)
     {
         this.tileType = type;
-        this.Position = new Vector2Int(x, y);
+        this.position = new Vector2Int(x, y);
     }
 
     public bool IsWalkable

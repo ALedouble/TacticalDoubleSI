@@ -25,7 +25,7 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnMovement;
 
         // TODO : Get entity position properly
-        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)entityBehaviour.transform.position.x, (int)entityBehaviour.transform.position.z), hit.position, 999);
+        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)entityBehaviour.transform.position.x, (int)entityBehaviour.transform.position.z), hit.position, true, 999);
 
         if (reachableTile == null)
         {
@@ -48,7 +48,7 @@ public class PlayerBrain : Brain
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
 
-        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.data.abilities[0], entityBehaviour.currentTile);
+        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), entityBehaviour.currentTile);
 
         attackSequence.OnComplete(() =>
         {
