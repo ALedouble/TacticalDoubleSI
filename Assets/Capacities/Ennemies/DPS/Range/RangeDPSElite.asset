@@ -12,17 +12,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: RangeDPSElite
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 0
+  displayName: Explosive arrow
+  description: Arrow that explode and deal area dmg to ennemies
+  cost: 4
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  cooldown: 0
-  numberOfEffects: []
+  cooldown: 1
+  numberOfEffects:
+  - {fileID: 11400000, guid: 6449538c8f845b44b8d09594818eeda1, type: 2}
   castArea:
-    size: 3
-    area: []
+    size: 7
+    area:
+    - {x: 3, y: 0}
+    - {x: 2, y: 1}
+    - {x: 3, y: 1}
+    - {x: 4, y: 1}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}
+    - {x: 4, y: 2}
+    - {x: 5, y: 2}
+    - {x: 0, y: 3}
+    - {x: 1, y: 3}
+    - {x: 5, y: 3}
+    - {x: 6, y: 3}
+    - {x: 1, y: 4}
+    - {x: 2, y: 4}
+    - {x: 4, y: 4}
+    - {x: 5, y: 4}
+    - {x: 2, y: 5}
+    - {x: 3, y: 5}
+    - {x: 4, y: 5}
+    - {x: 3, y: 6}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 2, y: 1}
+    - {x: 0, y: 2}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}

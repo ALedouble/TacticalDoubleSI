@@ -12,17 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: HealHealer
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 1
+  displayName: Heal
+  description: A simple heal
+  cost: 3
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  cooldown: 0
-  numberOfEffects: []
+  cooldown: 1
+  numberOfEffects:
+  - {fileID: 11400000, guid: 426588deade103e41b01776e92220352, type: 2}
   castArea:
-    size: 3
-    area: []
+    size: 7
+    area:
+    - {x: 3, y: 0}
+    - {x: 2, y: 1}
+    - {x: 3, y: 1}
+    - {x: 4, y: 1}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}
+    - {x: 3, y: 2}
+    - {x: 4, y: 2}
+    - {x: 5, y: 2}
+    - {x: 0, y: 3}
+    - {x: 1, y: 3}
+    - {x: 2, y: 3}
+    - {x: 4, y: 3}
+    - {x: 5, y: 3}
+    - {x: 6, y: 3}
+    - {x: 1, y: 4}
+    - {x: 2, y: 4}
+    - {x: 3, y: 4}
+    - {x: 4, y: 4}
+    - {x: 5, y: 4}
+    - {x: 2, y: 5}
+    - {x: 3, y: 5}
+    - {x: 4, y: 5}
+    - {x: 3, y: 6}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}
