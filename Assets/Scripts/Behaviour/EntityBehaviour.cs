@@ -35,10 +35,30 @@ public class EntityBehaviour : MonoBehaviour
 
     Color[] defaultColor;
 
+    [HideInInspector] public int heldCrystalValue = -1;
+
+    private void Update()
+    {
+       
+    }
+
     public void OnTurn()
     {
         data.brain.OnTurnStart(this);
         GetTileForCast(data.abilities[0].castArea);
+        if (inCase)
+        {
+            for (int i = 0; i < MapManager.GetMap().Count; i++)
+            {
+                defaultColor = new Color[MapManager.GetMap().Count];
+                defaultColor[i] = MapManager.GetMap()[i].color;
+
+                
+
+                Debug.Log(defaultColor[i]);
+            }
+
+        }
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
@@ -144,6 +164,7 @@ public class EntityBehaviour : MonoBehaviour
             if(castCase.x > 0)
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
+                Debug.Log(tilesForEffect[i]);
             }
             TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
 
@@ -154,5 +175,38 @@ public class EntityBehaviour : MonoBehaviour
         }
         
         return tilesForEffect;
+    }
+
+    public List<Vector2Int> Prev(TileArea area)
+    {
+        tilesForEffect = area.RelativeArea();
+
+        for (int i = 0; i < tilesForEffect.Count; i++)
+        {
+
+            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
+           
+           
+            if (tile != null)
+            {
+                tile.color = Color.yellow;
+            }
+        }
+
+        return tilesForEffect;
+    }
+
+    public Color Return(Color theColor)
+    {
+        
+        for(int y = 0; y < MapManager.GetMap().Count; y++)
+        {
+            MapManager.GetMap()[y].color = theColor;
+                    
+        }
+                
+ 
+
+        return theColor;
     }
 }

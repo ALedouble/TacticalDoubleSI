@@ -209,16 +209,17 @@ public class MapEditorWindow : EditorWindow
                         {
                             case 0:
 
-                                bool tileTaken = false;
+                                bool validTile = true;
                                 for (int i = 0; i < map.entityStartPositions.Count; i++)
                                 {
                                     if (map.entityStartPositions[i].position == hoveredTile.position)
                                     {
-                                        tileTaken = true;
+                                        validTile = false;
                                     }
                                 }
+                                if (hoveredTile.position.x < 0 || hoveredTile.position.y < 0 || hoveredTile.position.x > map.size || hoveredTile.position.y > map.size) validTile = false;
 
-                                if (!tileTaken) map.entityStartPositions.Add(new EntityRoundStartState(entities[selectedEntity], -1, hoveredTile.position));
+                                if (validTile) map.entityStartPositions.Add(new EntityRoundStartState(entities[selectedEntity], -1, hoveredTile.position));
 
                                 break;
                             case 1:
