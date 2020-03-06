@@ -25,19 +25,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 912e1e69382233c42817a57c60c6228f, type: 2}
   castArea:
     size: 3
+    area: []
+  effectArea:
+    size: 3
     area:
+    - {x: 0, y: 0}
     - {x: 1, y: 0}
+    - {x: 2, y: 0}
     - {x: 0, y: 1}
     - {x: 2, y: 1}
+    - {x: 0, y: 2}
     - {x: 1, y: 2}
-  effectArea:
-    size: 5
-    area:
-    - {x: 1, y: 1}
-    - {x: 2, y: 1}
-    - {x: 3, y: 1}
-    - {x: 1, y: 2}
-    - {x: 3, y: 2}
-    - {x: 1, y: 3}
-    - {x: 2, y: 3}
-    - {x: 3, y: 3}
+    - {x: 2, y: 2}
