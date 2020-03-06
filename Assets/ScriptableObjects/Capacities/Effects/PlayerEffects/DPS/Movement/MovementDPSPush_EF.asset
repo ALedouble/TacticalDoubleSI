@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae6f5299aa631d64e94fc21019042978, type: 3}
-  m_Name: PushEffect
+  m_Name: MovementDPSPush_EF
   m_EditorClassIdentifier: 
   duration: 0

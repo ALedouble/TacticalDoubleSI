@@ -12,17 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: DPSCACBase
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 0
+  displayName: Blow
+  description: A simple attack
+  cost: 4
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
-  numberOfEffects: []
+  numberOfEffects:
+  - {fileID: 11400000, guid: c9cffdc0349e84e4b9d10c28404672d8, type: 2}
   castArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 2, y: 1}
+    - {x: 1, y: 2}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}
