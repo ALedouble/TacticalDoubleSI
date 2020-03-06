@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ArmorTank_EF
   m_EditorClassIdentifier: 
   duration: 0
-  armorValue: 0
+  armorValue: 1
   sfxHit: {fileID: 0}
   vfxHit: {fileID: 0}

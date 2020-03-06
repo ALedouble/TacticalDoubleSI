@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: TankCACStage3
   m_EditorClassIdentifier: 
   animationType: 0
-  displayName: 
-  description: 
-  cost: 0
+  displayName: Bash
+  description: Pushes the ennemy away
+  cost: 5
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
   numberOfEffects:
-  - {fileID: 11400000, guid: 907b50b3d8e478944a0b2e5638ecceff, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b17a62630dfb74d4a8d17e41a574a47a, type: 2}
+  - {fileID: 11400000, guid: 912e1e69382233c42817a57c60c6228f, type: 2}
   castArea:
     size: 3
     area:
