@@ -420,19 +420,27 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   entityStartPositions:
   - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
+    heldCrystalValue: 0
     position: {x: 9, y: 0}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
     position: {x: 5, y: 0}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
     position: {x: 6, y: 1}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
     position: {x: 6, y: 5}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
     position: {x: 5, y: 6}
   - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
+    heldCrystalValue: 2
     position: {x: 7, y: 3}
   - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
+    heldCrystalValue: -1
     position: {x: 8, y: 3}
   - entity: {fileID: 11400000, guid: 74c6a767695a4c944af7e32fb0f986d6, type: 2}
+    heldCrystalValue: -1
     position: {x: 6, y: 3}
   size: 9
