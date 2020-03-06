@@ -26,18 +26,16 @@ public class EntityBehaviour : MonoBehaviour
     int currentArmor;
     public int CurrentArmor { get => currentArmor; }
 
-    List<Vector2Int> tiles;
+    List<Vector2Int> tilesForCast;
 
-    
+    Vector2Int castCase;
 
-    private void Start()
-    {
-        GetTileForCast(data.abilities[0].castArea);   
-    }
+    List<Vector2Int> tilesForEffect;
 
     public void OnTurn()
     {
         data.brain.OnTurnStart(this);
+        GetTileForCast(data.abilities[0].castArea);
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
@@ -91,7 +89,7 @@ public class EntityBehaviour : MonoBehaviour
             .SetEase(healEase, 2)
             .OnComplete(() =>
             {
-                tiles.Clear();
+                tilesForCast.Clear();
                 PlayEffects(ability.numberOfEffects, targetTile);
             }));
 
@@ -105,64 +103,63 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence PlayEffects(List<AbilityEffect> effects, TileData targetTile)
     {
         Sequence effectSequence = DOTween.Sequence();
-        for (int i = 0; i < tiles.Count; i++)
+        for (int i = 0; i < tilesForCast.Count; i++)
         {
-            if (SelectionUtils.MapRaycast().position == tiles[i])
+            if (SelectionUtils.MapRaycast().position == tilesForCast[i])
             {
+                castCase = tilesForCast[i];
                 GetTileForEffect(data.abilities[0].effectArea);
-                Debug.Log(tiles[i] - currentTile.position);
-                RoundVector(tiles[i] - currentTile.position);
+
             }
         }
         
         
 
-        return null;
+        return effectSequence;
     }
 
     public List<Vector2Int> GetTileForCast(TileArea area)
     {
-       tiles = area.RelativeArea();
+        tilesForCast = area.RelativeArea();
         List<Vector2Int> tileNoRelative = area.area;
         
-        for(int i = 0; i < tiles.Count; i++)
+        for(int i = 0; i < tilesForCast.Count; i++)
         {
-           TileData tile = MapManager.GetTile(tiles[i] + currentTile.position);
-            Debug.Log(tiles[i]);
+           TileData tile = MapManager.GetTile(tilesForCast[i] + currentTile.position);
             if (tile != null)
             {
                 tile.color = Color.blue;
             }
         }
-        return tiles;
+        return tilesForCast;
     }
 
     public List<Vector2Int> GetTileForEffect(TileArea area)
     {
-        List<Vector2Int> newTiles = area.RelativeArea();
+        tilesForEffect = area.RelativeArea();
         List<Vector2Int> tileNoRelative = area.area;
 
-        for (int i = 0; i < newTiles.Count; i++)
+        for (int i = 0; i < tilesForEffect.Count; i++)
         {
-            TileData tile = MapManager.GetTile(newTiles[i] + currentTile.position);
-            tile.position *= -2;
+
+          
+            
+            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
+
             if (tile != null)
             {
                 tile.color = Color.red;
+                Debug.Log(tilesForEffect[i]);
             }
         }
-        return newTiles;
+        
+        return tilesForEffect;
     }
 
+    /*
     public Vector2 RoundVector(Vector2 vectorToRound)
     {
-        Vector2 roundedVector = Vector2.zero;
-
-        if(vectorToRound.x > currentTile.position.x)
-        {
-            
-        }
-
-        return roundedVector;
+        
     }
+    */
 }
