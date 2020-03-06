@@ -54,6 +54,8 @@ public class MapEditorWindow : EditorWindow
     int brushMode;
     int selectedEntityBrush;
 
+    int selectedCrystalValue;
+
     private void OnGUI()
     {
         EditorGUILayout.Space();
@@ -159,7 +161,7 @@ public class MapEditorWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.Space(20);
-        selectedEntityBrush = GUILayout.Toolbar(selectedEntityBrush, new string[]{"Place","Remove"}, GUILayout.MinHeight(35));
+        selectedEntityBrush = GUILayout.Toolbar(selectedEntityBrush, new string[]{"Place","Remove","Add Crystal"}, GUILayout.MinHeight(35));
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
 
@@ -168,7 +170,8 @@ public class MapEditorWindow : EditorWindow
         EditorGUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.Space(20);
-        selectedEntity = EditorGUILayout.Popup(selectedEntity, entitiesNames);
+        if (selectedEntityBrush != 2) selectedEntity = EditorGUILayout.Popup(selectedEntity, entitiesNames);
+        else selectedCrystalValue = EditorGUILayout.Popup(selectedCrystalValue, new string[] {"No Crystal","Crystal A", "Crystal B", "Crystal C" });
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
 
@@ -205,7 +208,17 @@ public class MapEditorWindow : EditorWindow
                         switch (selectedEntityBrush)
                         {
                             case 0:
-                                map.entityStartPositions.Add(new EntityPosition(entities[selectedEntity], hoveredTile.position));
+
+                                bool tileTaken = false;
+                                for (int i = 0; i < map.entityStartPositions.Count; i++)
+                                {
+                                    if (map.entityStartPositions[i].position == hoveredTile.position)
+                                    {
+                                        tileTaken = true;
+                                    }
+                                }
+
+                                if (!tileTaken) map.entityStartPositions.Add(new EntityRoundStartState(entities[selectedEntity], -1, hoveredTile.position));
 
                                 break;
                             case 1:
@@ -216,6 +229,18 @@ public class MapEditorWindow : EditorWindow
 
                                     map.entityStartPositions.RemoveAt(i);
                                     break;
+                                }
+
+                                break;
+                            case 2:
+
+                                for (int i = 0; i < map.entityStartPositions.Count; i++)
+                                {
+                                    if (map.entityStartPositions[i].position == hoveredTile.position)
+                                    {
+                                        map.entityStartPositions[i].heldCrystalValue = selectedCrystalValue - 1;
+                                        break;
+                                    }
                                 }
 
                                 break;
@@ -285,8 +310,11 @@ public class MapEditorWindow : EditorWindow
                     {
                         GUIStyle newStyle = new GUIStyle(EditorStyles.whiteLargeLabel);
                         newStyle.alignment = TextAnchor.MiddleCenter;
-                        Handles.Label(new Vector3(map.entityStartPositions[i].position.x, .2f, map.entityStartPositions[i].position.y), map.entityStartPositions[i].entity.displayName,
-                        newStyle);
+                        Handles.Label(new Vector3(map.entityStartPositions[i].position.x, .2f, map.entityStartPositions[i].position.y), 
+                            map.entityStartPositions[i].entity.displayName + (map.entityStartPositions[i].heldCrystalValue == -1 ? "" :
+                            map.entityStartPositions[i].heldCrystalValue == 0 ? "[A]" :
+                            map.entityStartPositions[i].heldCrystalValue == 1 ? "[B]" : "[C]")
+                            , newStyle);
                     }
                 }
             }
