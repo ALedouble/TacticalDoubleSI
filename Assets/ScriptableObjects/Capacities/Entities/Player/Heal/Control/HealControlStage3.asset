@@ -12,17 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: HealControlStage3
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 0
+  displayName: Greater wall
+  description: Create a wall that stay 2 turn
+  cost: 6
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  cooldown: 0
-  numberOfEffects: []
+  cooldown: 1
+  numberOfEffects:
+  - {fileID: 11400000, guid: 0f5f59cb0df3a154c8b74dea10ccc1e3, type: 2}
+  - {fileID: 11400000, guid: a8de101ec264f364faa8ef08a14919eb, type: 2}
   castArea:
-    size: 3
-    area: []
+    size: 7
+    area:
+    - {x: 3, y: 0}
+    - {x: 3, y: 1}
+    - {x: 3, y: 2}
+    - {x: 0, y: 3}
+    - {x: 1, y: 3}
+    - {x: 2, y: 3}
+    - {x: 4, y: 3}
+    - {x: 5, y: 3}
+    - {x: 6, y: 3}
+    - {x: 3, y: 4}
+    - {x: 3, y: 5}
+    - {x: 3, y: 6}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 2, y: 1}

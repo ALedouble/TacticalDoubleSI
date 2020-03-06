@@ -12,17 +12,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: DPSRangeStage3
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 0
+  displayName: Molotov arrow
+  description: A shot that explode and leave a damage area on the ground
+  cost: 5
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
-  numberOfEffects: []
+  numberOfEffects:
+  - {fileID: 11400000, guid: 7ebc2584832b5ed49bc9caf410e3cac4, type: 2}
   castArea:
-    size: 3
-    area: []
+    size: 9
+    area:
+    - {x: 4, y: 0}
+    - {x: 3, y: 1}
+    - {x: 4, y: 1}
+    - {x: 5, y: 1}
+    - {x: 2, y: 2}
+    - {x: 3, y: 2}
+    - {x: 4, y: 2}
+    - {x: 5, y: 2}
+    - {x: 6, y: 2}
+    - {x: 1, y: 3}
+    - {x: 2, y: 3}
+    - {x: 3, y: 3}
+    - {x: 5, y: 3}
+    - {x: 6, y: 3}
+    - {x: 7, y: 3}
+    - {x: 0, y: 4}
+    - {x: 1, y: 4}
+    - {x: 2, y: 4}
+    - {x: 6, y: 4}
+    - {x: 7, y: 4}
+    - {x: 8, y: 4}
+    - {x: 1, y: 5}
+    - {x: 2, y: 5}
+    - {x: 3, y: 5}
+    - {x: 5, y: 5}
+    - {x: 6, y: 5}
+    - {x: 7, y: 5}
+    - {x: 2, y: 6}
+    - {x: 3, y: 6}
+    - {x: 4, y: 6}
+    - {x: 5, y: 6}
+    - {x: 6, y: 6}
+    - {x: 3, y: 7}
+    - {x: 4, y: 7}
+    - {x: 5, y: 7}
+    - {x: 4, y: 8}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    - {x: 2, y: 1}
+    - {x: 0, y: 2}
+    - {x: 1, y: 2}
+    - {x: 2, y: 2}

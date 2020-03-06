@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74904c7500e875e4f82a9dc27e497939, type: 3}
-  m_Name: ArmorTank_EF
+  m_Script: {fileID: 11500000, guid: 817dda5d92ae5af4cb25162ce3ce95fc, type: 3}
+  m_Name: CACDPS_EF
   m_EditorClassIdentifier: 
   duration: 0
-  armorValue: 1
+  damage: 0
+  damageMultiplicator: 1
   sfxHit: {fileID: 0}
   vfxHit: {fileID: 0}

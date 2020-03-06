@@ -12,17 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: DPSMovementBase
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 0
+  displayName: Dash
+  description: A simple dash to one direction
+  cost: 4
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  cooldown: 0
-  numberOfEffects: []
+  cooldown: 1
+  numberOfEffects:
+  - {fileID: 11400000, guid: 11bfd1cfb864aca4eb63a1d41be1ad61, type: 2}
   castArea:
-    size: 3
-    area: []
+    size: 5
+    area:
+    - {x: 2, y: 0}
+    - {x: 2, y: 1}
+    - {x: 0, y: 2}
+    - {x: 1, y: 2}
+    - {x: 3, y: 2}
+    - {x: 4, y: 2}
+    - {x: 2, y: 3}
+    - {x: 2, y: 4}
   effectArea:
     size: 3
-    area: []
+    area:
+    - {x: 1, y: 1}

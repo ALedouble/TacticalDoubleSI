@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: TankCACBase
   m_EditorClassIdentifier: 
-  displayName: 
-  description: 
-  cost: 0
+  animationType: 1
+  displayName: Bash
+  description: Pushes the ennemy away
+  cost: 4
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
   numberOfEffects:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b17a62630dfb74d4a8d17e41a574a47a, type: 2}
+  - {fileID: 11400000, guid: 912e1e69382233c42817a57c60c6228f, type: 2}
   castArea:
     size: 3
     area:

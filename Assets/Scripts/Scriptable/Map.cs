@@ -5,14 +5,16 @@ using UnityEngine;
 /// Contains the positions of all entities at the start of the level
 /// </summary>
 [System.Serializable]
-public struct EntityPosition
+public class EntityRoundStartState
 {
     public Entity entity;
+    public int heldCrystalValue = -1;
     public Vector2 position;
 
-    public EntityPosition(Entity entity, Vector2 position)
+    public EntityRoundStartState(Entity entity, int heldCrystalValue, Vector2 position)
     {
         this.entity = entity;
+        this.heldCrystalValue = heldCrystalValue;
         this.position = position;
     }
 }
@@ -25,7 +27,7 @@ public class Map : ScriptableObject
 {
     public List<TileData> map = new List<TileData>();
 
-    public List<EntityPosition> entityStartPositions = new List<EntityPosition>();
+    public List<EntityRoundStartState> entityStartPositions = new List<EntityRoundStartState>();
 
     public int size;
 

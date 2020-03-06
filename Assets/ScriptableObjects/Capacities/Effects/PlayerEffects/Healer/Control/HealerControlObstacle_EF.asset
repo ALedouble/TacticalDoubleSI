@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316a2b76f5932374192196f365c6e394, type: 3}
   m_Name: HealerControlObstacle_EF
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 1

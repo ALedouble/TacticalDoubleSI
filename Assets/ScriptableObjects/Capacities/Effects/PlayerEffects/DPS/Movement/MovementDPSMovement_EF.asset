@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74904c7500e875e4f82a9dc27e497939, type: 3}
-  m_Name: ArmorTank_EF
+  m_Script: {fileID: 11500000, guid: f620289ef5e9afa42b072d0b151cd951, type: 3}
+  m_Name: MovementDPSMovement_EF
   m_EditorClassIdentifier: 
   duration: 0
-  armorValue: 1
+  timeBeforeDestruction: 0
+  blockMyself: 1
   sfxHit: {fileID: 0}
   vfxHit: {fileID: 0}
