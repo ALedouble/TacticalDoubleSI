@@ -148,7 +148,7 @@ public class DebugMapManager : MonoBehaviour
                 }
                 else
                 {
-                    path = IAUtils.FindShortestPath(start, end, range, fullPath);
+                    path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
 
                     if (path != null)
                         path.path[path.path.Count - 1].color = chemin;
@@ -200,7 +200,7 @@ public class DebugMapManager : MonoBehaviour
                         MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
-                path = IAUtils.FindShortestPath(start, tileSelect.position, range, fullPath);
+                path = IAUtils.FindShortestPath(start, tileSelect.position, true, range, fullPath);
 
                 if (path != null)
                     foreach (TileData tileData in path.path)
@@ -258,7 +258,7 @@ public class DebugMapManager : MonoBehaviour
 
             if (havePath)
             {
-                path = IAUtils.FindShortestPath(start, end, range, fullPath);
+                path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
 
                 foreach (TileData tileData in path.path)
                 {
@@ -285,7 +285,7 @@ public class DebugMapManager : MonoBehaviour
                     tileData.color = normal;
             }
 
-            path = IAUtils.FindShortestPath(start, end, range, fullPath);
+            path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
 
             if (path != null)
                 foreach (TileData tileData in path.path)
