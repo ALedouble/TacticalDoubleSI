@@ -21,6 +21,22 @@ public class MapManager : MonoBehaviour
 
         // Create a copy of map since ScriptableObjects are persistent and we don't want to change the map in the project while in the editor
         map = Instantiate(map);
+
+        InstantiateEntities();
+    }
+
+    void InstantiateEntities()
+    {
+        GameObject entityPrefab = Resources.Load("Entity") as GameObject;
+
+        EntityBehaviour entityBehaviour;
+        for (int i = 0; i < map.entityStartPositions.Count; i++)
+        {
+            entityBehaviour = Instantiate(entityPrefab, new Vector3(map.entityStartPositions[i].position.x, 0, map.entityStartPositions[i].position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
+
+            entityBehaviour.data = map.entityStartPositions[i].entity;
+            entityBehaviour.heldCrystalValue = map.entityStartPositions[i].heldCrystalValue;
+        }
     }
 
     public static TileData GetTile(Vector2Int position)

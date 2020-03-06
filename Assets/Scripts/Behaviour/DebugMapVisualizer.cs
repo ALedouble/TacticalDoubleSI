@@ -18,6 +18,12 @@ public class DebugMapVisualizer : MonoBehaviour
         
     }
 
+    private Color normal = new Color(.9f, .9f, .9f, .1f);
+    private Color solid = new Color(.1f, .1f, .1f, .5f);
+    private Color fast = new Color(1, .6f, 0.9f, .8f);
+    private Color slow = new Color(.5f, 0f, .5f, .4f);
+    private Color playerPlacement = new Color(.0f, 0f, .8f, .2f);
+
     private void OnDrawGizmos()
     {
 
@@ -29,7 +35,9 @@ public class DebugMapVisualizer : MonoBehaviour
             {
                 for (int y = 0; y < MapManager.GetSize(); y++)
                 {
-                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.GetTile(new Vector2Int(x, y)).color);//new Color(.9f, .9f, .9f, .5f));
+                    DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Normal ? normal :
+                        MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Solid ? solid :
+                        MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
 
                 }
             }

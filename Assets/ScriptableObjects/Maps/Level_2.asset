@@ -419,9 +419,6 @@ MonoBehaviour:
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   entityStartPositions:
-  - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
-    heldCrystalValue: 0
-    position: {x: 9, y: 0}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
     position: {x: 5, y: 0}

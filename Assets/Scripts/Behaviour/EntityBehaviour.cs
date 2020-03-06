@@ -35,6 +35,8 @@ public class EntityBehaviour : MonoBehaviour
 
     Color[] defaultColor;
 
+    [HideInInspector] public int heldCrystalValue = -1;
+
     private void Update()
     {
        

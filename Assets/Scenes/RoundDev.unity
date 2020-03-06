@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e28f063a37ffa4bbdde165cc2883f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDebug: 0
+  drawDebug: 1
 --- !u!1001 &6894895933268431479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,5 +232,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentials
       objectReference: {fileID: 0}
+    - target: {fileID: 6894895934116413580, guid: 341f12258f9b0a442920615dfb072136,
+        type: 3}
+      propertyPath: map
+      value: 
+      objectReference: {fileID: 11400000, guid: 41518e8bb1021a840bdbcad9fe28beb2,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 341f12258f9b0a442920615dfb072136, type: 3}
