@@ -29,13 +29,34 @@ public class EntityBehaviour : MonoBehaviour
     List<Vector2Int> tilesForCast;
 
     Vector2Int castCase;
+    bool inCase = false;
 
     List<Vector2Int> tilesForEffect;
+
+    Color[] defaultColor;
+
+    private void Update()
+    {
+       
+    }
 
     public void OnTurn()
     {
         data.brain.OnTurnStart(this);
         GetTileForCast(data.abilities[0].castArea);
+        if (inCase)
+        {
+            for (int i = 0; i < MapManager.GetMap().Count; i++)
+            {
+                defaultColor = new Color[MapManager.GetMap().Count];
+                defaultColor[i] = MapManager.GetMap()[i].color;
+
+                
+
+                Debug.Log(defaultColor[i]);
+            }
+
+        }
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
@@ -89,13 +110,12 @@ public class EntityBehaviour : MonoBehaviour
             .SetEase(healEase, 2)
             .OnComplete(() =>
             {
-                tilesForCast.Clear();
+               
                 PlayEffects(ability.numberOfEffects, targetTile);
             }));
 
             abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnHealEase, 10));
         }
-
 
         return abilitySequence;
     }
@@ -112,8 +132,6 @@ public class EntityBehaviour : MonoBehaviour
 
             }
         }
-        
-        
 
         return effectSequence;
     }
@@ -121,7 +139,6 @@ public class EntityBehaviour : MonoBehaviour
     public List<Vector2Int> GetTileForCast(TileArea area)
     {
         tilesForCast = area.RelativeArea();
-        List<Vector2Int> tileNoRelative = area.area;
         
         for(int i = 0; i < tilesForCast.Count; i++)
         {
@@ -129,6 +146,7 @@ public class EntityBehaviour : MonoBehaviour
             if (tile != null)
             {
                 tile.color = Color.blue;
+                inCase = true;
             }
         }
         return tilesForCast;
@@ -137,29 +155,56 @@ public class EntityBehaviour : MonoBehaviour
     public List<Vector2Int> GetTileForEffect(TileArea area)
     {
         tilesForEffect = area.RelativeArea();
-        List<Vector2Int> tileNoRelative = area.area;
 
         for (int i = 0; i < tilesForEffect.Count; i++)
         {
-
-          
-            
+            Debug.Log(castCase);
+            if(castCase.x > 0)
+            {
+                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
+                Debug.Log(tilesForEffect[i]);
+            }
             TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
 
             if (tile != null)
             {
                 tile.color = Color.red;
-                Debug.Log(tilesForEffect[i]);
             }
         }
         
         return tilesForEffect;
     }
 
-    /*
-    public Vector2 RoundVector(Vector2 vectorToRound)
+    public List<Vector2Int> Prev(TileArea area)
+    {
+        tilesForEffect = area.RelativeArea();
+
+        for (int i = 0; i < tilesForEffect.Count; i++)
+        {
+
+            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
+           
+           
+            if (tile != null)
+            {
+                tile.color = Color.yellow;
+            }
+        }
+
+        return tilesForEffect;
+    }
+
+    public Color Return(Color theColor)
     {
         
+        for(int y = 0; y < MapManager.GetMap().Count; y++)
+        {
+            MapManager.GetMap()[y].color = theColor;
+                    
+        }
+                
+ 
+
+        return theColor;
     }
-    */
 }

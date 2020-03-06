@@ -10,8 +10,6 @@ public class PlayerBrain : Brain
     {
         base.OnTurnStart(entityBehaviour);
 
-
-
         //SelectionManager.Instance.OnClick += OnMovement;
 	    SelectionManager.Instance.OnClick += OnUseAbility;
     }
