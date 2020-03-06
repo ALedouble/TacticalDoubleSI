@@ -41,7 +41,7 @@ public class PlayerBrain : Brain
 
         EntityBehaviour selectedEntity = SelectionManager.Instance.selectedEntity;
 
-        Sequence attackSequence = selectedEntity.UseAbility(selectedEntity.data.abilities[0], selectedEntity.currentTile);
+        Sequence attackSequence = selectedEntity.UseAbility(selectedEntity.GetAbilities(0), selectedEntity.currentTile);
 
         attackSequence.OnComplete(() =>
         {

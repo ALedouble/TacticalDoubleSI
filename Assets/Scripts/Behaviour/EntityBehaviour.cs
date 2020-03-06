@@ -11,8 +11,32 @@ using DG.Tweening;
 public class EntityBehaviour : MonoBehaviour
 {
     public Entity data;
+    public int GetMaxHealth()
+    {
+        return data.maxHealth;
+    }
+    public List<Ability> GetAbilities()
+    {
+        return data.abilities;
+    }
+    public Ability GetAbilities(int i)
+    {
+        return data.abilities[i];
+    }
+    public Alignement GetAlignement()
+    {
+        return data.alignement;
+    }
+    public EntityTag GetEntityTag()
+    {
+        return data.entityTag;
+    }
 
     public TileData currentTile;
+    public Vector2Int GetPosition()
+    {
+        return currentTile.position;
+    }
 
     bool channelingBurst;
     public bool IsChannelingBurst { get => channelingBurst; }
@@ -71,7 +95,7 @@ public class EntityBehaviour : MonoBehaviour
 
         for (int i = 0; i < reachableTile.path.Count; i++)
         {
-            moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].Position.x, 0, reachableTile.path[i].Position.y), tileMovementSpeed)
+            moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), tileMovementSpeed)
                 .SetEase(movementEase));
 
             // first half of the jump
@@ -144,7 +168,7 @@ public class EntityBehaviour : MonoBehaviour
         
         for(int i = 0; i < tilesForCast.Count; i++)
         {
-           TileData tile = MapManager.GetTile(tilesForCast[i] + currentTile.position);
+           TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
             if (tile != null)
             {
                 tile.color = Color.blue;

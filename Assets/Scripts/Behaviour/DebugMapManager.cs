@@ -49,6 +49,7 @@ public class DebugMapManager : MonoBehaviour
         tileArea.area.Add(new Vector2Int(3, 3));
         tileArea.area.Add(new Vector2Int(2, 4));
         tileArea.area.Add(new Vector2Int(1, 3));
+        
     }
 
     private void Init()

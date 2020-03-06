@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 
 public enum Alignement { Enemy, Player, Neutral }
-public enum EntityTag { Healer, DPS, Tank, Minion, Totem }
+public enum EntityTag { Healer, DPS, Tank, Minion, Totem, Trap }
 
 [CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObjects/Entity", order = 1)]
 public class Entity : ScriptableObject
