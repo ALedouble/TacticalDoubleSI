@@ -57,8 +57,6 @@ public class EntityBehaviour : MonoBehaviour
 
     List<Vector2Int> tilesForEffect;
 
-    Color[] defaultColor;
-
     [HideInInspector] public int heldCrystalValue = -1;
 
     public void Init()
@@ -72,7 +70,7 @@ public class EntityBehaviour : MonoBehaviour
 
     private void Update()
     {
-       
+
     }
 
     public void OnTurn()
@@ -85,23 +83,10 @@ public class EntityBehaviour : MonoBehaviour
         else
         {
             data.brain.OnTurnStart(this);
+            GetTileForCast(data.abilities[0].castArea);
         }
 
-        /*
-        GetTileForCast(data.abilities[0].castArea);
-        if (inCase)
-        {
-            for (int i = 0; i < MapManager.GetMap().Count; i++)
-            {
-                defaultColor = new Color[MapManager.GetMap().Count];
-                defaultColor[i] = MapManager.GetMap()[i].color;
 
-                
-
-                Debug.Log(defaultColor[i]);
-            }
-
-        }*/
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
@@ -156,11 +141,10 @@ public class EntityBehaviour : MonoBehaviour
             Ease healEase = Ease.OutQuad;
             Ease returnHealEase = Ease.InQuad;
 
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x , transform.position.y + 0.5f, transform.position.z), .25f)
+            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), .25f)
             .SetEase(healEase, 2)
             .OnComplete(() =>
             {
-               
                 PlayEffects(ability.numberOfEffects, targetTile);
             }));
 
@@ -175,12 +159,12 @@ public class EntityBehaviour : MonoBehaviour
         Sequence effectSequence = DOTween.Sequence();
         for (int i = 0; i < tilesForCast.Count; i++)
         {
-            if (SelectionUtils.MapRaycast().position == tilesForCast[i])
+            if (SelectionUtils.MapRaycast().position - currentTile.position == tilesForCast[i])
             {
                 castCase = tilesForCast[i];
                 GetTileForEffect(data.abilities[0].effectArea);
-
             }
+
         }
 
         return effectSequence;
@@ -189,13 +173,14 @@ public class EntityBehaviour : MonoBehaviour
     public List<Vector2Int> GetTileForCast(TileArea area)
     {
         tilesForCast = area.RelativeArea();
-        
-        for(int i = 0; i < tilesForCast.Count; i++)
+
+        for (int i = 0; i < tilesForCast.Count; i++)
         {
-           TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
+            TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
             if (tile != null)
             {
                 tile.color = Color.blue;
+
                 inCase = true;
             }
         }
@@ -204,57 +189,68 @@ public class EntityBehaviour : MonoBehaviour
 
     public List<Vector2Int> GetTileForEffect(TileArea area)
     {
+        Debug.Log("hello");
         tilesForEffect = area.RelativeArea();
 
         for (int i = 0; i < tilesForEffect.Count; i++)
         {
             Debug.Log(castCase);
-            if(castCase.x > 0)
+
+            if (castCase.x > 0)
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
                 Debug.Log(tilesForEffect[i]);
             }
+
+            if (castCase.x < 0)
+            {
+                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y * -1, tilesForEffect[i].x);
+                Debug.Log(tilesForEffect[i]);
+            }
+
+            if (castCase.y < 0)
+            {
+                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].x , tilesForEffect[i].y * -1);
+                Debug.Log(tilesForEffect[i]);
+            }
+
             TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
+            Debug.Log(tile.position);
 
             if (tile != null)
             {
                 tile.color = Color.red;
             }
         }
-        
+
         return tilesForEffect;
     }
 
-    public List<Vector2Int> Prev(TileArea area)
+    public void OnDrawGizmos()
     {
-        tilesForEffect = area.RelativeArea();
 
-        for (int i = 0; i < tilesForEffect.Count; i++)
+        if (tilesForCast != null)
         {
-
-            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
-           
-           
-            if (tile != null)
+            for (int i = 0; i < tilesForCast.Count; i++)
             {
-                tile.color = Color.yellow;
+
+                DebugUtils.DrawTile(tilesForCast[i] + GetPosition(), Color.yellow, .5f);
+
+
             }
         }
 
-        return tilesForEffect;
-    }
 
-    public Color Return(Color theColor)
-    {
-        
-        for(int y = 0; y < MapManager.GetMap().Count; y++)
+
+        if (tilesForEffect != null)
         {
-            MapManager.GetMap()[y].color = theColor;
-                    
+            for (int i = 0; i < tilesForEffect.Count; i++)
+            {
+                Debug.Log(tilesForEffect[i]);
+                DebugUtils.DrawTile(tilesForEffect[i] + (castCase + GetPosition()), Color.green, .5f);
+            }
         }
-                
- 
 
-        return theColor;
     }
 }
+

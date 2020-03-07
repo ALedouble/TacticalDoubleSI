@@ -29,6 +29,7 @@ public class DebugMapVisualizer : MonoBehaviour
                         MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
 
                     if (MapManager.GetTile(new Vector2Int(x, y)).canPlacePlayerEntity) DebugUtils.DrawTile(new Vector2Int(x, y), playerPlacement, .5f);
+
                 }
             }
         }

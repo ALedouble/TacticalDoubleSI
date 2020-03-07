@@ -10,6 +10,7 @@ public class SelectionManager : MonoBehaviour
     public bool drawDebug;
 
     public Action<MapRaycastHit> OnClick;
+    public Action<EntityBehaviour> OnAttack;
     public Action<EntityBehaviour> OnEntitySelect;
 
     private void Awake()
