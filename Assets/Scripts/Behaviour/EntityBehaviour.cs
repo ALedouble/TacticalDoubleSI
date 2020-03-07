@@ -61,6 +61,15 @@ public class EntityBehaviour : MonoBehaviour
 
     [HideInInspector] public int heldCrystalValue = -1;
 
+    public void Init()
+    {
+        data = Instantiate(data);
+        name = data.name;
+
+        // VERY TEMPORARY
+        GetComponentInChildren<MeshRenderer>().material.color = data.alignement == Alignement.Enemy ? Color.red : Color.blue;
+    }
+
     private void Update()
     {
        
@@ -68,7 +77,17 @@ public class EntityBehaviour : MonoBehaviour
 
     public void OnTurn()
     {
-        data.brain.OnTurnStart(this);
+        if (data.brain == null)
+        {
+            Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
+            Debug.Break();
+        }
+        else
+        {
+            data.brain.OnTurnStart(this);
+        }
+
+        /*
         GetTileForCast(data.abilities[0].castArea);
         if (inCase)
         {
@@ -82,11 +101,16 @@ public class EntityBehaviour : MonoBehaviour
                 Debug.Log(defaultColor[i]);
             }
 
-        }
+        }*/
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
     {
+        currentTile.entities.Remove(this);
+
+        currentTile = MapManager.GetTile(reachableTile.GetCoordPosition());
+        currentTile.entities.Add(this);
+
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
 

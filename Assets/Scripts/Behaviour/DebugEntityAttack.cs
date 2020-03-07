@@ -22,8 +22,6 @@ public class DebugEntityAttack : MonoBehaviour
             }
         }
 
-        SelectionManager.Instance.selectedEntity = entity;
-
         entity.OnTurn();
     }
 

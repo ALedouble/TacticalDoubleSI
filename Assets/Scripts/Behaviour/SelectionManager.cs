@@ -9,9 +9,8 @@ public class SelectionManager : MonoBehaviour
 
     public bool drawDebug;
 
-    public EntityBehaviour selectedEntity;
-
     public Action<MapRaycastHit> OnClick;
+    public Action<EntityBehaviour> OnEntitySelect;
 
     private void Awake()
     {
@@ -23,8 +22,30 @@ public class SelectionManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (RaycastForEntities()) return;
+
             OnClick?.Invoke(SelectionUtils.MapRaycast());
         }
+    }
+
+    bool RaycastForEntities()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        Physics.Raycast(ray, out hit);
+
+        EntityBehaviour entity;
+
+        if (hit.collider == null) return false;
+
+        if (hit.collider.TryGetComponent<EntityBehaviour>(out entity))
+        {
+            OnEntitySelect?.Invoke(entity);
+            return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmos()

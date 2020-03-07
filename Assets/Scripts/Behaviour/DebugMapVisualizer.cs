@@ -6,17 +6,6 @@ public class DebugMapVisualizer : MonoBehaviour
 {
     public bool drawDebug;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private Color normal = new Color(.9f, .9f, .9f, .1f);
     private Color solid = new Color(.1f, .1f, .1f, .5f);
@@ -39,6 +28,7 @@ public class DebugMapVisualizer : MonoBehaviour
                         MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Solid ? solid :
                         MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
 
+                    if (MapManager.GetTile(new Vector2Int(x, y)).canPlacePlayerEntity) DebugUtils.DrawTile(new Vector2Int(x, y), playerPlacement, .5f);
                 }
             }
         }

@@ -17,11 +17,18 @@ public static class DebugUtils
 
     public static void DrawTile(Vector2Int position, Color color)
     {
+        DrawTile(position, color, 1);
+    }
+
+    public static void DrawTile(Vector2Int position, Color color, float sizeMultiplier)
+    {
         Color originalColor = Gizmos.color;
         Gizmos.color = color;
-        Gizmos.DrawCube(new Vector3(position.x, 0, position.y) + (Vector3.down * debugTileHeight * 0.5f), new Vector3(1 - debugTileSpacing, debugTileHeight, 1 - debugTileSpacing));
+        Gizmos.DrawCube(new Vector3(position.x, 0, position.y) + (Vector3.down * debugTileHeight * 0.5f), new Vector3(1* sizeMultiplier - debugTileSpacing, debugTileHeight, 1* sizeMultiplier - debugTileSpacing));
         Gizmos.color = originalColor;
     }
+
+
 
 #if UNITY_EDITOR
     public static void DrawTileEditor(Vector2Int position, Color color)
