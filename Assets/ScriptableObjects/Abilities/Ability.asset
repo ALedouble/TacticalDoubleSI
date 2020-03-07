@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: Ability
   m_EditorClassIdentifier: 
-  animationType: 0
+  animationType: 2
   displayName: 
   description: 
   cost: 0
@@ -27,15 +27,10 @@ MonoBehaviour:
     size: 5
     area:
     - {x: 2, y: 0}
-    - {x: 1, y: 1}
-    - {x: 3, y: 1}
-    - {x: 1, y: 3}
-    - {x: 3, y: 3}
-    - {x: 2, y: 4}
+    - {x: 0, y: 2}
+    - {x: 4, y: 2}
+    - {x: 1, y: 4}
   effectArea:
-    size: 5
+    size: 3
     area:
-    - {x: 1, y: 0}
-    - {x: 3, y: 0}
-    - {x: 2, y: 1}
-    - {x: 2, y: 2}
+    - {x: 1, y: 1}

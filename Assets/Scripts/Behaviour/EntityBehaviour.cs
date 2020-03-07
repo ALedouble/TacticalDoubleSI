@@ -163,11 +163,11 @@ public class EntityBehaviour : MonoBehaviour
             {
                 castCase = tilesForCast[i];
                 GetTileForEffect(data.abilities[0].effectArea);
+                
             }
-
         }
-
         return effectSequence;
+
     }
 
     public List<Vector2Int> GetTileForCast(TileArea area)
@@ -189,38 +189,36 @@ public class EntityBehaviour : MonoBehaviour
 
     public List<Vector2Int> GetTileForEffect(TileArea area)
     {
-        Debug.Log("hello");
         tilesForEffect = area.RelativeArea();
+        
 
         for (int i = 0; i < tilesForEffect.Count; i++)
         {
-            Debug.Log(castCase);
-
             if (castCase.x > 0)
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
-                Debug.Log(tilesForEffect[i]);
             }
 
             if (castCase.x < 0)
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y * -1, tilesForEffect[i].x);
-                Debug.Log(tilesForEffect[i]);
             }
 
             if (castCase.y < 0)
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].x , tilesForEffect[i].y * -1);
-                Debug.Log(tilesForEffect[i]);
             }
+            
 
-            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
-            Debug.Log(tile.position);
+            TileData tile = MapManager.GetTile(castCase + GetPosition());
+            Debug.Log(tile);
 
-            if (tile != null)
+            if (tile.entities.Count>0)
             {
-                tile.color = Color.red;
+              //  Debug.Log("hit");
             }
+           
+            
         }
 
         return tilesForEffect;
@@ -233,20 +231,14 @@ public class EntityBehaviour : MonoBehaviour
         {
             for (int i = 0; i < tilesForCast.Count; i++)
             {
-
                 DebugUtils.DrawTile(tilesForCast[i] + GetPosition(), Color.yellow, .5f);
-
-
             }
         }
-
-
 
         if (tilesForEffect != null)
         {
             for (int i = 0; i < tilesForEffect.Count; i++)
             {
-                Debug.Log(tilesForEffect[i]);
                 DebugUtils.DrawTile(tilesForEffect[i] + (castCase + GetPosition()), Color.green, .5f);
             }
         }
