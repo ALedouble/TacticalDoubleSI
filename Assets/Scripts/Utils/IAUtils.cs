@@ -65,6 +65,17 @@ public static class IAUtils
      * 
      * return l'ensemble de ces Tiles.
      */
+    public static List<ReachableTile> ValidCastFromTile(TileArea attackArea, List<TileData> tiles, Vector2Int startPosition, Vector2Int target)
+    {
+        List<ReachableTile> reachableTiles = new List<ReachableTile>();
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            reachableTiles.Add(FindShortestPath(startPosition, tiles[i].GetCoordPosition(), false, -1, true));
+        }
+
+        return ValidCastFromTile(attackArea, reachableTiles, target);
+    }
     public static List<ReachableTile> ValidCastFromTile(TileArea attackArea, List<ReachableTile> reachableTiles, Vector2Int target)
     {
         List<ReachableTile> canCastAndHitTarget = new List<ReachableTile>();
@@ -235,6 +246,20 @@ public static class IAUtils
                 ability2 = current.GetAbilities(0);
             }
         }
+    }
+    
+    /*
+     * Regarde si le turn d'entity est fini
+     */
+    public static bool CheckEndTurn(EntityBehaviour entity, bool canMakeAction, bool pass = false)
+    {
+        if (pass || !canMakeAction)
+        {
+            RoundManager.Instance.EndTurn(entity);
+            return true;
+        }
+
+        return false;
     }
 
 

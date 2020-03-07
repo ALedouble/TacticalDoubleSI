@@ -51,4 +51,9 @@ public class TileData
             tileType = value;
         }
     }
+
+    public Vector2Int GetCoordPosition()
+    {
+        return this.position;
+    }
 }

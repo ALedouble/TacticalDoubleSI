@@ -41,7 +41,7 @@ public class Minion : Brain
         if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
 
-        if (CheckEndTurn()) return;
+        if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
 
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0).effectArea, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, minion, playerHealer, playerDPS, playerTank);
@@ -62,7 +62,7 @@ public class Minion : Brain
 
                     else
                     {
-                        CheckEndTurn(true);
+                        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
                     }
                 }
             }
@@ -70,19 +70,8 @@ public class Minion : Brain
     }
 
     /*
-     * Regarde si le turn du Minion est fini
+     * Verifie si le Minion peut encore effectue une action 
      */
-    private bool CheckEndTurn(bool pass = false)
-    {
-        if (pass || !CanMakeAction())
-        {
-            RoundManager.Instance.EndTurn(minion);
-            return true;
-        }
-
-        return false;
-    }
-
     private bool CanMakeAction()
     {
         List<TileData> around = IAUtils.TilesAround(minion.currentTile);
