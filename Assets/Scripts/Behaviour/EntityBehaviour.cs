@@ -256,7 +256,7 @@ public class EntityBehaviour : MonoBehaviour
             {
                 TileData tile = MapManager.GetTile(castCase + GetPosition());
                 effectPosition = tile.position + tilesForEffect[i];
-                DebugUtils.DrawTile(effectPosition, Color.green, .5f);
+                DebugUtils.DrawTile(effectPosition, Color.blue, .5f);
             }
         }
 
