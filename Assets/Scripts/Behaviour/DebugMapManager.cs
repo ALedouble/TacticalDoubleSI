@@ -11,10 +11,8 @@ public class DebugMapManager : MonoBehaviour
 {
     [Header("AreaAndPath")]
     public bool drawDebug;
-    public bool fullPath;
     public int range = 15;
 
-    private bool saveFullPath;
     private bool firstClick = true;
     private bool havePath = false;
     private Vector2Int start;
@@ -36,7 +34,6 @@ public class DebugMapManager : MonoBehaviour
     private void Start()
     {
         Init();
-        saveFullPath = fullPath;
 
         tileArea = new TileArea();
 
@@ -148,7 +145,7 @@ public class DebugMapManager : MonoBehaviour
                 }
                 else
                 {
-                    path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
+                    path = IAUtils.FindShortestPath(false, start, end, true, range);
 
                     if (path != null)
                         path.path[path.path.Count - 1].color = chemin;
@@ -200,7 +197,7 @@ public class DebugMapManager : MonoBehaviour
                         MapManager.GetTile(tile.GetCoordPosition()).color = area;
                 }
 
-                path = IAUtils.FindShortestPath(start, tileSelect.position, true, range, fullPath);
+                path = IAUtils.FindShortestPath(false, start, tileSelect.position, true, range);
 
                 if (path != null)
                     foreach (TileData tileData in path.path)
@@ -258,7 +255,7 @@ public class DebugMapManager : MonoBehaviour
 
             if (havePath)
             {
-                path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
+                path = IAUtils.FindShortestPath(false, start, end, true, range);
 
                 foreach (TileData tileData in path.path)
                 {
@@ -276,29 +273,6 @@ public class DebugMapManager : MonoBehaviour
             firstClick = true;
             havePath = false;
         }
-
-        if (saveFullPath != fullPath)
-        {
-            foreach (TileData tileData in path.path)
-            {
-                if (tileData.color == chemin)
-                    tileData.color = normal;
-            }
-
-            path = IAUtils.FindShortestPath(start, end, true, range, fullPath);
-
-            if (path != null)
-                foreach (TileData tileData in path.path)
-                {
-                    if (tileData.color != target)
-                    {
-                        tileData.color = chemin;
-                    }
-                }
-
-            saveFullPath = fullPath;
-        }
-        
     }
 
 

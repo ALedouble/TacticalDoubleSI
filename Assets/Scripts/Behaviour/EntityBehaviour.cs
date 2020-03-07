@@ -39,16 +39,16 @@ public class EntityBehaviour : MonoBehaviour
     }
 
     bool channelingBurst;
-    public bool IsChannelingBurst { get => channelingBurst; }
+    public bool IsChannelingBurst { get => channelingBurst; set => channelingBurst = value; }
 
     int currentHealth;
-    public int CurrentHealth { get => currentHealth; }
+    public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
     int currentActionPoints;
-    public int CurrentActionPoints { get => currentActionPoints; }
+    public int CurrentActionPoints { get => currentActionPoints; set => currentActionPoints = value; }
 
     int currentArmor;
-    public int CurrentArmor { get => currentArmor; }
+    public int CurrentArmor { get => currentArmor; set => currentArmor = value; }
 
     Vector2Int effectPosition;
 

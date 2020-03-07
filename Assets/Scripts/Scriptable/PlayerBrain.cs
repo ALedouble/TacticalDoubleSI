@@ -25,7 +25,7 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnMovement;
 
         // TODO : Get entity position properly
-        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)entityBehaviour.transform.position.x, (int)entityBehaviour.transform.position.z), hit.position, true, 999);
+        ReachableTile reachableTile = IAUtils.FindShortestPath(false, new Vector2Int((int)entityBehaviour.transform.position.x, (int)entityBehaviour.transform.position.z), hit.position, true, 999);
 
         if (reachableTile == null)
         {
