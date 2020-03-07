@@ -86,18 +86,13 @@ public class EntityBehaviour : MonoBehaviour
         else
         {
             data.brain.OnTurnStart(this);
-            GetTileForCast(data.abilities[0].castArea);
         }
-
-
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
     {
-        currentTile.entities.Remove(this);
-
-        currentTile = MapManager.GetTile(reachableTile.GetCoordPosition());
-        currentTile.entities.Add(this);
+        currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile.GetCoordPosition());
+        CurrentActionPoints -= reachableTile.cost;
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
@@ -180,11 +175,14 @@ public class EntityBehaviour : MonoBehaviour
         for (int i = 0; i < tilesForCast.Count; i++)
         {
             TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
-            if (tile != null)
+            if (tile != null && MapManager.IsInsideMap(tile.position))
             {
                 tile.color = Color.blue;
             }
         }
+
+        // remove all tiles outside of the map
+        tilesForCast.RemoveAll(x => !MapManager.IsInsideMap(x + GetPosition()));
         return tilesForCast;
     }
 
@@ -231,13 +229,11 @@ public class EntityBehaviour : MonoBehaviour
             if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
             {
                 Vector2Int enemyPosition = MapManager.GetListOfEntity()[y].GetPosition();
-                Debug.Log(MapManager.GetListOfEntity()[y].GetPosition());
-                Debug.Log(currentTile.position);
-                Debug.Log((currentTile.position - (castCase + GetPosition())));
-                Debug.Log(CombatUtils.PushEffect(MapManager.GetListOfEntity()[y].GetPosition(), currentTile.position));
+                EntityBehaviour currentEnemy = MapManager.GetListOfEntity()[y];
+                
 
-                Vector2Int pushVector = CombatUtils.PushEffect(MapManager.GetListOfEntity()[y].GetPosition(), currentTile.position);
-                CombatUtils.Push(MapManager.GetListOfEntity()[y], pushVector);
+                Vector2Int pushVector = CombatUtils.PushEffect(enemyPosition, currentTile.position);
+                CombatUtils.Push(currentEnemy, pushVector);
 
             }
         }
@@ -260,7 +256,7 @@ public class EntityBehaviour : MonoBehaviour
             {
                 TileData tile = MapManager.GetTile(castCase + GetPosition());
                 effectPosition = tile.position + tilesForEffect[i];
-                DebugUtils.DrawTile(effectPosition, Color.green, .5f);
+                DebugUtils.DrawTile(effectPosition, Color.blue, .5f);
             }
         }
 

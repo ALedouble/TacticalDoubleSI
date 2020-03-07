@@ -29,15 +29,15 @@ public class RoundManager : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void StartRound()
     {
         phase = RoundPhase.Player;
+
+        for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+        {
+            // TODO : carry over a part of previous action points
+            PlayerTeamManager.Instance.playerEntitybehaviours[i].CurrentActionPoints = PlayerTeamManager.Instance.playerEntitybehaviours[i].data.maxActionPoints;
+        }
 
         SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
     }
@@ -49,7 +49,6 @@ public class RoundManager : MonoBehaviour
         entity.OnTurn();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
