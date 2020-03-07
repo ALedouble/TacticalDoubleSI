@@ -21,8 +21,17 @@ public static class CombatUtils
     {
         Sequence pushSequence = DOTween.Sequence();
         Ease pushEase = Ease.InQuad;
-
-        pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
+        for(int x = 0; x < MapManager.GetSize(); x++)
+        {
+            for (int y = 0; y < MapManager.GetSize(); y++)
+            {
+                if (MapManager.GetTile(pushVector.x,pushVector.y).tileType == TileType.Normal)
+                {
+                    pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
+                    
+                }
+            }
+        }
         return pushSequence;
     }
 }
