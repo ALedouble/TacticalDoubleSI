@@ -255,7 +255,7 @@ public static class IAUtils
     {
         if (pass || !canMakeAction)
         {
-            RoundManager.EndTurn(entity);
+            RoundManager.Instance.EndTurn(entity);
             return true;
         }
 
