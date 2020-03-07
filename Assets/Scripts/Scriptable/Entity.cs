@@ -20,6 +20,7 @@ public class Entity : ScriptableObject
     public Brain brain;
     public Alignement alignement;
     public EntityTag entityTag;
+    public float power;
 
     [Space]
 

@@ -50,12 +50,15 @@ public class EntityBehaviour : MonoBehaviour
     int currentArmor;
     public int CurrentArmor { get => currentArmor; }
 
+    Vector2Int effectPosition;
+
+
+    //For PropertyDrawer
     List<Vector2Int> tilesForCast;
-
-    Vector2Int castCase;
-    bool inCase = false;
-
     List<Vector2Int> tilesForEffect;
+    Vector2Int castCase;
+
+
 
     [HideInInspector] public int heldCrystalValue = -1;
 
@@ -180,8 +183,6 @@ public class EntityBehaviour : MonoBehaviour
             if (tile != null)
             {
                 tile.color = Color.blue;
-
-                inCase = true;
             }
         }
         return tilesForCast;
@@ -208,20 +209,31 @@ public class EntityBehaviour : MonoBehaviour
             {
                 tilesForEffect[i] = new Vector2Int(tilesForEffect[i].x , tilesForEffect[i].y * -1);
             }
+
             
 
             TileData tile = MapManager.GetTile(castCase + GetPosition());
-            Debug.Log(tile);
+            effectPosition = tile.position + tilesForEffect[i];
+            CheckEntity();
 
-            if (tile.entities.Count>0)
-            {
-              //  Debug.Log("hit");
-            }
-           
             
         }
 
+        
+
         return tilesForEffect;
+    }
+
+    public void CheckEntity()
+    {
+        Debug.Log(MapManager.GetListOfEntity());
+        for (int y = 0; y < MapManager.GetListOfEntity().Count; y++)
+        {
+            if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
+            {
+                Debug.Log(MapManager.GetListOfEntity()[y].name);
+            }
+        }
     }
 
     public void OnDrawGizmos()
@@ -239,7 +251,9 @@ public class EntityBehaviour : MonoBehaviour
         {
             for (int i = 0; i < tilesForEffect.Count; i++)
             {
-                DebugUtils.DrawTile(tilesForEffect[i] + (castCase + GetPosition()), Color.green, .5f);
+                TileData tile = MapManager.GetTile(castCase + GetPosition());
+                effectPosition = tile.position + tilesForEffect[i];
+                DebugUtils.DrawTile(effectPosition, Color.green, .5f);
             }
         }
 

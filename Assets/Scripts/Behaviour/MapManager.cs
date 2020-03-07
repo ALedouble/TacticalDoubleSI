@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
 {
     public Map map;
 
-    private List<EntityBehaviour> listOfEntityOnTheMap;
+    private List<EntityBehaviour> listOfEntityOnTheMap = new List<EntityBehaviour>();
 
     // Static fields should be in CamelCase
     public static MapManager Instance;
@@ -35,15 +35,16 @@ public class MapManager : MonoBehaviour
         EntityBehaviour entityBehaviour;
         for (int i = 0; i < map.entityStartPositions.Count; i++)
         {
+            
             entityBehaviour = Instantiate(entityPrefab, new Vector3(map.entityStartPositions[i].position.x, 0, map.entityStartPositions[i].position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
-
+            
             entityBehaviour.data = map.entityStartPositions[i].entity;
             entityBehaviour.heldCrystalValue = map.entityStartPositions[i].heldCrystalValue;
             entityBehaviour.currentTile = MapManager.GetTile(new Vector2Int((int)map.entityStartPositions[i].position.x, (int)map.entityStartPositions[i].position.y));
             entityBehaviour.currentTile.entities.Add(entityBehaviour);
 
+            listOfEntityOnTheMap.Add(entityBehaviour);
             entityBehaviour.Init();
-
             RoundManager.Instance.roundEntities.Add(entityBehaviour);
         }
     }
