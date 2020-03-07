@@ -14,6 +14,9 @@ public class MapManager : MonoBehaviour
     // Static fields should be in CamelCase
     public static MapManager Instance;
 
+    // TEMPORARY
+    public List<ReachableTile> reachableTiles = new List<ReachableTile>();
+
     private void Awake()
     {
         // No need to check if the instance is null because the MapManager will always be destroyed at the end of the level
@@ -77,6 +80,22 @@ public class MapManager : MonoBehaviour
     public static void SetMap(List<TileData> map)
     {
         Instance.map.map = map;
+    }
+
+    public static bool IsInsideMap(Vector2Int position)
+    {
+        return (position.x >= 0 && position.y >= 0 && position.x < MapManager.GetSize() && position.y < MapManager.GetSize());
+    }
+
+    /// <summary>
+    /// Returns the target tile
+    /// </summary>
+    public static TileData MoveEntity(EntityBehaviour entity, Vector2Int origin, Vector2Int target)
+    {
+        GetTile(origin).entities.Remove(entity);
+
+        GetTile(target).entities.Add(entity);
+        return GetTile(target);
     }
 
     public static List<EntityBehaviour> GetListOfEntity()

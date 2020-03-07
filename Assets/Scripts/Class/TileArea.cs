@@ -19,6 +19,7 @@ public class TileArea
         {
             Vector2Int position = area[i] - decalage;
             position.y *= -1;
+
             goodArea.Add(position);
         }
 

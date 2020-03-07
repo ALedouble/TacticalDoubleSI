@@ -15,8 +15,6 @@ public class HUDManager : MonoBehaviour
         Instance = this;
 
         GetReferences();
-
-        OnAbilityClicked += x => { Debug.Log(x); };
     }
 
     // Update is called once per frame

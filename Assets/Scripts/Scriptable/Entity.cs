@@ -16,6 +16,7 @@ public class Entity : ScriptableObject
     [Space]
 
     public int maxHealth;
+    public int maxActionPoints;
     public List<Ability> abilities;
     public Brain brain;
     public Alignement alignement;

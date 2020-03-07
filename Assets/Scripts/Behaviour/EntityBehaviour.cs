@@ -45,7 +45,7 @@ public class EntityBehaviour : MonoBehaviour
     public int CurrentHealth { get => currentHealth; }
 
     int currentActionPoints;
-    public int CurrentActionPoints { get => currentActionPoints; }
+    public int CurrentActionPoints { get => currentActionPoints; set => currentActionPoints = value; }
 
     int currentArmor;
     public int CurrentArmor { get => currentArmor; }
@@ -86,18 +86,13 @@ public class EntityBehaviour : MonoBehaviour
         else
         {
             data.brain.OnTurnStart(this);
-            GetTileForCast(data.abilities[0].castArea);
         }
-
-
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
     {
-        currentTile.entities.Remove(this);
-
-        currentTile = MapManager.GetTile(reachableTile.GetCoordPosition());
-        currentTile.entities.Add(this);
+        currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile.GetCoordPosition());
+        CurrentActionPoints -= reachableTile.cost;
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
@@ -180,11 +175,14 @@ public class EntityBehaviour : MonoBehaviour
         for (int i = 0; i < tilesForCast.Count; i++)
         {
             TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
-            if (tile != null)
+            if (tile != null && MapManager.IsInsideMap(tile.position))
             {
                 tile.color = Color.blue;
             }
         }
+
+        // remove all tiles outside of the map
+        tilesForCast.RemoveAll(x => !MapManager.IsInsideMap(x + GetPosition()));
         return tilesForCast;
     }
 
