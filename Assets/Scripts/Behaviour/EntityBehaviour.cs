@@ -230,10 +230,15 @@ public class EntityBehaviour : MonoBehaviour
         {
             if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
             {
+                Vector2Int enemyPosition = MapManager.GetListOfEntity()[y].GetPosition();
                 Debug.Log(MapManager.GetListOfEntity()[y].GetPosition());
                 Debug.Log(currentTile.position);
                 Debug.Log((currentTile.position - (castCase + GetPosition())));
                 Debug.Log(CombatUtils.PushEffect(MapManager.GetListOfEntity()[y].GetPosition(), currentTile.position));
+
+                Vector2Int pushVector = CombatUtils.PushEffect(MapManager.GetListOfEntity()[y].GetPosition(), currentTile.position);
+                CombatUtils.Push(MapManager.GetListOfEntity()[y], pushVector);
+
             }
         }
     }
