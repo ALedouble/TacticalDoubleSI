@@ -226,12 +226,14 @@ public class EntityBehaviour : MonoBehaviour
 
     public void CheckEntity()
     {
-        Debug.Log(MapManager.GetListOfEntity());
         for (int y = 0; y < MapManager.GetListOfEntity().Count; y++)
         {
             if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
             {
-                Debug.Log(MapManager.GetListOfEntity()[y].name);
+                Debug.Log(MapManager.GetListOfEntity()[y].GetPosition());
+                Debug.Log(currentTile.position);
+                Debug.Log((currentTile.position - (castCase + GetPosition())));
+                Debug.Log(CombatUtils.PushEffect(MapManager.GetListOfEntity()[y].GetPosition(), currentTile.position));
             }
         }
     }

@@ -176,12 +176,12 @@ MonoBehaviour:
   - entities: []
     position: {x: 4, y: 4}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 5}
     tileType: 2
-    canPlacePlayerEntity: 1
+    canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 6}
