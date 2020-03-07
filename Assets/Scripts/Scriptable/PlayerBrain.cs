@@ -43,7 +43,7 @@ public class PlayerBrain : Brain
 
         SelectionManager.Instance.OnClick -= OnMovement;
 
-        ReachableTile reachableTile = IAUtils.FindShortestPath(entityBehaviour.GetPosition(), hit.position, true, entityBehaviour.CurrentActionPoints);
+        ReachableTile reachableTile = IAUtils.FindShortestPath(false, entityBehaviour.GetPosition(), hit.position, true, entityBehaviour.CurrentActionPoints);
 
         if (reachableTile == null)
         {
