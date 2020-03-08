@@ -24,23 +24,7 @@ public static class CombatUtils
         return myPosition + (pushVector* 2);
     }
 
-    public static Sequence Push(EntityBehaviour entity, Vector2Int pushVector)
-    {
-        
-        Sequence pushSequence = DOTween.Sequence();
-        Ease pushEase = Ease.InQuad;
-        for(int x = 0; x < MapManager.GetSize(); x++)
-        {
-            for (int y = 0; y < MapManager.GetSize(); y++)
-            {
-                if (MapManager.GetTile(pushVector.x ,pushVector.y).tileType == TileType.Normal)
-                {
-                    pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
-                }
-            }
-        }
-        return pushSequence;
-    }
+    
 
     public static Sequence Grab(Vector2Int myPosition, EntityBehaviour entity, Vector2Int grabVector)
     {
