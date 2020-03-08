@@ -141,20 +141,6 @@ public class EntityBehaviour : MonoBehaviour
         return abilitySequence;
     }
 
-    /*
-    public void CheckEntity()
-    {
-        for (int y = 0; y < MapManager.GetListOfEntity().Count; y++)
-        {
-            if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
-            {
-                Vector2Int enemyPosition = MapManager.GetListOfEntity()[y].GetPosition();
-                EntityBehaviour currentEnemy = MapManager.GetListOfEntity()[y];
-            }
-        }
-    }
-    */
-
     public void OnDrawGizmos()
     {
 
