@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReachableTile : IComparable
 {
+    public TileData castTile { get; set; }
     public List<TileData> path { get; set;  }
     public int cost { get; }
 
