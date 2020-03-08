@@ -69,13 +69,14 @@ public static class IAUtils
     public static List<ReachableTile> ValidCastFromTile(Ability ability, List<ReachableTile> reachableTiles, Vector2Int target)
     {
         List<ReachableTile> canCastAndHitTarget = new List<ReachableTile>();
-        List<Vector2Int> attackRangeCast = ability.castArea.RelativeArea();
-        List<Vector2Int> attackRangeEffect = ability.effectArea.RelativeArea();
+        List<Vector2Int> attackRangeCast = ability.castArea.GetTiles();
+        List<Vector2Int> attackRangeEffect;
 
         for (int i = 0; i < reachableTiles.Count; i++)
         {
             for (int j = 0; j < attackRangeCast.Count; j++)
             {
+                attackRangeEffect = ability.effectArea.GetRotatedTiles(reachableTiles[i].GetCoordPosition(), reachableTiles[i].GetCoordPosition() + attackRangeCast[j]);
                 for (int k = 0; k < attackRangeEffect.Count; k++)
                 {
                     if ((reachableTiles[i].GetCoordPosition() + attackRangeCast[j] + attackRangeEffect[k]).Equals(target))
@@ -99,13 +100,14 @@ public static class IAUtils
      */
     public static TileData ValidCastFromTile(Ability ability, List<TileData> tilesOnPath, Vector2Int target)
     {
-        List<Vector2Int> attackRangeCast = ability.castArea.RelativeArea();
-        List<Vector2Int> attackRangeEffect = ability.effectArea.RelativeArea();
+        List<Vector2Int> attackRangeCast = ability.castArea.GetTiles();
+        List<Vector2Int> attackRangeEffect;
 
         for (int i = 0; i < tilesOnPath.Count; i++)
         {
             for (int j = 0; j < attackRangeCast.Count; j++)
             {
+                attackRangeEffect = ability.effectArea.GetRotatedTiles(tilesOnPath[i].GetCoordPosition(), tilesOnPath[i].GetCoordPosition() + attackRangeCast[j]);
                 for (int k = 0; k < attackRangeEffect.Count; k++)
                 {
                     if ((tilesOnPath[i].GetCoordPosition() + attackRangeCast[j] + attackRangeEffect[k]).Equals(target))
