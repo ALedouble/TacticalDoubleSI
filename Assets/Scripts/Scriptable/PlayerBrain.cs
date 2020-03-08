@@ -7,7 +7,7 @@ using DG.Tweening;
 public class PlayerBrain : Brain
 {
     EntityBehaviour entityBehaviour;
-
+    public List<Vector2Int> castableTiles;
     List<ReachableTile> reachableTiles;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
@@ -53,6 +53,8 @@ public class PlayerBrain : Brain
 
         // TEMPORARY
         MapManager.Instance.reachableTiles.Clear();
+        MapManager.Instance.castableTiles.Clear();
+        MapManager.Instance.effectTiles.Clear();
 
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
@@ -63,7 +65,7 @@ public class PlayerBrain : Brain
         });
     }
 
-    public List<Vector2Int> castableTiles;
+    
 
     void OnAbilitySelected(int index)
     {
@@ -74,19 +76,19 @@ public class PlayerBrain : Brain
 
         SelectionManager.Instance.OnClick += OnUseAbility;
 
-        castableTiles = new List<Vector2Int>(entityBehaviour.GetTileForCast(entityBehaviour.data.abilities[index].castArea));
+        castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
 
-        // TEMPORARY : GetTile(s)ForCast devrait return des cases en WORLD SPACE
-        for (int i = 0; i < castableTiles.Count; i++)
-        {
-            castableTiles[i] += entityBehaviour.GetPosition();
-        }
+        MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer
+
+
     }
 
     void OnUseAbility(MapRaycastHit hit)
     {
         if (hit.tile == null) return;
         if (!castableTiles.Contains(hit.position)) return;
+
+        MapManager.Instance.castableTiles.Clear();
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
 
@@ -96,5 +98,9 @@ public class PlayerBrain : Brain
         {
             SelectionManager.Instance.OnClick += OnUseAbility;
         });
+
+        List<Vector2Int> effectTiles = entityBehaviour.data.abilities[0].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
+
+        MapManager.Instance.effectTiles = effectTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer
     }
 }

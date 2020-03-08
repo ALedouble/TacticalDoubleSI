@@ -86,7 +86,7 @@ public class HUDManager : MonoBehaviour
 
             abilityButton.onClick.AddListener(() =>
             {
-                OnAbilityClicked.Invoke(abilityNumber);
+                OnAbilityClicked?.Invoke(abilityNumber);
             });
 
             return true;

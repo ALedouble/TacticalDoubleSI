@@ -69,7 +69,7 @@ public static class IAUtils
     public static List<ReachableTile> ValidCastFromTile(TileArea attackArea, List<ReachableTile> reachableTiles, Vector2Int target)
     {
         List<ReachableTile> canCastAndHitTarget = new List<ReachableTile>();
-        List<Vector2Int> attackRange = attackArea.RelativeArea();
+        List<Vector2Int> attackRange = attackArea.GetTiles();
 
         for (int i = 0; i < reachableTiles.Count; i++)
         {
@@ -89,7 +89,7 @@ public static class IAUtils
     public static List<TileData> ValidCastFromTile(TileArea attackArea, List<TileData> tilesOnPath, Vector2Int target)
     {
         List<TileData> canCastAndHitTarget = new List<TileData>();
-        List<Vector2Int> attackRange = attackArea.RelativeArea();
+        List<Vector2Int> attackRange = attackArea.GetTiles();
 
         for (int i = 0; i < tilesOnPath.Count; i++)
         {

@@ -128,7 +128,7 @@ public class EntityBehaviour : MonoBehaviour
             .SetEase(attackEase, 10)
             .OnComplete(() =>
             {
-                PlayEffects(ability.numberOfEffects, targetTile);
+                //PlayEffects(ability.numberOfEffects, targetTile);
             }));
 
             abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
@@ -143,7 +143,7 @@ public class EntityBehaviour : MonoBehaviour
             .SetEase(healEase, 2)
             .OnComplete(() =>
             {
-                PlayEffects(ability.numberOfEffects, targetTile);
+               // Abili
             }));
 
             abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnHealEase, 10));
@@ -152,75 +152,7 @@ public class EntityBehaviour : MonoBehaviour
         return abilitySequence;
     }
 
-    public Sequence PlayEffects(List<AbilityEffect> effects, TileData targetTile)
-    {
-        Sequence effectSequence = DOTween.Sequence();
-        for (int i = 0; i < tilesForCast.Count; i++)
-        {
-            if (SelectionUtils.MapRaycast().position - currentTile.position == tilesForCast[i])
-            {
-                castCase = tilesForCast[i];
-                GetTileForEffect(data.abilities[0].effectArea);
-            }
-        }
-        return effectSequence;
-
-    }
-
-    public List<Vector2Int> GetTileForCast(TileArea area)
-    {
-        tilesForCast = area.RelativeArea();
-
-        for (int i = 0; i < tilesForCast.Count; i++)
-        {
-            TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
-            if (tile != null && MapManager.IsInsideMap(tile.position))
-            {
-                tile.color = Color.blue;
-            }
-        }
-
-        // remove all tiles outside of the map
-        tilesForCast.RemoveAll(x => !MapManager.IsInsideMap(x + GetPosition()));
-        return tilesForCast;
-    }
-
-    public List<Vector2Int> GetTileForEffect(TileArea area)
-    {
-        tilesForEffect = area.RelativeArea();
-        
-
-        for (int i = 0; i < tilesForEffect.Count; i++)
-        {
-            if (castCase.x > 0)
-            {
-                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
-            }
-
-            if (castCase.x < 0)
-            {
-                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y * -1, tilesForEffect[i].x);
-            }
-
-            if (castCase.y < 0)
-            {
-                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].x , tilesForEffect[i].y * -1);
-            }
-
-            
-
-            TileData tile = MapManager.GetTile(castCase + GetPosition());
-            effectPosition = tile.position + tilesForEffect[i];
-            CheckEntity();
-
-            
-        }
-
-        
-
-        return tilesForEffect;
-    }
-
+    /*
     public void CheckEntity()
     {
         for (int y = 0; y < MapManager.GetListOfEntity().Count; y++)
@@ -229,16 +161,10 @@ public class EntityBehaviour : MonoBehaviour
             {
                 Vector2Int enemyPosition = MapManager.GetListOfEntity()[y].GetPosition();
                 EntityBehaviour currentEnemy = MapManager.GetListOfEntity()[y];
-                
-
-                Vector2Int pushVector = CombatUtils.PushEffect(enemyPosition, currentTile.position);
-                CombatUtils.Push(currentEnemy, pushVector);
-
-                CombatUtils.GetEffect(this);
-
             }
         }
     }
+    */
 
     public void OnDrawGizmos()
     {
