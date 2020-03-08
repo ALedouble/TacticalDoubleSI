@@ -17,8 +17,6 @@ public class SelectionManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        OnHoveredTileChanged += (x) => { Debug.Log("Hovered tile has changed, it is now : " + x.position); };
     }
 
     MapRaycastHit mapRaycastLastFrame;
