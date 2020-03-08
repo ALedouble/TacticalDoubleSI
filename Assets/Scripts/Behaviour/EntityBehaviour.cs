@@ -41,8 +41,8 @@ public class EntityBehaviour : MonoBehaviour
     bool channelingBurst;
     public bool IsChannelingBurst { get => channelingBurst; set => channelingBurst = value; }
 
-    int currentHealth;
-    public int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    float currentHealth;
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
     int currentActionPoints;
     public int CurrentActionPoints { get => currentActionPoints; set => currentActionPoints = value; }

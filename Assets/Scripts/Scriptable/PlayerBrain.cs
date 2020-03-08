@@ -92,7 +92,7 @@ public class PlayerBrain : Brain
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
 
-        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), entityBehaviour.currentTile);
+        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), hit.tile);
 
         attackSequence.OnComplete(() =>
         {

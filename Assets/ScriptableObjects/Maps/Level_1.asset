@@ -100,7 +100,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 3}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -125,12 +125,12 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 1}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 2}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []

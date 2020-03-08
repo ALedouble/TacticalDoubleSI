@@ -61,6 +61,8 @@ public class TileArea
             worldSpaceArea[i] += position;
         }
 
+        worldSpaceArea.RemoveAll(x => !MapManager.IsInsideMap(x));
+
         return worldSpaceArea;
     }
 
@@ -72,6 +74,8 @@ public class TileArea
         {
             worldSpaceArea[i] += target;
         }
+
+        worldSpaceArea.RemoveAll(x => !MapManager.IsInsideMap(x));
 
         return worldSpaceArea;
     }
