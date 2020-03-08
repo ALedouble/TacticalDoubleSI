@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Entity_Player_Heal
   m_EditorClassIdentifier: 
   displayName: T
-  maxHealth: 0
+  maxHealth: 30
   maxActionPoints: 10
   abilities:
   - {fileID: 11400000, guid: bce6c8f3ca38a4940b2ecd4848a7536a, type: 2}

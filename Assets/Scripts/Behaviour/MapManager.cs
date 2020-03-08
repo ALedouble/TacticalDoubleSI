@@ -17,6 +17,10 @@ public class MapManager : MonoBehaviour
     // TEMPORARY
     public List<ReachableTile> reachableTiles = new List<ReachableTile>();
 
+    public List<Vector2Int> castableTiles = new List<Vector2Int>();
+
+    public List<Vector2Int> effectTiles = new List<Vector2Int>();
+
     private void Awake()
     {
         // No need to check if the instance is null because the MapManager will always be destroyed at the end of the level
