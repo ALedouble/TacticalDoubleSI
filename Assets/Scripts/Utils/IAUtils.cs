@@ -201,10 +201,11 @@ public static class IAUtils
     /*
      * Return le path vers l'enemy le plus proche
      */
-    public static ReachableTile PathToShortestEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank, bool canWalkOnDamageTile = true, int range = - 1)
+    public static ReachableTile PathToShortestEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity,
+                                                        bool canWalkOnDamageTile = true, int range = - 1, bool havePriority = false)
     {
         List<ReachableTile> listOfPathPlayers = new List<ReachableTile>();
-        List<EntityBehaviour> listPlayer = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
+        List<EntityBehaviour> listPlayer = new List<EntityBehaviour>() { firstEntity, secondEntity, thirdEntity };
 
         for (int i = 0; i < listPlayer.Count; i++)
         {
@@ -218,7 +219,7 @@ public static class IAUtils
             }
         }
 
-        listOfPathPlayers.Sort();
+        if (!havePriority) listOfPathPlayers.Sort();
 
         if (listOfPathPlayers.Count > 0) return listOfPathPlayers[0];
         else return null;
@@ -252,6 +253,23 @@ public static class IAUtils
         {
             RoundManager.Instance.EndTurn(entity);
             return true;
+        }
+
+        return false;
+    }
+
+    /*
+     * Regarde si l'on a encore assez de PA pour move.
+     */
+    public static bool CanWalkAround(EntityBehaviour current, int remainingActionPoints)
+    {
+        List<TileData> around = IAUtils.TilesAround(current.currentTile);
+        for (int i = 0; i < around.Count; i++)
+        {
+            if (around[i].IsWalkable && (int)around[i].tileType <= remainingActionPoints)
+            {
+                return true;
+            }
         }
 
         return false;
