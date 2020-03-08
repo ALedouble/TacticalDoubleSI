@@ -11,7 +11,7 @@ public class AbilityEffect : ScriptableObject
 {
     public float duration;
 
-    public virtual void Activate(Sequence abilitySequence)
+    public virtual void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         
     }

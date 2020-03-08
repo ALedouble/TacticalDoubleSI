@@ -119,35 +119,24 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         Sequence abilitySequence = DOTween.Sequence();
-        if (ability.animationType == AnimationType.Movement)
+
+        Ease attackEase = Ease.InBack;
+        Ease returnAttackEase = Ease.InOutExpo;
+
+        abilitySequence.Append(ability.GetStartTween(transform)
+        .SetEase(attackEase, 10)
+        .OnComplete(() =>
         {
-            Ease attackEase = Ease.InBack;
-            Ease returnAttackEase = Ease.InOutExpo;
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f)
-            .SetEase(attackEase, 10)
-            .OnComplete(() =>
+            
+            for(int i = 0; i < ability.abilityEffect.Count; i++)
             {
-                //PlayEffects(ability.numberOfEffects, targetTile);
-            }));
+                ability.abilityEffect[i].Activate(this, ability, targetTile);
+            }
+        }));
 
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
-        }
-
-        if (ability.animationType == AnimationType.Jump)
-        {
-            Ease healEase = Ease.OutQuad;
-            Ease returnHealEase = Ease.InQuad;
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), .25f)
-            .SetEase(healEase, 2)
-            .OnComplete(() =>
-            {
-               // Abili
-            }));
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnHealEase, 10));
-        }
+        abilitySequence.Append(ability.GetEndTween(transform)
+        .SetEase(returnAttackEase, 10));
+    
 
         return abilitySequence;
     }
