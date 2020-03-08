@@ -16,12 +16,13 @@ MonoBehaviour:
   displayName: Blow
   description: A simple attack
   cost: 4
+  damageMultiplicator: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: c9cffdc0349e84e4b9d10c28404672d8, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   castArea:
     size: 3
     area:
@@ -32,4 +33,6 @@ MonoBehaviour:
   effectArea:
     size: 3
     area:
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
     - {x: 1, y: 1}
