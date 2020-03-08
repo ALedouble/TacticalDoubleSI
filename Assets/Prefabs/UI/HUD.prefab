@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 97222562716421233}
   - component: {fileID: 2657261313506800992}
   - component: {fileID: 3485178107539057528}
+  - component: {fileID: 7661023456829026947}
   m_Layer: 5
   m_Name: HP Text
   m_TagString: Untagged
@@ -347,6 +348,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7661023456829026947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472624621413345086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: HPTextEnemy
 --- !u!1 &641085528758561433
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +372,7 @@ GameObject:
   - component: {fileID: 7991530886193654853}
   - component: {fileID: 2836213823393349602}
   - component: {fileID: 6387298550869582309}
+  - component: {fileID: 7881381006113026764}
   m_Layer: 5
   m_Name: PA Bar
   m_TagString: Untagged
@@ -420,6 +435,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7881381006113026764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641085528758561433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PABarEnemy
 --- !u!1 &819794324768245433
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +459,7 @@ GameObject:
   - component: {fileID: 3827396273703061038}
   - component: {fileID: 7216369274966222636}
   - component: {fileID: 8793057740276582133}
+  - component: {fileID: 5501560689216503556}
   m_Layer: 5
   m_Name: Icon Ennemi
   m_TagString: Untagged
@@ -493,6 +522,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5501560689216503556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819794324768245433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: IconEnemy
 --- !u!1 &1037293287400674703
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudTag: HPBar
+  hudTag: HPBarPlayer
 --- !u!1 &2412441086534420952
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +998,7 @@ GameObject:
   - component: {fileID: 3047271975864579373}
   - component: {fileID: 8346377392873775727}
   - component: {fileID: 8433827611410725462}
+  - component: {fileID: 3664788056975275952}
   m_Layer: 5
   m_Name: HP Bar
   m_TagString: Untagged
@@ -1018,6 +1061,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3664788056975275952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412441086534420952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: HPBarEnemy
 --- !u!1 &2603493643752656926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,7 +2274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudTag: PAText
+  hudTag: PATextPlayer
 --- !u!1 &4682061218354966797
 GameObject:
   m_ObjectHideFlags: 0
@@ -2927,7 +2983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudTag: HPText
+  hudTag: HPTextPlayer
 --- !u!1 &6230556265454867336
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,7 +3070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudTag: PABar
+  hudTag: PABarPlayer
 --- !u!1 &6371463488266314445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3665,6 +3721,7 @@ GameObject:
   - component: {fileID: 8792096288361271073}
   - component: {fileID: 315475670348386608}
   - component: {fileID: 496695191095017119}
+  - component: {fileID: 3512509615178621316}
   m_Layer: 5
   m_Name: PA Text
   m_TagString: Untagged
@@ -3810,6 +3867,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3512509615178621316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7697095245802487991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PATextEnemy
 --- !u!1 &7709630540626909805
 GameObject:
   m_ObjectHideFlags: 0

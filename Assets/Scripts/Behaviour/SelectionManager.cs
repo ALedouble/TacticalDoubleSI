@@ -12,15 +12,26 @@ public class SelectionManager : MonoBehaviour
     public Action<MapRaycastHit> OnClick;
     public Action<EntityBehaviour> OnAttack;
     public Action<EntityBehaviour> OnEntitySelect;
+    public Action<MapRaycastHit> OnHoveredTileChanged;
 
     private void Awake()
     {
         Instance = this;
+
+        OnHoveredTileChanged += (x) => { Debug.Log("Hovered tile has changed, it is now : " + x.position); };
     }
 
-    // Update is called once per frame
+    MapRaycastHit mapRaycastLastFrame;
+
     void Update()
     {
+        MapRaycastHit mapRaycastThisFrame = SelectionUtils.MapRaycast();
+        if (mapRaycastLastFrame.tile != mapRaycastThisFrame.tile)
+        {
+            OnHoveredTileChanged?.Invoke(mapRaycastThisFrame);
+        }
+        mapRaycastLastFrame = mapRaycastThisFrame;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (RaycastForEntities()) return;
