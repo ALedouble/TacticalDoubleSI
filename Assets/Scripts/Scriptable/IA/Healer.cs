@@ -108,25 +108,24 @@ public class Healer : Brain
         if (ability1) return false;
 
         ReachableTile pathToHeal = null;
-        EntityBehaviour entityToHeal = null;
 
         reachableTiles = IAUtils.FindAllReachablePlace(healer.GetPosition(), healer.CurrentActionPoints - ability1.cost, true);
 
-        if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyTank, reachableTiles, iaEntityFunction, ability1, ref pathToHeal, ref entityToHeal,
+        if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyTank, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                         healerAbilityCall, conditionFunction))
         {
-            if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyDPS, reachableTiles, iaEntityFunction, ability1, ref pathToHeal, ref entityToHeal,
+            if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyDPS, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                             healerAbilityCall, conditionFunction))
             {
-                if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyHealer, reachableTiles, iaEntityFunction, ability1, ref pathToHeal, ref entityToHeal,
+                if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyHealer, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                                 healerAbilityCall, conditionFunction))
                 {
-                    if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyMinion, reachableTiles, iaEntityFunction, ability1, ref pathToHeal, ref entityToHeal,
+                    if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyMinion, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                                     healerAbilityCall, conditionFunction))
                     {
                         if (pathToHeal != null)
                         {
-                            return IAUtils.MoveAndTriggerAbilityIfNeed(healer, pathToHeal, iaEntityFunction, true, healerAbilityCall, ability1, entityToHeal.currentTile);
+                            return IAUtils.MoveAndTriggerAbilityIfNeed(healer, pathToHeal, iaEntityFunction, true, healerAbilityCall, ability1, pathToHeal.castTile);
                         }
                     }
                 }
@@ -145,10 +144,9 @@ public class Healer : Brain
         if (healer.CurrentActionPoints < ability2.cost) return false;
 
         reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>(), 0) };
-        IAUtils.GetPlayerInRange(reachableTiles, ability2.effectArea, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
+        IAUtils.GetPlayerInRange(reachableTiles, ability2, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        return IAUtils.AttackWithPriority(healer, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction,
-                                        healerAbilityCall, ability2, playerHealer, playerDPS, playerTank);
+        return IAUtils.AttackWithPriority(healer, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, healerAbilityCall, ability2);
     }
         
 

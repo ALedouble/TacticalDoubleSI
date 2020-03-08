@@ -101,9 +101,10 @@ public class DPS : Brain
 
                 for (int i = 0; i < listOfEntity.Count; i++)
                 {
-                    if (IAUtils.ValidCastFromTile(ability2.effectArea, zoneCast, listOfEntity[i].currentTile.GetCoordPosition()).Count > 0)
+                    TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
+                    if (tileToCast != null)
                     {
-                        IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, null, true, dpsAbilityCall, ability2, listOfEntity[i].currentTile);
+                        IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, null, true, dpsAbilityCall, ability2, tileToCast);
                         canCast = true;
                         break;
                     }
@@ -164,12 +165,20 @@ public class DPS : Brain
 
         if(!SeeToUseAbilityDuringThePathToTarget(target, true))
         {
-            return IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction, true, dpsAbilityCall, ability1, target.Item2.currentTile);
+            return IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction, true, dpsAbilityCall, ability1, target.Item1.castTile);
         }
 
         return false;
     }
 
+    /*
+     * Regarde vers quel entity il va se deplace selon l'ordre de priorite Heal (percentOfLifeNeedForAttackPrio % HP) 
+     *                                                                      > DPS (percentOfLifeNeedForAttackPrio % HP) 
+     *                                                                      > Tank (percentOfLifeNeedForAttackPrio % HP) 
+     *                                                                      > Heal 
+     *                                                                      > DPS 
+     *                                                                      > Tank
+     */
     private void WalkVersPrio()
     {
         reachableTiles = IAUtils.FindAllReachablePlace(dps.GetPosition(), dps.CurrentActionPoints, true);
@@ -212,7 +221,7 @@ public class DPS : Brain
 
         if (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100))
         {
-            tilesToCastOnEntity = IAUtils.ValidCastFromTile(ability1.effectArea, reachableTiles, entity.GetPosition());
+            tilesToCastOnEntity = IAUtils.ValidCastFromTile(ability1, reachableTiles, entity.GetPosition());
             if (tilesToCastOnEntity.Count > 0)
             {
                 return new Tuple<ReachableTile, EntityBehaviour>(tilesToCastOnEntity[0], entity);
@@ -238,21 +247,20 @@ public class DPS : Brain
         if (ability2Use) return false;
 
         List<TileData> zoneCastDist = null;
-        EntityBehaviour entityCastDist = null;
         for (int i = 0; i < pathToEntityCac.path.Count; i++)
         {
             zoneCastDist = new List<TileData>() { pathToEntityCac.path[i] };
             for (int j = 0; j < listOfEntity.Count; j++)
             {
-                if (IAUtils.ValidCastFromTile(ability2.effectArea, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition()).Count > 0)
+                TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
+                if (tileToCast != null)
                 {
-                    entityCastDist = listOfEntity[j];
-                    break;
+                    return UseAbilityDuringThePathToTarget(pathToEntityCac, tileToCast, zoneCastDist, priorityOnRun);
                 }
             }
         }
 
-        return UseAbilityDuringThePathToTarget(pathToEntityCac, entityCastDist, zoneCastDist, priorityOnRun);
+        return false;
     }
 
     /*
@@ -261,30 +269,28 @@ public class DPS : Brain
      * Soit on prioritise la Run vers "listOfPathToEntityCac" et alors on attaquera uniquement si le cout de la Run plus de "ability2" est inferieur au nombre de PA restant
      * Sinon, si on ne prioritise pas la Run, alors on verifie seulement si l'utilisation d'"ability2" et du deplacent pour le caster est inferieur au nombre de PA restant.
      */
-    private bool UseAbilityDuringThePathToTarget(ReachableTile pathToEntityCac, EntityBehaviour entityCastDist, List<TileData> zoneCastDist, bool priorityOnRun)
+    private bool UseAbilityDuringThePathToTarget(ReachableTile pathToEntityCac, TileData tileToCast, List<TileData> zoneCastDist, bool priorityOnRun)
     {
         bool canCast = true;
-        if (entityCastDist != null)
+
+        ReachableTile intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
+
+        int deplacementCost;
+        if (priorityOnRun) deplacementCost = pathToEntityCac.cost;
+        else deplacementCost = intermediateTile.cost;
+
+        if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
         {
-            ReachableTile intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
-
-            int deplacementCost;
-            if (priorityOnRun) deplacementCost = pathToEntityCac.cost;
-            else deplacementCost = intermediateTile.cost;
-
-            if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
-            {
-                ability2Use = true;
-                IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, entityCastDist.currentTile);
-            }
-
-            else
-            {
-                canCast = false;
-            }
+            ability2Use = true;
+            IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast);
         }
 
-        if (entityCastDist == null || !canCast) return false;
+        else
+        {
+            canCast = false;
+        }
+
+        if (!canCast) return false;
         return true;
     }
 }

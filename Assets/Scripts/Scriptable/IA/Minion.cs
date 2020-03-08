@@ -47,7 +47,7 @@ public class Minion : Brain
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
         
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
-        IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0).effectArea, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
+        IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
 
         if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
@@ -130,8 +130,7 @@ public class Minion : Brain
      */
     private bool Attack()
     {
-        return IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction,
-                                                minionAbilityCall, minion.GetAbilities(0), playerHealer, playerDPS, playerTank, conditionFunction);
+        return IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction);
     }
 
     /*
