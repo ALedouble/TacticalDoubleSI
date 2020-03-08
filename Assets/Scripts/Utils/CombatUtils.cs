@@ -5,11 +5,38 @@ using UnityEngine;
 
 public static class CombatUtils
 {
-    public static float damageCalcul(Entity data, float damage)
+    static AbilityEffect currentEffect;
+    static DamageEffect damageEffect;
+
+    public static AbilityEffect GetEffect(EntityBehaviour entity)
     {
-        damage = ((data.power * 0.5f) - 1);
-        return damage;
+        for (int i = 0; i < entity.GetAbilities().Count; i++) {
+            for (int y = 0; y < entity.data.abilities[i].numberOfEffects.Count; y++) {
+                 currentEffect = entity.data.abilities[i].numberOfEffects[y];
+
+                 if (currentEffect.GetType() == typeof(DamageEffect))
+                 {
+                    damageEffect = (DamageEffect)currentEffect;
+                    SetDamage(entity);
+                 }
+            }
+        }
+
+        return currentEffect;
     }
+
+    public static float SetDamage(EntityBehaviour entity) {
+        float damageValue = 0;
+        for(int i = 0; i < entity.GetAbilities().Count; i++)
+        {
+            float damage = ((entity.data.power * damageEffect.damageMultiplicator) - 1);
+            damageValue = damage;
+        }
+       
+
+        return damageValue;
+    }
+
 
     public static Vector2Int PushEffect(Vector2Int enemyPosition, Vector2Int myPosition)
     {
@@ -26,14 +53,9 @@ public static class CombatUtils
         {
             for (int y = 0; y < MapManager.GetSize(); y++)
             {
-                Debug.Log(MapManager.GetTile(x,y));
-                Debug.Log(pushVector);
                 if (MapManager.GetTile(pushVector.x ,pushVector.y).tileType == TileType.Normal)
                 {
-                    Debug.Log(entity.currentTile.position);
                     pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
-                    Debug.Log(entity.currentTile.position);
-                    
                 }
             }
         }

@@ -161,7 +161,6 @@ public class EntityBehaviour : MonoBehaviour
             {
                 castCase = tilesForCast[i];
                 GetTileForEffect(data.abilities[0].effectArea);
-                
             }
         }
         return effectSequence;
@@ -234,6 +233,8 @@ public class EntityBehaviour : MonoBehaviour
 
                 Vector2Int pushVector = CombatUtils.PushEffect(enemyPosition, currentTile.position);
                 CombatUtils.Push(currentEnemy, pushVector);
+
+                CombatUtils.GetEffect(this);
 
             }
         }

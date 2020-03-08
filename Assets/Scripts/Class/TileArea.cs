@@ -8,6 +8,8 @@ public class TileArea
     public int size = 3;
     public List<Vector2Int> area = new List<Vector2Int>();
 
+
+
     public List<Vector2Int> RelativeArea()
     {
         List<Vector2Int> goodArea = new List<Vector2Int>();

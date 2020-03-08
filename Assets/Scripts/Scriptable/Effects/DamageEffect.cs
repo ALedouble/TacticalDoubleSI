@@ -4,10 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "DamageEffect", menuName = "ScriptableObjects/DamageEffect", order = 100)]
 public class DamageEffect : AbilityEffect
-{
-    [Tooltip("Le nombre de dommage ")]
-    public float damage;
-
+{ 
     [Tooltip("Le multiplicateur à chaque LevelUp")]
     public float damageMultiplicator;
 
@@ -16,4 +13,10 @@ public class DamageEffect : AbilityEffect
 
     [Tooltip("VFX quand l'attaque touche")]
     public GameObject vfxHit;
+
+    public float damageCalcul(Entity data, float damage)
+    {
+        float totalDamage = ((data.power * damageMultiplicator) - 1);
+        return totalDamage;
+    }
 }
