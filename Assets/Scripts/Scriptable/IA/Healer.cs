@@ -24,11 +24,11 @@ public class Healer : Brain
 
     static string nameAbility1 = "Heal";
     static Ability ability1;
-    static bool ability1Use = false;
+    static bool ability1Use;
 
     static string nameAbility2 = "Attack";
     static Ability ability2;
-    static bool ability2Use = false;
+    static bool ability2Use;
 
     static int lifeLoseForPrio = 6;
 
@@ -39,7 +39,10 @@ public class Healer : Brain
         healerAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
         healer = entityBehaviour;
-        IAHealer();
+        ability1Use = false;
+        ability2Use = false;
+
+        iaEntityFunction();
     }
 
     /*
@@ -48,12 +51,12 @@ public class Healer : Brain
     private void IAHealer()
     {
         IAUtils.GetAbility(healer, nameAbility1, nameAbility2, ref ability1, ref ability2);
-
         IAUtils.GetAllEntity(healer, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyDPS, ref enemyHealer, ref enemyMinion);
+
 
         IAUtils.CheckEndTurn(healer, CanMakeAction());
 
-        if (RunAtMaxDistanceOfAll()) return;
+        if (IsInDanger()) return;
 
         else if (Heal()) { ability1Use = true; return; }
 
@@ -61,7 +64,7 @@ public class Healer : Brain
 
         else if (MoveToShortestAlly()) return;
 
-        IAUtils.CheckEndTurn(healer, CanMakeAction(), true);
+        RunAtMaxDistanceOfAll();
     }
 
     /*
@@ -72,68 +75,18 @@ public class Healer : Brain
         if (!ability1Use && healer.CurrentActionPoints >= ability1.cost) return true;
         if (!ability2Use && healer.CurrentActionPoints >= ability2.cost) return true;
 
-        List<TileData> around = IAUtils.TilesAround(healer.currentTile);
-        for (int i = 0; i < around.Count; i++)
-        {
-            if (around[i].IsWalkable && (int)around[i].tileType <= healer.CurrentActionPoints)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return IAUtils.CanWalkAround(healer, healer.CurrentActionPoints);
     }
 
     /*
-     * Cherche la tile la plus eloigne des trois perso du player dans la range du healer et lui dit d'y aller
+     * Si le healer est le dernier enemy || si un player est a cote || s'il n'a plus toute sa vie
      */
-    private bool RunAtMaxDistanceOfAll()
+    private bool IsInDanger()
     {
-        // Si le healer est le dernier enemy || si un player est a cote || s'il n'a plus toute sa vie
         if (Solo() || IAUtils.HaveXEntityAround(Alignement.Player, healer.currentTile) || healer.CurrentHealth < healer.GetMaxHealth())
         {
-            ReachableTile bestReachableTile = null;
-            float bestMoyenne = -1;
-
-            ReachableTile playerHealerPath;
-            ReachableTile playerDPSPath;
-            ReachableTile playerTankPath;
-
-            reachableTiles = IAUtils.FindAllReachablePlace(healer.GetPosition(), healer.CurrentActionPoints, true);
-
-            for (int i = 0; i < reachableTiles.Count; i++)
-            {
-                playerHealerPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerHealer.GetPosition(), false, healer.CurrentActionPoints);
-                playerDPSPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerDPS.GetPosition(), false, healer.CurrentActionPoints);
-                playerTankPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerTank.GetPosition(), false, healer.CurrentActionPoints);
-
-                float moyenne = SommeDistance(i);
-                if (bestMoyenne <= moyenne)
-                {
-                    bestReachableTile = reachableTiles[i];
-                    bestMoyenne = moyenne;
-                }
-            }
-
-            return IAUtils.MoveAndTriggerAbilityIfNeed(healer, bestReachableTile, iaEntityFunction);
-
-
-
-            float SommeDistance(int index)
-            {
-                float somme = 0;
-
-                if (playerHealerPath != null)
-                    somme += reachableTiles[index].cost;
-
-                if (playerDPSPath != null)
-                    somme += reachableTiles[index].cost;
-
-                if (playerTankPath != null)
-                    somme += reachableTiles[index].cost;
-
-                return somme;
-            }
+            RunAtMaxDistanceOfAll();
+            return true;
         }
 
         return false;
@@ -225,6 +178,55 @@ public class Healer : Brain
         }
 
         return true;
+    }
+
+    /*
+     * Cherche la tile la plus eloigne des trois perso du player dans la range du healer et lui dit d'y aller
+     */
+    private void RunAtMaxDistanceOfAll()
+    {
+        ReachableTile bestReachableTile = null;
+        float bestMoyenne = -1;
+
+        ReachableTile playerHealerPath;
+        ReachableTile playerDPSPath;
+        ReachableTile playerTankPath;
+
+        reachableTiles = IAUtils.FindAllReachablePlace(healer.GetPosition(), healer.CurrentActionPoints, true);
+
+        for (int i = 0; i < reachableTiles.Count; i++)
+        {
+            playerHealerPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerHealer.GetPosition(), false, healer.CurrentActionPoints);
+            playerDPSPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerDPS.GetPosition(), false, healer.CurrentActionPoints);
+            playerTankPath = IAUtils.FindShortestPath(true, reachableTiles[i].GetCoordPosition(), playerTank.GetPosition(), false, healer.CurrentActionPoints);
+
+            float moyenne = SommeDistance(i);
+            if (bestMoyenne <= moyenne)
+            {
+                bestReachableTile = reachableTiles[i];
+                bestMoyenne = moyenne;
+            }
+        }
+
+        IAUtils.MoveAndTriggerAbilityIfNeed(healer, bestReachableTile, iaEntityFunction);
+        IAUtils.CheckEndTurn(healer, CanMakeAction(), true);
+
+
+        float SommeDistance(int index)
+        {
+            float somme = 0;
+
+            if (playerHealerPath != null)
+                somme += reachableTiles[index].cost;
+
+            if (playerDPSPath != null)
+                somme += reachableTiles[index].cost;
+
+            if (playerTankPath != null)
+                somme += reachableTiles[index].cost;
+
+            return somme;
+        }
     }
 
     /*

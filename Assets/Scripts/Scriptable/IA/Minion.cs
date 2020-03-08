@@ -21,7 +21,9 @@ public class Minion : Brain
 
     static int percentOfLifeNeedForHelp = 25;
     static int rangeAttackWhenLowLife = 2;
-    static bool lowLife = false;
+
+    static bool firstActionInTurn;
+    static bool lowLife;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -30,6 +32,8 @@ public class Minion : Brain
         minionAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
         minion = entityBehaviour;
+        firstActionInTurn = true;
+        lowLife = false;
 
         iaEntityFunction();
     }
@@ -39,35 +43,23 @@ public class Minion : Brain
      */
     private void IAMinion()
     {
-        if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
-        else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
-
-        if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
-
+        if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
+        else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
+        
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0).effectArea, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        if (lowLife || !CheckIfNeedAndCanHaveHelp())
-        {
-            if (!IAUtils.IsThereAnExplosion(minion, playerHealer, playerDPS, playerTank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, 
-                                                iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction))
-            {
-                if (!IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, 
-                                                minionAbilityCall, minion.GetAbilities(0), playerHealer, playerDPS, playerTank, conditionFunction))
-                {
-                    if (!lowLife)
-                    {
-                        ReachableTile pathToShortestEnemy = IAUtils.PathToShortestEnemy(true, minion, playerHealer, playerDPS, playerTank);
-                        IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
-                    }
 
-                    else
-                    {
-                        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
-                    }
-                }
-            }
-        }
+        if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
+
+        if (Explosion()) return;
+
+        if (CheckIfNeedAndCanHaveHelp()) return;
+
+        if (Attack()) return;
+
+        WalkOnShortest();
+
     }
 
     /*
@@ -78,12 +70,7 @@ public class Minion : Brain
         List<TileData> around = IAUtils.TilesAround(minion.currentTile);
         for (int i = 0; i < around.Count; i++)
         {
-            if (around[i].IsWalkable && (int)around[i].tileType <= minion.CurrentActionPoints)
-            {
-                return true;
-            }
-
-            else if (!around[i].IsWalkable)
+            if (!around[i].IsWalkable)
             {
                 for (int j = 0; j < around[i].entities.Count; j++)
                 {
@@ -98,21 +85,67 @@ public class Minion : Brain
             }
         }
 
+        return IAUtils.CanWalkAround(minion, lowLife ? (rangeAttackWhenLowLife > minion.CurrentActionPoints ? minion.CurrentActionPoints : rangeAttackWhenLowLife) : minion.CurrentActionPoints);
+    }
+
+    /*
+     * Regarde si un joueur dans la range d'attaque prepare une explosion et le focus
+     * 
+     * Si oui, return true
+     * Sinon, return false
+     */
+    private bool Explosion()
+    {
+        return IAUtils.IsThereAnExplosion(minion, playerHealer, playerDPS, playerTank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack,
+                                                iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction);
+    }
+
+    /*
+     * Regarde si le Minion à besoin d'aide (PV < percentOfLifeNeedForHelp) et s'il reste au moins un Tank (Enemy)
+     * 
+     * Si oui, ce deplace au tank et previent qu'il est "lowLife"
+     * Sinon, continue
+     */
+    private bool CheckIfNeedAndCanHaveHelp()
+    {
+        if (firstActionInTurn)
+        {
+            firstActionInTurn = false;
+            if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp) / 100))
+            {
+                lowLife = true;
+                IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove);
+                return true;
+            }
+        }
+
         return false;
     }
 
     /*
-     * Regarde si le Minion à besoin d'aide (PV < percentOfLifeNeedForHelp%) et s'il reste au moins un Tank (Enemy)
+     * Regarde s'il peut attaquer un joueur dans l'ordre Heal > Dps > Tank
+     * 
+     * Si oui, return true
+     * Sinon, return false
      */
-    private bool CheckIfNeedAndCanHaveHelp()
+    private bool Attack()
     {
-        if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp) / 100))
+        return IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction,
+                                                minionAbilityCall, minion.GetAbilities(0), playerHealer, playerDPS, playerTank, conditionFunction);
+    }
+
+    /*
+     * Cherche l'enemy le plus pres et s'en rapproche (si on a encore assez de vie)
+     */
+    private void WalkOnShortest()
+    {
+        if (!lowLife)
         {
-            lowLife = true;
-            return IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove);
+            ReachableTile pathToShortestEnemy = IAUtils.PathToShortestEnemy(false, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints);
+            IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
         }
 
-        return false;
+        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
 
     /*
