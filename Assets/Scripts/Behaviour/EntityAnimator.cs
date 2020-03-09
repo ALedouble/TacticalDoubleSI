@@ -17,8 +17,7 @@ public class EntityAnimator : MonoBehaviour
     GameObject child;
 
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         matProp = new MaterialPropertyBlock();
 
@@ -29,25 +28,22 @@ public class EntityAnimator : MonoBehaviour
         meshRenderer = child.GetComponent<MeshRenderer>();
 
         meshRenderer.sharedMaterial = mat;
-
-        PlayAnimation(animation, LoopMode.Loop);
-        Update();
     }
 
     float animationStartTime;
     LoopMode loopMode;
-    public void PlayAnimation(EntityAnimation animation, LoopMode mode)
+    public void PlayAnimation(EntityAnimation animation)
     {
         Texture tex = animation.GetTexture(Time.time);
 
-        loopMode = mode;
+        loopMode = animation.loopMode;
 
         this.animation = animation;
         animationStartTime = Time.time;
     }
 
     Texture lastTexture;
-    private void Update()
+    public void Update()
     {
         float time = loopMode == LoopMode.Loop ? Mathf.Repeat(Time.time - animationStartTime, animation.Length) : Time.time - animationStartTime;
 

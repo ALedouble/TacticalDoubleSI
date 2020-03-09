@@ -27,13 +27,33 @@ public class EntityAnimationInspector : Editor
 
     float lengthOverride = 0;
 
+
+    float animationStartTime;
     public override void OnInspectorGUI()
     {
         ////////////////////////////////////////////////////////////////////////////////////////////// PREVIEW
 
         GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, 100), 
-            animation.GetTexture(Mathf.Repeat((float)EditorApplication.timeSinceStartup, animation.Length)),
+            animation.GetTexture(
+                serializedObject.FindProperty("loopMode").enumValueIndex == 0 ?
+                (float)EditorApplication.timeSinceStartup - animationStartTime :
+                Mathf.Repeat((float)EditorApplication.timeSinceStartup, animation.Length)
+                ),
             ScaleMode.ScaleToFit);
+
+        if (serializedObject.FindProperty("loopMode").enumValueIndex == 0)
+        {
+            if (GUILayout.Button("Play"))
+            {
+                animationStartTime = (float)EditorApplication.timeSinceStartup;
+            }
+        }
+        EditorGUI.BeginChangeCheck();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("loopMode"));
+        if (EditorGUI.EndChangeCheck())
+        {
+            serializedObject.ApplyModifiedProperties();
+        }
 
         EditorGUILayout.Space(20);
 
