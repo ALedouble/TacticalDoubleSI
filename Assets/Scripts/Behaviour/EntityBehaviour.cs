@@ -66,9 +66,6 @@ public class EntityBehaviour : MonoBehaviour
     {
         data = Instantiate(data);
         name = data.name;
-
-        // VERY TEMPORARY
-        GetComponentInChildren<MeshRenderer>().material.color = data.alignement == Alignement.Enemy ? Color.red : Color.blue;
     }
 
     private void Update()
