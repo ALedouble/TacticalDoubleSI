@@ -333,13 +333,6 @@ public static class IAUtils
                                                     bool condition = true, LambdaAbilityCall functionToCallAfterTheMove = null, Ability ability = null, TileData abilityTarget = null)
     {
         if (moveTarget == null) return false;
-
-        for (int i = 0; i < moveTarget.path.Count; i++)
-        {
-            Debug.Log(moveTarget.path[i].GetCoordPosition());
-        }
-        Debug.Log(current.GetPosition());
-
         if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
         
         if (condition)
@@ -347,19 +340,11 @@ public static class IAUtils
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
-                Debug.Log("pass");
-                Debug.Log(iaEntityFunction);
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
 
             else
             {
-                for (int i = 0; i < moveTarget.path.Count; i++)
-                {
-                    Debug.Log(moveTarget.path[i].GetCoordPosition());
-                }
-                Debug.Log(iaEntityFunction);
-
                 current.MoveTo(moveTarget).OnComplete(() => { iaEntityFunction(); });
             }
 
