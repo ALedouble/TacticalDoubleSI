@@ -19,6 +19,8 @@ public class DamageEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             x.CurrentHealth -= SetDamage(entity, ability);
         });
+
+        
     }
 
     public float SetDamage(EntityBehaviour entity, Ability ability)

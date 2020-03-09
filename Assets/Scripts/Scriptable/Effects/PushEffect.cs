@@ -17,16 +17,13 @@ public class PushEffect : AbilityEffect
     {
         Sequence pushSequence = DOTween.Sequence();
         Ease pushEase = Ease.InQuad;
-        for (int x = 0; x < MapManager.GetSize(); x++)
+        Debug.Log(pushVector);
+        if (MapManager.IsInsideMap(pushVector) && MapManager.GetTile(pushVector).tileType != TileType.Solid) //&& entity.data.alignement != Alignement.Player)
         {
-            for (int y = 0; y < MapManager.GetSize(); y++)
-            {
-                if (MapManager.GetTile(x, y).tileType == TileType.Normal)
-                {
-                    pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
-                }
-            }
+            pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));
+            entity.currentTile = MapManager.MoveEntity(entity, entity.GetPosition(), pushVector);
         }
+       
         return pushSequence;
     }
 }
