@@ -25,6 +25,8 @@ public class EntityAnimator : MonoBehaviour
         child.transform.parent = transform;
         child.transform.eulerAngles = Vector3.up * -45;
 
+        Destroy(child.GetComponent<MeshCollider>());
+
         meshRenderer = child.GetComponent<MeshRenderer>();
 
         meshRenderer.sharedMaterial = mat;
