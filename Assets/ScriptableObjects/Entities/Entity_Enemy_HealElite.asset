@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Entity_Enemy_HealElite
   m_EditorClassIdentifier: 
   displayName: H
+  portrait: {fileID: 0}
+  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
   maxHealth: 0
+  maxActionPoints: 0
   abilities:
   - {fileID: 11400000, guid: 6eb629cca321d354dba2d17ecfdcc1bf, type: 2}
   - {fileID: 11400000, guid: e638a709f4b4d4d4cb3bdd7d053341d2, type: 2}
   brain: {fileID: 0}
   alignement: 0
   entityTag: 0
+  power: 0
   totemValue: -1

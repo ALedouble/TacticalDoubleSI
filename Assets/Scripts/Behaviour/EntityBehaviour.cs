@@ -39,40 +39,54 @@ public class EntityBehaviour : MonoBehaviour
     }
 
     bool channelingBurst;
-    public bool IsChannelingBurst { get => channelingBurst; }
+    public bool IsChannelingBurst { get => channelingBurst; set => channelingBurst = value; }
 
-    int currentHealth;
-    public int CurrentHealth { get => currentHealth; }
+    float currentHealth;
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
     int currentActionPoints;
-    public int CurrentActionPoints { get => currentActionPoints; }
+    public int CurrentActionPoints { get => currentActionPoints; set => currentActionPoints = value; }
 
     int currentArmor;
-    public int CurrentArmor { get => currentArmor; }
+    public int CurrentArmor { get => currentArmor; set => currentArmor = value; }
 
+    Vector2Int effectPosition;
+
+
+    //For PropertyDrawer
     List<Vector2Int> tilesForCast;
-
-    Vector2Int castCase;
-    bool inCase = false;
-
     List<Vector2Int> tilesForEffect;
-
-    Color[] defaultColor;
+    Vector2Int castCase;
 
     [HideInInspector] public int heldCrystalValue = -1;
+
+    EntityAnimator animator;
 
     public void Init()
     {
         data = Instantiate(data);
         name = data.name;
 
-        // VERY TEMPORARY
-        GetComponentInChildren<MeshRenderer>().material.color = data.alignement == Alignement.Enemy ? Color.red : Color.blue;
+        InitAnimations();
+    }
+
+    void InitAnimations()
+    {
+        if (data.animations == null) return;
+
+        animator = gameObject.AddComponent<EntityAnimator>();
+        animator.mat = Resources.Load("Mat_Entity") as Material;
+
+        animator.Init();
+
+        animator.PlayAnimation(data.animations.GetAnimation(0));
+
+        animator.Update();
     }
 
     private void Update()
     {
-       
+
     }
 
     public void OnTurn()
@@ -86,30 +100,12 @@ public class EntityBehaviour : MonoBehaviour
         {
             data.brain.OnTurnStart(this);
         }
-
-        /*
-        GetTileForCast(data.abilities[0].castArea);
-        if (inCase)
-        {
-            for (int i = 0; i < MapManager.GetMap().Count; i++)
-            {
-                defaultColor = new Color[MapManager.GetMap().Count];
-                defaultColor[i] = MapManager.GetMap()[i].color;
-
-                
-
-                Debug.Log(defaultColor[i]);
-            }
-
-        }*/
     }
 
     public Sequence MoveTo(ReachableTile reachableTile)
     {
-        currentTile.entities.Remove(this);
-
-        currentTile = MapManager.GetTile(reachableTile.GetCoordPosition());
-        currentTile.entities.Add(this);
+        currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile.GetCoordPosition());
+        CurrentActionPoints -= reachableTile.cost;
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
@@ -136,125 +132,49 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         Sequence abilitySequence = DOTween.Sequence();
-        if (ability.animationType == AnimationType.Movement)
+
+        Ease attackEase = Ease.InBack;
+        Ease returnAttackEase = Ease.InOutExpo;
+
+        abilitySequence.Append(ability.GetStartTween(transform)
+        .SetEase(attackEase, 10)
+        .OnComplete(() =>
         {
-            Ease attackEase = Ease.InBack;
-            Ease returnAttackEase = Ease.InOutExpo;
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f)
-            .SetEase(attackEase, 10)
-            .OnComplete(() =>
+            
+            for(int i = 0; i < ability.abilityEffect.Count; i++)
             {
-                PlayEffects(ability.numberOfEffects, targetTile);
-            }));
+                ability.abilityEffect[i].Activate(this, ability, targetTile);
+            }
+        }));
 
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnAttackEase, 10));
-        }
-
-        if (ability.animationType == AnimationType.Jump)
-        {
-            Ease healEase = Ease.OutQuad;
-            Ease returnHealEase = Ease.InQuad;
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x , transform.position.y + 0.5f, transform.position.z), .25f)
-            .SetEase(healEase, 2)
-            .OnComplete(() =>
-            {
-               
-                PlayEffects(ability.numberOfEffects, targetTile);
-            }));
-
-            abilitySequence.Append(transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f).SetEase(returnHealEase, 10));
-        }
+        abilitySequence.Append(ability.GetEndTween(transform)
+        .SetEase(returnAttackEase, 10));
+    
 
         return abilitySequence;
     }
 
-    public Sequence PlayEffects(List<AbilityEffect> effects, TileData targetTile)
+    public void OnDrawGizmos()
     {
-        Sequence effectSequence = DOTween.Sequence();
-        for (int i = 0; i < tilesForCast.Count; i++)
-        {
-            if (SelectionUtils.MapRaycast().position == tilesForCast[i])
-            {
-                castCase = tilesForCast[i];
-                GetTileForEffect(data.abilities[0].effectArea);
 
+        if (tilesForCast != null)
+        {
+            for (int i = 0; i < tilesForCast.Count; i++)
+            {
+                DebugUtils.DrawTile(tilesForCast[i] + GetPosition(), Color.yellow, .5f);
             }
         }
 
-        return effectSequence;
-    }
-
-    public List<Vector2Int> GetTileForCast(TileArea area)
-    {
-        tilesForCast = area.RelativeArea();
-        
-        for(int i = 0; i < tilesForCast.Count; i++)
+        if (tilesForEffect != null)
         {
-           TileData tile = MapManager.GetTile(tilesForCast[i] + GetPosition());
-            if (tile != null)
+            for (int i = 0; i < tilesForEffect.Count; i++)
             {
-                tile.color = Color.blue;
-                inCase = true;
-            }
-        }
-        return tilesForCast;
-    }
-
-    public List<Vector2Int> GetTileForEffect(TileArea area)
-    {
-        tilesForEffect = area.RelativeArea();
-
-        for (int i = 0; i < tilesForEffect.Count; i++)
-        {
-            Debug.Log(castCase);
-            if(castCase.x > 0)
-            {
-                tilesForEffect[i] = new Vector2Int(tilesForEffect[i].y, tilesForEffect[i].x);
-                Debug.Log(tilesForEffect[i]);
-            }
-            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
-
-            if (tile != null)
-            {
-                tile.color = Color.red;
-            }
-        }
-        
-        return tilesForEffect;
-    }
-
-    public List<Vector2Int> Prev(TileArea area)
-    {
-        tilesForEffect = area.RelativeArea();
-
-        for (int i = 0; i < tilesForEffect.Count; i++)
-        {
-
-            TileData tile = MapManager.GetTile(castCase + tilesForEffect[i]);
-           
-           
-            if (tile != null)
-            {
-                tile.color = Color.yellow;
+                TileData tile = MapManager.GetTile(castCase + GetPosition());
+                effectPosition = tile.position + tilesForEffect[i];
+                DebugUtils.DrawTile(effectPosition, Color.blue, .5f);
             }
         }
 
-        return tilesForEffect;
-    }
-
-    public Color Return(Color theColor)
-    {
-        
-        for(int y = 0; y < MapManager.GetMap().Count; y++)
-        {
-            MapManager.GetMap()[y].color = theColor;
-                    
-        }
-                
- 
-
-        return theColor;
     }
 }
+

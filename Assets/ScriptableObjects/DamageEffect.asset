@@ -13,7 +13,5 @@ MonoBehaviour:
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
   duration: 0
-  damage: 0
-  damageMultiplicator: 0
   sfxHit: {fileID: 0}
   vfxHit: {fileID: 0}

@@ -7,6 +7,8 @@ using DG.Tweening;
 public class PlayerBrain : Brain
 {
     EntityBehaviour entityBehaviour;
+    public List<Vector2Int> castableTiles;
+    List<ReachableTile> reachableTiles;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -15,17 +17,35 @@ public class PlayerBrain : Brain
         this.entityBehaviour = entityBehaviour;
 
         SelectionManager.Instance.OnClick += OnMovement;
-        //SelectionManager.Instance.OnClick += OnUseAbility;
+        HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
+
+        MapManager.Instance.castableTiles.Clear();
+
+        reachableTiles = IAUtils.FindAllReachablePlace(entityBehaviour.GetPosition(), entityBehaviour.CurrentActionPoints);
+        reachableTiles.RemoveAll(x => x.GetCoordPosition() == entityBehaviour.GetPosition());
+        // TEMPORARY -> will replace with real fx 
+        MapManager.Instance.reachableTiles = reachableTiles;
     }
 
     void OnMovement(MapRaycastHit hit)
     {
         if (hit.tile == null) return;
 
+        bool canReachTile = false;
+        for (int i = 0; i < reachableTiles.Count; i++)
+        {
+            if (reachableTiles[i].GetCoordPosition() == hit.position)
+            {
+                canReachTile = true;
+                break;
+            }
+        }
+
+        if (!canReachTile) return;
+
         SelectionManager.Instance.OnClick -= OnMovement;
 
-        // TODO : Get entity position properly
-        ReachableTile reachableTile = IAUtils.FindShortestPath(new Vector2Int((int)entityBehaviour.transform.position.x, (int)entityBehaviour.transform.position.z), hit.position, true, 999);
+        ReachableTile reachableTile = IAUtils.FindShortestPath(false, entityBehaviour.GetPosition(), hit.position, true, entityBehaviour.CurrentActionPoints);
 
         if (reachableTile == null)
         {
@@ -33,26 +53,74 @@ public class PlayerBrain : Brain
             Debug.Break();
         }
 
+        // TEMPORARY
+        MapManager.Instance.reachableTiles.Clear();
+        MapManager.Instance.castableTiles.Clear();
+        MapManager.Instance.effectTiles.Clear();
+
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
         moveSequence.OnComplete(() =>
         {
-            //SelectionManager.Instance.OnClick += OnMovement;
-            RoundManager.Instance.EndTurn(entityBehaviour);
+            SelectionManager.Instance.OnClick += OnMovement;
+            HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
         });
+    }
+
+    int selectedAbilityIndex;
+
+    void OnAbilitySelected(int index)
+    {
+        if (index > entityBehaviour.data.abilities.Count - 1) return;
+
+        selectedAbilityIndex = index;
+
+        SelectionManager.Instance.OnClick -= OnMovement;
+        MapManager.Instance.reachableTiles.Clear();
+
+        SelectionManager.Instance.OnClick += OnUseAbility;
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
+
+        castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
+
+        MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer
+
+        
     }
 
     void OnUseAbility(MapRaycastHit hit)
     {
         if (hit.tile == null) return;
+        if (!castableTiles.Contains(hit.position)) return;
+
+        // TEMPORARY
+        MapManager.Instance.castableTiles.Clear();
+        MapManager.Instance.effectTiles.Clear();
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
 
-        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), entityBehaviour.currentTile);
+        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), hit.tile);
 
         attackSequence.OnComplete(() =>
         {
-            SelectionManager.Instance.OnClick += OnUseAbility;
+            SelectionManager.Instance.OnClick += OnMovement;
+            HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
         });
+
+        List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
+
+    }
+
+    // Maybe temporary, we need a function to subcribe for updating area effect
+    void UpdateAbilityEffectArea(MapRaycastHit hit)
+    {
+        if (hit.tile == null || !castableTiles.Contains(hit.position))
+        {
+            MapManager.Instance.effectTiles.Clear();
+            return;
+        }
+
+        MapManager.Instance.effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
     }
 }

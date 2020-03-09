@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: Entity_Player_Tank
   m_EditorClassIdentifier: 
   displayName: T
-  maxHealth: 0
+  portrait: {fileID: 0}
+  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
+  maxHealth: 50
+  maxActionPoints: 5
   abilities:
-  - {fileID: 11400000, guid: c43551cf92975534bba80816fc62552a, type: 2}
+  - {fileID: 11400000, guid: bce6c8f3ca38a4940b2ecd4848a7536a, type: 2}
   brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
   alignement: 1
   entityTag: 2
+  power: 0
+  totemValue: -1

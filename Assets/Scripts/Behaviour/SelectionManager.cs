@@ -10,25 +10,41 @@ public class SelectionManager : MonoBehaviour
     public bool drawDebug;
 
     public Action<MapRaycastHit> OnClick;
+    public Action<EntityBehaviour> OnAttack;
     public Action<EntityBehaviour> OnEntitySelect;
+    public Action<MapRaycastHit> OnHoveredTileChanged;
+    public Action<EntityBehaviour> OnHoveredEntityChanged;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    // Update is called once per frame
+    MapRaycastHit mapRaycastLastFrame;
+
     void Update()
     {
+        MapRaycastHit mapRaycastThisFrame = SelectionUtils.MapRaycast();
+        if (mapRaycastLastFrame.tile != mapRaycastThisFrame.tile)
+        {
+            OnHoveredTileChanged?.Invoke(mapRaycastThisFrame);
+        }
+        mapRaycastLastFrame = mapRaycastThisFrame;
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (RaycastForEntities()) return;
+            EntityBehaviour entityUnderCursor = EntityUnderCursor();
+            if (entityUnderCursor != null)
+            {
+                OnEntitySelect?.Invoke(entityUnderCursor);
+                return;
+            }
 
             OnClick?.Invoke(SelectionUtils.MapRaycast());
         }
     }
 
-    bool RaycastForEntities()
+    EntityBehaviour EntityUnderCursor()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -37,15 +53,14 @@ public class SelectionManager : MonoBehaviour
 
         EntityBehaviour entity;
 
-        if (hit.collider == null) return false;
+        if (hit.collider == null) return null;
 
         if (hit.collider.TryGetComponent<EntityBehaviour>(out entity))
         {
-            OnEntitySelect?.Invoke(entity);
-            return true;
+            return entity;
         }
 
-        return false;
+        return null;
     }
 
     private void OnDrawGizmos()

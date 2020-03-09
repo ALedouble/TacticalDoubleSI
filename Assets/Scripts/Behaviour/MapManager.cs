@@ -9,10 +9,17 @@ public class MapManager : MonoBehaviour
 {
     public Map map;
 
-    private List<EntityBehaviour> listOfEntityOnTheMap;
+    private List<EntityBehaviour> listOfEntityOnTheMap = new List<EntityBehaviour>();
 
     // Static fields should be in CamelCase
     public static MapManager Instance;
+
+    // TEMPORARY
+    public List<ReachableTile> reachableTiles = new List<ReachableTile>();
+
+    public List<Vector2Int> castableTiles = new List<Vector2Int>();
+
+    public List<Vector2Int> effectTiles = new List<Vector2Int>();
 
     private void Awake()
     {
@@ -35,15 +42,16 @@ public class MapManager : MonoBehaviour
         EntityBehaviour entityBehaviour;
         for (int i = 0; i < map.entityStartPositions.Count; i++)
         {
+            
             entityBehaviour = Instantiate(entityPrefab, new Vector3(map.entityStartPositions[i].position.x, 0, map.entityStartPositions[i].position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
-
+            
             entityBehaviour.data = map.entityStartPositions[i].entity;
             entityBehaviour.heldCrystalValue = map.entityStartPositions[i].heldCrystalValue;
             entityBehaviour.currentTile = MapManager.GetTile(new Vector2Int((int)map.entityStartPositions[i].position.x, (int)map.entityStartPositions[i].position.y));
             entityBehaviour.currentTile.entities.Add(entityBehaviour);
 
+            listOfEntityOnTheMap.Add(entityBehaviour);
             entityBehaviour.Init();
-
             RoundManager.Instance.roundEntities.Add(entityBehaviour);
         }
     }
@@ -76,6 +84,22 @@ public class MapManager : MonoBehaviour
     public static void SetMap(List<TileData> map)
     {
         Instance.map.map = map;
+    }
+
+    public static bool IsInsideMap(Vector2Int position)
+    {
+        return (position.x >= 0 && position.y >= 0 && position.x < MapManager.GetSize() && position.y < MapManager.GetSize());
+    }
+
+    /// <summary>
+    /// Returns the target tile
+    /// </summary>
+    public static TileData MoveEntity(EntityBehaviour entity, Vector2Int origin, Vector2Int target)
+    {
+        GetTile(origin).entities.Remove(entity);
+
+        GetTile(target).entities.Add(entity);
+        return GetTile(target);
     }
 
     public static List<EntityBehaviour> GetListOfEntity()

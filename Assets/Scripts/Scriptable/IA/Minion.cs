@@ -3,7 +3,7 @@
 public class Minion : Brain
 {
     IAUtils.IAEntity iaEntityFunction;
-    IAUtils.SpecificConditionForMove conditionFunction;
+    IAUtils.SpecificConditionReachable conditionFunction;
     IAUtils.LambdaAbilityCall minionAbilityCall;
 
     EntityBehaviour minion;
@@ -19,8 +19,11 @@ public class Minion : Brain
     ReachableTile playerDPSPathToAttack = null;
     ReachableTile playerTankPathToAttack = null;
 
-    int percentOfLifeNeedForHelp = 25;
-    int rangeAttackWhenLowLife = 2;
+    static int percentOfLifeNeedForHelp = 25;
+    static int rangeAttackWhenLowLife = 2;
+
+    static bool firstActionInTurn;
+    static bool lowLife;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -29,6 +32,8 @@ public class Minion : Brain
         minionAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
         minion = entityBehaviour;
+        firstActionInTurn = true;
+        lowLife = false;
 
         iaEntityFunction();
     }
@@ -36,64 +41,36 @@ public class Minion : Brain
     /*
      * Gere un deplacement/attack du Minion
      */
-    private void IAMinion(bool lowLife = false)
+    private void IAMinion()
     {
-        if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
-        else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
-
-        if (CheckEndTurn()) return;
-
+        if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
+        else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
+        
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
-        IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0).effectArea, ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, minion, playerHealer, playerDPS, playerTank);
+        IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        if (lowLife || !CheckIfNeedAndCanHaveHelp())
-        {
-            if (!IAUtils.IsThereAnExplosion(minion, playerHealer, playerDPS, playerTank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, 
-                                                iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction))
-            {
-                if (!IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, 
-                                                minionAbilityCall, minion.GetAbilities(0), playerHealer.currentTile, playerDPS.currentTile, playerTank.currentTile, conditionFunction))
-                {
-                    if (!lowLife)
-                    {
-                        ReachableTile pathToShortestEnemy = IAUtils.PathToShortestEnemy(minion, playerHealer, playerDPS, playerTank);
-                        IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
-                    }
 
-                    else
-                    {
-                        CheckEndTurn(true);
-                    }
-                }
-            }
-        }
+        if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
+
+        if (Explosion()) return;
+
+        if (CheckIfNeedAndCanHaveHelp()) return;
+
+        if (Attack()) return;
+
+        WalkOnShortest();
+
     }
 
     /*
-     * Regarde si le turn du Minion est fini
+     * Verifie si le Minion peut encore effectue une action 
      */
-    private bool CheckEndTurn(bool pass = false)
-    {
-        if (pass || !CanMakeAction())
-        {
-            RoundManager.Instance.EndTurn(minion);
-            return true;
-        }
-
-        return false;
-    }
-
     private bool CanMakeAction()
     {
         List<TileData> around = IAUtils.TilesAround(minion.currentTile);
         for (int i = 0; i < around.Count; i++)
         {
-            if (around[i].IsWalkable && (int)around[i].tileType <= minion.CurrentActionPoints)
-            {
-                return true;
-            }
-
-            else if (!around[i].IsWalkable)
+            if (!around[i].IsWalkable)
             {
                 for (int j = 0; j < around[i].entities.Count; j++)
                 {
@@ -108,21 +85,36 @@ public class Minion : Brain
             }
         }
 
-        return false;
+        return IAUtils.CanWalkAround(minion, lowLife ? (rangeAttackWhenLowLife > minion.CurrentActionPoints ? minion.CurrentActionPoints : rangeAttackWhenLowLife) : minion.CurrentActionPoints);
     }
 
     /*
-     * Regarde si le Minion à besoin d'aide (PV < percentOfLifeNeedForHelp%) et s'il reste au moins un Tank (Enemy)
+     * Regarde si un joueur dans la range d'attaque prepare une explosion et le focus
+     * 
+     * Si oui, return true
+     * Sinon, return false
+     */
+    private bool Explosion()
+    {
+        return IAUtils.IsThereAnExplosion(minion, playerHealer, playerDPS, playerTank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack,
+                                                iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction);
+    }
+
+    /*
+     * Regarde si le Minion à besoin d'aide (PV < percentOfLifeNeedForHelp) et s'il reste au moins un Tank (Enemy)
+     * 
+     * Si oui, ce deplace au tank et previent qu'il est "lowLife"
+     * Sinon, continue
      */
     private bool CheckIfNeedAndCanHaveHelp()
     {
-        if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp ) / 100))
+        if (firstActionInTurn)
         {
-            if (enemyTank.Count > 0)
+            firstActionInTurn = false;
+            if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp) / 100))
             {
-                ReachableTile pathToTank = RunForHelp();
-                IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToTank, iaEntityFunction, SpecificConditionForMove(pathToTank), true);
-
+                lowLife = true;
+                IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove);
                 return true;
             }
         }
@@ -131,20 +123,28 @@ public class Minion : Brain
     }
 
     /*
-     * Va vers le Tank le plus proche si les PV sont < percentOfLifeNeedForHelp%
+     * Regarde s'il peut attaquer un joueur dans l'ordre Heal > Dps > Tank
+     * 
+     * Si oui, return true
+     * Sinon, return false
      */
-    private ReachableTile RunForHelp()
+    private bool Attack()
     {
-        List<ReachableTile> listOfPathToTanks = new List<ReachableTile>();
+        return IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction);
+    }
 
-        for (int i = 0; i < enemyTank.Count; i++)
+    /*
+     * Cherche l'enemy le plus pres et s'en rapproche (si on a encore assez de vie)
+     */
+    private void WalkOnShortest()
+    {
+        if (!lowLife)
         {
-            ReachableTile pathToTank = IAUtils.FindShortestPath(minion.GetPosition(), enemyTank[i].GetPosition());
-            if (pathToTank != null) listOfPathToTanks.Add(pathToTank);
+            ReachableTile pathToShortestEnemy = IAUtils.PathToShortestEnemy(false, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints);
+            IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
         }
 
-        listOfPathToTanks.Sort();
-        return listOfPathToTanks[0];
+        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
 
     /*

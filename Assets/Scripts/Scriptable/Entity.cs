@@ -12,14 +12,18 @@ public enum EntityTag { Healer, DPS, Tank, Minion, Totem, Trap }
 public class Entity : ScriptableObject
 {
     public string displayName;
+    public Texture portrait;
+    public EntityAnimations animations;
 
     [Space]
 
     public int maxHealth;
+    public int maxActionPoints;
     public List<Ability> abilities;
     public Brain brain;
     public Alignement alignement;
     public EntityTag entityTag;
+    public float power;
 
     [Space]
 

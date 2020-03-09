@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum AnimationType{ Jump, Thrust, Movement, };
 
@@ -22,6 +23,9 @@ public class Ability : ScriptableObject
     [Tooltip("Coût de la capacité")]
     public int cost;
 
+    [Tooltip("Le multiplicateur à chaque LevelUp")]
+    public float multiplicator;
+
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
 
@@ -31,15 +35,58 @@ public class Ability : ScriptableObject
     [Tooltip("SFX quand on lance l'attaque")]
     public AudioSource sfxCast;
 
+
+
     [Tooltip("Cooldown (si 0, retourne null)")]
     public int cooldown;
 
     [Tooltip("Les effets que la capacité va appeller")]
-    public List<AbilityEffect> numberOfEffects;
+    public List<AbilityEffect> abilityEffect;
 
     [Tooltip("Zone ou la capcité pourra être lancé, à définir par sélection des tiles (gris foncé = notre position)")]
     public TileArea castArea;
 
     [Tooltip("Zone d'effet de la capacité, à définir par sélection des tiles (gris foncé = notre position)")]
     public TileArea effectArea;
+
+
+    public Tween GetStartTween(Transform transform)
+    {
+        switch (animationType)
+        {
+            case AnimationType.Jump:
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Thrust:
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Movement:
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                break;
+            default:
+                break;
+        }
+
+        return null;
+    }
+
+    public Tween GetEndTween(Transform transform)
+    {
+        switch (animationType)
+        {
+            case AnimationType.Jump:
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Thrust:
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Movement:
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                break;
+            default:
+                break;
+        }
+
+        return null;
+    }
 }
