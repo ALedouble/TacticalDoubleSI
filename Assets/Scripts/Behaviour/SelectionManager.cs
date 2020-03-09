@@ -42,14 +42,13 @@ public class SelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            OnClick?.Invoke(SelectionUtils.MapRaycast());
+
             EntityBehaviour entityUnderCursor = EntityUnderCursor();
             if (entityUnderCursor != null)
             {
                 OnEntitySelect?.Invoke(entityUnderCursor);
-                return;
             }
-
-            OnClick?.Invoke(SelectionUtils.MapRaycast());
         }
         if (Input.GetMouseButtonDown(1))
         {

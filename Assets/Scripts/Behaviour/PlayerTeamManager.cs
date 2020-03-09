@@ -32,14 +32,7 @@ public class PlayerTeamManager : MonoBehaviour
 
         GameObject entityPrefab = Resources.Load("Entity") as GameObject;
 
-        EntityBehaviour entityBehaviour;
-        entityBehaviour = Instantiate(entityPrefab, new Vector3(hit.position.x, 0, hit.position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
-
-        entityBehaviour.data = playerEntities[placedEntities];
-        entityBehaviour.currentTile = hit.tile;
-        entityBehaviour.currentTile.entities.Add(entityBehaviour);
-
-        entityBehaviour.Init();
+        EntityBehaviour entityBehaviour = MapManager.SpawnEntity(playerEntities[placedEntities], hit.position, -1);
 
         playerEntitybehaviours.Add(entityBehaviour);
 
