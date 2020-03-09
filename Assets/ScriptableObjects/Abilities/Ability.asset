@@ -20,10 +20,10 @@ MonoBehaviour:
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  canCastOnEntityPosition: 0
+  canCastOnEntityPosition: 1
   cooldown: 0
   abilityEffect:
-  - {fileID: 11400000, guid: 4c20b5871d37f5246a35fef500ab149c, type: 2}
+  - {fileID: 11400000, guid: a6535086c89a85a438f516d967cbac61, type: 2}
   castArea:
     size: 17
     area:
@@ -51,15 +51,20 @@ MonoBehaviour:
     - {x: 14, y: 8}
     - {x: 15, y: 8}
     - {x: 16, y: 8}
+    - {x: 8, y: 9}
+    - {x: 8, y: 10}
+    - {x: 8, y: 11}
+    - {x: 8, y: 12}
+    - {x: 8, y: 13}
+    - {x: 8, y: 14}
+    - {x: 8, y: 15}
+    - {x: 8, y: 16}
   effectArea:
-    size: 9
+    size: 11
     area:
-    - {x: 0, y: 4}
-    - {x: 1, y: 4}
-    - {x: 2, y: 4}
-    - {x: 3, y: 4}
-    - {x: 4, y: 4}
+    - {x: 5, y: 0}
+    - {x: 5, y: 1}
+    - {x: 5, y: 2}
+    - {x: 5, y: 3}
     - {x: 5, y: 4}
-    - {x: 6, y: 4}
-    - {x: 7, y: 4}
-    - {x: 8, y: 4}
+    - {x: 5, y: 5}

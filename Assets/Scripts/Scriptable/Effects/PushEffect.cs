@@ -9,7 +9,7 @@ public class PushEffect : AbilityEffect
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         ApplyEffect(entity, ability, castTile, (x) => {
-            Push(x, CombatUtils.ComputeProjection(x.GetPosition(), entity.GetPosition()));
+            Push(x, CombatUtils.ComputeProjection(x.GetPosition(), castTile.position));
         });
     }
 

@@ -83,7 +83,11 @@ public class PlayerBrain : Brain
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
 
-        castableTiles.RemoveAll(x => !MapManager.GetTile(x).IsWalkable);
+        if (!entityBehaviour.data.abilities[index].canCastOnEntityPosition)
+        {
+            castableTiles.RemoveAll(x => !MapManager.GetTile(x).IsWalkable);
+        }
+        
  
         MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer 
     }
