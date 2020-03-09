@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class CustomEditorUtils : MonoBehaviour
+public class CustomEditorUtils
 {
     public static List<Vector2Int> PropertyToVector2Int(SerializedProperty property) {
         List<Vector2Int> newArea = new List<Vector2Int>();

@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Entity_Enemy_DPSElite
   m_EditorClassIdentifier: 
   displayName: DPS
+  portrait: {fileID: 0}
+  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
   maxHealth: 0
+  maxActionPoints: 0
   abilities:
   - {fileID: 11400000, guid: 0538b2f18533ed3418ee54bc0f75c647, type: 2}
   - {fileID: 11400000, guid: cef1c5fd79b83f542b027521d33d1e82, type: 2}
   brain: {fileID: 0}
   alignement: 0
   entityTag: 1
+  power: 0
   totemValue: -1

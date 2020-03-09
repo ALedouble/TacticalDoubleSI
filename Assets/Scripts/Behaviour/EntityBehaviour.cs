@@ -58,14 +58,30 @@ public class EntityBehaviour : MonoBehaviour
     List<Vector2Int> tilesForEffect;
     Vector2Int castCase;
 
-
-
     [HideInInspector] public int heldCrystalValue = -1;
+
+    EntityAnimator animator;
 
     public void Init()
     {
         data = Instantiate(data);
         name = data.name;
+
+        InitAnimations();
+    }
+
+    void InitAnimations()
+    {
+        if (data.animations == null) return;
+
+        animator = gameObject.AddComponent<EntityAnimator>();
+        animator.mat = Resources.Load("Mat_Entity") as Material;
+
+        animator.Init();
+
+        animator.PlayAnimation(data.animations.GetAnimation(0));
+
+        animator.Update();
     }
 
     private void Update()

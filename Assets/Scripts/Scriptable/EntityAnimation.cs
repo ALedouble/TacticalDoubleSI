@@ -6,6 +6,7 @@ using UnityEngine;
 public class EntityAnimation : ScriptableObject
 {
     public List<AnimationFrame> frames = new List<AnimationFrame>();
+    public LoopMode loopMode;
 
     public float Length
     {
