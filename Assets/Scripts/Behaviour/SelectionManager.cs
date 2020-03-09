@@ -13,6 +13,7 @@ public class SelectionManager : MonoBehaviour
     public Action<EntityBehaviour> OnAttack;
     public Action<EntityBehaviour> OnEntitySelect;
     public Action<MapRaycastHit> OnHoveredTileChanged;
+    public Action<EntityBehaviour> OnHoveredEntityChanged;
 
     private void Awake()
     {
@@ -32,13 +33,18 @@ public class SelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (RaycastForEntities()) return;
+            EntityBehaviour entityUnderCursor = EntityUnderCursor();
+            if (entityUnderCursor != null)
+            {
+                OnEntitySelect?.Invoke(entityUnderCursor);
+                return;
+            }
 
             OnClick?.Invoke(SelectionUtils.MapRaycast());
         }
     }
 
-    bool RaycastForEntities()
+    EntityBehaviour EntityUnderCursor()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -47,15 +53,14 @@ public class SelectionManager : MonoBehaviour
 
         EntityBehaviour entity;
 
-        if (hit.collider == null) return false;
+        if (hit.collider == null) return null;
 
         if (hit.collider.TryGetComponent<EntityBehaviour>(out entity))
         {
-            OnEntitySelect?.Invoke(entity);
-            return true;
+            return entity;
         }
 
-        return false;
+        return null;
     }
 
     private void OnDrawGizmos()
