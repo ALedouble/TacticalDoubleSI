@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: T
   maxHealth: 0
+  maxActionPoints: 0
   abilities:
   - {fileID: 0}
-  brain: {fileID: 0}
+  brain: {fileID: 11400000, guid: 73b9a169b18349e4daf35a1eff00d0d9, type: 2}
   alignement: 0
   entityTag: 2
+  power: 0
   totemValue: -1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: T
   maxHealth: 50
-  maxActionPoints: 5
+  maxActionPoints: 10
   abilities:
   - {fileID: 11400000, guid: bce6c8f3ca38a4940b2ecd4848a7536a, type: 2}
   brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
