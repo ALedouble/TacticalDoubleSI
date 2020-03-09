@@ -10,18 +10,30 @@ public static class CombatUtils
         float damageValue = 0;
         for(int i = 0; i < entity.GetAbilities().Count; i++)
         {
-            float damage = ((entity.data.power * ability.damageMultiplicator) - 1);
+            float damage = ((entity.data.power * ability.multiplicator));
             damageValue = damage;
         }
 
         return damageValue;
     }
 
+    public static float ComputeHeal(EntityBehaviour entity, Ability ability)
+    {
+        float healValue = 0;
+        for (int i = 0; i < entity.GetAbilities().Count; i++)
+        {
+            float heal = ((entity.data.power * ability.multiplicator));
+            healValue = heal;
+        }
+
+        return healValue;
+    }
+
 
     public static Vector2Int ComputeProjection(Vector2Int enemyPosition, Vector2Int myPosition)
     {
         Vector2Int pushVector = enemyPosition - myPosition;
-        return myPosition + (pushVector* 2);
+        return myPosition + (pushVector * 2);
     }
 
     

@@ -24,7 +24,7 @@ public class Ability : ScriptableObject
     public int cost;
 
     [Tooltip("Le multiplicateur à chaque LevelUp")]
-    public float damageMultiplicator;
+    public float multiplicator;
 
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
