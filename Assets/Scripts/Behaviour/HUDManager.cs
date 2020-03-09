@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class HUDManager : MonoBehaviour
 {
@@ -20,8 +21,39 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
-        SelectionManager.Instance.OnEntitySelect += UpdateEntityInfo;
+        enemyInfoGroup.alpha = 0;
+        tileInfoGroup.alpha = 0;
+
+        SelectionManager.Instance.OnEntitySelect += (x)=> 
+        {
+            switch (x.data.alignement)
+            {
+                case Alignement.Enemy:
+                    inspectedEnemy = x;
+                    break;
+                case Alignement.Player:
+                    inspectedPlayer = x;
+                    break;
+                default:
+                    break;
+            }
+            UpdateEntityInfo(x);
+        };
+        SelectionManager.Instance.OnHoveredEntityChanged += UpdateEntityInfo;
+        SelectionManager.Instance.OnCancel += () =>
+        {
+            inspectedEnemy = null;
+            inspectedPlayer = null;
+
+            UpdateEntityInfo(null);
+            UpdateEntityInfo(null);
+        };
+
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateTileInfo;
     }
+
+    EntityBehaviour inspectedEnemy;
+    EntityBehaviour inspectedPlayer;
 
     TextMeshProUGUI HPTextPlayer;
     TextMeshProUGUI PATextPlayer;
@@ -29,35 +61,102 @@ public class HUDManager : MonoBehaviour
     TextMeshProUGUI HPTextEnemy;
     TextMeshProUGUI PATextEnemy;
 
+    CanvasGroup enemyInfoGroup;
+    Tween enemyInfoFade;
+    CanvasGroup playerInfoGroup;
+    Tween playerInfoFade;
+
+    Image playerIcon;
+    Image enemyIcon;
+
     void UpdateEntityInfo(EntityBehaviour entity)
     {
-        TextMeshProUGUI HPtextMeshToUpdate = null;
-        TextMeshProUGUI PAtextMeshToUpdate = null;
+        if (entity == null)
+        {
+            if (inspectedEnemy == null)
+            {
+                enemyInfoFade?.Kill();
+                enemyInfoGroup.DOFade(0, 0.05f);
+            }
+            if (inspectedPlayer == null)
+            {
+                playerInfoFade?.Kill();
+                playerInfoGroup.DOFade(0, 0.05f);
+            }
+
+            if (inspectedEnemy != null) UpdateEntityInfo(inspectedEnemy);
+            if (inspectedPlayer != null) UpdateEntityInfo(inspectedPlayer);
+
+            return;
+        }
+
+
+        TextMeshProUGUI HPtextMesh = null;
+        TextMeshProUGUI PAtextMesh = null;
+
+        Image icon = null;
+        CanvasGroup canvasGroup = null;
+        Tween fade = null;
+
 
         switch (entity.data.alignement)
         {
             case Alignement.Enemy:
 
-                HPtextMeshToUpdate = HPTextEnemy;
-                PAtextMeshToUpdate = PATextEnemy;
+                HPtextMesh = HPTextEnemy;
+                PAtextMesh = PATextEnemy;
+
+                canvasGroup = enemyInfoGroup;
+                fade = enemyInfoFade;
+
+                icon = enemyIcon;
 
                 break;
             case Alignement.Player:
 
-                HPtextMeshToUpdate = HPTextPlayer;
-                PAtextMeshToUpdate = PATextPlayer;
+                HPtextMesh = HPTextPlayer;
+                PAtextMesh = PATextPlayer;
 
-                break;
-            case Alignement.Neutral:
+                canvasGroup = playerInfoGroup;
+                fade = playerInfoFade;
+
+                icon = playerIcon;
+
                 break;
             default:
                 break;
         }
 
-        if (HPtextMeshToUpdate == null || PAtextMeshToUpdate == null) return;
+        if (canvasGroup.alpha != 1)
+        {
+            fade?.Kill();
+            canvasGroup.DOFade(1, 0.05f);
+        }
 
-        HPtextMeshToUpdate.text = entity.CurrentHealth.ToString() + "/" + entity.data.maxHealth;
-        PAtextMeshToUpdate.text = entity.CurrentActionPoints.ToString() + "/" + entity.data.maxActionPoints;
+        icon.sprite = entity.data.portrait;
+
+        HPtextMesh.text = entity.CurrentHealth.ToString() + "/" + entity.data.maxHealth;
+        PAtextMesh.text = entity.CurrentActionPoints.ToString() + "/" + entity.data.maxActionPoints;
+    }
+
+    CanvasGroup tileInfoGroup;
+    Tween tileInfoFade;
+
+    void UpdateTileInfo(MapRaycastHit mapHit)
+    {
+        if (!MapManager.IsInsideMap(mapHit.position))
+        {
+            tileInfoFade?.Kill();
+            tileInfoGroup.DOFade(0, .05f);
+            return;
+        }
+        else
+        {
+            // TODO : get tile type and display info
+
+            tileInfoFade?.Kill();
+            tileInfoGroup.DOFade(1, .05f);
+        }
     }
 
     HUDReferencer[] HUDReferences;
@@ -72,6 +171,11 @@ public class HUDManager : MonoBehaviour
             if (GetAbilityReferences(tag, HUDReferences[i])) continue;
 
             if (GetEntityInfoReferences(tag, HUDReferences[i])) continue;
+
+            if (GetGroupReferences(tag, HUDReferences[i])) continue;
+
+            if (tag == "IconPlayer") playerIcon = HUDReferences[i].GetComponent<Image>();
+            if (tag == "IconEnemy") enemyIcon = HUDReferences[i].GetComponent<Image>();
         }
     }
 
@@ -114,5 +218,27 @@ public class HUDManager : MonoBehaviour
             default:
                 return false;
         }
+    }
+
+    bool GetGroupReferences(string tag, HUDReferencer reference)
+    {
+        if (tag.Contains("Group"))
+        {
+            if (tag == "EnemyInfoGroup")
+            {
+                enemyInfoGroup = reference.GetComponent<CanvasGroup>();
+            }
+            if (tag == "PlayerInfoGroup")
+            {
+                playerInfoGroup = reference.GetComponent<CanvasGroup>();
+            }
+            if (tag == "TileInfoGroup")
+            {
+                tileInfoGroup = reference.GetComponent<CanvasGroup>();
+            }
+
+            return true;
+        }
+        return false;
     }
 }
