@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2f449558ab261449fbd426a26bc5be, type: 3}
+  m_Name: AP_HealerHeal
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: cf18729ab30d5f94db2597a20dff02be, type: 2}
+  - {fileID: 11400000, guid: e8b712d331c519d4cb7226aa5556272e, type: 2}
+  - {fileID: 11400000, guid: adff84c79fbb64e45a17f53e14b320e3, type: 2}
+  - {fileID: 11400000, guid: 763680b722cb66942a7a9d23a3d06fd0, type: 2}

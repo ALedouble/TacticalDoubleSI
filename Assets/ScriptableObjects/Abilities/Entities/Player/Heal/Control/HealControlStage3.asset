@@ -16,13 +16,14 @@ MonoBehaviour:
   displayName: Greater wall
   description: Create a wall that stay 2 turn
   cost: 6
+  multiplicator: 2
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 1
-  numberOfEffects:
-  - {fileID: 11400000, guid: 0f5f59cb0df3a154c8b74dea10ccc1e3, type: 2}
-  - {fileID: 11400000, guid: a8de101ec264f364faa8ef08a14919eb, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: 4c20b5871d37f5246a35fef500ab149c, type: 2}
   castArea:
     size: 7
     area:

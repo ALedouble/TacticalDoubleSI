@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Greater Heal
   description: A powerfull area heal
   cost: 3
+  multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 1
-  numberOfEffects:
-  - {fileID: 11400000, guid: e6287a91015d7f84f9bfae1b93289ce5, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
   castArea:
     size: 7
     area:

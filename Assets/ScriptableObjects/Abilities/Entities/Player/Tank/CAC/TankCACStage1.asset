@@ -16,13 +16,15 @@ MonoBehaviour:
   displayName: Bash
   description: Pushes the ennemy away
   cost: 4
+  multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: b17a62630dfb74d4a8d17e41a574a47a, type: 2}
-  - {fileID: 11400000, guid: 912e1e69382233c42817a57c60c6228f, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  - {fileID: 11400000, guid: be1d7f3a61156174c913c0689d3d64d7, type: 2}
   castArea:
     size: 3
     area:
