@@ -18,7 +18,6 @@ public class RoundManager : MonoBehaviour
 
     public List<EntityBehaviour> roundEntities = new List<EntityBehaviour>();
     public int currentEntityTurn = 0;
-    public int playerTurnsFinished = 0;
 
     public RoundPhase phase;
     public int roundNumber;
@@ -29,9 +28,13 @@ public class RoundManager : MonoBehaviour
         Instance = this;
     }
 
+    public Action OnPlayerTurn;
+
     public void StartRound()
     {
         phase = RoundPhase.Player;
+
+        OnPlayerTurn?.Invoke();
 
         for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
         {
@@ -40,6 +43,8 @@ public class RoundManager : MonoBehaviour
         }
 
         SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
+
+        HUDManager.Instance.OnEndTurnPressed += EndTurn;
     }
 
     void StartPlayerTurn(EntityBehaviour entity)
@@ -57,22 +62,16 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    public void EndTurn(EntityBehaviour entityBehaviour)
+    public void EndTurn()
     {
         if (phase == RoundPhase.Player)
         {
-            playerTurnsFinished++;
+            phase = RoundPhase.AI;
 
-            if (playerTurnsFinished == PlayerTeamManager.Instance.playerEntities.Count)
-            {
-                playerTurnsFinished = 0;
-                phase = RoundPhase.AI;
+            SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
-                SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
-
-                // All player entities have played, make the ai play
-                roundEntities[currentEntityTurn].OnTurn();
-            }
+            // All player entities have played, make the ai play
+            roundEntities[currentEntityTurn].OnTurn();
         }
         else
         {

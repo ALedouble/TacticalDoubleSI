@@ -9,5 +9,7 @@ public class EntityProgression : ScriptableObject
     public float actionPointsIncrement;
     public float armorIncrement;
 
+    public List<EntityAnimations> animations = new List<EntityAnimations>();
+
     public List<AbilityProgression> abilityProgression = new List<AbilityProgression>();
 }

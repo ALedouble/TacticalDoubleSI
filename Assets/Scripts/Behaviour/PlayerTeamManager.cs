@@ -15,14 +15,22 @@ public class PlayerTeamManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        for (int i = 0; i < playerEntities.Count; i++)
+        {
+            playerEntities[i] = Instantiate(playerEntities[i]);
+        }
     }
 
     public void BeginPlacement()
     {
         SelectionManager.Instance.OnClick += PlacePlayerEntity;
+
+        HUDManager.Instance.OnFinishPlacement += OnPressedFinishedPlacement;
     }
 
     public Action OnFinishPlacement;
+    public Action OnPlacedAllPlayers;
 
     void PlacePlayerEntity(MapRaycastHit hit)
     {
@@ -40,10 +48,17 @@ public class PlayerTeamManager : MonoBehaviour
 
         if (placedEntities == playerEntities.Count)
         {
+            OnPlacedAllPlayers?.Invoke();
+        }
+    }
 
-            // TODO : subscribe to UI event for begin play
+    void OnPressedFinishedPlacement()
+    {
+        if (placedEntities >= playerEntities.Count)
+        {
             OnFinishPlacement?.Invoke();
 
+            HUDManager.Instance.OnFinishPlacement -= OnPressedFinishedPlacement;
             SelectionManager.Instance.OnClick -= PlacePlayerEntity;
         }
     }

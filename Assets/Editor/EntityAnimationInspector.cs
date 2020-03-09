@@ -33,13 +33,17 @@ public class EntityAnimationInspector : Editor
     {
         ////////////////////////////////////////////////////////////////////////////////////////////// PREVIEW
 
-        GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, 100), 
-            animation.GetTexture(
-                serializedObject.FindProperty("loopMode").enumValueIndex == 0 ?
-                (float)EditorApplication.timeSinceStartup - animationStartTime :
-                Mathf.Repeat((float)EditorApplication.timeSinceStartup, animation.Length)
-                ),
-            ScaleMode.ScaleToFit);
+        if (serializedObject.FindProperty("frames").arraySize > 0)
+        {
+
+            GUI.DrawTexture(GUILayoutUtility.GetRect(Screen.width, 100),
+                animation.GetTexture(
+                    serializedObject.FindProperty("loopMode").enumValueIndex == 0 ?
+                    (float)EditorApplication.timeSinceStartup - animationStartTime :
+                    Mathf.Repeat((float)EditorApplication.timeSinceStartup, animation.Length)
+                    ),
+                ScaleMode.ScaleToFit);
+        }
 
         if (serializedObject.FindProperty("loopMode").enumValueIndex == 0)
         {
