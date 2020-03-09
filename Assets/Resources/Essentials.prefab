@@ -261,29 +261,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6894895933869895191}
     m_Modifications:
-    - target: {fileID: 5610548139224800717, guid: 82622d15b5066c2478d8866f040c9eb6,
-        type: 3}
-      propertyPath: playerEntities.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5610548139224800717, guid: 82622d15b5066c2478d8866f040c9eb6,
-        type: 3}
-      propertyPath: playerEntities.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: cb74d7d255e42bb4fa3c9881d7d35723,
-        type: 2}
-    - target: {fileID: 5610548139224800717, guid: 82622d15b5066c2478d8866f040c9eb6,
-        type: 3}
-      propertyPath: playerEntities.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 57b709b99281afc469f090c00719ed3e,
-        type: 2}
-    - target: {fileID: 5610548139224800717, guid: 82622d15b5066c2478d8866f040c9eb6,
-        type: 3}
-      propertyPath: playerEntities.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: b8bb936c0037c954a9a57dd4e001aa70,
-        type: 2}
     - target: {fileID: 5610548139224800722, guid: 82622d15b5066c2478d8866f040c9eb6,
         type: 3}
       propertyPath: m_LocalPosition.x

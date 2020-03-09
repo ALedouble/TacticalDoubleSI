@@ -39,7 +39,7 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
         {
             // TODO : carry over a part of previous action points
-            MapManager.GetListOfEntity()[i].CurrentActionPoints = MapManager.GetListOfEntity()[i].data.maxActionPoints;
+            MapManager.GetListOfEntity()[i].CurrentActionPoints = Mathf.CeilToInt(MapManager.GetListOfEntity()[i].data.maxActionPoints);
         }
 
         SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;

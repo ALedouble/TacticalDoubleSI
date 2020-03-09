@@ -13,7 +13,7 @@ public class EntityBehaviour : MonoBehaviour
     public Entity data;
     public int GetMaxHealth()
     {
-        return data.maxHealth;
+        return Mathf.CeilToInt(data.maxHealth);
     }
     public List<Ability> GetAbilities()
     {
@@ -66,6 +66,9 @@ public class EntityBehaviour : MonoBehaviour
     {
         data = Instantiate(data);
         name = data.name;
+
+        // TODO : set armor
+        currentHealth = GetMaxHealth();
 
         InitAnimations();
     }
