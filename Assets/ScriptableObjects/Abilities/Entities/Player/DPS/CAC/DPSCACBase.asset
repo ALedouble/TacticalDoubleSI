@@ -16,10 +16,11 @@ MonoBehaviour:
   displayName: Blow
   description: A simple attack
   cost: 4
-  damageMultiplicator: 0
+  multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
