@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+[CreateAssetMenu(fileName = "HealerBrain", menuName = "ScriptableObjects/IA_Brain/Healer_Brain", order = 999)]
 public class Healer : Brain
 {
     IAUtils.IAEntity iaEntityFunction;
@@ -9,28 +11,25 @@ public class Healer : Brain
     EntityBehaviour healer;
     List<ReachableTile> reachableTiles;
 
-    List<EntityBehaviour> enemyTank = new List<EntityBehaviour>();
-    List<EntityBehaviour> enemyDPS = new List<EntityBehaviour>();
-    List<EntityBehaviour> enemyHealer = new List<EntityBehaviour>();
-    List<EntityBehaviour> enemyMinion = new List<EntityBehaviour>();
+    List<EntityBehaviour> enemyTank;
+    List<EntityBehaviour> enemyDPS;
+    List<EntityBehaviour> enemyHealer;
+    List<EntityBehaviour> enemyMinion;
 
-    EntityBehaviour playerHealer = null;
-    EntityBehaviour playerDPS = null;
-    EntityBehaviour playerTank = null;
+    EntityBehaviour playerHealer;
+    EntityBehaviour playerDPS;
+    EntityBehaviour playerTank;
 
-    ReachableTile playerHealerPathToAttack = null;
-    ReachableTile playerDPSPathToAttack = null;
-    ReachableTile playerTankPathToAttack = null;
+    List<ReachableTile> playerHealerPathToAttack;
+    List<ReachableTile> playerDPSPathToAttack;
+    List<ReachableTile> playerTankPathToAttack;
 
-    static string nameAbility1 = "Heal";
     static Ability ability1;
     static bool ability1Use;
-
-    static string nameAbility2 = "Attack";
     static Ability ability2;
     static bool ability2Use;
 
-    static int lifeLoseForPrio = 6;
+    public int lifeLoseForPrio = 6;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -38,11 +37,33 @@ public class Healer : Brain
         conditionFunction = ConditionHealthToHeal;
         healerAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
+        Debug.Log("New Healer");
+
+        Init(entityBehaviour);
+        iaEntityFunction();
+    }
+
+    private void Init(EntityBehaviour entityBehaviour)
+    {
         healer = entityBehaviour;
+
+        enemyTank = new List<EntityBehaviour>();
+        enemyDPS = new List<EntityBehaviour>();
+        enemyHealer = new List<EntityBehaviour>();
+        enemyMinion = new List<EntityBehaviour>();
+
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        playerHealerPathToAttack = null;
+        playerDPSPathToAttack = null;
+        playerTankPathToAttack = null;
+
+        ability1 = healer.GetAbilities(0);
+        ability2 = healer.GetAbilities(1);
         ability1Use = false;
         ability2Use = false;
-
-        iaEntityFunction();
     }
 
     /*
@@ -50,7 +71,6 @@ public class Healer : Brain
      */
     private void IAHealer()
     {
-        IAUtils.GetAbility(healer, nameAbility1, nameAbility2, ref ability1, ref ability2);
         IAUtils.GetAllEntity(healer, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyDPS, ref enemyHealer, ref enemyMinion);
 
 
@@ -83,7 +103,7 @@ public class Healer : Brain
      */
     private bool IsInDanger()
     {
-        if (Solo() || IAUtils.HaveXEntityAround(Alignement.Player, healer.currentTile) || healer.CurrentHealth < healer.GetMaxHealth())
+        if (Solo() || IAUtils.HaveXEntityAround(healer, Alignement.Player, healer.currentTile) || healer.CurrentHealth < healer.GetMaxHealth())
         {
             RunAtMaxDistanceOfAll();
             return true;
@@ -207,8 +227,6 @@ public class Healer : Brain
         }
 
         IAUtils.MoveAndTriggerAbilityIfNeed(healer, bestReachableTile, iaEntityFunction);
-        IAUtils.CheckEndTurn(healer, CanMakeAction(), true);
-
 
         float SommeDistance(int index)
         {

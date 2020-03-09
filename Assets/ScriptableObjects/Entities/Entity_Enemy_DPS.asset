@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: DPS
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
-  maxHealth: 0
+  maxHealth: 10
   maxActionPoints: 0
   abilities:
   - {fileID: 0}
-  brain: {fileID: 0}
+  brain: {fileID: 11400000, guid: d89fb07e551e94b4bba6dbb59a891b95, type: 2}
   alignement: 0
   entityTag: 1
   power: 0

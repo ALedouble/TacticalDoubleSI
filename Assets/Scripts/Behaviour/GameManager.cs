@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerTeamManager.Instance.OnFinishPlacement -= OnFinishedPlacement;
 
+        for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+        {
+            MapManager.GetListOfEntity().Add(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
+        }
+
         RoundManager.Instance.StartRound();
     }
 }
