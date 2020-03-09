@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public enum AnimationType{ Jump, Thrust, Movement, };
+public enum AnimationType{ Jump, Thrust, Movement, Grab};
 
 
 [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability", order = 1)]
@@ -25,6 +25,9 @@ public class Ability : ScriptableObject
 
     [Tooltip("Le multiplicateur à chaque LevelUp")]
     public float multiplicator;
+
+    [Tooltip("L'expérience à chaque fois qu'on utilise l'effet")]
+    public float experience;
 
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
@@ -53,18 +56,22 @@ public class Ability : ScriptableObject
     public TileArea effectArea;
 
 
-    public Tween GetStartTween(Transform transform)
+    public Tween GetStartTween(Transform transform, Vector2Int position)
     {
         switch (animationType)
         {
             case AnimationType.Jump:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                Ease jumpStartEase = Ease.InExpo;
+                return transform.DOMove(new Vector3(transform.position.x, 0f, transform.position.z), 0.45f).SetEase(jumpStartEase, 3f);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                return transform.DOMove(new Vector3(position.x, 0, position.y), .25f);
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                return transform.DOMove(new Vector3(position.x + 0.5f, 0, position.y), .25f);
+                break;
+            case AnimationType.Grab:
+                return transform.DOMove(new Vector3(position.x + 0.5f, 0, position.y), .25f);
                 break;
             default:
                 break;
@@ -73,18 +80,22 @@ public class Ability : ScriptableObject
         return null;
     }
 
-    public Tween GetEndTween(Transform transform)
+    public Tween GetEndTween(Transform transform, Vector2Int targetTilePos)
     {
         switch (animationType)
         {
             case AnimationType.Jump:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                Ease jumpEndEase = Ease.OutExpo;
+                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f).SetEase(jumpEndEase, 10f);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
+                break;
+            case AnimationType.Grab:
+                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
                 break;
             default:
                 break;

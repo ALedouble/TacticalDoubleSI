@@ -118,10 +118,15 @@ public class EntityBehaviour : MonoBehaviour
             moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), tileMovementSpeed)
                 .SetEase(movementEase));
 
-            // first half of the jump
-            moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
-            // second half
-            moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
+            
+            if(GetAlignement() == Alignement.Player)
+            {
+                // first half of the jump
+                moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
+                // second half
+                moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
+            }
+            
         }
 
         RoundManager.Instance.currentMovementSequence = moveSequence;
@@ -137,8 +142,7 @@ public class EntityBehaviour : MonoBehaviour
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
-        abilitySequence.Append(ability.GetStartTween(transform)
-        .SetEase(attackEase, 10)
+        abilitySequence.Append(ability.GetStartTween(transform, targetTile.position)
         .OnComplete(() =>
         {
             
@@ -148,7 +152,7 @@ public class EntityBehaviour : MonoBehaviour
             }
         }));
 
-        abilitySequence.Append(ability.GetEndTween(transform)
+        abilitySequence.Append(ability.GetEndTween(transform, targetTile.position)
         .SetEase(returnAttackEase, 10));
     
 
