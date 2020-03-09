@@ -18,6 +18,6 @@ public class PickUpCrystalEffect : AbilityEffect
     // Update is called once per frame
     public void PickUp(EntityBehaviour entity)
     {
-        
+        MapManager.DeleteEntity(entity);
     }
 }

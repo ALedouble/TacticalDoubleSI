@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Resistance
   description: Gives Armure to yourself and allies
   cost: 6
+  multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: 3dc4e7da69de2bb45a8574705f1d1f7d, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: 1eb1993e66a6fc047ad3694fd97b90f7, type: 2}
   castArea:
     size: 3
     area:

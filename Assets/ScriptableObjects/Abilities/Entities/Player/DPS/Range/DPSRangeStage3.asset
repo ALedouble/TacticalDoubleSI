@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Molotov arrow
   description: A shot that explode and leave a damage area on the ground
   cost: 5
+  multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: 7ebc2584832b5ed49bc9caf410e3cac4, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   castArea:
     size: 9
     area:
