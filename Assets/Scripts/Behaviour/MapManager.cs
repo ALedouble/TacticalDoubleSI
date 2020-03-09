@@ -94,11 +94,17 @@ public class MapManager : MonoBehaviour
     /// <summary>
     /// Returns the target tile
     /// </summary>
+    public static TileData MoveEntity(EntityBehaviour entity, Vector2Int origin, ReachableTile target)
+    {
+        if (target.path.Count <= 0) return GetTile(origin);
+        return MoveEntity(entity, origin, target.GetCoordPosition());
+    }
     public static TileData MoveEntity(EntityBehaviour entity, Vector2Int origin, Vector2Int target)
     {
         GetTile(origin).entities.Remove(entity);
 
         GetTile(target).entities.Add(entity);
+
         return GetTile(target);
     }
 

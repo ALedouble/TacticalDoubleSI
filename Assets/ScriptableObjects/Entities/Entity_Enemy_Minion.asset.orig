@@ -10,17 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c81287856b9dfa47bf2cfa8feeee7a6, type: 3}
-  m_Name: Entity_Enemy_DPS
+  m_Name: Entity_Enemy_Minion
   m_EditorClassIdentifier: 
-  displayName: DPS
+  displayName: M
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
-  maxHealth: 10
+<<<<<<< HEAD
+  maxHealth: 5
   maxActionPoints: 0
+=======
+  maxHealth: 0
+  maxActionPoints: 10
+>>>>>>> c52dab619d70c7ff5e66cbf803eddd903b75f623
   abilities:
-  - {fileID: 0}
-  brain: {fileID: 11400000, guid: d89fb07e551e94b4bba6dbb59a891b95, type: 2}
+  - {fileID: 11400000, guid: ba967516f76355f42a34c61d6881c8ea, type: 2}
+  brain: {fileID: 11400000, guid: ccf1b3bb34189b7428dd9096da9bc123, type: 2}
   alignement: 0
-  entityTag: 1
-  power: 0
+  entityTag: 3
+  power: 2
   totemValue: -1
