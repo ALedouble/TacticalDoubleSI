@@ -13,6 +13,3 @@ MonoBehaviour:
   m_Name: ArmorEffect
   m_EditorClassIdentifier: 
   duration: 0
-  armorValue: 0
-  sfxHit: {fileID: 0}
-  vfxHit: {fileID: 0}
