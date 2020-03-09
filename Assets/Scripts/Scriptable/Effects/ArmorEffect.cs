@@ -5,12 +5,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ArmorEffect", menuName = "ScriptableObjects/ArmorEffect", order = 103)]
 public class ArmorEffect : AbilityEffect
 {
-    [Tooltip("Le nombre d'armure ajouté")]
-    public float armorValue;
+    public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
+    {
+        ApplyEffect(entity, ability, castTile, (x) =>
+        {
+            x.CurrentArmor += UpgradeArmor(entity, ability);
+        });
+    }
 
-    [Tooltip("SFX quand l'attaque touche")]
-    public AudioSource sfxHit;
-
-    [Tooltip("VFX quand l'attaque touche")]
-    public GameObject vfxHit;
+    public int UpgradeArmor(EntityBehaviour entity, Ability ability)
+    {
+        return entity.CurrentArmor + 1;
+    }
 }

@@ -58,17 +58,30 @@ public class EntityBehaviour : MonoBehaviour
     List<Vector2Int> tilesForEffect;
     Vector2Int castCase;
 
-
-
     [HideInInspector] public int heldCrystalValue = -1;
+
+    EntityAnimator animator;
 
     public void Init()
     {
         data = Instantiate(data);
         name = data.name;
 
-        // VERY TEMPORARY
-        GetComponentInChildren<MeshRenderer>().material.color = data.alignement == Alignement.Enemy ? Color.red : Color.blue;
+        InitAnimations();
+    }
+
+    void InitAnimations()
+    {
+        if (data.animations == null) return;
+
+        animator = gameObject.AddComponent<EntityAnimator>();
+        animator.mat = Resources.Load("Mat_Entity") as Material;
+
+        animator.Init();
+
+        animator.PlayAnimation(data.animations.GetAnimation(0));
+
+        animator.Update();
     }
 
     private void Update()
@@ -141,20 +154,6 @@ public class EntityBehaviour : MonoBehaviour
 
         return abilitySequence;
     }
-
-    /*
-    public void CheckEntity()
-    {
-        for (int y = 0; y < MapManager.GetListOfEntity().Count; y++)
-        {
-            if (MapManager.GetListOfEntity()[y].GetPosition() == effectPosition)
-            {
-                Vector2Int enemyPosition = MapManager.GetListOfEntity()[y].GetPosition();
-                EntityBehaviour currentEnemy = MapManager.GetListOfEntity()[y];
-            }
-        }
-    }
-    */
 
     public void OnDrawGizmos()
     {

@@ -24,7 +24,7 @@ public class Ability : ScriptableObject
     public int cost;
 
     [Tooltip("Le multiplicateur à chaque LevelUp")]
-    public float damageMultiplicator;
+    public float multiplicator;
 
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
@@ -34,6 +34,9 @@ public class Ability : ScriptableObject
 
     [Tooltip("SFX quand on lance l'attaque")]
     public AudioSource sfxCast;
+
+    [Tooltip("Est-ce possible de se le lancer dessus")]
+    public bool canCastOnEntityPosition;
 
 
 

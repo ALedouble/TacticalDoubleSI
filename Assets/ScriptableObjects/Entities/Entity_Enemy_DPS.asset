@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Entity_Enemy_DPS
   m_EditorClassIdentifier: 
   displayName: DPS
+  portrait: {fileID: 0}
+  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
   maxHealth: 0
   maxActionPoints: 0
   abilities:
