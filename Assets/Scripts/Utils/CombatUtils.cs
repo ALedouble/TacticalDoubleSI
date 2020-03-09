@@ -10,7 +10,7 @@ public static class CombatUtils
         float damageValue = 0;
         for(int i = 0; i < entity.GetAbilities().Count; i++)
         {
-            float damage = ((entity.data.power * ability.multiplicator) - 1);
+            float damage = ((entity.data.power * ability.multiplicator));
             damageValue = damage;
         }
 

@@ -17,7 +17,7 @@ public class DamageEffect : AbilityEffect
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         ApplyEffect(entity, ability, castTile, (x) => {
-            x.CurrentHealth -= SetDamage(entity, ability);
+            x.CurrentHealth -= SetDamage(entity, ability) - x.CurrentArmor;
         });
 
         
