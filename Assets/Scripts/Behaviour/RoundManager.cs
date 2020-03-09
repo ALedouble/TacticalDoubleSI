@@ -33,10 +33,10 @@ public class RoundManager : MonoBehaviour
     {
         phase = RoundPhase.Player;
 
-        for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+        for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
         {
             // TODO : carry over a part of previous action points
-            PlayerTeamManager.Instance.playerEntitybehaviours[i].CurrentActionPoints = PlayerTeamManager.Instance.playerEntitybehaviours[i].data.maxActionPoints;
+            MapManager.GetListOfEntity()[i].CurrentActionPoints = MapManager.GetListOfEntity()[i].data.maxActionPoints;
         }
 
         SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;

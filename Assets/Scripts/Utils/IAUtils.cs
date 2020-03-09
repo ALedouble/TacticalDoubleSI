@@ -28,7 +28,7 @@ public static class IAUtils
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { MapManager.GetTile(startPosition) }, 0) };
 
         LookAround(stopJustBeforeTarget, NavigationQueryType.Area, ref reachableTiles, reachableTiles[0], Vector2Int.zero, canWalkOnDamageTile, range, ignoreWalkable, ignoreWeightMove);
-
+        
         return reachableTiles;
     }
 
@@ -58,7 +58,7 @@ public static class IAUtils
             }
         }
 
-        return ReturnPath(reachableTiles, range);
+        return ReturnPath(stopJustBeforeTarget, reachableTiles, range);
     }
 
     /*
@@ -153,7 +153,7 @@ public static class IAUtils
      * Regarde si les entity du players sont dans l'area que peut atteindre current avec mouvement + attack
      */
     public static void GetPlayerInRange(List<ReachableTile> reachableTiles, Ability ability,
-                                        ref ReachableTile playerHealerPathToAttack, ref ReachableTile playerDPSPathToAttack, ref ReachableTile playerTankPathToAttack,
+                                        ref List<ReachableTile> playerHealerPathToAttack, ref List<ReachableTile> playerDPSPathToAttack, ref List<ReachableTile> playerTankPathToAttack,
                                         EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank)
     {
         List<ReachableTile> resultForCast;
@@ -161,21 +161,21 @@ public static class IAUtils
         for (int i = 0; i < reachableTiles.Count; i++)
         {
             resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
-            if (resultForCast != null)
+            if (resultForCast != null && resultForCast.Count > 0)
             {
-                playerHealerPathToAttack = resultForCast[0];
+                playerHealerPathToAttack = resultForCast;
             }
 
             resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
-            if (resultForCast != null)
+            if (resultForCast != null && resultForCast.Count > 0)
             {
-                playerDPSPathToAttack = resultForCast[0];
+                playerDPSPathToAttack = resultForCast;
             }
 
             resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
-            if (resultForCast != null)
+            if (resultForCast != null && resultForCast.Count > 0)
             {
-                playerTankPathToAttack = resultForCast[0];
+                playerTankPathToAttack = resultForCast;
             }
         }
     }
@@ -183,11 +183,11 @@ public static class IAUtils
     /*
      * Regarde s'il y a une Entity X ayant les parametre : "alignement" et "entityTag" autour de "target"
      */
-    public static bool HaveXEntityAround(Alignement alignement, ReachableTile target, EntityTag? entityTag = null)
+    public static bool HaveXEntityAround(EntityBehaviour current, Alignement alignement, ReachableTile target, EntityTag? entityTag = null)
     {
-        return HaveXEntityAround(alignement, target.GetLastTile(), entityTag);
+        return HaveXEntityAround(current, alignement, target.GetLastTile(), entityTag);
     }
-    public static bool HaveXEntityAround(Alignement alignement, TileData target, EntityTag? entityTag = null)
+    public static bool HaveXEntityAround(EntityBehaviour current, Alignement alignement, TileData target, EntityTag? entityTag = null)
     {
         List<TileData> around = TilesAround(target);
 
@@ -195,16 +195,14 @@ public static class IAUtils
         {
             for (int j = 0; j < around[i].entities.Count; j++)
             {
-                if (entityTag == null)
+                if (around[i].entities[j] != current)
                 {
-                    return true;
-                }
-
-                else if (around[i].entities[j].GetAlignement().Equals(alignement))
-                {
-                    if (around[i].entities[j].GetEntityTag().Equals(entityTag))
+                    if (around[i].entities[j].GetAlignement().Equals(alignement))
                     {
-                        return true;
+                        if (entityTag == null || around[i].entities[j].GetEntityTag().Equals(entityTag))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -216,7 +214,7 @@ public static class IAUtils
     /*
      * Return le path vers l'enemy le plus proche
      */
-    public static ReachableTile PathToShortestEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity,
+    public static ReachableTile ShortestPathToEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity,
                                                         bool canWalkOnDamageTile = true, int range = - 1, bool havePriority = false)
     {
         List<ReachableTile> listOfPathPlayers = new List<ReachableTile>();
@@ -227,7 +225,7 @@ public static class IAUtils
             ReachableTile pathToPlayer = null;
             if (listPlayer[i] != null)
             {
-                pathToPlayer = FindShortestPath(stopJustBeforeTarget, current.GetPosition(), listPlayer[i].GetPosition(), canWalkOnDamageTile, range);
+                pathToPlayer = FindShortestPath(stopJustBeforeTarget, current.GetPosition(), listPlayer[i].GetPosition(), canWalkOnDamageTile);
 
                 if (pathToPlayer != null)
                     listOfPathPlayers.Add(pathToPlayer);
@@ -236,29 +234,10 @@ public static class IAUtils
 
         if (!havePriority) listOfPathPlayers.Sort();
 
-        if (listOfPathPlayers.Count > 0) return listOfPathPlayers[0];
+        if (listOfPathPlayers.Count > 0) return CutPathInRange(listOfPathPlayers[0], range);
         else return null;
     }
-
-    /*
-     * Recupere les ability de current
-     */
-    public static void GetAbility(EntityBehaviour current, string nameAbility1, string nameAbility2, ref Ability ability1, ref Ability ability2)
-    {
-        for (int i = 0; i < current.GetAbilities().Count; i++)
-        {
-            if (current.GetAbilities(0).name.Equals(nameAbility1))
-            {
-                ability1 = current.GetAbilities(0);
-            }
-
-            else if (current.GetAbilities(0).name.Equals(nameAbility2))
-            {
-                ability2 = current.GetAbilities(0);
-            }
-        }
-    }
-    
+        
     /*
      * Regarde si le turn d'entity est fini
      */
@@ -267,6 +246,7 @@ public static class IAUtils
         if (pass || !canMakeAction)
         {
             RoundManager.Instance.EndTurn(entity);
+            Debug.LogWarning("fin " + entity.name);
             return true;
         }
 
@@ -340,6 +320,7 @@ public static class IAUtils
     public delegate void LambdaAbilityCall(EntityBehaviour current, Ability ability, TileData target, IAEntity iaEntityFunction);
     public static void LambdaAbilityCallDelegate(EntityBehaviour current, Ability ability, TileData target, IAEntity iaEntityFunction)
     {
+        Debug.Log(target.GetCoordPosition());
         current.UseAbility(ability, target).OnComplete(() => { iaEntityFunction(); });
     }
 
@@ -352,11 +333,13 @@ public static class IAUtils
                                                     bool condition = true, LambdaAbilityCall functionToCallAfterTheMove = null, Ability ability = null, TileData abilityTarget = null)
     {
         if (moveTarget == null) return false;
-
+        if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
+        
         if (condition)
         {
             if (functionToCallAfterTheMove != null)
             {
+                if (current.CurrentActionPoints < ability.cost) return false;
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
 
@@ -376,28 +359,29 @@ public static class IAUtils
      * 
      * Return si l'on a attaque
      */
-    public static bool AttackWithPriority(EntityBehaviour current, ReachableTile firstToTestMovement, ReachableTile secondToTestMovement, ReachableTile thirdToTestMovement,
+    public static bool AttackWithPriority(EntityBehaviour current, List<ReachableTile> firstToTestMovement, List<ReachableTile> secondToTestMovement, List<ReachableTile> thirdToTestMovement,
                                             IAEntity iaEntityFunction,  LambdaAbilityCall functionToCallAfterTheMove, Ability ability,
                                             SpecificConditionReachable functionConditionReachable = null)
     {
-        if (!MoveAndTriggerAbilityIfNeed(current, firstToTestMovement, iaEntityFunction,
-                                            functionConditionReachable == null ? true : functionConditionReachable(firstToTestMovement),
-                                            functionToCallAfterTheMove, ability, firstToTestMovement.castTile))
+        List<List<ReachableTile>> allReachableTilesForAllPlayers = new List<List<ReachableTile>>() { firstToTestMovement, secondToTestMovement, thirdToTestMovement };
+
+        for (int i = 0; i < allReachableTilesForAllPlayers.Count; i++)
         {
-            if (!MoveAndTriggerAbilityIfNeed(current, secondToTestMovement, iaEntityFunction, 
-                                                functionConditionReachable == null ? true : functionConditionReachable(secondToTestMovement),
-                                                functionToCallAfterTheMove, ability, secondToTestMovement.castTile))
+            if (allReachableTilesForAllPlayers[i] != null)
             {
-                if (!MoveAndTriggerAbilityIfNeed(current, thirdToTestMovement, iaEntityFunction, 
-                                                    functionConditionReachable == null ? true : functionConditionReachable(thirdToTestMovement),
-                                                    functionToCallAfterTheMove, ability, thirdToTestMovement.castTile))
+                for (int j = 0; j < allReachableTilesForAllPlayers[i].Count; j++)
                 {
-                    return false;
+                    if (allReachableTilesForAllPlayers[i][j] != null && MoveAndTriggerAbilityIfNeed(current, allReachableTilesForAllPlayers[i][j], iaEntityFunction,
+                                                                                    functionConditionReachable == null ? true : functionConditionReachable(allReachableTilesForAllPlayers[i][j]),
+                                                                                    functionToCallAfterTheMove, ability, allReachableTilesForAllPlayers[i][j].castTile))
+                    {
+                        return true;
+                    }
                 }
             }
         }
 
-        return true;
+        return false;
     }
 
     /*
@@ -406,20 +390,33 @@ public static class IAUtils
      * return si l'action "MoveAndTriggerAbilityIfNeed" c'est bien derouler, ou false s'il n'y a pas d'explosion
      */
     public static bool IsThereAnExplosion(EntityBehaviour current, EntityBehaviour firstToTestTargetTile, EntityBehaviour secondToTestTargetTile, EntityBehaviour thirdToTestTargetTile,
-                                            ReachableTile firstToTestMovement, ReachableTile secondToTestMovement, ReachableTile thirdToTestMovement,
+                                            List<ReachableTile> firstToTestMovement, List<ReachableTile> secondToTestMovement, List<ReachableTile> thirdToTestMovement,
                                             IAEntity iaEntityFunction, LambdaAbilityCall functionToCallAfterTheMove, Ability ability, 
                                             SpecificConditionReachable functionConditionReachable = null, SpecificConditionEntity functionConditionEntity = null)
     {
+        List<EntityBehaviour> allPlayers = new List<EntityBehaviour>() { firstToTestTargetTile, secondToTestTargetTile, thirdToTestTargetTile };
+        List<List<ReachableTile>> allReachableTilesForAllPlayers = new List<List<ReachableTile>>() { firstToTestMovement, secondToTestMovement, thirdToTestMovement };
         List<(EntityBehaviour, ReachableTile)> shortestExplosion = new List<(EntityBehaviour, ReachableTile)>();
-        if (firstToTestMovement != null) shortestExplosion.Add((firstToTestTargetTile, firstToTestMovement));
-        if (secondToTestMovement != null) shortestExplosion.Add((secondToTestTargetTile, secondToTestMovement));
-        if (thirdToTestMovement != null) shortestExplosion.Add((thirdToTestTargetTile, thirdToTestMovement));
+
+        for (int i = 0; i < allPlayers.Count; i++)
+        {
+            if (allPlayers[i] != null && allReachableTilesForAllPlayers[i] != null)
+            {
+                for (int j = 0; j < allReachableTilesForAllPlayers[i].Count; j++)
+                {
+                    if (allReachableTilesForAllPlayers[i][j] != null)
+                    {
+                        shortestExplosion.Add((allPlayers[i], allReachableTilesForAllPlayers[i][j]));
+                    }
+                }
+            }
+        }
 
         shortestExplosion.Sort((x, y) => x.Item2.CompareTo(y.Item2));
 
         for (int i = 0; i < shortestExplosion.Count; i++)
         {
-            if (shortestExplosion[i].Item1 != null && shortestExplosion[i].Item1.IsChannelingBurst && shortestExplosion[i].Item2 != null)
+            if (shortestExplosion[i].Item1.IsChannelingBurst)
             {
                 if(MoveAndTriggerAbilityIfNeed(current, shortestExplosion[i].Item2, iaEntityFunction,
                                                 functionConditionReachable == null ? true : functionConditionReachable(shortestExplosion[i].Item2) &&
@@ -640,14 +637,17 @@ public static class IAUtils
     /*
      * return "null" s'il n'existe pas de path, le path complet si "fullPath" ou le path dans la limite de "range" sinon
      */
-    private static ReachableTile ReturnPath(List<ReachableTile> reachableTiles, int range)
+    private static ReachableTile ReturnPath(bool stopJustBeforeTarget, List<ReachableTile> reachableTiles, int range)
     {
         if (reachableTiles == null || reachableTiles.Count <= 0)
         {
             return null;
         }
 
-        ReachableTile shortest = reachableTiles[reachableTiles.Count - 1];
+        ReachableTile shortest;
+        if (stopJustBeforeTarget) shortest = reachableTiles[0];
+        else shortest = reachableTiles[reachableTiles.Count - 1];
+
         shortest.path.RemoveAt(0);
 
         if (range >= 0)

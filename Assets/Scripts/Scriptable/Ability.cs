@@ -35,6 +35,9 @@ public class Ability : ScriptableObject
     [Tooltip("SFX quand on lance l'attaque")]
     public AudioSource sfxCast;
 
+    [Tooltip("Est-ce possible de se le lancer dessus")]
+    public bool canCastOnEntityPosition;
+
 
 
     [Tooltip("Cooldown (si 0, retourne null)")]

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+[CreateAssetMenu(fileName = "MinionBrain", menuName = "ScriptableObjects/IA_Brain/Minion_Brain", order = 999)]
 public class Minion : Brain
 {
     IAUtils.IAEntity iaEntityFunction;
@@ -9,21 +11,21 @@ public class Minion : Brain
     EntityBehaviour minion;
     List<ReachableTile> reachableTiles;
 
-    List<EntityBehaviour> enemyTank = new List<EntityBehaviour>();
+    List<EntityBehaviour> enemyTank;
 
-    EntityBehaviour playerHealer = null;
-    EntityBehaviour playerDPS = null;
-    EntityBehaviour playerTank = null;
+    EntityBehaviour playerHealer;
+    EntityBehaviour playerDPS;
+    EntityBehaviour playerTank;
 
-    ReachableTile playerHealerPathToAttack = null;
-    ReachableTile playerDPSPathToAttack = null;
-    ReachableTile playerTankPathToAttack = null;
-
-    static int percentOfLifeNeedForHelp = 25;
-    static int rangeAttackWhenLowLife = 2;
-
+    List<ReachableTile> playerHealerPathToAttack;
+    List<ReachableTile> playerDPSPathToAttack;
+    List<ReachableTile> playerTankPathToAttack;
+    
     static bool firstActionInTurn;
     static bool lowLife;
+
+    public int percentOfLifeNeedForHelp = 25;
+    public int rangeAttackWhenLowLife = 2;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -31,11 +33,27 @@ public class Minion : Brain
         conditionFunction = SpecificConditionForMove;
         minionAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
+        Debug.Log("New Minion");
+
+        Init(entityBehaviour);
+        iaEntityFunction();
+    }
+
+    private void Init(EntityBehaviour entityBehaviour)
+    {
         minion = entityBehaviour;
+
+        enemyTank = new List<EntityBehaviour>();
+
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        playerHealerPathToAttack = null;
+        playerDPSPathToAttack = null;
+        playerTankPathToAttack = null;
         firstActionInTurn = true;
         lowLife = false;
-
-        iaEntityFunction();
     }
 
     /*
@@ -43,9 +61,10 @@ public class Minion : Brain
      */
     private void IAMinion()
     {
+
         if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
-        
+                
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
@@ -140,11 +159,15 @@ public class Minion : Brain
     {
         if (!lowLife)
         {
-            ReachableTile pathToShortestEnemy = IAUtils.PathToShortestEnemy(false, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints);
+            ReachableTile pathToShortestEnemy = IAUtils.ShortestPathToEnemy(true, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints);
+
+            for (int i = 0; i < pathToShortestEnemy.path.Count; i++)
+            {
+                Debug.Log(pathToShortestEnemy.path[i].GetCoordPosition());
+            }
+
             IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
         }
-
-        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
 
     /*
@@ -155,6 +178,8 @@ public class Minion : Brain
      */
     private bool SpecificConditionForMove (ReachableTile target)
     {
-        return !IAUtils.HaveXEntityAround(Alignement.Enemy, target, EntityTag.Minion);
+        if (target == null || target.path.Count <= 0) return false;
+
+        return !IAUtils.HaveXEntityAround(minion, Alignement.Enemy, target, EntityTag.Minion);
     }
 }
