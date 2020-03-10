@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b64a0772756b19488245fc0e13ad708, type: 3}
   m_Name: EP_Tank
   m_EditorClassIdentifier: 
-  healthIncrement: 0
-  actionPointsIncrement: 0
-  armorIncrement: 0
+  healthIncrement: 6
+  actionPointsIncrement: 0.4
+  armorIncrement: 0.6
+  powerIncrement: 0.6
+  animations: []
   abilityProgression:
   - {fileID: 11400000, guid: cceb02344f65d0e409eda55990348428, type: 2}
   - {fileID: 11400000, guid: 8add951ed8bc2f348b9e8bc42aebb096, type: 2}
