@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: EntityAnimation_MinionEN_Idle
   m_EditorClassIdentifier: 
   frames:
-  - texture: {fileID: 2800000, guid: aaaefc7a18f6db945bd991d4c375516c, type: 3}
+  - texture: {fileID: 2800000, guid: db078c59ba59513418d5c71b64ca81d7, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: e821dcfa7d3a0d24ab10a0091485378b, type: 3}
+  - texture: {fileID: 2800000, guid: 24e20ac66cd848a4e895b4fcc8e55587, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: d6d04259c2865e9418ea089d24f011d6, type: 3}
+  - texture: {fileID: 2800000, guid: e95121b493a2c5540b446d5834596083, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 36db27bf9d1417a478262ed4ea24af8f, type: 3}
+  - texture: {fileID: 2800000, guid: b65fa8a6bf7baa341920236714c6775d, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: dbf4d2796e517884984f6800e068e7a9, type: 3}
+  - texture: {fileID: 2800000, guid: 0271d140945c83f45a24cfb7a204ec85, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 69471557d8430d042b455761d0e85460, type: 3}
+  - texture: {fileID: 2800000, guid: 51fe7f45204875942b0c04ca88620fc5, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: c77fc512b5dac574f861527480159300, type: 3}
+  - texture: {fileID: 2800000, guid: c8a0226a7ed45b1448076b537ddbd3a8, type: 3}
     length: 0.1
   loopMode: 1

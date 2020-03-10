@@ -70,6 +70,8 @@ public class RoundManager : MonoBehaviour
 
             SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
+            HUDManager.Instance.OnEndTurnPressed -= EndTurn;
+
             // All player entities have played, make the ai play
             roundEntities[currentEntityTurn].OnTurn();
         }
