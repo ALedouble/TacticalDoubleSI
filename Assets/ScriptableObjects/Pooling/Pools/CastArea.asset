@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedc2706863fca54c9b17f09584b7aa0, type: 3}
+  m_Name: CastArea
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3483823113218419330, guid: 9e37f95fd2e6a3a44a34d5527cbd6324, type: 3}
+  size: 50
+  renaming: 0
+  inactiveObjects: []
+  activeObjects: []

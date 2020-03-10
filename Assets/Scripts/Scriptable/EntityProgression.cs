@@ -8,6 +8,7 @@ public class EntityProgression : ScriptableObject
     public float healthIncrement;
     public float actionPointsIncrement;
     public float armorIncrement;
+    public float powerIncrement;
 
     public List<EntityAnimations> animations = new List<EntityAnimations>();
 
