@@ -36,6 +36,11 @@ public static class CombatUtils
         return myPosition + (pushVector * 2);
     }
 
+    public static Vector2Int ComputeGrab(Vector2Int enemyPosition, Vector2Int myPosition)
+    {
+        Vector2Int grabVector = enemyPosition + myPosition;
+        return grabVector * 2;
+    }
     
 
     public static Sequence Grab(Vector2Int myPosition, EntityBehaviour entity, Vector2Int grabVector)
@@ -50,7 +55,7 @@ public static class CombatUtils
                 if (MapManager.GetTile(grabVector.x, grabVector.y).tileType == TileType.Normal)
                 {
                     Debug.Log(grabVector);
-                  //  grabSequence.Append(entity.transform.DOMove(new Vector3(-grabVector.x, 0, -grabVector.y), 0.5f));
+                    grabSequence.Append(entity.transform.DOMove(new Vector3(-grabVector.x, 0, -grabVector.y), 0.5f));
                 }
             }
         }

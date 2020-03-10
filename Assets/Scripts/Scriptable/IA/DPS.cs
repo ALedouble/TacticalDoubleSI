@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+[CreateAssetMenu(fileName = "DPSBrain", menuName = "ScriptableObjects/IA_Brain/DPS_Brain", order = 999)]
 public class DPS : Brain
 {
     IAUtils.IAEntity iaEntityFunction;
@@ -9,38 +11,51 @@ public class DPS : Brain
     EntityBehaviour dps;
     List<ReachableTile> reachableTiles;
 
-    List<EntityBehaviour> enemyTank = new List<EntityBehaviour>();
-    List<EntityBehaviour> enemyHealer = new List<EntityBehaviour>();
+    List<EntityBehaviour> enemyTank;
+    List<EntityBehaviour> enemyHealer;
 
-    EntityBehaviour playerHealer = null;
-    EntityBehaviour playerDPS = null;
-    EntityBehaviour playerTank = null;
+    EntityBehaviour playerHealer;
+    EntityBehaviour playerDPS;
+    EntityBehaviour playerTank;
     List<EntityBehaviour> listOfEntity;
 
-    ReachableTile playerHealerPathToAttack = null;
-    ReachableTile playerDPSPathToAttack = null;
-    ReachableTile playerTankPathToAttack = null;
-
-    static string nameAbility1 = "Cac";
     static Ability ability1;
-
-    static string nameAbility2 = "Dist";
     static Ability ability2;
     static bool ability2Use;
 
-    static int percentOfLifeNeedForAttackPrio = 25;
-    static int percentOfLifeNeedForHealer = 25;
-    static int percentOfLifeNeedForTank = 50;
+    static bool haveEndTurn;
+
+    public int percentOfLifeNeedForAttackPrio = 25;
+    public int percentOfLifeNeedForRunToHealer = 25;
+    public int percentOfLifeNeedForRunToTank = 50;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
         iaEntityFunction = IA_DPS;
         dpsAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
+        Debug.LogError("New DPS");
+
+        Init(entityBehaviour);
+        iaEntityFunction();
+    }
+
+    private void Init(EntityBehaviour entityBehaviour)
+    {
         dps = entityBehaviour;
+
+        enemyTank = new List<EntityBehaviour>();
+        enemyHealer = new List<EntityBehaviour>();
+
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        ability1 = dps.GetAbilities(0);
+        ability2 = dps.GetAbilities(1);
         ability2Use = false;
 
-        iaEntityFunction();
+        haveEndTurn = false;
     }
 
     /*
@@ -48,7 +63,6 @@ public class DPS : Brain
      */
     private void IA_DPS()
     {
-        IAUtils.GetAbility(dps, nameAbility1, nameAbility2, ref ability1, ref ability2);
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
@@ -72,6 +86,7 @@ public class DPS : Brain
      */
     private bool CanMakeAction()
     {
+        if (haveEndTurn) return false;
         if (dps.CurrentActionPoints >= ability1.cost) return true;
         if (!ability2Use && dps.CurrentActionPoints >= ability2.cost) return true;
 
@@ -85,7 +100,7 @@ public class DPS : Brain
      */
     private bool GoToHealer()
     {
-        if (dps.CurrentHealth < ((dps.GetMaxHealth() * percentOfLifeNeedForHealer) / 100))
+        if (dps.CurrentHealth < ((dps.GetMaxHealth() * percentOfLifeNeedForRunToHealer) / 100))
         {
             List<Tuple<ReachableTile, EntityBehaviour>> listOfPathToHealer = IAUtils.PathToCastOrToJoin(true, IAUtils.GetReachableTileFromCastOrPathDelegate, dps, enemyHealer, reachableTiles, null);
 
@@ -104,18 +119,21 @@ public class DPS : Brain
                     TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
                     if (tileToCast != null)
                     {
-                        IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, null, true, dpsAbilityCall, ability2, tileToCast);
-                        canCast = true;
+                        canCast = IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast);
                         break;
                     }
                 }
 
                 if (!canCast)
                 {
-                    IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, null);
+                    if (!IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, iaEntityFunction)) return false;
+                }
+                else
+                {
+                    ability2Use = true;
                 }
 
-                IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
+                haveEndTurn = true;
                 return true;
             }
         }
@@ -130,18 +148,22 @@ public class DPS : Brain
      */
     private bool GoToTank()
     {
-        if (dps.CurrentHealth < ((dps.GetMaxHealth() * percentOfLifeNeedForTank) / 100))
+        if (dps.CurrentHealth < ((dps.GetMaxHealth() * percentOfLifeNeedForRunToTank) / 100))
         {
             List<Tuple<ReachableTile, EntityBehaviour>> listOfPathToTank = IAUtils.PathToCastOrToJoin(true, IAUtils.GetReachableTileFromCastOrPathDelegate, dps, enemyTank, reachableTiles, null);
             
             if (listOfPathToTank != null)
             {
-                if(SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
+                if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
                 {
-                    IAUtils.MoveAndTriggerAbilityIfNeed(dps, listOfPathToTank[0].Item1, null);
-                    IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
-                    return true;
+                    if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, listOfPathToTank[0].Item1, iaEntityFunction))
+                    {
+                        haveEndTurn = true;
+                        return true;
+                    }
                 }
+
+                else return true;
             }
         }
 
@@ -163,21 +185,17 @@ public class DPS : Brain
 
         if (target == null) return false;
 
-        if(!SeeToUseAbilityDuringThePathToTarget(target, true))
+        if (!SeeToUseAbilityDuringThePathToTarget(target, true))
         {
             return IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction, true, dpsAbilityCall, ability1, target.Item1.castTile);
         }
 
-        return false;
+        return true;
     }
 
     /*
-     * Regarde vers quel entity il va se deplace selon l'ordre de priorite Heal (percentOfLifeNeedForAttackPrio % HP) 
-     *                                                                      > DPS (percentOfLifeNeedForAttackPrio % HP) 
-     *                                                                      > Tank (percentOfLifeNeedForAttackPrio % HP) 
-     *                                                                      > Heal 
-     *                                                                      > DPS 
-     *                                                                      > Tank
+     * Regarde vers quel entity il va se deplace selon l'ordre de priorite :
+     *          Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
      */
     private void WalkVersPrio()
     {
@@ -186,10 +204,8 @@ public class DPS : Brain
 
         if (target != null)
         { 
-            IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, null);
+            IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction);
         }
-
-        IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
     }
 
     /*
@@ -271,8 +287,6 @@ public class DPS : Brain
      */
     private bool UseAbilityDuringThePathToTarget(ReachableTile pathToEntityCac, TileData tileToCast, List<TileData> zoneCastDist, bool priorityOnRun)
     {
-        bool canCast = true;
-
         ReachableTile intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
 
         int deplacementCost;
@@ -281,16 +295,13 @@ public class DPS : Brain
 
         if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
         {
-            ability2Use = true;
-            IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast);
+            if(IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast))
+            {
+                ability2Use = true;
+                return true;
+            }
         }
 
-        else
-        {
-            canCast = false;
-        }
-
-        if (!canCast) return false;
-        return true;
+        return false;
     }
 }

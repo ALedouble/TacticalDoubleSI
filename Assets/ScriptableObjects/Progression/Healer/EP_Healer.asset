@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b64a0772756b19488245fc0e13ad708, type: 3}
+  m_Name: EP_Healer
+  m_EditorClassIdentifier: 
+  healthIncrement: 0
+  actionPointsIncrement: 0
+  armorIncrement: 0
+  abilityProgression:
+  - {fileID: 11400000, guid: 8f4969c9a0fce8548bbaccad18169a20, type: 2}
+  - {fileID: 11400000, guid: c88579dd61b19fa4ab2c62b04a376847, type: 2}
+  - {fileID: 11400000, guid: 281406b3834aca24d8fa0d7f3a86ae1e, type: 2}
+  - {fileID: 11400000, guid: f2f8c6e33f7eb6848909824191756b6a, type: 2}

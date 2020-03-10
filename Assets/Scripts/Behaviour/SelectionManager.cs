@@ -14,6 +14,7 @@ public class SelectionManager : MonoBehaviour
     public Action<EntityBehaviour> OnEntitySelect;
     public Action<MapRaycastHit> OnHoveredTileChanged;
     public Action<EntityBehaviour> OnHoveredEntityChanged;
+    public Action OnCancel;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     MapRaycastHit mapRaycastLastFrame;
+    EntityBehaviour entityHoveredLastFrame;
 
     void Update()
     {
@@ -31,16 +33,26 @@ public class SelectionManager : MonoBehaviour
         }
         mapRaycastLastFrame = mapRaycastThisFrame;
 
+        EntityBehaviour entityHoveredThisFrame = EntityUnderCursor();
+        if (entityHoveredThisFrame != entityHoveredLastFrame)
+        {
+            OnHoveredEntityChanged?.Invoke(entityHoveredThisFrame);
+        }
+        entityHoveredLastFrame = entityHoveredThisFrame;
+
         if (Input.GetMouseButtonDown(0))
         {
+            OnClick?.Invoke(SelectionUtils.MapRaycast());
+
             EntityBehaviour entityUnderCursor = EntityUnderCursor();
             if (entityUnderCursor != null)
             {
                 OnEntitySelect?.Invoke(entityUnderCursor);
-                return;
             }
-
-            OnClick?.Invoke(SelectionUtils.MapRaycast());
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            OnCancel?.Invoke();
         }
     }
 

@@ -83,9 +83,13 @@ public class PlayerBrain : Brain
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
 
-        MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer
-
+        if (!entityBehaviour.data.abilities[index].canCastOnEntityPosition)
+        {
+            castableTiles.RemoveAll(x => !MapManager.GetTile(x).IsWalkable);
+        }
         
+ 
+        MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer 
     }
 
     void OnUseAbility(MapRaycastHit hit)
@@ -100,7 +104,7 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnUseAbility;
         SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
 
-        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(0), hit.tile);
+        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
 
         attackSequence.OnComplete(() =>
         {

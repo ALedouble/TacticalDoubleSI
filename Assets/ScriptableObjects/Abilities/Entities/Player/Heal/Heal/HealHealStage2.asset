@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Heal
   description: A area heal
   cost: 5
+  multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 1
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: 862a1413a8e59d347a8126ec2f72bdc9, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
   castArea:
     size: 9
     area:

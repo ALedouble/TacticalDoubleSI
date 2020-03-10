@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public enum AnimationType{ Jump, Thrust, Movement, };
+public enum AnimationType{ Jump, Thrust, Movement, Grab};
 
 
 [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability", order = 1)]
@@ -26,6 +26,9 @@ public class Ability : ScriptableObject
     [Tooltip("Le multiplicateur à chaque LevelUp")]
     public float multiplicator;
 
+    [Tooltip("L'expérience à chaque fois qu'on utilise l'effet")]
+    public float experience;
+
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
 
@@ -34,6 +37,9 @@ public class Ability : ScriptableObject
 
     [Tooltip("SFX quand on lance l'attaque")]
     public AudioSource sfxCast;
+
+    [Tooltip("Est-ce possible de se le lancer dessus")]
+    public bool canCastOnEntityPosition;
 
 
 
@@ -55,12 +61,16 @@ public class Ability : ScriptableObject
         switch (animationType)
         {
             case AnimationType.Jump:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                Ease jumpStartEase = Ease.InExpo;
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0f, transform.position.z), 0.25f);
                 break;
             case AnimationType.Thrust:
                 return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Movement:
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Grab:
                 return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             default:
@@ -75,12 +85,16 @@ public class Ability : ScriptableObject
         switch (animationType)
         {
             case AnimationType.Jump:
+                Ease jumpEndEase = Ease.OutExpo;
                 return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Thrust:
                 return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Movement:
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                break;
+            case AnimationType.Grab:
                 return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             default:

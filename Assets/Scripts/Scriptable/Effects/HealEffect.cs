@@ -14,7 +14,7 @@ public class HealEffect : AbilityEffect
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         ApplyEffect(entity, ability, castTile, (x) => {
-            if(x.data.alignement == Alignement.Player)
+            if(x.data.alignement == entity.data.alignement)
             {
                 x.CurrentHealth += SetHeal(entity, ability);
             }

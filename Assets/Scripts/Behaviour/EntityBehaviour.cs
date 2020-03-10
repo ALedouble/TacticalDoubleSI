@@ -13,7 +13,7 @@ public class EntityBehaviour : MonoBehaviour
     public Entity data;
     public int GetMaxHealth()
     {
-        return data.maxHealth;
+        return Mathf.CeilToInt(data.maxHealth);
     }
     public List<Ability> GetAbilities()
     {
@@ -67,6 +67,9 @@ public class EntityBehaviour : MonoBehaviour
         data = Instantiate(data);
         name = data.name;
 
+        // TODO : set armor
+        currentHealth = GetMaxHealth();
+
         InitAnimations();
     }
 
@@ -79,7 +82,7 @@ public class EntityBehaviour : MonoBehaviour
 
         animator.Init();
 
-        animator.PlayAnimation(data.animations.GetAnimation(0));
+        animator.PlayAnimation(data.animations.idleAnimation);
 
         animator.Update();
     }
@@ -104,7 +107,7 @@ public class EntityBehaviour : MonoBehaviour
 
     public Sequence MoveTo(ReachableTile reachableTile)
     {
-        currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile.GetCoordPosition());
+        currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
         CurrentActionPoints -= reachableTile.cost;
 
         Sequence moveSequence = DOTween.Sequence();
@@ -118,10 +121,15 @@ public class EntityBehaviour : MonoBehaviour
             moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), tileMovementSpeed)
                 .SetEase(movementEase));
 
-            // first half of the jump
-            moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
-            // second half
-            moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
+            
+            if(GetAlignement() == Alignement.Player)
+            {
+                // first half of the jump
+                moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
+                // second half
+                moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
+            }
+            
         }
 
         RoundManager.Instance.currentMovementSequence = moveSequence;
@@ -131,7 +139,8 @@ public class EntityBehaviour : MonoBehaviour
 
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
-        Sequence abilitySequence = DOTween.Sequence();
+        CurrentActionPoints -= ability.cost;
+        Sequence abilitySequence = DOTween.Sequence(); 
 
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;

@@ -17,7 +17,10 @@ public class DamageEffect : AbilityEffect
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         ApplyEffect(entity, ability, castTile, (x) => {
-            x.CurrentHealth -= SetDamage(entity, ability) - x.CurrentArmor;
+            if (x.data.alignement != entity.data.alignement)
+            {
+                x.CurrentHealth -= SetDamage(entity, ability) - x.CurrentArmor;
+            }
         });
 
         
@@ -25,6 +28,7 @@ public class DamageEffect : AbilityEffect
 
     public float SetDamage(EntityBehaviour entity, Ability ability)
     {
+        Debug.Log("hello");
         return CombatUtils.ComputeDamage(entity, ability);
     }
 }

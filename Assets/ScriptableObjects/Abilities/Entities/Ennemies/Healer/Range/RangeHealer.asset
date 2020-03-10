@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Fireball
   description: A simple fireball
   cost: 3
+  multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 1
-  numberOfEffects:
-  - {fileID: 11400000, guid: f62ba79614d71134289f9a1c7cccc2f8, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   castArea:
     size: 7
     area:

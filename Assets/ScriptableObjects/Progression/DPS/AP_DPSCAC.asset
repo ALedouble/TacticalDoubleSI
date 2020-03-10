@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2f449558ab261449fbd426a26bc5be, type: 3}
+  m_Name: AP_DPSCAC
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: 5761bd4056270654ba02996eecf972cc, type: 2}
+  - {fileID: 11400000, guid: 42bbe10e38d62324ca0c3304d29bb78a, type: 2}
+  - {fileID: 11400000, guid: acdc26cccd9e6cf41bb5d8a5b6731a5f, type: 2}
+  - {fileID: 11400000, guid: dcf74d4480f3b8d40bcd2b309ae15091, type: 2}

@@ -12,40 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: Ability
   m_EditorClassIdentifier: 
-  animationType: 2
+  animationType: 0
   displayName: 
   description: 
   cost: 0
   multiplicator: 5
+  experience: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: 7d2440bf137371e49b16f4501da1c9ea, type: 2}
   castArea:
-    size: 5
+    size: 15
     area:
-    - {x: 2, y: 0}
-    - {x: 4, y: 0}
-    - {x: 2, y: 1}
-    - {x: 1, y: 2}
-    - {x: 3, y: 2}
-    - {x: 4, y: 2}
-    - {x: 0, y: 3}
-    - {x: 2, y: 3}
-    - {x: 4, y: 3}
-    - {x: 0, y: 4}
-    - {x: 3, y: 4}
-  effectArea:
-    size: 9
-    area:
-    - {x: 0, y: 4}
-    - {x: 1, y: 4}
-    - {x: 2, y: 4}
-    - {x: 3, y: 4}
-    - {x: 4, y: 4}
-    - {x: 5, y: 4}
-    - {x: 6, y: 4}
+    - {x: 7, y: 2}
+    - {x: 7, y: 3}
     - {x: 7, y: 4}
-    - {x: 8, y: 4}
+    - {x: 7, y: 5}
+    - {x: 7, y: 6}
+    - {x: 0, y: 7}
+    - {x: 1, y: 7}
+    - {x: 2, y: 7}
+    - {x: 3, y: 7}
+    - {x: 4, y: 7}
+    - {x: 5, y: 7}
+    - {x: 6, y: 7}
+    - {x: 8, y: 7}
+    - {x: 9, y: 7}
+    - {x: 10, y: 7}
+    - {x: 11, y: 7}
+    - {x: 12, y: 7}
+    - {x: 13, y: 7}
+    - {x: 14, y: 7}
+    - {x: 7, y: 8}
+    - {x: 7, y: 9}
+    - {x: 7, y: 10}
+    - {x: 7, y: 11}
+  effectArea:
+    size: 11
+    area:
+    - {x: 5, y: 0}
+    - {x: 5, y: 1}
+    - {x: 5, y: 2}
+    - {x: 5, y: 3}
+    - {x: 5, y: 4}
+    - {x: 5, y: 5}

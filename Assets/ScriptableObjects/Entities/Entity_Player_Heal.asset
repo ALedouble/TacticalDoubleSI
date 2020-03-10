@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Entity_Player_Heal
   m_EditorClassIdentifier: 
   displayName: T
-  portrait: {fileID: 0}
-  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
+  portrait: {fileID: 21300000, guid: 38e63f6bc9a63ad4498c729d2c42d224, type: 3}
+  animations: {fileID: 11400000, guid: 296f630569233ea46a9168ba855e3449, type: 2}
   maxHealth: 30
   maxActionPoints: 10
   abilities:

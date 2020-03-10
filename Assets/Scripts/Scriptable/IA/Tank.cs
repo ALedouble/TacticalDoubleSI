@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+[CreateAssetMenu(fileName = "TankBrain", menuName = "ScriptableObjects/IA_Brain/Tank_Brain", order = 999)]
 public class Tank : Brain
 {
     IAUtils.IAEntity iaEntityFunction;
@@ -8,32 +10,46 @@ public class Tank : Brain
     EntityBehaviour tank;
     List<ReachableTile> reachableTiles;
 
-    EntityBehaviour playerHealer = null;
-    EntityBehaviour playerDPS = null;
-    EntityBehaviour playerTank = null;
+    EntityBehaviour playerHealer;
+    EntityBehaviour playerDPS;
+    EntityBehaviour playerTank;
 
-    ReachableTile playerHealerPathToAttack = null;
-    ReachableTile playerDPSPathToAttack = null;
-    ReachableTile playerTankPathToAttack = null;
+    List<ReachableTile> playerHealerPathToAttack;
+    List<ReachableTile> playerDPSPathToAttack;
+    List<ReachableTile> playerTankPathToAttack;
 
-    static string nameAbility1 = "Cac";
     static Ability ability1;
-
-    static string nameAbility2 = "Repousse";
     static Ability ability2;
-
-    static int percentOfLifeNeedForChangePatern = 50;
     static bool haveUseFirstAttack;
+
+    public int percentOfLifeNeedForChangePatern = 50;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
         iaEntityFunction = IATank;
         tankAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
-        tank = entityBehaviour;
-        haveUseFirstAttack = false;
+        Debug.Log("New Tank");
 
+        Init(entityBehaviour);
         iaEntityFunction();
+    }
+
+    private void Init(EntityBehaviour entityBehaviour)
+    {
+        tank = entityBehaviour;
+
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        playerHealerPathToAttack = null;
+        playerDPSPathToAttack = null;
+        playerTankPathToAttack = null;
+
+        ability1 = tank.GetAbilities(0);
+        ability2 = tank.GetAbilities(1);
+        haveUseFirstAttack = false;
     }
 
     /*
@@ -41,7 +57,6 @@ public class Tank : Brain
      */
     private void IATank()
     {
-        IAUtils.GetAbility(tank, nameAbility1, nameAbility2, ref ability1, ref ability2);
         IAUtils.GetAllEntity(tank, ref playerHealer, ref playerDPS, ref playerTank);
                
 
@@ -104,14 +119,20 @@ public class Tank : Brain
             {
                 return true;
             }
-        }
 
-        haveUseFirstAttack = true;
+            return false;
+        }
 
         reachableTiles = IAUtils.FindAllReachablePlace(tank.GetPosition(), tank.CurrentActionPoints - ability1.cost, true);
         IAUtils.GetPlayerInRange(reachableTiles, tank.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        return IAUtils.AttackWithPriority(tank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, tankAbilityCall, ability1);
+        if (IAUtils.AttackWithPriority(tank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, tankAbilityCall, ability1))
+        {
+            haveUseFirstAttack = true;
+            return true;
+        }
+
+        return false;
 
     }
 
@@ -120,14 +141,11 @@ public class Tank : Brain
      */
     private void WalkVersPrio()
     {
-        reachableTiles = IAUtils.FindAllReachablePlace(tank.GetPosition(), tank.CurrentActionPoints, true);
-        ReachableTile target = IAUtils.PathToShortestEnemy(false, tank, playerDPS, playerTank, playerHealer, true, -1, true);
+        ReachableTile target = IAUtils.ShortestPathToEnemy(true, tank, playerDPS, playerTank, playerHealer, true, tank.CurrentActionPoints, true);
 
         if (target != null)
         {
-            IAUtils.MoveAndTriggerAbilityIfNeed(tank, target, null);
+            IAUtils.MoveAndTriggerAbilityIfNeed(tank, target, iaEntityFunction);
         }
-
-        IAUtils.CheckEndTurn(tank, CanMakeAction(), true);
     }
 }
