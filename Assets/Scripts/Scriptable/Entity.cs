@@ -21,6 +21,7 @@ public class Entity : ScriptableObject
     public float maxActionPoints;
     public float armor;
     public List<Ability> abilities;
+    public List<int> abilityLevels;
     public Brain brain;
     public Alignement alignement;
     public EntityTag entityTag;
