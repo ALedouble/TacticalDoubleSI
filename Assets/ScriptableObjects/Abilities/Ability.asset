@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640d42744aaf3aa4394b706e7cf782d0, type: 3}
   m_Name: Ability
   m_EditorClassIdentifier: 
-  animationType: 0
+  animationType: 4
   displayName: 
   description: 
   cost: 0
@@ -21,10 +21,10 @@ MonoBehaviour:
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  canCastOnEntityPosition: 0
+  canCastOnEntityPosition: 1
   cooldown: 0
   abilityEffect:
-  - {fileID: 11400000, guid: 7d2440bf137371e49b16f4501da1c9ea, type: 2}
+  - {fileID: 11400000, guid: be1d7f3a61156174c913c0689d3d64d7, type: 2}
   castArea:
     size: 15
     area:
@@ -32,7 +32,9 @@ MonoBehaviour:
     - {x: 7, y: 3}
     - {x: 7, y: 4}
     - {x: 7, y: 5}
+    - {x: 6, y: 6}
     - {x: 7, y: 6}
+    - {x: 8, y: 6}
     - {x: 0, y: 7}
     - {x: 1, y: 7}
     - {x: 2, y: 7}
@@ -54,9 +56,4 @@ MonoBehaviour:
   effectArea:
     size: 11
     area:
-    - {x: 5, y: 0}
-    - {x: 5, y: 1}
-    - {x: 5, y: 2}
-    - {x: 5, y: 3}
-    - {x: 5, y: 4}
     - {x: 5, y: 5}
