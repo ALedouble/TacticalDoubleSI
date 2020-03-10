@@ -82,7 +82,7 @@ public class EntityBehaviour : MonoBehaviour
 
         animator.Init();
 
-        animator.PlayAnimation(data.animations.GetAnimation(0));
+        animator.PlayAnimation(data.animations.idleAnimation);
 
         animator.Update();
     }

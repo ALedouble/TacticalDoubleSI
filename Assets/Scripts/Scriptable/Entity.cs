@@ -29,4 +29,9 @@ public class Entity : ScriptableObject
     [Space]
 
     public int totemValue = -1;
+
+    public int GetAbilityNumber(Ability ability)
+    {
+        return abilities.FindIndex(x => x == ability);
+    }
 }

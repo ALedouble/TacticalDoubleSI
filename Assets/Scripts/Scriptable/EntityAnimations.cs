@@ -5,11 +5,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EntityAnimations", menuName = "ScriptableObjects/EntityAnimations")]
 public class EntityAnimations : ScriptableObject
 {
-    [SerializeField]
-    private List<EntityAnimation> animations;
 
-    public EntityAnimation GetAnimation(int i)
+    [SerializeField]
+    public EntityAnimation idleAnimation;
+    [SerializeField]
+    public EntityAnimation moveAnimation;
+    [SerializeField]
+    public EntityAnimation hitAnimation;
+    [SerializeField]
+    public EntityAnimation deathAnimation;
+
+    [SerializeField]
+    private List<EntityAnimation> abilityAnimations;
+
+    public EntityAnimation GetAbilityAnimation(int abilityNumber)
     {
-        return animations[i];
+        return abilityAnimations[abilityNumber];
     }
 }
