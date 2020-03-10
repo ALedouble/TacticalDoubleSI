@@ -56,22 +56,22 @@ public class Ability : ScriptableObject
     public TileArea effectArea;
 
 
-    public Tween GetStartTween(Transform transform, Vector2Int position)
+    public Tween GetStartTween(Transform transform)
     {
         switch (animationType)
         {
             case AnimationType.Jump:
                 Ease jumpStartEase = Ease.InExpo;
-                return transform.DOMove(new Vector3(transform.position.x, 0f, transform.position.z), 0.45f).SetEase(jumpStartEase, 3f);
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0f, transform.position.z), 0.25f);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(position.x, 0, position.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(position.x + 0.5f, 0, position.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Grab:
-                return transform.DOMove(new Vector3(position.x + 0.5f, 0, position.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             default:
                 break;
@@ -80,22 +80,22 @@ public class Ability : ScriptableObject
         return null;
     }
 
-    public Tween GetEndTween(Transform transform, Vector2Int targetTilePos)
+    public Tween GetEndTween(Transform transform)
     {
         switch (animationType)
         {
             case AnimationType.Jump:
                 Ease jumpEndEase = Ease.OutExpo;
-                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f).SetEase(jumpEndEase, 10f);
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Grab:
-                return transform.DOMove(new Vector3(targetTilePos.x, 0, targetTilePos.y), .25f);
+                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             default:
                 break;

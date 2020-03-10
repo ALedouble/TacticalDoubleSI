@@ -28,6 +28,7 @@ public class DamageEffect : AbilityEffect
 
     public float SetDamage(EntityBehaviour entity, Ability ability)
     {
+        Debug.Log("hello");
         return CombatUtils.ComputeDamage(entity, ability);
     }
 }

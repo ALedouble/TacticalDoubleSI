@@ -145,7 +145,8 @@ public class EntityBehaviour : MonoBehaviour
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
-        abilitySequence.Append(ability.GetStartTween(transform, targetTile.position)
+        abilitySequence.Append(ability.GetStartTween(transform)
+        .SetEase(attackEase, 10)
         .OnComplete(() =>
         {
             
@@ -155,7 +156,7 @@ public class EntityBehaviour : MonoBehaviour
             }
         }));
 
-        abilitySequence.Append(ability.GetEndTween(transform, targetTile.position)
+        abilitySequence.Append(ability.GetEndTween(transform)
         .SetEase(returnAttackEase, 10));
     
 
