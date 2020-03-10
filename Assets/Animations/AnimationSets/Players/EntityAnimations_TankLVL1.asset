@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d4d67012f4c7554d87aceafe15d6b6f, type: 3}
-  m_Name: EntityAnimations_Tank
+  m_Name: EntityAnimations_TankLVL1
   m_EditorClassIdentifier: 
   idleAnimation: {fileID: 11400000, guid: bbc41fd8c4d1a684996b4fe021209516, type: 2}
   moveAnimation: {fileID: 11400000, guid: 209c846b893405247a6adcef10e6977e, type: 2}
