@@ -245,8 +245,7 @@ public static class IAUtils
     {
         if (pass || !canMakeAction)
         {
-            RoundManager.Instance.EndTurn();
-            Debug.LogWarning("fin " + entity.name);
+            RoundManager.Instance.EndTurn(entity);
             return true;
         }
 
