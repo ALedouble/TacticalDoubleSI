@@ -141,7 +141,7 @@ public class HUDManager : MonoBehaviour
 
         switch (entity.data.alignement)
         {
-            case Alignement.Enemy:
+            case Alignement.Enemy :
 
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
@@ -161,6 +161,17 @@ public class HUDManager : MonoBehaviour
                 fade = playerInfoFade;
 
                 icon = playerIcon;
+
+                break;
+            case Alignement.Neutral:
+
+                HPtextMesh = HPTextEnemy;
+                PAtextMesh = PATextEnemy;
+
+                canvasGroup = enemyInfoGroup;
+                fade = enemyInfoFade;
+
+                icon = enemyIcon;
 
                 break;
             default:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frames:
   - texture: {fileID: 2800000, guid: 5a5a5f3b0388a014a9f267de1d3efbac, type: 3}
-    length: 0.1
+    length: 0.25
   - texture: {fileID: 2800000, guid: 98f62c815fe04894a965d64041f89d9f, type: 3}
-    length: 0.1
+    length: 0.25
   loopMode: 1
