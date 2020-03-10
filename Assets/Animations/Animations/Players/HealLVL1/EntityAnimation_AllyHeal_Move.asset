@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frames:
   - texture: {fileID: 2800000, guid: c007ffc496d2faa4f88f72d41cd0f2f1, type: 3}
-    length: 0.1
+    length: 0.08
   - texture: {fileID: 2800000, guid: a7ba8631a5ceb474b8fda9753dab993d, type: 3}
-    length: 0.1
+    length: 0.08
   - texture: {fileID: 2800000, guid: e068030f47e4ffa4cb5f43fca68a6a6a, type: 3}
-    length: 0.1
+    length: 0.08
   - texture: {fileID: 2800000, guid: 6dadda009ccbc5a48b2046ce3e3c5e9b, type: 3}
-    length: 0.1
+    length: 0.08
   - texture: {fileID: 2800000, guid: 5e58ff3b16fb66643a91f6aa478be192, type: 3}
-    length: 0.1
+    length: 0.08
   loopMode: 1
