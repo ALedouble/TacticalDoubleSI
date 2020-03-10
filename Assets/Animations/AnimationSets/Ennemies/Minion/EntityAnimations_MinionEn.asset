@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d4d67012f4c7554d87aceafe15d6b6f, type: 3}
+  m_Name: EntityAnimations_MinionEn
+  m_EditorClassIdentifier: 
+  idleAnimation: {fileID: 11400000, guid: 17157cc7dc9b81d44b734dede9769326, type: 2}
+  moveAnimation: {fileID: 0}
+  hitAnimation: {fileID: 0}
+  deathAnimation: {fileID: 0}
+  abilityAnimations:
+  - {fileID: 11400000, guid: 0f6f15247fe0b7346aab3ec3fffe40a4, type: 2}
