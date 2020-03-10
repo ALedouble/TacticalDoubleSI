@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: T
   portrait: {fileID: 0}
-  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
+  animations: {fileID: 11400000, guid: b01ebd5733feb844eb4ede0847a8a402, type: 2}
   maxHealth: 10
   maxActionPoints: 10
   armor: 0
