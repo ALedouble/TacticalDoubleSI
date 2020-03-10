@@ -5,16 +5,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ObstacleEffect", menuName = "ScriptableObjects/ObstacleEffect", order = 106)]
 public class ObstacleEffect : AbilityEffect
 {
+    public Entity spawnedEntity;
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
-        ApplyEffect(entity, ability, castTile, (x) =>
+        List<Vector2Int> effectTiles = ability.effectArea.GetWorldSpaceRotated(entity.GetPosition(), castTile.position);
+        for (int i = 0; i < effectTiles.Count; i++)
         {
-            SetObstacle(castTile, castTile.position);
-        });
+            if (MapManager.GetTile(effectTiles[i]).IsWalkable)
+            {
+                RoundManager.Instance.roundEntities.Add(MapManager.SpawnEntity(spawnedEntity, effectTiles[i], -1));
+            }
+            
+        }
+
+        
     }
 
-    public void SetObstacle(TileData tile, Vector2Int position)
-    {
-        tile.TileType = TileType.Solid;
-    }
+    
 }
