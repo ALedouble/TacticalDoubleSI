@@ -212,7 +212,6 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            Debug.Log((int)mapHit.tile.TileType - 1);
             //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
             tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType-1];
             tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType-1];
