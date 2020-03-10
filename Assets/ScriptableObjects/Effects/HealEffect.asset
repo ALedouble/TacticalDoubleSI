@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: HealEffect
   m_EditorClassIdentifier: 
   duration: 0
-  healValue: 0
   sfxHit: {fileID: 0}
   vfxHit: {fileID: 0}
