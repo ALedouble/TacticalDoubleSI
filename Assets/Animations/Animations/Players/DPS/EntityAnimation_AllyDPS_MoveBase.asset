@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyDPS_MoveBase
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: d5d50f0e498094a4fbde81d05c7473a9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 13720c9a9b5d9464ab09d29d80834630, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c260825d9cfeadf45843cb4f613982f1, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 41416245860ae5d4d8d974497a94f56e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 3207f72429366b9479d1737d45a2e9d9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 1be5775c611278f40bb87fbccf247406, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: d99589929bd3422449d35965dbae523e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: f4e785488ea69614b88a45500ac176bd, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 82363b2e30230174d8621ee5314a4d58, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 1a3bf75d3da2f524cb7052a233bba6d0, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ed81d4f528ce9104f83c9148f37438d7, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5047dd31f8934cc4189ac25cc759696e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 43d033101b2f4cd4da378a151ae0c5e9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ebf6d1103859fbc44b34ee05dde01fe8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4b0928ab7318e0640b249749c0496869, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b0eae693b35217f4dab58adf7ffc6226, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: f4aad25e96ca86b4e9d9e3c638d77a5e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2416de710efa3ad4dbd22976ca2624d3, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c0243173dc38b414a854edd7be5e6515, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 14a9360fba21cd6479cd5ee815d73ab2, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: a4b77032135a9f443b41cc658f360dbe, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c58a4f26bef8667428ef6dbde770617b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 121ec7c8d9276e44488cc68bc63bb022, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7d6492eafc16f5d44829e4b7ca59b463, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 016b3489ad1fd1343be2e04197f89e2b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b68ee77259058c049a9843d0e0ff784a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 476282b79c0ab1e4d98f3c7efbcb717c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 975109e6b4d22894bb76b4cc626631ea, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c3ea8a534ea223a4cb008bd18f5305b2, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e1e7244513f1a8a4a8337945bdd1e84e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 6513331646a559947836421cd00f70bc, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2c15902b7b1f32448bc6d7620607baac, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 76a5612a9976b9d4386a073c69836ee4, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: a5a92e0148b257548af182900657e0cf, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: f64b22beff167ae4c85856819c50838b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 34c0ae1b1e3b8f7428d44cb572cef1af, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2df53f7ced5597b42acc9b57090dc4ca, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0f0d7500c20c74c4e95c453011dc23f5, type: 3}
+    length: 0.1
+  loopMode: 1
