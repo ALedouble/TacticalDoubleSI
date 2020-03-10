@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_DPSEn_Idle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 932d3af88839e404dbca515db8341b81, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4c48a6836a294b245afcfa3990c26812, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 494ee7261b3a43d41b4b994eb8439dbb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c8a3a230d5f7f764eabe18b82e7382e8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 83970e5a2d7248b4080e1862b4939c44, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e0208e7353b0cf54fa619128a7766839, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4027fe156ab672a43b45fa9d396279b8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ab3b24ce38a502c458fc2bacd44aeeae, type: 3}
+    length: 0.1
+  loopMode: 1

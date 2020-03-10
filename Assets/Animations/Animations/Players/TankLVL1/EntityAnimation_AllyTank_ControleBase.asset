@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyTank_ControleBase
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 622b0afae848e8e48be9c1da3a645ef3, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: a69be200329e9c147931dd175897056a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: fe75ffc4cd4543543ac0ba05591e2df4, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: c4eb61905b1d5e2418e932695dc519c4, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 771ab463ce89f164b923ccef5a885be3, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 512ac9d15f2ad8649aeb2ec7977be609, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 25cc194f508dbc04c931f5e7efb30ff0, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 63aae4da9d3026744aad98eb4d7829ff, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 08160c4a0cbc523409adb923b36fee5f, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: d0821ff21eac22f4ea10476a2e4f503c, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 0552932f9158bea44818b54998b35c99, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: e7c2ec419b4ab694b96a8f910bb1cd14, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: a8f5e08df66a15b438be4d85d4681080, type: 3}
+    length: 0.08
+  loopMode: 0

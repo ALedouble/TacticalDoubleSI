@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_MinionEN_Idle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: aaaefc7a18f6db945bd991d4c375516c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e821dcfa7d3a0d24ab10a0091485378b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: d6d04259c2865e9418ea089d24f011d6, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 36db27bf9d1417a478262ed4ea24af8f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: dbf4d2796e517884984f6800e068e7a9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 69471557d8430d042b455761d0e85460, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c77fc512b5dac574f861527480159300, type: 3}
+    length: 0.1
+  loopMode: 1

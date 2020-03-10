@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyTank_Idle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: a5a4e369ec7f7c6488785589fcb83d5f, type: 3}
+    length: 0.25
+  - texture: {fileID: 2800000, guid: 7cb6c59563e1da24882617c7c1ea27d6, type: 3}
+    length: 0.25
+  - texture: {fileID: 2800000, guid: 33c9d5204e2be3b4cbf4823cb0bbf5a4, type: 3}
+    length: 0.25
+  loopMode: 1

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c81287856b9dfa47bf2cfa8feeee7a6, type: 3}
+  m_Name: ObstacleEntity
+  m_EditorClassIdentifier: 
+  displayName: 
+  portrait: {fileID: 0}
+  animations: {fileID: 0}
+  maxHealth: 0
+  maxActionPoints: 0
+  armor: 0
+  abilities: []
+  brain: {fileID: 0}
+  alignement: 0
+  entityTag: 0
+  power: 1
+  totemValue: -1

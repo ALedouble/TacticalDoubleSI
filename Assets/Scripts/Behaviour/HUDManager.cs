@@ -10,6 +10,8 @@ public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance;
 
+    public TileDescriptions tileDescriptions;
+
     public Action<int> OnAbilityClicked;
     public Action OnFinishPlacement;
 
@@ -139,7 +141,7 @@ public class HUDManager : MonoBehaviour
 
         switch (entity.data.alignement)
         {
-            case Alignement.Enemy:
+            case Alignement.Enemy :
 
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
@@ -161,6 +163,17 @@ public class HUDManager : MonoBehaviour
                 icon = playerIcon;
 
                 break;
+            case Alignement.Neutral:
+
+                HPtextMesh = HPTextEnemy;
+                PAtextMesh = PATextEnemy;
+
+                canvasGroup = enemyInfoGroup;
+                fade = enemyInfoFade;
+
+                icon = enemyIcon;
+
+                break;
             default:
                 break;
         }
@@ -179,10 +192,14 @@ public class HUDManager : MonoBehaviour
 
     CanvasGroup tileInfoGroup;
     Tween tileInfoFade;
+    Image tilePreview;
+    TextMeshProUGUI tileName;
+    TextMeshProUGUI tileDescription;
+
 
     void UpdateTileInfo(MapRaycastHit mapHit)
     {
-        if (!MapManager.IsInsideMap(mapHit.position))
+        if (mapHit.tile == null || mapHit.tile.TileType == TileType.Solid)
         {
             tileInfoFade?.Kill();
             tileInfoGroup.DOFade(0, .05f);
@@ -190,7 +207,10 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            // TODO : get tile type and display info
+            Debug.Log((int)mapHit.tile.TileType - 1);
+            //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
+            tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType-1];
+            tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType-1];
 
             tileInfoFade?.Kill();
             tileInfoGroup.DOFade(1, .05f);
@@ -216,6 +236,10 @@ public class HUDManager : MonoBehaviour
             if (tag == "IconEnemy") enemyIcon = HUDReferences[i].GetComponent<Image>();
 
             if (GetButtonReferences(tag, HUDReferences[i])) continue;
+
+            if (tag == "TilePreview") enemyIcon = HUDReferences[i].GetComponent<Image>();
+            if (tag == "TileName") tileName = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+            if (tag == "TileEffect") tileDescription = HUDReferences[i].GetComponent<TextMeshProUGUI>();
         }
     }
 
