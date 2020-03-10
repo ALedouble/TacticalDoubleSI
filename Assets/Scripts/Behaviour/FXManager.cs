@@ -27,5 +27,28 @@ public class FXManager : MonoBehaviour
                     break;
             }
         }
+
+        hoverTile = Instantiate(HoverTilePrefab);
+        hoverSystem = hoverTile.GetComponent<ParticleSystem>();
+        UpdateHoverTile(new MapRaycastHit(null, new Vector2Int()));
+
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateHoverTile;
+    }
+
+    GameObject hoverTile;
+    ParticleSystem hoverSystem;
+    void UpdateHoverTile(MapRaycastHit mapHit)
+    {
+        if (mapHit.tile == null || mapHit.tile.tileType == TileType.Solid)
+        {
+            hoverTile.SetActive(false);
+        }
+        else
+        {
+            hoverTile.SetActive(true);
+            hoverTile.transform.position = new Vector3(mapHit.position.x, 0.01f, mapHit.position.y);
+            hoverSystem.Clear(true);
+            hoverSystem.Play(true);
+        }
     }
 }

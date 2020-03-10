@@ -56,7 +56,7 @@ public class PlayerBrain : Brain
         // TEMPORARY
         MapManager.Instance.reachableTiles.Clear();
         MapManager.Instance.castableTiles.Clear();
-        MapManager.Instance.effectTiles.Clear();
+        MapManager.SetEffectTilesPreview(null);
 
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
@@ -89,7 +89,7 @@ public class PlayerBrain : Brain
         }
         
  
-        MapManager.Instance.castableTiles = castableTiles; //TEMPORARY : For DrawColor in DebugMapVizualizer 
+        MapManager.SetCastableTilesPreview(castableTiles);
     }
 
     void OnUseAbility(MapRaycastHit hit)
@@ -98,8 +98,8 @@ public class PlayerBrain : Brain
         if (!castableTiles.Contains(hit.position)) return;
 
         // TEMPORARY
-        MapManager.Instance.castableTiles.Clear();
-        MapManager.Instance.effectTiles.Clear();
+        MapManager.SetCastableTilesPreview(null);
+        MapManager.SetEffectTilesPreview(null);
 
         SelectionManager.Instance.OnClick -= OnUseAbility;
         SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
@@ -121,10 +121,10 @@ public class PlayerBrain : Brain
     {
         if (hit.tile == null || !castableTiles.Contains(hit.position))
         {
-            MapManager.Instance.effectTiles.Clear();
+            MapManager.SetEffectTilesPreview(null);
             return;
         }
 
-        MapManager.Instance.effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
+        MapManager.SetEffectTilesPreview(entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position));
     }
 }

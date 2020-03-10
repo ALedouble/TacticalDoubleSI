@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Holds the map data and provides static methods to access its contents
@@ -16,10 +17,29 @@ public class MapManager : MonoBehaviour
 
     // TEMPORARY
     public List<ReachableTile> reachableTiles = new List<ReachableTile>();
+    public static List<ReachableTile> SetReachableTilesPreview()
+    {
+        return Instance.reachableTiles;
+    }
 
     public List<Vector2Int> castableTiles = new List<Vector2Int>();
 
+    public Action<List<Vector2Int>> OnCastableTilesChanged;
+
+    public static void SetCastableTilesPreview(List<Vector2Int> tiles)
+    {
+        Instance.castableTiles = tiles;
+        Instance.OnCastableTilesChanged?.Invoke(Instance.castableTiles);
+    }
+
     public List<Vector2Int> effectTiles = new List<Vector2Int>();
+
+    public Action<List<Vector2Int>> OnEffectTilesChanged;
+    public static void SetEffectTilesPreview(List<Vector2Int> tiles)
+    {
+        Instance.effectTiles = tiles;
+        Instance.OnEffectTilesChanged?.Invoke(Instance.effectTiles);
+    }
 
     public GameObject entityPrefab;
 
