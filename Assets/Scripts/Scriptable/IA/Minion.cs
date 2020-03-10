@@ -61,7 +61,6 @@ public class Minion : Brain
      */
     private void IAMinion()
     {
-
         if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
                 
@@ -77,8 +76,9 @@ public class Minion : Brain
 
         if (Attack()) return;
 
-        WalkOnShortest();
+        if (WalkOnShortest()) return;
 
+        IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
 
     /*
@@ -133,7 +133,7 @@ public class Minion : Brain
             if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp) / 100))
             {
                 lowLife = true;
-                IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove);
+                IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove, null, true);
                 return true;
             }
         }
@@ -155,19 +155,25 @@ public class Minion : Brain
     /*
      * Cherche l'enemy le plus pres et s'en rapproche (si on a encore assez de vie)
      */
-    private void WalkOnShortest()
+    private bool WalkOnShortest()
     {
         if (!lowLife)
         {
-            ReachableTile pathToShortestEnemy = IAUtils.ShortestPathToEnemy(true, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints);
+            List<ReachableTile> pathToShortestEnemy = IAUtils.ShortestsPathToEnemy(true, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints, false, true);
 
-            for (int i = 0; i < pathToShortestEnemy.path.Count; i++)
+            if (pathToShortestEnemy != null)
             {
-                Debug.Log(pathToShortestEnemy.path[i].GetCoordPosition());
+                for (int i = 0; i < pathToShortestEnemy.Count; i++)
+                {
+                    if (IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy[i], iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy[i])))
+                    {
+                        return true;
+                    }
+                }
             }
-
-            IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy, iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy));
         }
+
+        return false;
     }
 
     /*

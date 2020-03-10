@@ -15,8 +15,9 @@ MonoBehaviour:
   displayName: H
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
-  maxHealth: 0
-  maxActionPoints: 0
+  maxHealth: 10
+  maxActionPoints: 10
+  armor: 0
   abilities:
   - {fileID: 11400000, guid: 39447f9dcd3b2024295f993ef06fd378, type: 2}
   - {fileID: 11400000, guid: 2be9d3790a80c844d8a988772eb71fa8, type: 2}

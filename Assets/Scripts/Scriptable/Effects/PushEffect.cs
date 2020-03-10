@@ -17,7 +17,7 @@ public class PushEffect : AbilityEffect
     {
         Sequence pushSequence = DOTween.Sequence();
         Ease pushEase = Ease.InQuad;
-        Debug.Log(pushVector);
+
         if (MapManager.IsInsideMap(pushVector) && MapManager.GetTile(pushVector).tileType != TileType.Solid) //&& entity.data.alignement != Alignement.Player)
         {
             pushSequence.Append(entity.transform.DOMove(new Vector3(pushVector.x, 0, pushVector.y), 0.5f));

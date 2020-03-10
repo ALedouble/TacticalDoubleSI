@@ -35,7 +35,7 @@ public static class IAUtils
     /*
      * Trouve le plus court chemin depuis "startPosition" a "target", calculer par la fonction de l'IA
      */
-    public static ReachableTile FindShortestPath(bool stopJustBeforeTarget, Vector2Int startPosition, Vector2Int target, bool canWalkOnDamageTile = true, int range = -1)
+    public static ReachableTile FindShortestPath(bool stopJustBeforeTarget, Vector2Int startPosition, Vector2Int target, bool canWalkOnDamageTile = true, int range = -1, bool ignoreWeightMove = false)
     {
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { MapManager.GetTile(startPosition) }, 0) };
         List<Vector2Int> deletedPlaces = new List<Vector2Int>();
@@ -58,7 +58,7 @@ public static class IAUtils
             }
         }
 
-        return ReturnPath(stopJustBeforeTarget, reachableTiles, range);
+        return ReturnPath(stopJustBeforeTarget, reachableTiles, range, ignoreWeightMove);
     }
 
     /*
@@ -158,26 +158,24 @@ public static class IAUtils
     {
         List<ReachableTile> resultForCast;
 
-        for (int i = 0; i < reachableTiles.Count; i++)
+        resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
+        if (resultForCast != null && resultForCast.Count > 0)
         {
-            resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
-            if (resultForCast != null && resultForCast.Count > 0)
-            {
-                playerHealerPathToAttack = resultForCast;
-            }
-
-            resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
-            if (resultForCast != null && resultForCast.Count > 0)
-            {
-                playerDPSPathToAttack = resultForCast;
-            }
-
-            resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
-            if (resultForCast != null && resultForCast.Count > 0)
-            {
-                playerTankPathToAttack = resultForCast;
-            }
+            playerHealerPathToAttack = resultForCast;
         }
+
+        resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
+        if (resultForCast != null && resultForCast.Count > 0)
+        {
+            playerDPSPathToAttack = resultForCast;
+        }
+
+        resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
+        if (resultForCast != null && resultForCast.Count > 0)
+        {
+            playerTankPathToAttack = resultForCast;
+        }
+
     }
 
     /*
@@ -212,10 +210,10 @@ public static class IAUtils
     }
 
     /*
-     * Return le path vers l'enemy le plus proche
+     * Return la listes des path possible vers les enemies
      */
-    public static ReachableTile ShortestPathToEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity,
-                                                        bool canWalkOnDamageTile = true, int range = - 1, bool havePriority = false)
+    public static List<ReachableTile> ShortestsPathToEnemy(bool stopJustBeforeTarget, EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity,
+                                                        bool canWalkOnDamageTile = true, int range = - 1, bool havePriority = false, bool ignoreWeightMove = false)
     {
         List<ReachableTile> listOfPathPlayers = new List<ReachableTile>();
         List<EntityBehaviour> listPlayer = new List<EntityBehaviour>() { firstEntity, secondEntity, thirdEntity };
@@ -225,7 +223,7 @@ public static class IAUtils
             ReachableTile pathToPlayer = null;
             if (listPlayer[i] != null)
             {
-                pathToPlayer = FindShortestPath(stopJustBeforeTarget, current.GetPosition(), listPlayer[i].GetPosition(), canWalkOnDamageTile);
+                pathToPlayer = FindShortestPath(stopJustBeforeTarget, current.GetPosition(), listPlayer[i].GetPosition(), canWalkOnDamageTile, -1, ignoreWeightMove);
 
                 if (pathToPlayer != null)
                     listOfPathPlayers.Add(pathToPlayer);
@@ -234,7 +232,12 @@ public static class IAUtils
 
         if (!havePriority) listOfPathPlayers.Sort();
 
-        if (listOfPathPlayers.Count > 0) return CutPathInRange(listOfPathPlayers[0], range);
+        for (int i = 0; i < listOfPathPlayers.Count; i++)
+        {
+            listOfPathPlayers[i] = CutPathInRange(listOfPathPlayers[i], range, ignoreWeightMove);
+        }
+
+        if (listOfPathPlayers.Count > 0) return listOfPathPlayers;
         else return null;
     }
         
@@ -245,7 +248,7 @@ public static class IAUtils
     {
         if (pass || !canMakeAction)
         {
-            RoundManager.Instance.EndTurn(entity);
+            RoundManager.Instance.EndTurn();
             return true;
         }
 
@@ -273,19 +276,19 @@ public static class IAUtils
      * Recupere l'ensemble des ReachableTile menant à une entity de "listEntity" en path direct ou avec "ability" dans l'area "reachableTiles"
      */
     public static List<Tuple<ReachableTile, EntityBehaviour>> PathToCastOrToJoin(bool stopJustBeforeTarget, GetReachableTileFromCastOrPath pathTo, EntityBehaviour current,
-                                                                                    List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, Ability ability)
+                                                                                    List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, Ability ability, bool ignoreWeightMove = false)
     {
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = new List<Tuple<ReachableTile, EntityBehaviour>>();
 
         for (int i = 0; i < listEntity.Count; i++)
         {
-            ReachableTile canCastAbility = pathTo(stopJustBeforeTarget, ability, reachableTiles, current.GetPosition(), listEntity[i].GetPosition(), current.CurrentActionPoints);
+            ReachableTile canCastAbility = pathTo(stopJustBeforeTarget, ability, reachableTiles, current.GetPosition(), listEntity[i].GetPosition(), current.CurrentActionPoints, ignoreWeightMove);
             if (canCastAbility != null && canCastAbility.path.Count > 0) allEntitiesReachableBestTileForCast.Add(new Tuple<ReachableTile, EntityBehaviour>(canCastAbility, listEntity[i]));
         }
 
         if (allEntitiesReachableBestTileForCast.Count > 0)
         {
-            allEntitiesReachableBestTileForCast.Sort((x, y) => x.Item1.CompareTo(x.Item2));
+            allEntitiesReachableBestTileForCast.Sort((x, y) => x.Item1.CompareTo(y.Item1));
             return allEntitiesReachableBestTileForCast;
         }
 
@@ -304,11 +307,18 @@ public static class IAUtils
     /*
      * Recupere la ReachableTile par "ValidCastFromTile" si l'on utilise l'Ability "ability", ou "FindShortestPath" si l'on cherche par le plus court chemin
      */
-    public delegate ReachableTile GetReachableTileFromCastOrPath(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range);
-    public static ReachableTile GetReachableTileFromCastOrPathDelegate(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range)
+    public delegate ReachableTile GetReachableTileFromCastOrPath(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove);
+    public static ReachableTile GetReachableTileFromCastOrPathDelegate(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove)
     {
-        if (ability != null) return ValidCastFromTile(ability, reachableTiles, target)[0];
-        else return FindShortestPath(stopJustBeforeTarget, startPosition, target, true, range);
+        if (ability != null)
+        {
+            List<ReachableTile> tilesToCastAbility = ValidCastFromTile(ability, reachableTiles, target);
+
+            if (tilesToCastAbility.Count > 0) return tilesToCastAbility[0];
+            return null;
+        }
+
+        else return FindShortestPath(stopJustBeforeTarget, startPosition, target, true, range, ignoreWeightMove);
     }
 
     /*
@@ -319,7 +329,6 @@ public static class IAUtils
     public delegate void LambdaAbilityCall(EntityBehaviour current, Ability ability, TileData target, IAEntity iaEntityFunction);
     public static void LambdaAbilityCallDelegate(EntityBehaviour current, Ability ability, TileData target, IAEntity iaEntityFunction)
     {
-        Debug.Log(target.GetCoordPosition());
         current.UseAbility(ability, target).OnComplete(() => { iaEntityFunction(); });
     }
 
@@ -333,7 +342,7 @@ public static class IAUtils
     {
         if (moveTarget == null) return false;
         if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
-        
+
         if (condition)
         {
             if (functionToCallAfterTheMove != null)
@@ -371,7 +380,7 @@ public static class IAUtils
                 for (int j = 0; j < allReachableTilesForAllPlayers[i].Count; j++)
                 {
                     if (allReachableTilesForAllPlayers[i][j] != null && MoveAndTriggerAbilityIfNeed(current, allReachableTilesForAllPlayers[i][j], iaEntityFunction,
-                                                                                    functionConditionReachable == null ? true : functionConditionReachable(allReachableTilesForAllPlayers[i][j]),
+                                                                                    ((functionConditionReachable == null) ? (true) : (functionConditionReachable(allReachableTilesForAllPlayers[i][j]))),
                                                                                     functionToCallAfterTheMove, ability, allReachableTilesForAllPlayers[i][j].castTile))
                     {
                         return true;
@@ -418,8 +427,8 @@ public static class IAUtils
             if (shortestExplosion[i].Item1.IsChannelingBurst)
             {
                 if(MoveAndTriggerAbilityIfNeed(current, shortestExplosion[i].Item2, iaEntityFunction,
-                                                functionConditionReachable == null ? true : functionConditionReachable(shortestExplosion[i].Item2) &&
-                                                functionConditionEntity == null ? true : functionConditionEntity(shortestExplosion[i].Item1),
+                                                (((functionConditionReachable == null) ? (true) : (functionConditionReachable(shortestExplosion[i].Item2))) &&
+                                                ((functionConditionEntity == null) ? (true) : (functionConditionEntity(shortestExplosion[i].Item1)))),
                                                 functionToCallAfterTheMove, ability, shortestExplosion[i].Item2.castTile))
                 {
                     return true;
@@ -466,23 +475,24 @@ public static class IAUtils
      */
     public static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, IAEntity iaEntityFunction,
                                                                             SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
-                                                                            Ability ability = null)
+                                                                            Ability ability = null, bool ignoreWeightMove = false)
     {
         ReachableTile pathToUseAbility = null;
 
         GetReachableTileFromCastOrPath pathTo = GetReachableTileFromCastOrPathDelegate;
 
         return MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(pathTo, current, listEntity, reachableTiles, iaEntityFunction, false, ability,
-                                                                    ref pathToUseAbility, null, functionConditionEntity, functionConditionReachable, true);
+                                                                    ref pathToUseAbility, null, functionConditionEntity, functionConditionReachable, true, ignoreWeightMove);
     }
     public static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, IAEntity iaEntityFunction,
                                                                             Ability ability, ref ReachableTile pathToUseAbility, LambdaAbilityCall functionToCallAfterTheMove,
-                                                                            SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null)
+                                                                            SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
+                                                                            bool ignoreWeightMove = false)
     {
         GetReachableTileFromCastOrPath pathTo = GetReachableTileFromCastOrPathDelegate;
 
         return MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(pathTo, current, listEntity, reachableTiles, iaEntityFunction, true, ability,
-                                                                ref pathToUseAbility, functionToCallAfterTheMove, functionConditionEntity, functionConditionReachable);
+                                                                ref pathToUseAbility, functionToCallAfterTheMove, functionConditionEntity, functionConditionReachable, ignoreWeightMove);
     }
 
 
@@ -636,7 +646,7 @@ public static class IAUtils
     /*
      * return "null" s'il n'existe pas de path, le path complet si "fullPath" ou le path dans la limite de "range" sinon
      */
-    private static ReachableTile ReturnPath(bool stopJustBeforeTarget, List<ReachableTile> reachableTiles, int range)
+    private static ReachableTile ReturnPath(bool stopJustBeforeTarget, List<ReachableTile> reachableTiles, int range, bool ignoreWeightMove)
     {
         if (reachableTiles == null || reachableTiles.Count <= 0)
         {
@@ -651,7 +661,7 @@ public static class IAUtils
 
         if (range >= 0)
         {
-            return CutPathInRange(shortest, range);
+            return CutPathInRange(shortest, range, ignoreWeightMove);
         }
         else
         {
@@ -662,7 +672,7 @@ public static class IAUtils
     /*
      * Cut le path de "shortest" dans la limite "range" donner
      */
-    private static ReachableTile CutPathInRange(ReachableTile shortest, int range)
+    private static ReachableTile CutPathInRange(ReachableTile shortest, int range, bool ignoreWeightMove)
     {
         if (shortest == null) return null;
 
@@ -672,13 +682,14 @@ public static class IAUtils
 
         for (int i = 0; i < path.Count; i++)
         {
-            cost += (int)path[i].tileType;
+            cost += ignoreWeightMove ? fixedWeight :(int)path[i].tileType;
             if (cost > range)
                 break;
             lenght++;
         }
 
         shortest.path = path.Take(lenght).ToList();
+        shortest.cost = range;
         return shortest;
     }
     
@@ -754,33 +765,38 @@ public static class IAUtils
     * Sinon, return false
     */
     private static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(GetReachableTileFromCastOrPath pathTo, EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles,
-                                                                            IAEntity iaEntityFunction, bool useAbuility, Ability ability, ref ReachableTile pathToUseAbility,
+                                                                            IAEntity iaEntityFunction, bool useAbility, Ability ability, ref ReachableTile pathToUseAbility,
                                                                             LambdaAbilityCall functionToCallAfterTheMove, SpecificConditionEntity functionConditionEntity,
-                                                                            SpecificConditionReachable functionConditionReachable, bool stopJustBeforeTarget = false)
+                                                                            SpecificConditionReachable functionConditionReachable, bool stopJustBeforeTarget = false, bool ignoreWeightMove = false)
     {
-        List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability);
+        List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
+
         if (allEntitiesReachableBestTileForCast == null) return false;
 
         for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
         {
-            if (useAbuility && MoveAndTriggerAbilityIfNeed(current, allEntitiesReachableBestTileForCast[i].Item1, iaEntityFunction,
-                                                            functionConditionReachable == null ? true : functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1) &&
-                                                            functionConditionEntity == null ? true : functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2),
+            if (useAbility && MoveAndTriggerAbilityIfNeed(current, allEntitiesReachableBestTileForCast[i].Item1, iaEntityFunction,
+                                                            (((functionConditionReachable == null) ? (true) : (functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1))) &&
+                                                            ((functionConditionEntity == null) ? (true) : (functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2)))),
                                                             functionToCallAfterTheMove, ability, allEntitiesReachableBestTileForCast[i].Item1.castTile))
             {
                 return true;
             }
 
-            else if (!useAbuility && MoveAndTriggerAbilityIfNeed(current, allEntitiesReachableBestTileForCast[i].Item1, iaEntityFunction,
-                                                                    functionConditionReachable == null ? true : functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1) &&
-                                                                    functionConditionEntity == null ? true : functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2)))
+            else if (!useAbility && MoveAndTriggerAbilityIfNeed(current, allEntitiesReachableBestTileForCast[i].Item1, iaEntityFunction,
+                                                                    (((functionConditionReachable == null) ? (true) : (functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1))) &&
+                                                                    ((functionConditionEntity == null) ? (true) : (functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2))))))
             {
                 return true;
             }
 
-            else if (useAbuility && pathToUseAbility == null)
+            else if (useAbility && pathToUseAbility == null)
             {
-                pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
+                if ((((functionConditionReachable == null) ? (true) : (functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1))) &&
+                     ((functionConditionEntity == null) ? (true) : (functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2)))))
+                {
+                    pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
+                }
             }
         }
 
