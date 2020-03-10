@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EntityAnimations_MinionEn
   m_EditorClassIdentifier: 
   idleAnimation: {fileID: 11400000, guid: 17157cc7dc9b81d44b734dede9769326, type: 2}
-  moveAnimation: {fileID: 0}
-  hitAnimation: {fileID: 0}
-  deathAnimation: {fileID: 0}
+  moveAnimation: {fileID: 11400000, guid: 8d1b544a6362f5246b28d289bbd6e7e8, type: 2}
+  hitAnimation: {fileID: 11400000, guid: b30df6b4262d41449b678bb2a48460d8, type: 2}
+  deathAnimation: {fileID: 11400000, guid: 3b0f5695f68e9184c8f36bfed099c387, type: 2}
   abilityAnimations:
-  - {fileID: 11400000, guid: 0f6f15247fe0b7346aab3ec3fffe40a4, type: 2}
+  - {fileID: 11400000, guid: e86a0615e0fa8fc42a110180cbc019d6, type: 2}

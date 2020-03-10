@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EntityAnimations_HealEn
   m_EditorClassIdentifier: 
   idleAnimation: {fileID: 11400000, guid: 1a8a4ada414098646bae1e6a4a629c47, type: 2}
-  moveAnimation: {fileID: 0}
-  hitAnimation: {fileID: 0}
-  deathAnimation: {fileID: 0}
+  moveAnimation: {fileID: 11400000, guid: c4cc21dfb48052041a90a51f483f3db0, type: 2}
+  hitAnimation: {fileID: 11400000, guid: 73253273cb9cc314b8e79655f06d2166, type: 2}
+  deathAnimation: {fileID: 11400000, guid: 2dd293c15e60ab54380680ca8ce95366, type: 2}
   abilityAnimations:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 85ce9917cc14e0b4a8267b51cd9727e9, type: 2}
