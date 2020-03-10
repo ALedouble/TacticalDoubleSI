@@ -9,9 +9,10 @@ public class TemporaryObstacleBrain : Brain
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
-        if(turnNumber > 2)
+        Debug.Log("hello");
+        if(turnNumber == 0)
         {
-
+            MapManager.DeleteEntity(entityBehaviour);
         } else
         {
             turnNumber++;
