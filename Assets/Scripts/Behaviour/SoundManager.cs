@@ -7,50 +7,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    public Sound pop;
-
-    [Header("Combat")]
-    public Sound PlayerHit1;
-    public Sound PlayerHitImpact;
-    public Sound PlayerElectrocuted;
-    public Sound RobotStep;
-    public Sound RobotStepBig;
-    public Sound SunModeLoop;
-    public Sound OversunLoop;
-    public Sound OversunGet;
-    public Sound OversunBreak;
-
-    [Header("Platform")]
-    public Sound GeyserImpulse;
-    public Sound Jump;
-    public Sound JumpDouble;
-    public Sound UmbrellaOpening;
-    public Sound LandSoft;
-    public Sound LandHard;
-    public Sound StepRight;
-    public Sound StepLeft;
-    public Sound SunPickUp;
-    public Sound umbrellaCollection;
-
-    [Header("Effects")]
-    public Sound lightningAnticipation;
-    public Sound lightningClimax;
-
-    [Header("Interface")]
-    public Sound hover;
-    public Sound click;
-    public Sound titlePop;
-
-    [Header("Cinematics")]
-    public Sound suckerFlying;
-    public Sound sunAppears;
-    public Sound thunderComes;
-    public Sound robotCum;
-
-
     public Queue<GameObject> receptaclePool;
 
-    public float sfxVolume;
+    public float sfxVolume = 1;
 
     private void Awake()
     {
