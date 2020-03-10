@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyTank_ArmorBase
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 55390cab27933594c955b4724d9c0e53, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 868e2b677d0830447bdf50afa558eec9, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 0dda2b736627d9446a8903049bfa48b9, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 57cd04a5e0025124fb94263f6afac4d4, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 6afb7219d3245544b8fdacfc679b173a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 4dff13f097258564dacd486d1ba854bf, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: ec09de9ef8bc14345a71790a290e6bda, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 50bbe97c1e98aa24dbc1f933ac49ca50, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 07eda9a3333de34458a072696c933756, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: a3ede261b2e38a84caf58156586ac7ab, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: e6113feb80f3b1046aafa7ecdf926995, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 44b7e71668276524eae6d5cf0d53598f, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 21ca27c8ffc31d542b815da171f7bce3, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 18844cbcbeccab747b156da3fb6c5e71, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: de4e966d30374cb45a4a638e83db9a45, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 105541ef2082f1a42a74bb6dd5da2b96, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: c0b1bc359bcf82148a8aa6639c567a07, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 3ede9f4d8eaee1149ac8a3608d110f83, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 6e8df373dc513b6418376db2d551ca9e, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: f7d4a2232fe2f224ba96edf1b097395f, type: 3}
+    length: 0.08
+  loopMode: 0
