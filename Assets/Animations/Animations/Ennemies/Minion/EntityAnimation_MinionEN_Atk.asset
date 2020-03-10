@@ -13,18 +13,38 @@ MonoBehaviour:
   m_Name: EntityAnimation_MinionEN_Atk
   m_EditorClassIdentifier: 
   frames:
-  - texture: {fileID: 2800000, guid: 2f0ad9834d280564884fc9c43f73bb0f, type: 3}
+  - texture: {fileID: 2800000, guid: 5e42780941baef34a87d8f167008ea82, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 0f0e7b636c46b104aaf0ef06e7d62908, type: 3}
+  - texture: {fileID: 2800000, guid: ca9137b92e10fa643842849abe850b38, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 9f40d26191c817e4793852d97e437fa5, type: 3}
+  - texture: {fileID: 2800000, guid: 17473f2b8b87bdb448397b488968e899, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: c99faa1ff0c1ca44db648ce9c4f84366, type: 3}
+  - texture: {fileID: 2800000, guid: 965e1de83dcad9b44b9735e1d15967a0, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: c4e11d7251f788a4eadf2500b7bf60ce, type: 3}
+  - texture: {fileID: 2800000, guid: 46b40c6bf98cd0840a351261cb1283dc, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 77b4bfd029ab47f43899204135c266bb, type: 3}
+  - texture: {fileID: 2800000, guid: 1648864bb06bd5d4988e5e983b36e05b, type: 3}
     length: 0.1
-  - texture: {fileID: 2800000, guid: 56125be913e81fb40bfa854a3caa6e46, type: 3}
+  - texture: {fileID: 2800000, guid: 5e1c5c1b1edbf9244a5ced6e4d099af9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 45324847df160474b9cf1c3bfd8654ea, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 26c9db71b4287ac449533a8088bae5ee, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: fcc45169f4c021d4389d41db11265677, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c03fba35163ee5c439bfee8a8b45172e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b3c09e65a601ccb48ade5dd7e62bea6e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 81ed5cbd4cf0e7b4cb79da4677b44ace, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0d2f1a565c294f64a9f83dcd4abc75b0, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: a2ba3b627a485ed43a9fd87fbbaa143f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7b22e9fbe563a8b4aa9f0385f5710524, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: fbf9a883d79009842b9b2f38b273fce8, type: 3}
     length: 0.1
   loopMode: 1
