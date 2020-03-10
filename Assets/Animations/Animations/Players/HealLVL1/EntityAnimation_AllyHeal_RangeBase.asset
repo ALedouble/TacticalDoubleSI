@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyHeal_RangeBase
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 4c021193a85d4684eb4b25d80646cc62, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 8b2bd0626c3fcec4e886dd78ab4e970b, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: c69a8e7b3d6b9a048ab5d038bb429895, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 3ff5ef23209b9c14687bfa698c0ccf9a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 42c5aa5da35b79140ae3e7d6a3b23d1d, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 7bfa3fa1491e9994587f03b247e1a352, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: e69fa745a0959bf4f94d3d28308d9950, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: ef15dd007d305bb44954d3f0b753958f, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 761eda5ffb6a7624e9eb57e039ecb0a6, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 300f34534018e9e4db3485fb9116981d, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 45e4ed82576ea004c888bf89f3a22976, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 11acb2748db33c3498a6644f06a68592, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: cdb7caa6feed4704faa4b78dc3bd103a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: fe1d5a9246e12244b8e9848720a7b20a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 96a5405558c076f4d89ba50e2fb9e3b6, type: 3}
+    length: 0.08
+  loopMode: 0

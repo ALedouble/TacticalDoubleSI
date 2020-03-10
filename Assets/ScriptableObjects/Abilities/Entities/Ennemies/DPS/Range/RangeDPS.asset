@@ -16,12 +16,14 @@ MonoBehaviour:
   displayName: Snipe
   description: Powerfull and precise arrow
   cost: 4
+  multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 1
-  numberOfEffects:
-  - {fileID: 11400000, guid: b13c6a7c9658257459af8b6a37891bdb, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   castArea:
     size: 7
     area:

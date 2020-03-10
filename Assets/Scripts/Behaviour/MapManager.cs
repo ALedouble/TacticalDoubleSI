@@ -21,8 +21,12 @@ public class MapManager : MonoBehaviour
 
     public List<Vector2Int> effectTiles = new List<Vector2Int>();
 
+    public GameObject entityPrefab;
+
     private void Awake()
     {
+        entityPrefab = Resources.Load("Entity") as GameObject;
+
         // No need to check if the instance is null because the MapManager will always be destroyed at the end of the level
         Instance = this;
 
@@ -37,22 +41,52 @@ public class MapManager : MonoBehaviour
 
     void InstantiateEntities()
     {
-        GameObject entityPrefab = Resources.Load("Entity") as GameObject;
-
-        EntityBehaviour entityBehaviour;
         for (int i = 0; i < map.entityStartPositions.Count; i++)
         {
-            
-            entityBehaviour = Instantiate(entityPrefab, new Vector3(map.entityStartPositions[i].position.x, 0, map.entityStartPositions[i].position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
-            
-            entityBehaviour.data = map.entityStartPositions[i].entity;
-            entityBehaviour.heldCrystalValue = map.entityStartPositions[i].heldCrystalValue;
-            entityBehaviour.currentTile = MapManager.GetTile(new Vector2Int((int)map.entityStartPositions[i].position.x, (int)map.entityStartPositions[i].position.y));
-            entityBehaviour.currentTile.entities.Add(entityBehaviour);
+            RoundManager.Instance.roundEntities.Add(SpawnEntity(map.entityStartPositions[i].entity, map.entityStartPositions[i].position, map.entityStartPositions[i].heldCrystalValue));
+        }
+    }
 
-            listOfEntityOnTheMap.Add(entityBehaviour);
-            entityBehaviour.Init();
-            RoundManager.Instance.roundEntities.Add(entityBehaviour);
+    public static EntityBehaviour SpawnEntity(Entity entity, Vector2 position, int heldCrystalValue)
+    {
+        EntityBehaviour entityBehaviour = Instantiate(MapManager.Instance.entityPrefab, new Vector3(position.x, 0, position.y), Quaternion.identity).GetComponent<EntityBehaviour>();
+
+        entityBehaviour.data = entity;
+        entityBehaviour.heldCrystalValue = heldCrystalValue;
+        entityBehaviour.currentTile = MapManager.GetTile(new Vector2Int((int)position.x, (int)position.y));
+        entityBehaviour.currentTile.entities.Add(entityBehaviour);
+
+        MapManager.GetListOfEntity().Add(entityBehaviour);
+        entityBehaviour.Init();
+
+        return entityBehaviour;
+    }
+
+    public static void DeleteEntity(EntityBehaviour entity)
+    {
+        MapManager.GetListOfEntity().Remove(entity);
+
+        entity.currentTile.entities.Remove(entity);
+
+        switch (entity.data.alignement)
+        {
+            case Alignement.Enemy:
+
+                RoundManager.Instance.roundEntities.Remove(entity);
+
+                break;
+            case Alignement.Player:
+
+                PlayerTeamManager.Instance.playerEntitybehaviours.Remove(entity);
+
+                break;
+            case Alignement.Neutral:
+
+                RoundManager.Instance.roundEntities.Remove(entity);
+
+                break;
+            default:
+                break;
         }
     }
 

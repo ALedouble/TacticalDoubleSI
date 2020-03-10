@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EntityAnimator : MonoBehaviour
 {
-    const int pixelUnit = 32;
+    const int pixelUnit = 26;
 
     public Material mat;
     public EntityAnimation animation;
@@ -25,6 +25,8 @@ public class EntityAnimator : MonoBehaviour
         child.transform.parent = transform;
         child.transform.eulerAngles = Vector3.up * -45;
 
+        Destroy(child.GetComponent<MeshCollider>());
+
         meshRenderer = child.GetComponent<MeshRenderer>();
 
         meshRenderer.sharedMaterial = mat;
@@ -34,6 +36,12 @@ public class EntityAnimator : MonoBehaviour
     LoopMode loopMode;
     public void PlayAnimation(EntityAnimation animation)
     {
+        if (animation == null)
+        {
+            Debug.LogWarning("Animation is null on " + gameObject.name);
+            return;
+        }
+
         Texture tex = animation.GetTexture(Time.time);
 
         loopMode = animation.loopMode;
@@ -45,6 +53,8 @@ public class EntityAnimator : MonoBehaviour
     Texture lastTexture;
     public void Update()
     {
+        if (animation == null) return;
+
         float time = loopMode == LoopMode.Loop ? Mathf.Repeat(Time.time - animationStartTime, animation.Length) : Time.time - animationStartTime;
 
         Texture tex = animation.GetTexture(time);

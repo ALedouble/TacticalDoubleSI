@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: T
   portrait: {fileID: 21300000, guid: e4ed4179ae139694ba213e6521a1f0c2, type: 3}
-  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
+  animations: {fileID: 11400000, guid: 7e74a606f67560b489a199964222e9a2, type: 2}
   maxHealth: 50
   maxActionPoints: 10
   abilities:

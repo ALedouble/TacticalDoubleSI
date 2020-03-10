@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 
 public enum Alignement { Enemy, Player, Neutral }
-public enum EntityTag { Healer, DPS, Tank, Minion, Totem, Trap }
+public enum EntityTag { Healer, DPS, Tank, Minion, Totem, Trap, None }
 
 [CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObjects/Entity", order = 1)]
 public class Entity : ScriptableObject
@@ -17,15 +17,21 @@ public class Entity : ScriptableObject
 
     [Space]
 
-    public int maxHealth;
-    public int maxActionPoints;
+    public float maxHealth;
+    public float maxActionPoints;
+    public float armor;
     public List<Ability> abilities;
     public Brain brain;
     public Alignement alignement;
     public EntityTag entityTag;
-    public float power;
+    public float power = 1;
 
     [Space]
 
     public int totemValue = -1;
+
+    public int GetAbilityNumber(Ability ability)
+    {
+        return abilities.FindIndex(x => x == ability);
+    }
 }

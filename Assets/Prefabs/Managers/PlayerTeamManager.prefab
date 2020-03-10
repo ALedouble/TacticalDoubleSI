@@ -43,4 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54803aeefe4b0874588be19e2e655037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEntities: []
+  playerProgression:
+  - {fileID: 11400000, guid: 4e11d5addcd24744b9905fbaa6aa339c, type: 2}
+  - {fileID: 11400000, guid: b64d00ab970534644b24504f66ff281e, type: 2}
+  - {fileID: 11400000, guid: 94a17fd97bdb0ec48a159c1603dfba77, type: 2}
+  playerEntities:
+  - {fileID: 11400000, guid: cb74d7d255e42bb4fa3c9881d7d35723, type: 2}
+  - {fileID: 11400000, guid: 57b709b99281afc469f090c00719ed3e, type: 2}
+  - {fileID: 11400000, guid: b8bb936c0037c954a9a57dd4e001aa70, type: 2}
+  playerEntitybehaviours: []

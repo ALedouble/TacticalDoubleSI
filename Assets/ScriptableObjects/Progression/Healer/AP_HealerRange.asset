@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2f449558ab261449fbd426a26bc5be, type: 3}
+  m_Name: AP_HealerRange
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: 9c38162c112bd0f439e279e572c675b2, type: 2}
+  - {fileID: 11400000, guid: 14511e7d74dd3f249ba336f2e37ca445, type: 2}
+  - {fileID: 11400000, guid: c9064fbeb1011e44bbaacde7674c3856, type: 2}
+  - {fileID: 11400000, guid: 0896410cdbe7e30449d147d45b42d59e, type: 2}

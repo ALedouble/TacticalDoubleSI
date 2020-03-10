@@ -10,7 +10,10 @@ public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance;
 
+    public TileDescriptions tileDescriptions;
+
     public Action<int> OnAbilityClicked;
+    public Action OnFinishPlacement;
 
     private void Awake()
     {
@@ -23,6 +26,8 @@ public class HUDManager : MonoBehaviour
     {
         enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
+        roundHUDGroup.alpha = 0;
+        finishPlacementButton.DOScale(0, 0);
 
         SelectionManager.Instance.OnEntitySelect += (x)=> 
         {
@@ -50,6 +55,41 @@ public class HUDManager : MonoBehaviour
         };
 
         SelectionManager.Instance.OnHoveredTileChanged += UpdateTileInfo;
+
+        PlayerTeamManager.Instance.OnPlacedAllPlayers += ShowFinishPlacementButton;
+        PlayerTeamManager.Instance.OnFinishPlacement += OnFinishPlacementConfirmed;
+
+        RoundManager.Instance.OnPlayerTurn += ShowEndTurnButton;
+    }
+
+    CanvasGroup roundHUDGroup;
+    RectTransform finishPlacementButton;
+
+    void ShowFinishPlacementButton()
+    {
+        PlayerTeamManager.Instance.OnPlacedAllPlayers -= ShowFinishPlacementButton;
+
+        finishPlacementButton.DOScale(1, .1f).SetEase(Ease.OutBack);
+    }
+
+    void OnFinishPlacementConfirmed()
+    {
+        roundHUDGroup.DOFade(1, .2f);
+        finishPlacementButton.DOScale(0, .2f).SetEase(Ease.InBack);
+    }
+
+    public Action OnEndTurnPressed;
+    RectTransform endTurnButton;
+
+    void ShowEndTurnButton()
+    {
+        endTurnButton.DOScale(1, .2f).SetEase(Ease.OutBack);
+    }
+
+    void OnEndTurn()
+    {
+        OnEndTurnPressed?.Invoke();
+        endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack);
     }
 
     EntityBehaviour inspectedEnemy;
@@ -101,7 +141,7 @@ public class HUDManager : MonoBehaviour
 
         switch (entity.data.alignement)
         {
-            case Alignement.Enemy:
+            case Alignement.Enemy :
 
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
@@ -123,6 +163,17 @@ public class HUDManager : MonoBehaviour
                 icon = playerIcon;
 
                 break;
+            case Alignement.Neutral:
+
+                HPtextMesh = HPTextEnemy;
+                PAtextMesh = PATextEnemy;
+
+                canvasGroup = enemyInfoGroup;
+                fade = enemyInfoFade;
+
+                icon = enemyIcon;
+
+                break;
             default:
                 break;
         }
@@ -141,10 +192,14 @@ public class HUDManager : MonoBehaviour
 
     CanvasGroup tileInfoGroup;
     Tween tileInfoFade;
+    Image tilePreview;
+    TextMeshProUGUI tileName;
+    TextMeshProUGUI tileDescription;
+
 
     void UpdateTileInfo(MapRaycastHit mapHit)
     {
-        if (!MapManager.IsInsideMap(mapHit.position))
+        if (mapHit.tile == null || mapHit.tile.TileType == TileType.Solid)
         {
             tileInfoFade?.Kill();
             tileInfoGroup.DOFade(0, .05f);
@@ -152,7 +207,10 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            // TODO : get tile type and display info
+            Debug.Log((int)mapHit.tile.TileType - 1);
+            //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
+            tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType-1];
+            tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType-1];
 
             tileInfoFade?.Kill();
             tileInfoGroup.DOFade(1, .05f);
@@ -176,6 +234,12 @@ public class HUDManager : MonoBehaviour
 
             if (tag == "IconPlayer") playerIcon = HUDReferences[i].GetComponent<Image>();
             if (tag == "IconEnemy") enemyIcon = HUDReferences[i].GetComponent<Image>();
+
+            if (GetButtonReferences(tag, HUDReferences[i])) continue;
+
+            if (tag == "TilePreview") enemyIcon = HUDReferences[i].GetComponent<Image>();
+            if (tag == "TileName") tileName = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+            if (tag == "TileEffect") tileDescription = HUDReferences[i].GetComponent<TextMeshProUGUI>();
         }
     }
 
@@ -236,9 +300,38 @@ public class HUDManager : MonoBehaviour
             {
                 tileInfoGroup = reference.GetComponent<CanvasGroup>();
             }
+            if (tag == "RoundHUDGroup")
+            {
+                roundHUDGroup = reference.GetComponent<CanvasGroup>();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    bool GetButtonReferences(string tag, HUDReferencer reference)
+    {
+        if (tag == "FinishPlacementButton")
+        {
+            finishPlacementButton = reference.GetComponent<RectTransform>();
+            reference.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                OnFinishPlacement?.Invoke();
+            });
 
             return true;
         }
+        if (tag == "EndTurnButton")
+        {
+            endTurnButton = reference.GetComponent<RectTransform>();
+            reference.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                OnEndTurn();
+            });
+
+            return true;
+        }
+
         return false;
     }
 }

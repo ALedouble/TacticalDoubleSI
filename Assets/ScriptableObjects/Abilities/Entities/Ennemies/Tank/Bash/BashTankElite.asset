@@ -16,13 +16,15 @@ MonoBehaviour:
   displayName: Cleaving bash
   description: A cleave that push away ennemies
   cost: 4
+  multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
+  canCastOnEntityPosition: 0
   cooldown: 0
-  numberOfEffects:
-  - {fileID: 11400000, guid: 2a89e899f2f931748a7ea7e2b74f4260, type: 2}
-  - {fileID: 11400000, guid: 2dd92320f8e6905409f88ca0076afb83, type: 2}
+  abilityEffect:
+  - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  - {fileID: 11400000, guid: be1d7f3a61156174c913c0689d3d64d7, type: 2}
   castArea:
     size: 3
     area:
