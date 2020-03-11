@@ -16,11 +16,12 @@ MonoBehaviour:
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: b01ebd5733feb844eb4ede0847a8a402, type: 2}
   maxHealth: 10
-  maxActionPoints: 10
+  maxActionPoints: 0
   armor: 0
   abilities:
   - {fileID: 11400000, guid: 43e7699322e51ab4191644bfa1e0b3da, type: 2}
   - {fileID: 11400000, guid: 40f5568757f006043b9ed08b2afcca3a, type: 2}
+  abilityLevels: 
   brain: {fileID: 11400000, guid: 73b9a169b18349e4daf35a1eff00d0d9, type: 2}
   alignement: 0
   entityTag: 2

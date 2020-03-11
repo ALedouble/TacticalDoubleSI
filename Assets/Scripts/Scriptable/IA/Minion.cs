@@ -24,7 +24,7 @@ public class Minion : Brain
     static bool firstActionInTurn;
     static bool lowLife;
 
-    public int percentOfLifeNeedForHelp = 25;
+    public float percentOfLifeNeedForHelp = 25f;
     public int rangeAttackWhenLowLife = 2;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
@@ -133,8 +133,7 @@ public class Minion : Brain
             if (minion.CurrentHealth < ((minion.GetMaxHealth() * percentOfLifeNeedForHelp) / 100))
             {
                 lowLife = true;
-                IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove, null, true);
-                return true;
+                return IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(minion, enemyTank, reachableTiles, iaEntityFunction, null, SpecificConditionForMove, null, true);
             }
         }
 

@@ -22,7 +22,7 @@ public class Tank : Brain
     static Ability ability2;
     static bool haveUseFirstAttack;
 
-    public int percentOfLifeNeedForChangePatern = 50;
+    public float percentOfLifeNeedForChangePatern = 50f;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
