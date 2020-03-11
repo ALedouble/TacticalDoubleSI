@@ -24,6 +24,7 @@ public class PushEffect : AbilityEffect
         if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Ennemies)
         {
             PlayerTeamManager.Instance.teamXp += 1;
+            entity.earnedXPThisAbility = true;
         }
     
 

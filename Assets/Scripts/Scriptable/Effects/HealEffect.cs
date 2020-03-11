@@ -29,13 +29,14 @@ public class HealEffect : AbilityEffect
         if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Allies)
         {
             PlayerTeamManager.Instance.teamXp += 1;
+            entity.earnedXPThisAbility = true;
         }
 
 
         ApplyEffect(entity, ability, castTile, (x) => {
             if(x.data.alignement == entity.data.alignement)
             {
-                float heal = SetHeal(entity, ability);
+                float heal = Mathf.Ceil(SetHeal(entity, ability));
                 x.CurrentHealth += heal;
                 HUDManager.DisplayValue("+" + heal.ToString(), Color.green, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
