@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
-  m_Name: EntityAnimation_Crystal_Idle
+  m_Name: EntityAnimation_CrystalA_Idle
   m_EditorClassIdentifier: 
-  frames: []
-  loopMode: 0
+  frames:
+  - texture: {fileID: 2800000, guid: 39601c6fc9d7c0446b1ab553c43c9768, type: 3}
+    length: 0.1
+  loopMode: 1

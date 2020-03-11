@@ -9,13 +9,14 @@ public class ExplodeEffect : AbilityEffect
     {
         PlayerTeamManager.Instance.LevelUpPlayerEntity(entity.data);
         entity.IsChannelingBurst = true;
-       // MapManager.GetListOfEntity().Remove(entity);
+        MapManager.GetListOfEntity().Remove(entity);
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.entityTag == EntityTag.Totem)
             {
                 PlayerTeamManager.Instance.LevelUpPlayerAbility(entity.data, x.data.totemValue);
 
-                MapManager.DeleteEntity(x);  
+                MapManager.DeleteEntity(x);
+                Destroy(x.gameObject);
             }
         });
     }

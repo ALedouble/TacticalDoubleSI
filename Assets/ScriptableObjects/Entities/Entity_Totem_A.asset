@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: T_A
   portrait: {fileID: 0}
-  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
+  animations: {fileID: 11400000, guid: 44342596b6f752941a574dd885cfac44, type: 2}
   maxHealth: 0
   maxActionPoints: 0
+  armor: 0
   abilities:
   - {fileID: 0}
+  abilityLevels: 
   brain: {fileID: 0}
   alignement: 2
   entityTag: 4
