@@ -25,8 +25,8 @@ public class MovementEffect : AbilityEffect
         Sequence teleportSequence = DOTween.Sequence();
         Ease pushEase = Ease.InQuad;
         teleportSequence.Append(entity.transform.DOMove(
-            new Vector3(entity.currentTile.position.x, 10, entity.currentTile.position.y),
-            0.25f).SetEase(pushEase)).OnComplete(() =>
+            new Vector3(castTilePosition.x, 0, castTilePosition.y),
+            0.55f).SetEase(pushEase)).OnComplete(() =>
             {
                 TeleportEnd(entity, castTilePosition);
             });
