@@ -42,7 +42,7 @@ public class DamageEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.alignement != entity.data.alignement)
             {
-                float damage = SetDamage(entity, ability) - x.CurrentArmor;
+                float damage = Mathf.Ceil(SetDamage(entity, ability) - x.CurrentArmor);
                 x.CurrentHealth -= damage;
                 Debug.Log(damage);
                 Debug.Log(damage.ToString());
