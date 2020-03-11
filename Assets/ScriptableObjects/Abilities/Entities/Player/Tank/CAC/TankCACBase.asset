@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 1
   displayName: Bash
-  description: Pushes the ennemy away
+  description: Pushes the enemy away
   cost: 4
   multiplicator: 1
+  experience: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  canCastOnEntityPosition: 0
+  canCastOnEntityPosition: 1
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}

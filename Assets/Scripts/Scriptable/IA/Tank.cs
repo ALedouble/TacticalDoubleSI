@@ -22,7 +22,7 @@ public class Tank : Brain
     static Ability ability2;
     static bool haveUseFirstAttack;
 
-    public int percentOfLifeNeedForChangePatern = 50;
+    public float percentOfLifeNeedForChangePatern = 50f;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -53,7 +53,7 @@ public class Tank : Brain
     }
 
     /*
-     * Gere un deplacement/attack du Minion
+     * Gere un deplacement/attack du Tank
      */
     private void IATank()
     {
@@ -112,7 +112,7 @@ public class Tank : Brain
         {
             haveUseFirstAttack = false;
 
-            reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>(), 0) };
+            reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { tank.currentTile }, 0) };
             IAUtils.GetPlayerInRange(reachableTiles, tank.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
             if (IAUtils.AttackWithPriority(tank, playerDPSPathToAttack, playerTankPathToAttack, playerHealerPathToAttack, iaEntityFunction, tankAbilityCall, ability2))
@@ -126,7 +126,7 @@ public class Tank : Brain
         reachableTiles = IAUtils.FindAllReachablePlace(tank.GetPosition(), tank.CurrentActionPoints - ability1.cost, true);
         IAUtils.GetPlayerInRange(reachableTiles, tank.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        if (IAUtils.AttackWithPriority(tank, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, tankAbilityCall, ability1))
+        if (IAUtils.AttackWithPriority(tank, playerDPSPathToAttack, playerTankPathToAttack, playerHealerPathToAttack, iaEntityFunction, tankAbilityCall, ability1))
         {
             haveUseFirstAttack = true;
             return true;
@@ -137,15 +137,22 @@ public class Tank : Brain
     }
 
     /*
-     * Regarde vers quel entity il va se deplace selon l'ordre de priorite Heal > DPS > Tank
+     * Regarde vers quel entity il va se deplace selon l'ordre de priorite DPS > Tank > Heal
      */
     private void WalkVersPrio()
     {
-        ReachableTile target = IAUtils.ShortestPathToEnemy(true, tank, playerDPS, playerTank, playerHealer, true, tank.CurrentActionPoints, true);
+        List<ReachableTile> targets = IAUtils.ShortestsPathToEnemy(true, tank, playerDPS, playerTank, playerHealer, true, tank.CurrentActionPoints, true, true);
 
-        if (target != null)
+        if (targets != null)
         {
-            IAUtils.MoveAndTriggerAbilityIfNeed(tank, target, iaEntityFunction);
+            for (int i = 0; i < targets.Count; i++)
+            {
+                if (IAUtils.MoveAndTriggerAbilityIfNeed(tank, targets[i], iaEntityFunction))
+                {
+                    return;
+                }
+            }
         }
+        
     }
 }

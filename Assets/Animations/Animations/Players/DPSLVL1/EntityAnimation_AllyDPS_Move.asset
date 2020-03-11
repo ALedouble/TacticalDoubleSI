@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyDPS_Move
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: e122dbb76104b6f448f1241b497e7991, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: a82a4479879126044a1a277c2db2752c, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: f64ba52c4354dd642937a3036931dfa1, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 594a7cde91aba7a42adf273c447dafb9, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 86420e585b135424abde24fb74ec4511, type: 3}
+    length: 0.08
+  loopMode: 0

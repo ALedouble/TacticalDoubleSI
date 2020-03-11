@@ -17,10 +17,11 @@ MonoBehaviour:
   description: 'Grabs foes'' attention '
   cost: 4
   multiplicator: 0.7
+  experience: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
-  canCastOnEntityPosition: 0
+  canCastOnEntityPosition: 1
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
@@ -28,15 +29,13 @@ MonoBehaviour:
   castArea:
     size: 5
     area:
-    - {x: 2, y: 0}
     - {x: 2, y: 1}
-    - {x: 0, y: 2}
     - {x: 1, y: 2}
     - {x: 3, y: 2}
-    - {x: 4, y: 2}
     - {x: 2, y: 3}
-    - {x: 2, y: 4}
   effectArea:
-    size: 3
+    size: 7
     area:
-    - {x: 1, y: 1}
+    - {x: 3, y: 1}
+    - {x: 3, y: 2}
+    - {x: 3, y: 3}

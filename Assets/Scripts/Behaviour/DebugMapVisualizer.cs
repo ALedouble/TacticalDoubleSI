@@ -23,32 +23,14 @@ public class DebugMapVisualizer : MonoBehaviour
             for (int x = 0; x < MapManager.GetSize(); x++)
             {
                 for (int y = 0; y < MapManager.GetSize(); y++)
-                {
+                {/*
                     DebugUtils.DrawTile(new Vector2Int(x, y), MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Normal ? normal :
                         MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Solid ? solid :
-                        MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);
+                        MapManager.GetTile(new Vector2Int(x, y)).TileType == TileType.Fast ? fast : slow);*/
 
                     if (MapManager.GetTile(new Vector2Int(x, y)).canPlacePlayerEntity) DebugUtils.DrawTile(new Vector2Int(x, y), playerPlacement, .5f);
 
-                    foreach (var reachableTile in MapManager.Instance.reachableTiles)
-                    {
-                        if (reachableTile.GetCoordPosition() == new Vector2Int(x,y)) DebugUtils.DrawTile(new Vector2Int(x, y), Color.green, .8f);
-                    }
 
-                    foreach (var reachableTile in MapManager.Instance.reachableTiles)
-                    {
-                        if (reachableTile.GetCoordPosition() == new Vector2Int(x, y)) DebugUtils.DrawTile(new Vector2Int(x, y), Color.green, .8f);
-                    }
-
-                    foreach(var castableTile in MapManager.Instance.castableTiles)
-                    {
-                        if (castableTile == new Vector2Int(x, y)) DebugUtils.DrawTile(new Vector2Int(x, y), Color.blue, .8f);
-                    }
-
-                    foreach(var effectTile in MapManager.Instance.effectTiles)
-                    {
-                        if (effectTile == new Vector2Int(x, y)) DebugUtils.DrawTile(new Vector2Int(x, y), Color.red, .8f);
-                    }
                 }
             }
         }

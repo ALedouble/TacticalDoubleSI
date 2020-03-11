@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_MinionEN_Atk
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 5e42780941baef34a87d8f167008ea82, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ca9137b92e10fa643842849abe850b38, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 17473f2b8b87bdb448397b488968e899, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 965e1de83dcad9b44b9735e1d15967a0, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 46b40c6bf98cd0840a351261cb1283dc, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 1648864bb06bd5d4988e5e983b36e05b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5e1c5c1b1edbf9244a5ced6e4d099af9, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 45324847df160474b9cf1c3bfd8654ea, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 26c9db71b4287ac449533a8088bae5ee, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: fcc45169f4c021d4389d41db11265677, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c03fba35163ee5c439bfee8a8b45172e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b3c09e65a601ccb48ade5dd7e62bea6e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 81ed5cbd4cf0e7b4cb79da4677b44ace, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0d2f1a565c294f64a9f83dcd4abc75b0, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: a2ba3b627a485ed43a9fd87fbbaa143f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7b22e9fbe563a8b4aa9f0385f5710524, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: fbf9a883d79009842b9b2f38b273fce8, type: 3}
+    length: 0.1
+  loopMode: 1
