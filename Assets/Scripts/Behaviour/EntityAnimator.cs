@@ -36,7 +36,7 @@ public class EntityAnimator : MonoBehaviour
     LoopMode loopMode;
     public void PlayAnimation(EntityAnimation animation)
     {
-        if (animation == null)
+        if (animation == null || (animation.frames.Count == 0))
         {
             Debug.LogWarning("Animation is null on " + gameObject.name);
             return;

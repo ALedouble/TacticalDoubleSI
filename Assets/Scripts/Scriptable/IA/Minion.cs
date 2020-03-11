@@ -23,6 +23,7 @@ public class Minion : Brain
     
     static bool firstActionInTurn;
     static bool lowLife;
+    static bool haveEndTurn;
 
     public float percentOfLifeNeedForHelp = 25f;
     public int rangeAttackWhenLowLife = 2;
@@ -52,8 +53,10 @@ public class Minion : Brain
         playerHealerPathToAttack = null;
         playerDPSPathToAttack = null;
         playerTankPathToAttack = null;
+
         firstActionInTurn = true;
         lowLife = false;
+        haveEndTurn = false;
     }
 
     /*
@@ -86,6 +89,8 @@ public class Minion : Brain
      */
     private bool CanMakeAction()
     {
+        if (haveEndTurn) return false;
+
         List<TileData> around = IAUtils.TilesAround(minion.currentTile);
         for (int i = 0; i < around.Count; i++)
         {
@@ -166,6 +171,7 @@ public class Minion : Brain
                 {
                     if (IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy[i], iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy[i])))
                     {
+                        haveEndTurn = true;
                         return true;
                     }
                 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Entity_Player_DPS
   m_EditorClassIdentifier: 
   displayName: DPS
-  portrait: {fileID: 21300000, guid: 6aa7d14f265ba4343ba6c87443bb3339, type: 3}
+  portrait: {fileID: 21300000, guid: d9d7f1c9beabd9645bd41f578ba7dd72, type: 3}
   animations: {fileID: 11400000, guid: f4e580c2003748e46840b75fd95b0162, type: 2}
   maxHealth: 20
   maxActionPoints: 15
@@ -25,4 +25,5 @@ MonoBehaviour:
   alignement: 1
   entityTag: 1
   power: 1
+  xpPoint: 1
   totemValue: -1

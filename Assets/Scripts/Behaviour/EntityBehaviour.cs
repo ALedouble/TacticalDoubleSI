@@ -75,7 +75,19 @@ public class EntityBehaviour : MonoBehaviour
         InitAnimations();
     }
 
+    private void Start()
+    {
+        SelectionManager.Instance.OnHoveredEntityChanged += Squish;
+    }
 
+    Tween squishTween;
+    void Squish(EntityBehaviour entity)
+    {
+        if (entity != this) return;
+
+        squishTween?.Kill(true);
+        squishTween = transform.DOPunchScale(Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(.4f,-.4f,0), .2f, 15, 1f);
+    }
 
     void InitAnimations()
     {
@@ -164,8 +176,8 @@ public class EntityBehaviour : MonoBehaviour
 
         Debug.Log(name + " is using " + ability.name);
 
-        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
-        float duration = anim.Length;
+        EntityAnimation anim = data.alignement == Alignement.Player ? data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability)) : null;
+        float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;
 
 
         abilitySequence.AppendCallback(() =>
