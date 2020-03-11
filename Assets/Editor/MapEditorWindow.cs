@@ -82,6 +82,12 @@ public class MapEditorWindow : EditorWindow
             EditorUtility.SetDirty(map);
         }
 
+        EditorGUI.BeginChangeCheck();
+        map.center = EditorGUILayout.Vector2Field("Camera Focus Point", map.center);
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(map);
+        }
     }
 
     void OnScene(SceneView scene)

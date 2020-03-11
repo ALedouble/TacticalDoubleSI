@@ -47,9 +47,11 @@ public class RoundManager : MonoBehaviour
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
     }
 
-    void StartPlayerTurn(EntityBehaviour entity)
+    public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
+
+        SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
         entity.OnTurn();
     }

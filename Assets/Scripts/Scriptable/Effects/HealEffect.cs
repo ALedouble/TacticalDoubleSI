@@ -13,10 +13,14 @@ public class HealEffect : AbilityEffect
 
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
+        Debug.Log("heal");
+
         ApplyEffect(entity, ability, castTile, (x) => {
             if(x.data.alignement == entity.data.alignement)
             {
-                x.CurrentHealth += SetHeal(entity, ability);
+                float heal = SetHeal(entity, ability);
+                x.CurrentHealth += heal;
+                HUDManager.DisplayValue("+" + heal.ToString(), Color.green, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
         });
     }

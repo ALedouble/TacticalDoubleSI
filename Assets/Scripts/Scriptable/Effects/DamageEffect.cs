@@ -19,7 +19,9 @@ public class DamageEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.alignement != entity.data.alignement)
             {
-                x.CurrentHealth -= SetDamage(entity, ability) - x.CurrentArmor;
+                float damage = SetDamage(entity, ability) - x.CurrentArmor;
+                x.CurrentHealth -= damage;
+                HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
         });
 

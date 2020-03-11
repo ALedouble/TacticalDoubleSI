@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   displayName: Heal
-  description: A area heal
+  description: An area heal
   cost: 5
   multiplicator: 1
+  experience: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}

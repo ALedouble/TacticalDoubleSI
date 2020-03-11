@@ -8,6 +8,16 @@ public class ReachableTile : IComparable
     public List<TileData> path { get; set;  }
     public int cost { get; set; }
 
+    public int GetCost()
+    {
+        int costBuffer = 0;
+        for (int i = 0; i < path.Count; i++)
+        {
+            costBuffer += (int)path[i].tileType;
+        }
+        return costBuffer;
+    }
+
     public ReachableTile(List<TileData> path, int cout)
     {
         this.path = path;
