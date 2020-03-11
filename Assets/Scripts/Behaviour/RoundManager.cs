@@ -59,11 +59,11 @@ public class RoundManager : MonoBehaviour
     public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
-
+        if (entity.IsChannelingBurst) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
-        
 
+        entity.OnTurn();
     }
 
     void Update()

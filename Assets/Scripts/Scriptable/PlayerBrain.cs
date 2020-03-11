@@ -17,12 +17,6 @@ public class PlayerBrain : Brain
        
         this.entityBehaviour = entityBehaviour;
 
-        if (this.entityBehaviour.IsChannelingBurst)
-        {
-            CanSelectAnotherPlayer();
-            return;
-        }
-
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
