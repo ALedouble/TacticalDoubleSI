@@ -83,7 +83,7 @@ public class Tank : Brain
         if (tank.CurrentActionPoints >= ability1.cost) return true;
         if (tank.CurrentActionPoints >= ability2.cost) return true;
 
-        return IAUtils.CanWalkAround(tank, tank.CurrentActionPoints);
+        return IAUtils.CanWalkAround(tank, tank.CurrentActionPoints, true);
     }
 
     /*

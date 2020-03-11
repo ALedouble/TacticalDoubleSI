@@ -44,14 +44,10 @@ public class DamageEffect : AbilityEffect
             {
                 float damage = Mathf.Ceil(SetDamage(entity, ability) - x.CurrentArmor);
                 x.CurrentHealth -= damage;
-                Debug.Log(damage);
-                Debug.Log(damage.ToString());
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
         });
 
-        Debug.Log(entitiesFounded);
-        Debug.Log(PlayerTeamManager.Instance.teamXp);
         
     }
 
