@@ -198,7 +198,7 @@ public class DPS : Brain
 
     /*
      * Regarde vers quel entity il va se deplace selon l'ordre de priorite :
-     *          Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
+     *           Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
      */
     private bool WalkVersPrio()
     {
