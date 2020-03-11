@@ -72,6 +72,8 @@ public static class IAUtils
         List<Vector2Int> attackRangeCast = ability.castArea.GetTiles();
         List<Vector2Int> attackRangeEffect;
 
+        Debug.Log("target : " + target);
+
         for (int i = 0; i < reachableTiles.Count; i++)
         {
             for (int j = 0; j < attackRangeCast.Count; j++)
@@ -103,8 +105,12 @@ public static class IAUtils
         List<Vector2Int> attackRangeCast = ability.castArea.GetTiles();
         List<Vector2Int> attackRangeEffect;
 
+        Debug.Log(ability.displayName);
+        Debug.Log(target);
+
         for (int i = 0; i < tilesOnPath.Count; i++)
         {
+            Debug.Log(tilesOnPath[i].GetCoordPosition());
             for (int j = 0; j < attackRangeCast.Count; j++)
             {
                 attackRangeEffect = ability.effectArea.GetRotatedTiles(tilesOnPath[i].GetCoordPosition(), tilesOnPath[i].GetCoordPosition() + attackRangeCast[j]);
@@ -259,12 +265,12 @@ public static class IAUtils
     /*
      * Regarde si l'on a encore assez de PA pour move.
      */
-    public static bool CanWalkAround(EntityBehaviour current, int remainingActionPoints)
+    public static bool CanWalkAround(EntityBehaviour current, int remainingActionPoints, bool ignoreWeightMove = false)
     {
-        List<TileData> around = IAUtils.TilesAround(current.currentTile);
+        List<TileData> around = TilesAround(current.currentTile);
         for (int i = 0; i < around.Count; i++)
         {
-            if (around[i].IsWalkable && (int)around[i].tileType <= remainingActionPoints)
+            if (around[i].IsWalkable && ((ignoreWeightMove) ? (fixedWeight <= remainingActionPoints) : ((int)around[i].tileType <= remainingActionPoints)))
             {
                 return true;
             }
@@ -341,13 +347,17 @@ public static class IAUtils
     public static bool MoveAndTriggerAbilityIfNeed(EntityBehaviour current, ReachableTile moveTarget, IAEntity iaEntityFunction, 
                                                     bool condition = true, LambdaAbilityCall functionToCallAfterTheMove = null, Ability ability = null, TileData abilityTarget = null)
     {
+        Debug.Log("move");
         if (moveTarget == null) return false;
         if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
-
+        if (moveTarget.path.Count > 0)Debug.Log(moveTarget.GetCoordPosition());
+        Debug.Log(condition);
+        
         if (condition)
         {
             if (functionToCallAfterTheMove != null)
             {
+                Debug.Log(current.CurrentActionPoints < ability.cost);
                 if (current.CurrentActionPoints < ability.cost) return false;
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
@@ -771,7 +781,7 @@ public static class IAUtils
                                                                             SpecificConditionReachable functionConditionReachable, bool stopJustBeforeTarget = false, bool ignoreWeightMove = false)
     {
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
-
+        Debug.Log(allEntitiesReachableBestTileForCast);
         if (allEntitiesReachableBestTileForCast == null) return false;
 
         for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
@@ -791,13 +801,15 @@ public static class IAUtils
                 return true;
             }
 
-            else if (useAbility && pathToUseAbility == null)
+            if (useAbility && pathToUseAbility == null)
             {
-                if ((((functionConditionReachable == null) ? (true) : (functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1))) &&
-                     ((functionConditionEntity == null) ? (true) : (functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2)))))
-                {
-                    pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
-                }
+                //if ((((functionConditionReachable == null) ? (true) : (functionConditionReachable(allEntitiesReachableBestTileForCast[i].Item1))) &&
+                //     ((functionConditionEntity == null) ? (true) : (functionConditionEntity(allEntitiesReachableBestTileForCast[i].Item2)))))
+                //{
+                    
+                //}
+
+                pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
             }
         }
 

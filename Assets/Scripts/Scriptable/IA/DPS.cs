@@ -25,9 +25,9 @@ public class DPS : Brain
 
     static bool haveEndTurn;
 
-    public int percentOfLifeNeedForAttackPrio = 25;
-    public int percentOfLifeNeedForRunToHealer = 25;
-    public int percentOfLifeNeedForRunToTank = 50;
+    public float percentOfLifeNeedForAttackPrio = 25f;
+    public float percentOfLifeNeedForRunToHealer = 25f;
+    public float percentOfLifeNeedForRunToTank = 50f;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -69,7 +69,7 @@ public class DPS : Brain
         reachableTiles = IAUtils.FindAllReachablePlace(dps.GetPosition(), dps.CurrentActionPoints, true);
 
 
-        if (IAUtils.CheckEndTurn(dps, CanMakeAction(), true)) return;
+        if (IAUtils.CheckEndTurn(dps, CanMakeAction())) return;
 
         if (GoToHealer()) return;
 
@@ -100,12 +100,14 @@ public class DPS : Brain
      */
     private bool GoToHealer()
     {
-        if (dps.CurrentHealth < ((dps.GetMaxHealth() * percentOfLifeNeedForRunToHealer) / 100))
+        if ((float)dps.CurrentHealth < (float)((dps.GetMaxHealth() * percentOfLifeNeedForRunToHealer) / 100))
         {
+            Debug.Log("heal");
             List<Tuple<ReachableTile, EntityBehaviour>> listOfPathToHealer = IAUtils.PathToCastOrToJoin(true, IAUtils.GetReachableTileFromCastOrPathDelegate, dps, enemyHealer, reachableTiles, null, true);
 
             if (listOfPathToHealer != null)
             {
+                Debug.Log("find");
                 ReachableTile pathToHealer;
                 EntityBehaviour healer;
 
@@ -154,14 +156,14 @@ public class DPS : Brain
             
             if (listOfPathToTank != null)
             {
-                if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
-                {
+                //if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
+                //{
                     if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, listOfPathToTank[0].Item1, iaEntityFunction))
                     {
                         haveEndTurn = true;
                         return true;
                     }
-                }
+                //}
 
                 else return true;
             }

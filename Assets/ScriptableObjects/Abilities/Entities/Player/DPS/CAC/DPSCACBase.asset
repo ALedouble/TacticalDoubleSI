@@ -34,8 +34,6 @@ MonoBehaviour:
     - {x: 2, y: 1}
     - {x: 1, y: 2}
   effectArea:
-    size: 3
+    size: 5
     area:
-    - {x: 1, y: 0}
-    - {x: 2, y: 0}
-    - {x: 1, y: 1}
+    - {x: 2, y: 2}

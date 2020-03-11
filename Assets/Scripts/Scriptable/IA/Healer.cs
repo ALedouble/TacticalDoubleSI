@@ -81,7 +81,7 @@ public class Healer : Brain
 
         if (IsInDanger()) return;
 
-        if (Heal()) { Debug.Log("pass"); ability1Use = true; return; }
+        if (Heal()) { ability1Use = true; return; }
 
         if (Attack()) { ability2Use = true; return; }
 
