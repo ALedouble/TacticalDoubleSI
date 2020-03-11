@@ -20,7 +20,9 @@ public class Tank : Brain
 
     static Ability ability1;
     static Ability ability2;
+
     static bool haveUseFirstAttack;
+    static bool haveEndTurn;
 
     public float percentOfLifeNeedForChangePatern = 50f;
 
@@ -49,7 +51,9 @@ public class Tank : Brain
 
         ability1 = tank.GetAbilities(0);
         ability2 = tank.GetAbilities(1);
+
         haveUseFirstAttack = false;
+        haveEndTurn = false;
     }
 
     /*
@@ -58,7 +62,6 @@ public class Tank : Brain
     private void IATank()
     {
         IAUtils.GetAllEntity(tank, ref playerHealer, ref playerDPS, ref playerTank);
-               
 
         if (IAUtils.CheckEndTurn(tank, CanMakeAction())) return;
 
@@ -66,8 +69,9 @@ public class Tank : Brain
         
         if (Attack()) return;
 
-        WalkVersPrio();
+        if (WalkOnShortest()) return;
 
+        IAUtils.CheckEndTurn(tank, CanMakeAction());
     }
 
     /*
@@ -75,6 +79,8 @@ public class Tank : Brain
      */
     private bool CanMakeAction()
     {
+        if (haveEndTurn) return false;
+        if (tank.CurrentActionPoints >= ability1.cost) return true;
         if (tank.CurrentActionPoints >= ability2.cost) return true;
 
         return IAUtils.CanWalkAround(tank, tank.CurrentActionPoints);
@@ -137,22 +143,24 @@ public class Tank : Brain
     }
 
     /*
-     * Regarde vers quel entity il va se deplace selon l'ordre de priorite DPS > Tank > Heal
+     * Cherche l'enemy le plus pres et s'en rapproche
      */
-    private void WalkVersPrio()
+    private bool WalkOnShortest()
     {
-        List<ReachableTile> targets = IAUtils.ShortestsPathToEnemy(true, tank, playerDPS, playerTank, playerHealer, true, tank.CurrentActionPoints, true, true);
+        List<ReachableTile> pathToShortestEnemy = IAUtils.ShortestsPathToEnemy(true, tank, playerHealer, playerDPS, playerTank, true, tank.CurrentActionPoints, false, true);
 
-        if (targets != null)
+        if (pathToShortestEnemy != null)
         {
-            for (int i = 0; i < targets.Count; i++)
+            for (int i = 0; i < pathToShortestEnemy.Count; i++)
             {
-                if (IAUtils.MoveAndTriggerAbilityIfNeed(tank, targets[i], iaEntityFunction))
+                if (IAUtils.MoveAndTriggerAbilityIfNeed(tank, pathToShortestEnemy[i], iaEntityFunction))
                 {
-                    return;
+                    haveEndTurn = true;
+                    return true;
                 }
             }
         }
-        
+
+        return false;
     }
 }

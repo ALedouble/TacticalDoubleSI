@@ -202,7 +202,6 @@ public class Healer : Brain
                 {
                     if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyMinion, reachableTiles, iaEntityFunction, null, null, null, true))
                     {
-                       
                         return false;
                     }
                 }

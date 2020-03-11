@@ -77,8 +77,9 @@ public class DPS : Brain
 
         if (Attack()) return;
 
-        WalkVersPrio();
-               
+        if (WalkVersPrio()) return;
+
+        IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
     }
 
     /*
@@ -199,15 +200,21 @@ public class DPS : Brain
      * Regarde vers quel entity il va se deplace selon l'ordre de priorite :
      *          Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
      */
-    private void WalkVersPrio()
+    private bool WalkVersPrio()
     {
         reachableTiles = IAUtils.FindAllReachablePlace(dps.GetPosition(), dps.CurrentActionPoints, true);
         Tuple<ReachableTile, EntityBehaviour> target = FindPriorityForAllEntity(true);
 
         if (target != null)
         { 
-            IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction);
+            if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction))
+            {
+                haveEndTurn = true;
+                return true;
+            }
         }
+
+        return false;
     }
 
     /*

@@ -162,8 +162,8 @@ public class EntityBehaviour : MonoBehaviour
 
         Debug.Log(name + " is using " + ability.name);
 
-        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
-        float duration = anim.Length;
+        EntityAnimation anim = data.alignement == Alignement.Player ? data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability)) : null;
+        float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;
 
 
         abilitySequence.AppendCallback(() =>
