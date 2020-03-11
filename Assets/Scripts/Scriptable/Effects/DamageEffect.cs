@@ -46,6 +46,7 @@ public class DamageEffect : AbilityEffect
                 x.CurrentHealth -= damage;
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
                 x.CheckCurrentHealthAndDestroy();
+                x.Shake();
             }
         });
 
