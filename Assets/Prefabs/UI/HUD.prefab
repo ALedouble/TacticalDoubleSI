@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c37a56001dff394dbbb0f33a5f08f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasRect: {fileID: 0}
+  canvas: {fileID: 0}
   tileDescriptions: {fileID: 11400000, guid: 6fbe35a037623c34395c0fe854fdd96e, type: 2}
   displayValueHUDPrefab: {fileID: 5192998135264269959, guid: b3068e2a6a039f545a77a8b4f5a20901,
     type: 3}
@@ -4462,7 +4462,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -122.700195, y: 264.03003}
+  m_AnchoredPosition: {x: -122.700195, y: 127}
   m_SizeDelta: {x: 245.5, y: 528.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6844803763946446767
