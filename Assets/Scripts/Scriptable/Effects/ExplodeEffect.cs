@@ -8,7 +8,7 @@ public class ExplodeEffect : AbilityEffect
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
         PlayerTeamManager.Instance.LevelUpPlayerEntity(entity.data);
-        entity.IsChannelingBurst = true;
+        
         MapManager.GetListOfEntity().Remove(entity);
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.entityTag == EntityTag.Totem)

@@ -38,8 +38,7 @@ public class EntityBehaviour : MonoBehaviour
         return currentTile.position;
     }
 
-    bool channelingBurst;
-    public bool IsChannelingBurst { get => channelingBurst; set => channelingBurst = value; }
+    public bool IsChannelingBurst { get => channelingRoundsLeft > 0;}
 
     float currentHealth;
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
@@ -51,6 +50,7 @@ public class EntityBehaviour : MonoBehaviour
     public int CurrentArmor { get => currentArmor; set => currentArmor = value; }
 
     Vector2Int effectPosition;
+    public int channelingRoundsLeft = -1;
 
 
     //For PropertyDrawer
@@ -61,6 +61,8 @@ public class EntityBehaviour : MonoBehaviour
     [HideInInspector] public int heldCrystalValue = -1;
 
     EntityAnimator animator;
+
+    public Ability channelingAbility; 
 
     public void Init()
     {
@@ -73,7 +75,19 @@ public class EntityBehaviour : MonoBehaviour
         InitAnimations();
     }
 
+    private void Start()
+    {
+        SelectionManager.Instance.OnHoveredEntityChanged += Squish;
+    }
 
+    Tween squishTween;
+    void Squish(EntityBehaviour entity)
+    {
+        if (entity != this) return;
+
+        squishTween?.Kill(true);
+        squishTween = transform.DOPunchScale(Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(.4f,-.4f,0), .2f, 15, 1f);
+    }
 
     void InitAnimations()
     {
@@ -162,8 +176,8 @@ public class EntityBehaviour : MonoBehaviour
 
         Debug.Log(name + " is using " + ability.name);
 
-        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
-        float duration = anim.Length;
+        EntityAnimation anim = data.alignement == Alignement.Player ? data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability)) : null;
+        float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;
 
 
         abilitySequence.AppendCallback(() =>

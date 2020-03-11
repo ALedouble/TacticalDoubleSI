@@ -12,13 +12,15 @@ public class PlayerBrain : Brain
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
+       
         base.OnTurnStart(entityBehaviour);
-
+       
         this.entityBehaviour = entityBehaviour;
 
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
+
 
         SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick += OnMovement;
@@ -32,6 +34,8 @@ public class PlayerBrain : Brain
         reachableTiles.RemoveAll(x => x.GetCoordPosition() == entityBehaviour.GetPosition());
         // TEMPORARY -> will replace with real fx 
         MapManager.SetReachableTilesPreview(reachableTiles);
+
+        
     }
 
     void CanSelectAnotherPlayer()
@@ -138,8 +142,16 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
 
-        Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
+        if (entityBehaviour.GetAbilities(selectedAbilityIndex).Channeling)
+        {
+            entityBehaviour.channelingRoundsLeft = 1;
+            entityBehaviour.channelingAbility = entityBehaviour.GetAbilities(selectedAbilityIndex);
+            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            return;
+        }
+         Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
 
+        
         attackSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);

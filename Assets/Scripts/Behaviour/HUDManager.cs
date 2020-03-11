@@ -28,6 +28,7 @@ public class HUDManager : MonoBehaviour
     {
         canvas = FindObjectOfType<Canvas>();
 
+        playerInfoGroup.alpha = 0;
         enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
@@ -195,6 +196,7 @@ public class HUDManager : MonoBehaviour
         }
 
         icon.sprite = entity.data.portrait;
+        icon.preserveAspect = true;
 
         HPtextMesh.text = entity.CurrentHealth.ToString() + "/" + entity.data.maxHealth;
         PAtextMesh.text = entity.CurrentActionPoints.ToString() + "/" + entity.data.maxActionPoints;
