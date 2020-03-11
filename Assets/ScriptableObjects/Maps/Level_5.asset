@@ -754,9 +754,6 @@ MonoBehaviour:
     position: {x: 6, y: 10}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
-    position: {x: 8, y: 10}
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
     position: {x: 10, y: 10}
   - entity: {fileID: 11400000, guid: 04bd2aa69ba04254e8f1a734fd912a0d, type: 2}
     heldCrystalValue: 1
@@ -773,8 +770,5 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
     heldCrystalValue: 0
     position: {x: 1, y: 11}
-  - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
-    heldCrystalValue: -1
-    position: {x: 11, y: 11}
   size: 12
   center: {x: 0, y: 0}
