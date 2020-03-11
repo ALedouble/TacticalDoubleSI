@@ -51,7 +51,9 @@ public class EntityBehaviour : MonoBehaviour
 
     Vector2Int effectPosition;
     public int channelingRoundsLeft = -1;
+    public int stasisRoundsLeft = -1;
 
+    public bool stasis { get => stasisRoundsLeft > 0; }
 
     //For PropertyDrawer
     List<Vector2Int> tilesForCast;
@@ -78,6 +80,11 @@ public class EntityBehaviour : MonoBehaviour
     private void Start()
     {
         SelectionManager.Instance.OnHoveredEntityChanged += Squish;
+    }
+
+    private void OnDestroy()
+    {
+        SelectionManager.Instance.OnHoveredEntityChanged -= Squish;
     }
 
     Tween squishTween;
@@ -122,7 +129,11 @@ public class EntityBehaviour : MonoBehaviour
         }
         else
         {
+           
+            
             data.brain.OnTurnStart(this);
+
+
         }
     }
 
