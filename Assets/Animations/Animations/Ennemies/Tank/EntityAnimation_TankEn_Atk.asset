@@ -12,5 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_TankEn_Atk
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: 439445e6e877bb349b60fa4d8ec3df1e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e86b59cd9a4cf1844ad19c8fbc33ef3b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 31866612ff0d64e4483999437d48ef83, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c4c6c13d5ec198e44af21ed4633891b8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 6f88fe042e3e58442b5740fe4a0a0a61, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ca86a43ac825a774a8d311cf365607ce, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 969a9b75e3d53634fa08ab32c5beb654, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4eaec0215e5903e4fb7fe455571feff4, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e5624d8912ea02948a9416e740e5b087, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 61947cab330b39b4380665493338ac9a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 41bdce9e6ab2b914a8cb81fc79850433, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2669ef1613dfedd47bdfd7105b5bbcda, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ac508641a8b21184bb05543f52c15acb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 759264fd5283d124d8c84a353df6de14, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c620de04fdeabed4b88edddb49fd4f9a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 73b1c8f4290a59e40a538b5110a510e6, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 373aa1919b875af4aa2e2b4491f8b022, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0e21a00a12a079f4da95e5cdc201d720, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c22108e5f72417d41b4962deb1c83291, type: 3}
+    length: 0.1
   loopMode: 1

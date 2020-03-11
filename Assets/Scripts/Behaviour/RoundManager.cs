@@ -36,22 +36,32 @@ public class RoundManager : MonoBehaviour
 
         OnPlayerTurn?.Invoke();
 
+        for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+        {
+            PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingRoundsLeft--;
+        }
+
         for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
         {
             // TODO : carry over a part of previous action points
             MapManager.GetListOfEntity()[i].CurrentActionPoints = Mathf.CeilToInt(MapManager.GetListOfEntity()[i].data.maxActionPoints);
+            
+            
         }
 
         SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
+
+        
     }
 
     public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
-
+        if (entity.IsChannelingBurst) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
+
 
         entity.OnTurn();
     }

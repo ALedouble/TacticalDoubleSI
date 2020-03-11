@@ -38,8 +38,7 @@ public class EntityBehaviour : MonoBehaviour
         return currentTile.position;
     }
 
-    bool channelingBurst;
-    public bool IsChannelingBurst { get => channelingBurst; set => channelingBurst = value; }
+    public bool IsChannelingBurst { get => channelingRoundsLeft > 0;}
 
     float currentHealth;
     public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
@@ -51,6 +50,7 @@ public class EntityBehaviour : MonoBehaviour
     public int CurrentArmor { get => currentArmor; set => currentArmor = value; }
 
     Vector2Int effectPosition;
+    public int channelingRoundsLeft = -1;
 
 
     //For PropertyDrawer
@@ -61,6 +61,8 @@ public class EntityBehaviour : MonoBehaviour
     [HideInInspector] public int heldCrystalValue = -1;
 
     EntityAnimator animator;
+
+    public Ability channelingAbility; 
 
     public void Init()
     {
