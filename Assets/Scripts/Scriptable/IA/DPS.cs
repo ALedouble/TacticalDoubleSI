@@ -91,7 +91,7 @@ public class DPS : Brain
         if (dps.CurrentActionPoints >= ability1.cost) return true;
         if (!ability2Use && dps.CurrentActionPoints >= ability2.cost) return true;
 
-        return IAUtils.CanWalkAround(dps, dps.CurrentActionPoints);
+        return IAUtils.CanWalkAround(dps, dps.CurrentActionPoints, true);
     }
 
     /*

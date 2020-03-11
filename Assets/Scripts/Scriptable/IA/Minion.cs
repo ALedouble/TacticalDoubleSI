@@ -109,7 +109,7 @@ public class Minion : Brain
             }
         }
 
-        return IAUtils.CanWalkAround(minion, lowLife ? (rangeAttackWhenLowLife > minion.CurrentActionPoints ? minion.CurrentActionPoints : rangeAttackWhenLowLife) : minion.CurrentActionPoints);
+        return IAUtils.CanWalkAround(minion, ((lowLife) ? (rangeAttackWhenLowLife > minion.CurrentActionPoints ? minion.CurrentActionPoints : rangeAttackWhenLowLife) : (minion.CurrentActionPoints)), true);
     }
 
     /*
