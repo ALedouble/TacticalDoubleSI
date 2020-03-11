@@ -15,8 +15,9 @@ MonoBehaviour:
   displayName: T
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: b01ebd5733feb844eb4ede0847a8a402, type: 2}
+  pivot: {x: 0.5, y: 0.5}
   maxHealth: 10
-  maxActionPoints: 0
+  maxActionPoints: 10
   armor: 0
   abilities:
   - {fileID: 11400000, guid: 43e7699322e51ab4191644bfa1e0b3da, type: 2}
@@ -26,4 +27,5 @@ MonoBehaviour:
   alignement: 0
   entityTag: 2
   power: 0
+  xpPoint: 1
   totemValue: -1
