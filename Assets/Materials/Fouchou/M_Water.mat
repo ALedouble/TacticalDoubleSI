@@ -88,13 +88,13 @@ Material:
     - _NormalTile: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Smoothness: 0.37
+    - _Smoothness: 0.41
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Tesselation: 2
     - _UVSec: 0
-    - _WaveHeight: 0.25
+    - _WaveHeight: 0.1
     - _WaveSpeed: 0.64
     - _WaveTile: 1.63
     - _ZWrite: 1
