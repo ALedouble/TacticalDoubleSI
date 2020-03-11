@@ -17,6 +17,9 @@ public class PlayerBrain : Brain
        
         this.entityBehaviour = entityBehaviour;
 
+        CancelEverything();
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
@@ -48,6 +51,7 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
         SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
+        SelectionManager.Instance.OnClick -= OnUseAbility;
 
         MapManager.SetCastableTilesPreview(null);
         MapManager.SetEffectTilesPreview(null);
@@ -94,7 +98,7 @@ public class PlayerBrain : Brain
         moveSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
-            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            CanSelectAnotherPlayer();
         });
     }
 
@@ -115,8 +119,15 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick += OnUseAbility;
         SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
         SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
+
+        SelectionManager.Instance.OnClick += CancelAbility;
 
         if (!entityBehaviour.data.abilities[index].canCastOnEntityPosition)
         {
@@ -125,6 +136,19 @@ public class PlayerBrain : Brain
         castableTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
 
         MapManager.SetCastableTilesPreview(castableTiles);
+    }
+
+    void CancelAbility(MapRaycastHit mapHit)
+    {
+        SelectionManager.Instance.OnClick -= CancelAbility;
+
+        if (castableTiles.Contains(mapHit.position))
+        {
+            return;
+        }
+
+        CancelEverything();
+        CanSelectAnotherPlayer();
     }
 
     void OnUseAbility(MapRaycastHit hit)
@@ -155,7 +179,6 @@ public class PlayerBrain : Brain
         attackSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
-            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
         });
 
         List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);

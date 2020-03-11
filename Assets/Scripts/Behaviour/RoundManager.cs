@@ -49,7 +49,7 @@ public class RoundManager : MonoBehaviour
             
         }
 
-        SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
 
@@ -60,8 +60,7 @@ public class RoundManager : MonoBehaviour
     {
         if (entity.data.alignement != Alignement.Player) return;
         if (entity.IsChannelingBurst) return;
-        SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
-
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
 
         entity.OnTurn();
     }

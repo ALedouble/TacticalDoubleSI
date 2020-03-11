@@ -73,7 +73,7 @@ public class EntityAnimator : MonoBehaviour
     void UpdateChildHeight(float width, float height)
     {
         child.transform.localScale = new Vector3(width / pixelUnit, (height / pixelUnit) / Mathf.Cos(Camera.main.transform.eulerAngles.x * Mathf.Deg2Rad), 1);
-        child.transform.localPosition = Vector3.up * (child.transform.localScale.y * .5f);
+        child.transform.localPosition = new Vector3(child.transform.localPosition.x, child.transform.localScale.y * .5f, child.transform.localPosition.z);
     }
 }
 
