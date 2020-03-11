@@ -295,7 +295,7 @@ public static class IAUtils
 
         return null;
     }
-
+    
 
 
     //#################################################################################################################################################################################################
@@ -435,6 +435,39 @@ public static class IAUtils
                                                 functionToCallAfterTheMove, ability, shortestExplosion[i].Item2.castTile))
                 {
                     return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Se rapproche de l'ally le plus proche
+     */
+    public static bool WalkOnShortest(EntityBehaviour current, EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank,
+                                            IAEntity iaEntityFunction, SpecificConditionReachable conditionReachable = null)
+    {
+        List<ReachableTile> pathToShortestEnemy = ShortestsPathToEnemy(true, current, playerHealer, playerDPS, playerTank, true, current.CurrentActionPoints, false, true);
+
+        if (pathToShortestEnemy != null)
+        {
+            for (int i = 0; i < pathToShortestEnemy.Count; i++)
+            {
+                if (conditionReachable != null)
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction, conditionReachable(pathToShortestEnemy[i])))
+                    {
+                        return true;
+                    }
+                }
+
+                else
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction))
+                    {
+                        return true;
+                    }
                 }
             }
         }

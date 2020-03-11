@@ -79,7 +79,7 @@ public class Minion : Brain
 
         if (Attack()) return;
 
-        if (WalkOnShortest()) return;
+        if (Walk()) return;
 
         IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
@@ -159,26 +159,14 @@ public class Minion : Brain
     /*
      * Cherche l'enemy le plus pres et s'en rapproche (si on a encore assez de vie)
      */
-    private bool WalkOnShortest()
+    private bool Walk()
     {
         if (!lowLife)
         {
-            List<ReachableTile> pathToShortestEnemy = IAUtils.ShortestsPathToEnemy(true, minion, playerHealer, playerDPS, playerTank, true, minion.CurrentActionPoints, false, true);
-
-            if (pathToShortestEnemy != null)
-            {
-                for (int i = 0; i < pathToShortestEnemy.Count; i++)
-                {
-                    if (IAUtils.MoveAndTriggerAbilityIfNeed(minion, pathToShortestEnemy[i], iaEntityFunction, SpecificConditionForMove(pathToShortestEnemy[i])))
-                    {
-                        haveEndTurn = true;
-                        return true;
-                    }
-                }
-            }
+            haveEndTurn = IAUtils.WalkOnShortest(minion, playerHealer, playerDPS, playerTank, iaEntityFunction, conditionFunction);
         }
 
-        return false;
+        return haveEndTurn;
     }
 
     /*
