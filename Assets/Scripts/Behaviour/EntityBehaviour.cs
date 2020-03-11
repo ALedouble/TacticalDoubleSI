@@ -62,7 +62,7 @@ public class EntityBehaviour : MonoBehaviour
 
     [HideInInspector] public int heldCrystalValue = -1;
 
-    EntityAnimator animator;
+    [HideInInspector] public EntityAnimator animator;
 
     public Ability channelingAbility; 
 

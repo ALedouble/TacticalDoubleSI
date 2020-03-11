@@ -526,7 +526,8 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
     heldCrystalValue: -1
     position: {x: 2, y: 6}
-  - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
+  - entity: {fileID: 11400000, guid: 04bd2aa69ba04254e8f1a734fd912a0d, type: 2}
     heldCrystalValue: -1
-    position: {x: 5, y: 6}
+    position: {x: 5, y: 1}
   size: 10
+  center: {x: 0, y: 0}

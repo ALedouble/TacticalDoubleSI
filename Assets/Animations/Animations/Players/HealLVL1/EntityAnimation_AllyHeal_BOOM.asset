@@ -12,5 +12,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_AllyHeal_BOOM
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: 76a4c1abe19afa74788c4558d24bb154, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 38b5fefae2957794f90589d86c767eae, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 28748839d82af2d4e93c6bcbd85a44c9, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 592b9ad64290e1043a90c9f0f998e14b, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 268805f5de0a6724584a4f9dc65cb0c2, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 3225b3ad29818b94ba63b15eb670adc0, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: ddce3b508538b284cb51b5caf538a751, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 1ab566f0f2bbb2a4f9eb72ed9a1bce1a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: a76a5624790d9344a9213f122991b7f1, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 5a5d45452f56a8e4a838f0d412d62b5c, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 0888db7156e2b78429a4bfb8f4ba5823, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 2d4649c135b98e74c96568e236ec2ccc, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 4c577469bd8db2247bb6be11364ac6b3, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: ae135d42b134c514db637d1481ceeedb, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 9f625478ddc77d544ba606ed83d6f74b, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: ff0ed7f3f8199984d90e2d6bb7f0bb07, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 55587e997b0ba3749b7724f3508a4dc8, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 21b55b53dbc07ba4bbea7ddfd5c69382, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 1fd6d39a6f1882944b0e29dd811f391e, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 8d518838810662c4b818fb53d8e44142, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 29a8636ad1b078848980bf38563cf968, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: d03e17f00bb802f47a95a8fc13ca6657, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 2437ed5b33e6d4e4ca7102f9b21daaae, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: e5a710de44144334eaa8e43f233fc63a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 8c4ab5df53fac6f4fa9c8556fd3662c1, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 79c5ea62c149ccb40959977eb8904003, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: bce12ac8f59acc946bea847fad1cd0b3, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 1eefd64edb6e71848b4dc82eda20d485, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 56e6d63972aa1474b8a38faf6b476e44, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: bf2d79aeb4f9091489453fcf4ab2fd1a, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: d1914317c5a4305429931da6577cbb97, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 7b045a58b5362fe4d8bfd4cb3ca84c07, type: 3}
+    length: 0.08
   loopMode: 0
