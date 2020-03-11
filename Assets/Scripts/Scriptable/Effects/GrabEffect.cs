@@ -35,6 +35,7 @@ public class GrabEffect : AbilityEffect
         if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Ennemies)
         {
             PlayerTeamManager.Instance.teamXp += 1;
+            entity.earnedXPThisAbility = true;
         }
 
         entities.Sort((x, y) => Vector2Int.Distance(entity.GetPosition(), x.GetPosition()).

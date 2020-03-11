@@ -29,6 +29,7 @@ public class HealEffect : AbilityEffect
         if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Allies)
         {
             PlayerTeamManager.Instance.teamXp += 1;
+            entity.earnedXPThisAbility = true;
         }
 
 
