@@ -14,6 +14,7 @@ public class Entity : ScriptableObject
     public string displayName;
     public Sprite portrait;
     public EntityAnimations animations;
+    public Vector2 pivot = new Vector2(0.5f, 0.5f);
 
     [Space]
 

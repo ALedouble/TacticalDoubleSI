@@ -64,7 +64,7 @@ public class RoundManager : MonoBehaviour
             
         }
 
-        SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
 

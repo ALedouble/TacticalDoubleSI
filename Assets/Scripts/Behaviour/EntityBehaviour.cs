@@ -104,6 +104,7 @@ public class EntityBehaviour : MonoBehaviour
         animator.mat = Resources.Load("Mat_Entity") as Material;
 
         animator.Init();
+        animator.transform.GetChild(0).localPosition = new Vector3(data.pivot.x - .5f, animator.transform.GetChild(0).localPosition.y, data.pivot.y - .5f);
 
         animator.PlayAnimation(data.animations.idleAnimation);
 

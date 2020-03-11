@@ -295,7 +295,7 @@ public static class IAUtils
 
         return null;
     }
-
+    
 
 
     //#################################################################################################################################################################################################
@@ -311,23 +311,10 @@ public static class IAUtils
     public delegate ReachableTile GetReachableTileFromCastOrPath(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove);
     public static ReachableTile GetReachableTileFromCastOrPathDelegate(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove)
     {
-        Debug.LogError(ability.displayName);
-        Debug.Log(reachableTiles.Count);
-        for (int i = 0; i < reachableTiles.Count; i++)
-        {
-            if (reachableTiles[i].path != null)
-            {
-                for (int j = 0; j < reachableTiles[i].path.Count; j++)
-                {
-                    Debug.Log(reachableTiles[i].path[j].position);
-                }
-                Debug.Log("----------------------------------------------------");
-            }
-        }
         if (ability != null)
         {
             List<ReachableTile> tilesToCastAbility = ValidCastFromTile(ability, reachableTiles, target);
-            Debug.Log(tilesToCastAbility.Count);
+
             if (tilesToCastAbility.Count > 0) return tilesToCastAbility[0];
             return null;
         }
@@ -448,6 +435,39 @@ public static class IAUtils
                                                 functionToCallAfterTheMove, ability, shortestExplosion[i].Item2.castTile))
                 {
                     return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Se rapproche de l'ally le plus proche
+     */
+    public static bool WalkOnShortest(EntityBehaviour current, EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank,
+                                            IAEntity iaEntityFunction, SpecificConditionReachable conditionReachable = null)
+    {
+        List<ReachableTile> pathToShortestEnemy = ShortestsPathToEnemy(true, current, playerHealer, playerDPS, playerTank, true, current.CurrentActionPoints, false, true);
+
+        if (pathToShortestEnemy != null)
+        {
+            for (int i = 0; i < pathToShortestEnemy.Count; i++)
+            {
+                if (conditionReachable != null)
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction, conditionReachable(pathToShortestEnemy[i])))
+                    {
+                        return true;
+                    }
+                }
+
+                else
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction))
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -791,27 +811,12 @@ public static class IAUtils
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
 
 
-
-        Debug.LogWarning(allEntitiesReachableBestTileForCast);
-
+        Debug.Log(allEntitiesReachableBestTileForCast);
 
 
         if (allEntitiesReachableBestTileForCast == null) return false;
 
 
-
-        Debug.Log(allEntitiesReachableBestTileForCast.Count);
-        for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
-        {
-            if (allEntitiesReachableBestTileForCast[i].Item1.path != null)
-            {
-                for (int j = 0; j < allEntitiesReachableBestTileForCast[i].Item1.path.Count; j++)
-                {
-                    Debug.Log(allEntitiesReachableBestTileForCast[i].Item1.path[j].position);
-                }
-                Debug.Log("----------------------------------------------------");
-            }
-        }
 
 
 
