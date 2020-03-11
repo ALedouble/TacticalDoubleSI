@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b64a0772756b19488245fc0e13ad708, type: 3}
   m_Name: EP_DPS
   m_EditorClassIdentifier: 
-  healthIncrement: 0
-  actionPointsIncrement: 0
-  armorIncrement: 0
+  healthIncrement: 4
+  actionPointsIncrement: 0.6
+  armorIncrement: 0.4
+  powerIncrement: 0.7
+  animations: []
   abilityProgression:
   - {fileID: 11400000, guid: b3c63aae09a626e45b05b00c432f8334, type: 2}
   - {fileID: 11400000, guid: 99e1167ed326f53458d00e4707e19f53, type: 2}

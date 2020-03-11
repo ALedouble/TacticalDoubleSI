@@ -47,9 +47,11 @@ public class RoundManager : MonoBehaviour
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
     }
 
-    void StartPlayerTurn(EntityBehaviour entity)
+    public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
+
+        SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
         entity.OnTurn();
     }
@@ -69,6 +71,8 @@ public class RoundManager : MonoBehaviour
             phase = RoundPhase.AI;
 
             SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
+
+            HUDManager.Instance.OnEndTurnPressed -= EndTurn;
 
             // All player entities have played, make the ai play
             roundEntities[currentEntityTurn].OnTurn();

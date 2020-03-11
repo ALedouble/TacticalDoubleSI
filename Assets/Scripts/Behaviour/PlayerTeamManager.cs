@@ -20,6 +20,14 @@ public class PlayerTeamManager : MonoBehaviour
         for (int i = 0; i < playerEntities.Count; i++)
         {
             playerEntities[i] = Instantiate(playerEntities[i]);
+
+            playerEntities[i].abilities.Clear();
+            for (int j = 0; j < 4; j++)
+            {
+                playerEntities[i].abilityLevels.Add(0);
+
+                playerEntities[i].abilities.Add(playerProgression[i].abilityProgression[j].abilities[0]);
+            }
         }
     }
 
@@ -65,19 +73,36 @@ public class PlayerTeamManager : MonoBehaviour
         }
     }
 
-    void LevelUpPlayerEntity(Entity entity)
+    public void LevelUpPlayerEntity(Entity entity)
     {
         if (entity.alignement != Alignement.Player)
         {
             Debug.LogError("Can't level up a enemy or neutral entity");
         }
 
-        int index = playerEntities.FindIndex(x => x == entity);
 
+        int index = playerEntities.FindIndex(x => x.displayName == entity.displayName);
+        Debug.Log(index);
         entity.maxActionPoints += playerProgression[index].actionPointsIncrement;
         entity.maxHealth += playerProgression[index].healthIncrement;
         entity.armor += entity.armor;
 
         entity.power++;
+    }
+
+    public void LevelUpPlayerAbility(Entity entity, int totemValue)
+    {
+        if (entity.alignement != Alignement.Player)
+        {
+            Debug.LogError("Can't level up a enemy or neutral entity");
+        }
+
+        int index = playerEntities.FindIndex(x => x.displayName == entity.displayName);
+
+        int abilityNumber = totemValue;
+
+        entity.abilityLevels[abilityNumber]++;
+
+        entity.abilities[abilityNumber] = playerProgression[index].abilityProgression[abilityNumber].abilities[entity.abilityLevels[abilityNumber]];
     }
 }

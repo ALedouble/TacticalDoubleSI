@@ -441,3 +441,4 @@ MonoBehaviour:
     heldCrystalValue: -1
     position: {x: 6, y: 3}
   size: 9
+  center: {x: 4, y: 3}
