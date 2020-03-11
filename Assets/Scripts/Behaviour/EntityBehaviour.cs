@@ -115,9 +115,7 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence MoveTo(ReachableTile reachableTile)
     {
         currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
-        Debug.Log(CurrentActionPoints);
-        CurrentActionPoints -= reachableTile.GetCost();
-        Debug.Log(CurrentActionPoints);
+        CurrentActionPoints -= reachableTile.cost;
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
@@ -155,7 +153,7 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         CurrentActionPoints -= ability.cost;
-        Sequence abilitySequence = DOTween.Sequence(); 
+        Sequence abilitySequence = DOTween.Sequence();
 
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
@@ -165,19 +163,27 @@ public class EntityBehaviour : MonoBehaviour
         EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
         float duration = anim.Length;
 
+
         abilitySequence.AppendCallback(() =>
         {
             animator.PlayAnimation(anim);
+            
         });
+
         abilitySequence.AppendInterval(duration);
+
         abilitySequence.AppendCallback(() =>
         {
+            
+
             for (int i = 0; i < ability.abilityEffect.Count; i++)
             {
                 ability.abilityEffect[i].Activate(this, ability, targetTile);
             }
             animator.PlayAnimation(data.animations.idleAnimation);
+
         });
+
 
         /*
         abilitySequence.Append(ability.GetStartTween(transform, targetTile.position)

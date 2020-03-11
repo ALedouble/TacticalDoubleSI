@@ -133,7 +133,7 @@ public class Healer : Brain
 
         ReachableTile pathToHeal = null;
         reachableTiles = IAUtils.FindAllReachablePlace(healer.GetPosition(), healer.CurrentActionPoints - ability1.cost, true);
- 
+
         if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyTank, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                         healerAbilityCall, conditionFunction, null, true))
         {
@@ -152,6 +152,11 @@ public class Healer : Brain
                             {
                                 return false;
                             }
+                        }
+
+                        else
+                        {
+                            return false;
                         }
                     }
                 }
