@@ -202,6 +202,13 @@ public class EntityBehaviour : MonoBehaviour
 
         abilitySequence.AppendCallback(() =>
         {
+            List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
+
+            for (int i = 0; i < fxPositions.Count; i++)
+            {
+                FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
+            }
+
             earnedXPThisAbility = false;
 
             for (int i = 0; i < ability.abilityEffect.Count; i++)
@@ -234,5 +241,9 @@ public class EntityBehaviour : MonoBehaviour
         return abilitySequence;
     }
     
+    public void Shake()
+    {
+        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.5f, 0, .5f), 10, 90, false, true);
+    }
 }
 
