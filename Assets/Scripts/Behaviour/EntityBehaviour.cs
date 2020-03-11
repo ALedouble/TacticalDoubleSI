@@ -73,7 +73,19 @@ public class EntityBehaviour : MonoBehaviour
         InitAnimations();
     }
 
+    private void Start()
+    {
+        SelectionManager.Instance.OnHoveredEntityChanged += Squish;
+    }
 
+    Tween squishTween;
+    void Squish(EntityBehaviour entity)
+    {
+        if (entity != this) return;
+
+        squishTween?.Kill(true);
+        squishTween = transform.DOPunchScale(Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(.4f,-.4f,0), .2f, 15, 1f);
+    }
 
     void InitAnimations()
     {
