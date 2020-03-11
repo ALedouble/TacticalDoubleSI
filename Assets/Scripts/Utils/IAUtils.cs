@@ -693,14 +693,17 @@ public static class IAUtils
 
         for (int i = 0; i < path.Count; i++)
         {
-            cost += ignoreWeightMove ? fixedWeight :(int)path[i].tileType;
+            cost += ignoreWeightMove ? fixedWeight : (int)path[i].tileType;
             if (cost > range)
+            {
+                cost -= ignoreWeightMove ? fixedWeight : (int)path[i].tileType;
                 break;
+            }
             lenght++;
         }
 
         shortest.path = path.Take(lenght).ToList();
-        shortest.cost = range;
+        shortest.cost = cost;
         return shortest;
     }
     
