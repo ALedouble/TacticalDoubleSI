@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class FXManager : MonoBehaviour
 {
@@ -184,5 +185,17 @@ public class FXManager : MonoBehaviour
             ps.Clear(true);
             ps.Play(true);
         }
+    }
+
+    public static GameObject SpawnFX(GameObject go, Vector2Int position, Vector2 direction)
+    {
+        GameObject fx = PoolManager.InstantiatePooled(go, new Vector3(position.x, 0.01f, position.y), FXManager.Instance.transform);
+        Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            PoolManager.Recycle(fx);
+        });
+        seq.SetDelay(10);
+        return fx;
     }
 }

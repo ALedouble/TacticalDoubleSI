@@ -19,7 +19,7 @@ MonoBehaviour:
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 0}
-  vfxCast: {fileID: 0}
+  vfxCast: {fileID: 1971691301407850121, guid: f102c9ba0e4b6e74683cc54e165d7aff, type: 3}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
   Channeling: 0
@@ -36,7 +36,4 @@ MonoBehaviour:
   effectArea:
     size: 5
     area:
-    - {x: 1, y: 1}
-    - {x: 2, y: 1}
-    - {x: 3, y: 1}
     - {x: 2, y: 2}

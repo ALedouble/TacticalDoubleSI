@@ -30,6 +30,7 @@ public class Healer : Brain
     static bool ability2Use;
 
     static bool haveEndTurn;
+    static float saveOfLife = -1f;
     static bool isFarAway;
 
     public int lifeLoseForPrio = 6;
@@ -45,6 +46,8 @@ public class Healer : Brain
 
         Init(entityBehaviour);
         iaEntityFunction();
+
+        saveOfLife = healer.CurrentHealth;
     }
 
     private void Init(EntityBehaviour entityBehaviour)
@@ -72,6 +75,11 @@ public class Healer : Brain
 
         haveEndTurn = false;
         isFarAway = false;
+
+        if (saveOfLife == -1)
+        {
+            saveOfLife = healer.data.maxHealth;
+        }
     }
 
     /*
@@ -111,7 +119,7 @@ public class Healer : Brain
      */
     private bool IsInDanger()
     {
-        if (Solo() || IAUtils.HaveXEntityAround(healer, Alignement.Player, healer.currentTile) || healer.CurrentHealth < healer.GetMaxHealth())
+        if (Solo() || IAUtils.HaveXEntityAround(healer, Alignement.Player, healer.currentTile) || healer.CurrentHealth < saveOfLife)
         {
             RunAtMaxDistanceOfAll();
             return true;

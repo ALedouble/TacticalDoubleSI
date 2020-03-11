@@ -1139,6 +1139,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentials
       objectReference: {fileID: 0}
+    - target: {fileID: 6894895934116413580, guid: 341f12258f9b0a442920615dfb072136,
+        type: 3}
+      propertyPath: map
+      value: 
+      objectReference: {fileID: 11400000, guid: f56eb38b0dfb37c438ea3f5f2f0c87b9,
+        type: 2}
     - target: {fileID: 7742460470451206448, guid: 341f12258f9b0a442920615dfb072136,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1167,12 +1173,17 @@ PrefabInstance:
     - target: {fileID: 9153181466470166775, guid: 341f12258f9b0a442920615dfb072136,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 9153181466470166775, guid: 341f12258f9b0a442920615dfb072136,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153181466470166775, guid: 341f12258f9b0a442920615dfb072136,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 341f12258f9b0a442920615dfb072136, type: 3}
@@ -1283,8 +1294,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1668740774}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.4492188, y: 0.99609375, z: 2.6748047}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 4.33, y: 0.99609375, z: 4.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 229837472}
@@ -1302,7 +1313,7 @@ Transform:
   - {fileID: 298821262}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &1696026412 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6951448242250497531, guid: 7571475722aa85840946833967ed23e1,
