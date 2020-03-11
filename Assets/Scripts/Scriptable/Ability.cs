@@ -26,8 +26,7 @@ public class Ability : ScriptableObject
     [Tooltip("Le multiplicateur à chaque LevelUp")]
     public float multiplicator;
 
-    [Tooltip("L'expérience à chaque fois qu'on utilise l'effet")]
-    public float experience;
+
 
     [Tooltip("Le sprite de l'UI'")]
     public Sprite displaySprite;
@@ -55,57 +54,50 @@ public class Ability : ScriptableObject
     [Tooltip("Zone d'effet de la capacité, à définir par sélection des tiles (gris foncé = notre position)")]
     public TileArea effectArea;
 
+    [HideInInspector]
+    Vector3 posBeforeAnim;
 
-    public Tween GetStartTween(Transform transform, Vector2Int castableTiles)
+
+    public void MovementAnimations(EntityBehaviour entity, TileData targetTile)
     {
+        posBeforeAnim = new Vector3(entity.GetPosition().x, 0, entity.GetPosition().y);
 
         switch (animationType)
         {
             case AnimationType.Jump:
-                Ease jumpStartEase = Ease.InExpo;
-                return transform.DOMove(new Vector3(transform.position.x, 0f, transform.position.z), 0.25f);
+                entity.transform.position = new Vector3(targetTile.position.x, 0, targetTile.position.y);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(transform.position.x + (castableTiles.x * 0.1f), 0, transform.position.z), .25f);
+                entity.transform.position = new Vector3(targetTile.position.x, 0, targetTile.position.y);
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Grab:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Push:
-                return transform.DOMove(new Vector3(transform.position.x + 0.5f, 0, transform.position.z), .25f);
+                break;
             default:
                 break;
         }
-
-        return null;
     }
 
-    public Tween GetEndTween(Transform transform)
+    public void ReturnPositions(EntityBehaviour entity, TileData targetTile)
     {
         switch (animationType)
         {
             case AnimationType.Jump:
-                Ease jumpEndEase = Ease.OutExpo;
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Thrust:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                entity.transform.position = posBeforeAnim;
                 break;
             case AnimationType.Movement:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Grab:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
                 break;
             case AnimationType.Push:
-                return transform.DOMove(new Vector3(transform.position.x, 0, transform.position.z), .25f);
+                break;
             default:
                 break;
         }
-
-        return null;
     }
 }

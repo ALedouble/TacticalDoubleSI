@@ -27,6 +27,8 @@ public class Entity : ScriptableObject
     public EntityTag entityTag;
     public float power = 1;
 
+    public float xpPoint = 1;
+
     [Space]
 
     public int totemValue = -1;

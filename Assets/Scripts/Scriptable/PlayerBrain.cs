@@ -100,6 +100,8 @@ public class PlayerBrain : Brain
     {
         if (index > entityBehaviour.data.abilities.Count - 1) return;
 
+        if (entityBehaviour.CurrentActionPoints < entityBehaviour.data.abilities[index].cost) return;
+
         selectedAbilityIndex = index;
 
         SelectionManager.Instance.OnClick -= OnMovement;

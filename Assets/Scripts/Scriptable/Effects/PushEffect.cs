@@ -8,6 +8,11 @@ public class PushEffect : AbilityEffect
 {
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
+        if (entity.GetEntityTag() == EntityTag.Tank)
+        {
+            entity.data.xpPoint++;
+        }
+
         List<EntityBehaviour> entities = new List<EntityBehaviour>();
         List<Vector2Int> effectTiles = ability.effectArea.GetWorldSpaceRotated(entity.GetPosition(), castTile.position);
         for (int i = 0; i < effectTiles.Count; i++)
