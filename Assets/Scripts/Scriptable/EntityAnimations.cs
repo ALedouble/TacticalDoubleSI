@@ -14,6 +14,10 @@ public class EntityAnimations : ScriptableObject
     public EntityAnimation hitAnimation;
     [SerializeField]
     public EntityAnimation deathAnimation;
+    [SerializeField]
+    public EntityAnimation channelingStartAnimation;
+    [SerializeField]
+    public EntityAnimation channelingIdleAnimation;
 
     [SerializeField]
     private List<EntityAnimation> abilityAnimations;

@@ -16,8 +16,12 @@ MonoBehaviour:
   moveAnimation: {fileID: 11400000, guid: 298f0a271f0f4b449a50e5ff60ac9fc1, type: 2}
   hitAnimation: {fileID: 11400000, guid: 1a5d903903ab0aa4ead1c6d6ca51d3f2, type: 2}
   deathAnimation: {fileID: 11400000, guid: f1194e4ec224a5544a88adc98fa36938, type: 2}
+  channelingStartAnimation: {fileID: 11400000, guid: f2c70c500751a244d841f48567c184ac,
+    type: 2}
+  channelingIdleAnimation: {fileID: 11400000, guid: 6c2af01b4e3b88e4b8b1dde48272ca84,
+    type: 2}
   abilityAnimations:
   - {fileID: 11400000, guid: b568197d1b631d644ac24ce9aa45c23b, type: 2}
   - {fileID: 11400000, guid: f260f08f05155eb458e4457ea016c7fb, type: 2}
   - {fileID: 11400000, guid: 1084878ce1a8db843953ba39e92a88d2, type: 2}
-  - {fileID: 11400000, guid: f2c70c500751a244d841f48567c184ac, type: 2}
+  - {fileID: 11400000, guid: 3a6c0f711513df847b4f1f1968f7b89a, type: 2}

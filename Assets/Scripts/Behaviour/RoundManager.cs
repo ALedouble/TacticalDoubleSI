@@ -39,6 +39,21 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
         {
             PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingRoundsLeft--;
+
+
+            if (PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingRoundsLeft == 0)
+            {
+                PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
+                    PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
+                    PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
+            }
+
+            PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
+
+            if(PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft == 0)
+            {
+
+            }
         }
 
         for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
@@ -49,7 +64,7 @@ public class RoundManager : MonoBehaviour
             
         }
 
-        SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
 
@@ -59,7 +74,7 @@ public class RoundManager : MonoBehaviour
     public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
-        if (entity.IsChannelingBurst) return;
+        if (entity.IsChannelingBurst || entity.stasis) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fedc2706863fca54c9b17f09584b7aa0, type: 3}
-  m_Name: new Pool
+  m_Name: TankBash
   m_EditorClassIdentifier: 
-  prefab: {fileID: 9220724682693865938, guid: aea681653ab0c8048a4cda8f3a854ee1, type: 3}
-  size: 50
-  renaming: 1
+  prefab: {fileID: 8329912737801096584, guid: 45d861d47abc42148be7a3972caaafe5, type: 3}
+  size: 10
+  renaming: 0
   inactiveObjects: []
   activeObjects: []
