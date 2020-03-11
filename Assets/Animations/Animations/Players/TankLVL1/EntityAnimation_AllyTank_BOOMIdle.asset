@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyTank_BOOMIdle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 00cd3fbf90cca7d48a51cc180ebff783, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: dc0a7f8ef86f65d4394fef2d13d86670, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 5d5c7a7e2ec0b0c4f9fd0096de970fc7, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 7cdf4de174a4d5747ba8987f02ffcfaa, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 60e66ee6137853f4ea777bc00610723b, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 8ae739b63333dac4eb5da742807b85dd, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 51fc8faa1bc60494cb63c7965bb63ed2, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 5d39f0af0e8ef7f448336d05fd05c856, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: b8b55e03588ae5e4bbb4cdb389254ff4, type: 3}
+    length: 0.08
+  - texture: {fileID: 2800000, guid: 526636ace6db02244a408c66587d079b, type: 3}
+    length: 0.08
+  loopMode: 1

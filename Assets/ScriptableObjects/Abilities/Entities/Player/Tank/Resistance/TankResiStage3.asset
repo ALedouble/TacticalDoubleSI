@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: TankResiStage3
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: 
   description: 
   cost: 6
   multiplicator: 1
   displaySprite: {fileID: 0}
-  vfxCast: {fileID: 0}
+  vfxCast: {fileID: 6439881731162528523, guid: 6ff12f42296e62e4ca356baff79cab5f, type: 3}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: 1eb1993e66a6fc047ad3694fd97b90f7, type: 2}
