@@ -81,7 +81,7 @@ public class Healer : Brain
 
         if (IsInDanger()) return;
 
-        if (Heal()) { ability1Use = true; return; }
+        if (Heal()) { Debug.Log("pass"); ability1Use = true; return; }
 
         if (Attack()) { ability2Use = true; return; }
 
@@ -133,7 +133,7 @@ public class Healer : Brain
 
         ReachableTile pathToHeal = null;
         reachableTiles = IAUtils.FindAllReachablePlace(healer.GetPosition(), healer.CurrentActionPoints - ability1.cost, true);
- 
+
         if (!IAUtils.MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(healer, enemyTank, reachableTiles, iaEntityFunction, ability1, ref pathToHeal,
                                                                         healerAbilityCall, conditionFunction, null, true))
         {
@@ -152,6 +152,11 @@ public class Healer : Brain
                             {
                                 return false;
                             }
+                        }
+
+                        else
+                        {
+                            return false;
                         }
                     }
                 }

@@ -115,9 +115,8 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence MoveTo(ReachableTile reachableTile)
     {
         currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
-        Debug.Log(CurrentActionPoints);
-        CurrentActionPoints -= reachableTile.GetCost();
-        Debug.Log(CurrentActionPoints);
+        CurrentActionPoints -= reachableTile.cost;
+        //CurrentActionPoints -= reachableTile.GetCost();
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;

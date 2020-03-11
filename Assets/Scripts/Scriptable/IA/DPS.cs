@@ -34,7 +34,7 @@ public class DPS : Brain
         iaEntityFunction = IA_DPS;
         dpsAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
-        Debug.LogError("New DPS");
+        Debug.Log("New DPS");
 
         Init(entityBehaviour);
         iaEntityFunction();
