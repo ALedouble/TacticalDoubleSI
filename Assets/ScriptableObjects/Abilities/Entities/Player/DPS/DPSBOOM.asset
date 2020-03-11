@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: DPSBOOM
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Blast Out
   description: 
   cost: 0
   multiplicator: 2
-  experience: 0
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  Channeling: 1
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}

@@ -172,6 +172,7 @@ public class PlayerBrain : Brain
             
             entityBehaviour.channelingAbility = entityBehaviour.GetAbilities(selectedAbilityIndex);
             SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            animBlastOut(entityBehaviour, entityBehaviour.channelingAbility);
             return;
         }
          Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
@@ -199,5 +200,28 @@ public class PlayerBrain : Brain
         effectTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
 
         MapManager.SetEffectTilesPreview(effectTiles);
+    }
+
+    Sequence animBlastOut(EntityBehaviour entity, Ability ability)
+    {
+        Sequence blastOutSequence = DOTween.Sequence();
+
+        EntityAnimation anim = entity.data.animations.channelingStartAnimation;
+        blastOutSequence.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(anim);
+        });
+
+        blastOutSequence.AppendInterval(3f);
+
+       
+
+        blastOutSequence.AppendCallback(() =>
+        {
+            anim = entity.data.animations.channelingIdleAnimation;
+            entity.animator.PlayAnimation(anim);
+        });
+
+            return blastOutSequence;
     }
 }

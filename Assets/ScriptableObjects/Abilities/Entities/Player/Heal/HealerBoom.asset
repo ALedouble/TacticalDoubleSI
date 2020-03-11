@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HealerBoom
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Blast Out
   description: 
   cost: 0
@@ -21,10 +22,12 @@ MonoBehaviour:
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  Channeling: 1
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  - {fileID: 11400000, guid: e5ec334204ae7b04890e2360f5962227, type: 2}
   castArea:
     size: 3
     area:
