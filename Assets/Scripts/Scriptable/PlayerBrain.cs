@@ -16,15 +16,40 @@ public class PlayerBrain : Brain
 
         this.entityBehaviour = entityBehaviour;
 
+        SelectionManager.Instance.OnCancel += CancelEverything;
+        SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
+        HUDManager.Instance.OnEndTurnPressed += CancelEverything;
+
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick += OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
         HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
 
-        MapManager.Instance.castableTiles.Clear();
+        MapManager.SetCastableTilesPreview(null);
+        MapManager.SetEffectTilesPreview(null);
 
         reachableTiles = IAUtils.FindAllReachablePlace(entityBehaviour.GetPosition(), entityBehaviour.CurrentActionPoints);
         reachableTiles.RemoveAll(x => x.GetCoordPosition() == entityBehaviour.GetPosition());
         // TEMPORARY -> will replace with real fx 
-        MapManager.Instance.reachableTiles = reachableTiles;
+        MapManager.SetReachableTilesPreview(reachableTiles);
+    }
+
+    void CanSelectAnotherPlayer()
+    {
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+    }
+
+    void CancelEverything()
+    {
+        SelectionManager.Instance.OnClick -= OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
+        SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
+
+        MapManager.SetCastableTilesPreview(null);
+        MapManager.SetEffectTilesPreview(null);
+        MapManager.SetReachableTilesPreview(null);
+
+        SelectionManager.Instance.OnCancel -= CanSelectAnotherPlayer;
     }
 
     void OnMovement(MapRaycastHit hit)
@@ -44,6 +69,7 @@ public class PlayerBrain : Brain
         if (!canReachTile) return;
 
         SelectionManager.Instance.OnClick -= OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
 
         ReachableTile reachableTile = IAUtils.FindShortestPath(false, entityBehaviour.GetPosition(), hit.position, true, entityBehaviour.CurrentActionPoints);
 
@@ -54,16 +80,17 @@ public class PlayerBrain : Brain
         }
 
         // TEMPORARY
-        MapManager.Instance.reachableTiles.Clear();
-        MapManager.Instance.castableTiles.Clear();
+        MapManager.SetReachableTilesPreview(null);
+        MapManager.SetCastableTilesPreview(null);
         MapManager.SetEffectTilesPreview(null);
+        FXManager.Instance.pathRenderer.positionCount = 0;
 
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
         moveSequence.OnComplete(() =>
         {
-            SelectionManager.Instance.OnClick += OnMovement;
-            HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
+            OnTurnStart(entityBehaviour);
+            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
         });
     }
 
@@ -76,10 +103,12 @@ public class PlayerBrain : Brain
         selectedAbilityIndex = index;
 
         SelectionManager.Instance.OnClick -= OnMovement;
-        MapManager.Instance.reachableTiles.Clear();
+        MapManager.SetReachableTilesPreview(null);
 
+        SelectionManager.Instance.OnClick -= OnUseAbility;
         SelectionManager.Instance.OnClick += OnUseAbility;
         SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
 
@@ -87,8 +116,8 @@ public class PlayerBrain : Brain
         {
             castableTiles.RemoveAll(x => !MapManager.GetTile(x).IsWalkable);
         }
-        
- 
+        castableTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
+
         MapManager.SetCastableTilesPreview(castableTiles);
     }
 
@@ -101,15 +130,18 @@ public class PlayerBrain : Brain
         MapManager.SetCastableTilesPreview(null);
         MapManager.SetEffectTilesPreview(null);
 
+        SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
         SelectionManager.Instance.OnClick -= OnUseAbility;
-        SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
+        SelectionManager.Instance.OnClick -= OnMovement;
+        SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
 
         Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
 
         attackSequence.OnComplete(() =>
         {
-            SelectionManager.Instance.OnClick += OnMovement;
-            HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
+            OnTurnStart(entityBehaviour);
+            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
         });
 
         List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
@@ -125,6 +157,9 @@ public class PlayerBrain : Brain
             return;
         }
 
-        MapManager.SetEffectTilesPreview(entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position));
+        List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
+        effectTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
+
+        MapManager.SetEffectTilesPreview(effectTiles);
     }
 }

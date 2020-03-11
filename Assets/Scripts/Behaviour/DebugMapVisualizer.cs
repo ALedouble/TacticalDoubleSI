@@ -30,10 +30,6 @@ public class DebugMapVisualizer : MonoBehaviour
 
                     if (MapManager.GetTile(new Vector2Int(x, y)).canPlacePlayerEntity) DebugUtils.DrawTile(new Vector2Int(x, y), playerPlacement, .5f);
 
-                    foreach (var reachableTile in MapManager.Instance.reachableTiles)
-                    {
-                        if (reachableTile.GetCoordPosition() == new Vector2Int(x,y)) DebugUtils.DrawTile(new Vector2Int(x, y), Color.green, .8f);
-                    }
 
                 }
             }

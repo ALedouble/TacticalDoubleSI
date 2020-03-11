@@ -12,14 +12,14 @@ public class MapManager : MonoBehaviour
 
     private List<EntityBehaviour> listOfEntityOnTheMap = new List<EntityBehaviour>();
 
-    // Static fields should be in CamelCase
     public static MapManager Instance;
 
-    // TEMPORARY
     public List<ReachableTile> reachableTiles = new List<ReachableTile>();
-    public static List<ReachableTile> SetReachableTilesPreview()
+    public Action<List<ReachableTile>> OnReachableTilesChanged;
+    public static void SetReachableTilesPreview(List<ReachableTile> tiles)
     {
-        return Instance.reachableTiles;
+        Instance.reachableTiles = tiles;
+        Instance.OnReachableTilesChanged?.Invoke(Instance.reachableTiles);
     }
 
     public List<Vector2Int> castableTiles = new List<Vector2Int>();
@@ -108,6 +108,11 @@ public class MapManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public static Vector2 GetCenter()
+    {
+        return Instance.map.center;
     }
 
     public static TileData GetTile(Vector2Int position)

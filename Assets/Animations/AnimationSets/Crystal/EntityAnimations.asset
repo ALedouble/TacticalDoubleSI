@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4d67012f4c7554d87aceafe15d6b6f, type: 3}
   m_Name: EntityAnimations
   m_EditorClassIdentifier: 
-  idleAnimation: {fileID: 0}
+  idleAnimation: {fileID: 11400000, guid: b7134d47cf15f4e4e9c87e555b54d7f4, type: 2}
   moveAnimation: {fileID: 0}
   hitAnimation: {fileID: 0}
   deathAnimation: {fileID: 0}
