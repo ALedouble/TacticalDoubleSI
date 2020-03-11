@@ -18,16 +18,24 @@ public class GrabEffect : AbilityEffect
 
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
-        if(entity.GetEntityTag() == EntityTag.Tank)
-        {
-            entity.data.xpPoint++;
-        }
 
+        bool entitiesFounded = false;
         List<EntityBehaviour> entities = new List<EntityBehaviour>();
         List<Vector2Int> effectTiles = ability.effectArea.GetWorldSpaceRotated(entity.GetPosition(), castTile.position);
-        for(int i = 0; i < effectTiles.Count; i++)
+        for (int i = 0; i < effectTiles.Count; i++)
         {
-             entities.AddRange(MapManager.GetTile(effectTiles[i]).entities);
+            entities.AddRange(MapManager.GetTile(effectTiles[i]).entities);
+
+            if (entities.Count > 0)
+            {
+                entitiesFounded = true;
+            }
+        }
+
+        if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Ennemies)
+        {
+            PlayerTeamManager.Instance.teamXp += 1;
+            entity.earnedXPThisAbility = true;
         }
 
         entities.Sort((x, y) => Vector2Int.Distance(entity.GetPosition(), x.GetPosition()).
@@ -48,7 +56,11 @@ public class GrabEffect : AbilityEffect
                 finalTile += grabDirection;
             }
 
-            finalTile -= grabDirection;
+            if(MapManager.GetTile(finalTile).tileType != TileType.Solid)
+            {
+                finalTile -= grabDirection;
+            }
+            
 
             Grab(entities[i], finalTile);
         }

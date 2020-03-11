@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public enum AnimationType{ Jump, Thrust, Movement, Grab, Push};
 
+public enum OnEntityAlignementXp { Allies, Ennemies };
+
 
 [CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability", order = 1)]
 /// <summary>
@@ -13,6 +15,8 @@ public enum AnimationType{ Jump, Thrust, Movement, Grab, Push};
 public class Ability : ScriptableObject
 {
     public AnimationType animationType;
+
+    public OnEntityAlignementXp alignementXP;
 
     [Tooltip("Le nom de la capacité")]
     public string displayName;
