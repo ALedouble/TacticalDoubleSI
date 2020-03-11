@@ -233,6 +233,16 @@ public class EntityBehaviour : MonoBehaviour
 
         return abilitySequence;
     }
+
+    public void CheckCurrentHealthAndDestroy()
+    {
+        if (currentHealth < 0)
+        {
+            MapManager.GetListOfEntity().Remove(this);
+            MapManager.DeleteEntity(this);
+            Destroy(gameObject);
+        }
+    }
     
 }
 
