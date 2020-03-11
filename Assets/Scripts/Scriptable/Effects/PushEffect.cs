@@ -43,7 +43,7 @@ public class PushEffect : AbilityEffect
             Vector2Int finalTile = entities[i].GetPosition() - grabDirection;
             if (MapManager.IsInsideMap(finalTile))
             {
-                if (MapManager.GetTile(finalTile).tileType != TileType.Solid)
+                if (MapManager.GetTile(finalTile).IsWalkable)
                 {
                     Push(entities[i], finalTile);
                 }
