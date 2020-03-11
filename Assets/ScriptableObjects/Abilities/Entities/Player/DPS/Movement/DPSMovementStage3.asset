@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DPSMovementStage3
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 1
   displayName: Charge
   description: A powerfull Dash that hurt and repulse ennemies
   cost: 4
@@ -21,6 +22,7 @@ MonoBehaviour:
   vfxCast: {fileID: 0}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: 7d2440bf137371e49b16f4501da1c9ea, type: 2}

@@ -169,6 +169,7 @@ public class PlayerBrain : Brain
         if (entityBehaviour.GetAbilities(selectedAbilityIndex).Channeling)
         {
             entityBehaviour.channelingRoundsLeft = 1;
+            
             entityBehaviour.channelingAbility = entityBehaviour.GetAbilities(selectedAbilityIndex);
             SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
             return;

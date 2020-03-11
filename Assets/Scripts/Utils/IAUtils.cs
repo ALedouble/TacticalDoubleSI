@@ -343,10 +343,11 @@ public static class IAUtils
     {
 
         if (moveTarget == null) return false;
-        if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
 
         if (condition)
         {
+            if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
+
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
@@ -479,7 +480,7 @@ public static class IAUtils
                                                                             SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
                                                                             Ability ability = null, bool ignoreWeightMove = false)
     {
-        ReachableTile pathToUseAbility = null;
+        List<ReachableTile> pathToUseAbility = null;
 
         GetReachableTileFromCastOrPath pathTo = GetReachableTileFromCastOrPathDelegate;
 
@@ -487,7 +488,7 @@ public static class IAUtils
                                                                     ref pathToUseAbility, null, functionConditionEntity, functionConditionReachable, true, ignoreWeightMove);
     }
     public static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, IAEntity iaEntityFunction,
-                                                                            Ability ability, ref ReachableTile pathToUseAbility, LambdaAbilityCall functionToCallAfterTheMove,
+                                                                            Ability ability, ref List<ReachableTile> pathToUseAbility, LambdaAbilityCall functionToCallAfterTheMove,
                                                                             SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
                                                                             bool ignoreWeightMove = false)
     {
@@ -770,13 +771,21 @@ public static class IAUtils
     * Sinon, return false
     */
     private static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(GetReachableTileFromCastOrPath pathTo, EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles,
-                                                                            IAEntity iaEntityFunction, bool useAbility, Ability ability, ref ReachableTile pathToUseAbility,
+                                                                            IAEntity iaEntityFunction, bool useAbility, Ability ability, ref List<ReachableTile> pathToUseAbility,
                                                                             LambdaAbilityCall functionToCallAfterTheMove, SpecificConditionEntity functionConditionEntity,
                                                                             SpecificConditionReachable functionConditionReachable, bool stopJustBeforeTarget = false, bool ignoreWeightMove = false)
     {
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
 
+
+        Debug.Log(allEntitiesReachableBestTileForCast);
+
+
         if (allEntitiesReachableBestTileForCast == null) return false;
+
+
+
+
 
         for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
         {
@@ -797,7 +806,10 @@ public static class IAUtils
 
             if (useAbility && pathToUseAbility == null)
             {
-                pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
+                if (allEntitiesReachableBestTileForCast[i].Item2.CurrentHealth < allEntitiesReachableBestTileForCast[i].Item2.data.maxHealth)
+                {
+                    pathToUseAbility.Add(allEntitiesReachableBestTileForCast[i].Item1);
+                }
             }
         }
 
