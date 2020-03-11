@@ -9,9 +9,12 @@ public class ArmorEffect : AbilityEffect
     {
         ApplyEffect(entity, ability, castTile, (x) =>
         {
-            int armor = UpgradeArmor(entity, ability);
-            x.CurrentArmor += armor;
-            HUDManager.DisplayValue("+" + armor.ToString(), Color.yellow, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
+            if (x.data.alignement == entity.data.alignement)
+            {
+                int armor = UpgradeArmor(entity, ability);
+                x.CurrentArmor += armor;
+                HUDManager.DisplayValue("+" + armor.ToString(), Color.yellow, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
+            }
         });
     }
 

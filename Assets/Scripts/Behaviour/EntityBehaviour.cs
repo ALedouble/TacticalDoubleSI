@@ -150,6 +150,8 @@ public class EntityBehaviour : MonoBehaviour
         return moveSequence;
     }
 
+
+    public bool earnedXPThisAbility;
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         CurrentActionPoints -= ability.cost;
@@ -174,7 +176,7 @@ public class EntityBehaviour : MonoBehaviour
 
         abilitySequence.AppendCallback(() =>
         {
-            
+            earnedXPThisAbility = false;
 
             for (int i = 0; i < ability.abilityEffect.Count; i++)
             {
@@ -205,28 +207,6 @@ public class EntityBehaviour : MonoBehaviour
 
         return abilitySequence;
     }
-
-    public void OnDrawGizmos()
-    {
-
-        if (tilesForCast != null)
-        {
-            for (int i = 0; i < tilesForCast.Count; i++)
-            {
-                DebugUtils.DrawTile(tilesForCast[i] + GetPosition(), Color.yellow, .5f);
-            }
-        }
-
-        if (tilesForEffect != null)
-        {
-            for (int i = 0; i < tilesForEffect.Count; i++)
-            {
-                TileData tile = MapManager.GetTile(castCase + GetPosition());
-                effectPosition = tile.position + tilesForEffect[i];
-                DebugUtils.DrawTile(effectPosition, Color.blue, .5f);
-            }
-        }
-
-    }
+    
 }
 

@@ -10,6 +10,7 @@ public class PlayerTeamManager : MonoBehaviour
     public List<EntityProgression> playerProgression = new List<EntityProgression>();
     public List<Entity> playerEntities = new List<Entity>();
     private int placedEntities = 0;
+    [HideInInspector] public int teamXp = 0;
 
     public List<EntityBehaviour> playerEntitybehaviours = new List<EntityBehaviour>();
 
