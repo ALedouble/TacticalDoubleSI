@@ -1731,6 +1731,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentials
       objectReference: {fileID: 0}
+    - target: {fileID: 6894895934116413580, guid: 341f12258f9b0a442920615dfb072136,
+        type: 3}
+      propertyPath: map
+      value: 
+      objectReference: {fileID: 11400000, guid: bd3f90a6d5675124097b0f884c3e5d92,
+        type: 2}
     - target: {fileID: 7742460470451206448, guid: 341f12258f9b0a442920615dfb072136,
         type: 3}
       propertyPath: m_textInfo.characterCount
