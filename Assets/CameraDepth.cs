@@ -6,7 +6,6 @@ public class CameraDepth : MonoBehaviour
 {
     private void OnEnable()
     {
-        Debug.Log("Suce");
         Camera.main.depthTextureMode = DepthTextureMode.Depth;
     }
 }
