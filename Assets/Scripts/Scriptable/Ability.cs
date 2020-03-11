@@ -58,6 +58,7 @@ public class Ability : ScriptableObject
 
     public Tween GetStartTween(Transform transform, Vector2Int castableTiles)
     {
+
         switch (animationType)
         {
             case AnimationType.Jump:

@@ -20,6 +20,7 @@ MonoBehaviour:
   armor: 0
   abilities:
   - {fileID: 11400000, guid: ba967516f76355f42a34c61d6881c8ea, type: 2}
+  abilityLevels: 
   brain: {fileID: 11400000, guid: ccf1b3bb34189b7428dd9096da9bc123, type: 2}
   alignement: 0
   entityTag: 3

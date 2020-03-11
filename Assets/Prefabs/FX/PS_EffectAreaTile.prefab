@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5116058720342873206}
   - component: {fileID: 5116058720342873207}
   m_Layer: 0
-  m_Name: PS_Zone
+  m_Name: PS_EffectAreaTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -30,6 +30,7 @@ public class Map : ScriptableObject
     public List<EntityRoundStartState> entityStartPositions = new List<EntityRoundStartState>();
 
     public int size;
+    public Vector2 center;
 
     public void Init()
     {

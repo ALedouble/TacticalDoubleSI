@@ -73,6 +73,8 @@ public class EntityBehaviour : MonoBehaviour
         InitAnimations();
     }
 
+
+
     void InitAnimations()
     {
         if (data.animations == null) return;
@@ -96,6 +98,11 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (data.brain == null)
         {
+            if (data.entityTag == EntityTag.Totem)
+            {
+                RoundManager.Instance.EndTurn();
+                return;
+            }
             Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
             Debug.Break();
         }
@@ -108,27 +115,35 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence MoveTo(ReachableTile reachableTile)
     {
         currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
-        CurrentActionPoints -= reachableTile.cost;
+        Debug.Log(CurrentActionPoints);
+        CurrentActionPoints -= reachableTile.GetCost();
+        Debug.Log(CurrentActionPoints);
 
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
 
-        // TODO : put in scriptableObject
-        float tileMovementSpeed = .25f;
-
         for (int i = 0; i < reachableTile.path.Count; i++)
         {
-            moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), tileMovementSpeed)
-                .SetEase(movementEase));
+            moveSequence.AppendCallback(() =>
+            {
+                if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.moveAnimation);
+            });
+            moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), data.alignement == Alignement.Player ? data.animations.moveAnimation.Length-.1f : .3f)
+                .SetEase(movementEase)
+                .SetDelay(data.alignement == Alignement.Player? .1f : 0)
+                .OnComplete(()=>
+                {
+                    if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.idleAnimation);
+                }));
 
-            
+            /*
             if(GetAlignement() == Alignement.Player)
             {
                 // first half of the jump
-                moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(1, tileMovementSpeed * .5f).SetEase(Ease.OutQuad));
+                moveSequence.Insert(i * tileMovementSpeed, transform.DOMoveY(.8f, tileMovementSpeed * .5f).SetEase(Ease.OutSine));
                 // second half
-                moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InQuad));
-            }
+                moveSequence.Insert(i * tileMovementSpeed + tileMovementSpeed * .5f, transform.DOMoveY(0, tileMovementSpeed * .5f).SetEase(Ease.InSine));
+            }*/
             
         }
 
@@ -145,20 +160,42 @@ public class EntityBehaviour : MonoBehaviour
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
+        Debug.Log(name + " is using " + ability.name);
+
+        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
+        float duration = anim.Length;
+
+        abilitySequence.AppendCallback(() =>
+        {
+            animator.PlayAnimation(anim);
+        });
+        abilitySequence.AppendInterval(duration);
+        abilitySequence.AppendCallback(() =>
+        {
+            for (int i = 0; i < ability.abilityEffect.Count; i++)
+            {
+                ability.abilityEffect[i].Activate(this, ability, targetTile);
+            }
+            animator.PlayAnimation(data.animations.idleAnimation);
+        });
+
+        /*
         abilitySequence.Append(ability.GetStartTween(transform, targetTile.position)
         .SetEase(attackEase, 10)
         .OnComplete(() =>
         {
-            
             for(int i = 0; i < ability.abilityEffect.Count; i++)
             {
                 ability.abilityEffect[i].Activate(this, ability, targetTile);
             }
         }));
-
         abilitySequence.Append(ability.GetEndTween(transform)
-        .SetEase(returnAttackEase, 10));
-           
+        .SetEase(returnAttackEase, 10)
+        .OnComplete(()=>
+        {
+            animator.PlayAnimation(data.animations.idleAnimation);
+        }));
+           */
 
         return abilitySequence;
     }

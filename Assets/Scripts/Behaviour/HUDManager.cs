@@ -10,6 +10,8 @@ public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance;
 
+    [HideInInspector] public Canvas canvas;
+
     public TileDescriptions tileDescriptions;
 
     public Action<int> OnAbilityClicked;
@@ -24,6 +26,8 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
+        canvas = FindObjectOfType<Canvas>();
+
         enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
@@ -60,6 +64,7 @@ public class HUDManager : MonoBehaviour
         PlayerTeamManager.Instance.OnFinishPlacement += OnFinishPlacementConfirmed;
 
         RoundManager.Instance.OnPlayerTurn += ShowEndTurnButton;
+
     }
 
     CanvasGroup roundHUDGroup;
@@ -212,7 +217,6 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            Debug.Log((int)mapHit.tile.TileType - 1);
             //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
             tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType-1];
             tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType-1];
@@ -338,5 +342,26 @@ public class HUDManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public GameObject displayValueHUDPrefab;
+
+    public static void DisplayValue(string value, Color color, Vector3 position)
+    {
+        RectTransform rect = PoolManager.InstantiatePooled(HUDManager.Instance.displayValueHUDPrefab, Vector3.zero).GetComponent<RectTransform>();
+
+        rect.parent = Instance.transform;
+        rect.localScale = Vector3.one * 1;
+        rect.anchoredPosition = Instance.canvas.WorldToCanvas(position);
+
+        TextMeshProUGUI textMesh = rect.GetComponent<TextMeshProUGUI>();
+        textMesh.text = value;
+        textMesh.color = color;
+
+        rect.DOAnchorPosY(rect.anchoredPosition.y + 1, .5f).SetEase(Ease.OutBack, 100);
+        textMesh.DOFade(0, 1f).SetDelay(.5f).OnComplete(()=>
+        {
+            PoolManager.Recycle(rect.gameObject);
+        });
     }
 }

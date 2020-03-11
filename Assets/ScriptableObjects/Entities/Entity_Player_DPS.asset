@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c81287856b9dfa47bf2cfa8feeee7a6, type: 3}
   m_Name: Entity_Player_DPS
   m_EditorClassIdentifier: 
-  displayName: T
+  displayName: DPS
   portrait: {fileID: 21300000, guid: 6aa7d14f265ba4343ba6c87443bb3339, type: 3}
   animations: {fileID: 11400000, guid: f4e580c2003748e46840b75fd95b0162, type: 2}
   maxHealth: 20
   maxActionPoints: 15
+  armor: 0
   abilities:
   - {fileID: 11400000, guid: bce6c8f3ca38a4940b2ecd4848a7536a, type: 2}
+  abilityLevels: 
   brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
   alignement: 1
   entityTag: 1
-  power: 3
+  power: 1
   totemValue: -1

@@ -33,7 +33,10 @@ public class SelectionManager : MonoBehaviour
         }
         mapRaycastLastFrame = mapRaycastThisFrame;
 
-        EntityBehaviour entityHoveredThisFrame = EntityUnderCursor();
+        EntityBehaviour entityUnderCursor = mapRaycastThisFrame.tile == null ? null : 
+            mapRaycastThisFrame.tile.entities.Count <= 0 ? null : mapRaycastThisFrame.tile.entities[0];
+
+        EntityBehaviour entityHoveredThisFrame = entityUnderCursor;
         if (entityHoveredThisFrame != entityHoveredLastFrame)
         {
             OnHoveredEntityChanged?.Invoke(entityHoveredThisFrame);
@@ -44,7 +47,6 @@ public class SelectionManager : MonoBehaviour
         {
             OnClick?.Invoke(SelectionUtils.MapRaycast());
 
-            EntityBehaviour entityUnderCursor = EntityUnderCursor();
             if (entityUnderCursor != null)
             {
                 OnEntitySelect?.Invoke(entityUnderCursor);
@@ -54,25 +56,6 @@ public class SelectionManager : MonoBehaviour
         {
             OnCancel?.Invoke();
         }
-    }
-
-    EntityBehaviour EntityUnderCursor()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        Physics.Raycast(ray, out hit);
-
-        EntityBehaviour entity;
-
-        if (hit.collider == null) return null;
-
-        if (hit.collider.TryGetComponent<EntityBehaviour>(out entity))
-        {
-            return entity;
-        }
-
-        return null;
     }
 
     private void OnDrawGizmos()

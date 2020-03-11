@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ObstacleEffect
   m_EditorClassIdentifier: 
   duration: 0
+  spawnedEntity: {fileID: 11400000, guid: 9a56bb9a08d40bc4db4adbd332473d7a, type: 2}

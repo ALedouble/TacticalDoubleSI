@@ -7,7 +7,8 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         // berk berk les nombres magiques !
-        transform.position = new Vector3(Mathf.Floor(MapManager.GetSize() * .5f)-1, 0, Mathf.Floor(MapManager.GetSize() * .5f)+1);
+        transform.position = new Vector3(MapManager.GetCenter().x, 0, MapManager.GetCenter().y);
         transform.GetChild(0).localPosition = Vector3.forward * -30;
+        Camera.main.orthographicSize = MapManager.GetSize()/2;
     }
 }
