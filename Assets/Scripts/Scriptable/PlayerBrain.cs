@@ -18,6 +18,7 @@ public class PlayerBrain : Brain
         this.entityBehaviour = entityBehaviour;
 
         CancelEverything();
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
         SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         SelectionManager.Instance.OnCancel += CancelEverything;
@@ -95,10 +96,13 @@ public class PlayerBrain : Brain
 
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
+        HUDManager.Instance.HideEndTurnButton();
+
         moveSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
             CanSelectAnotherPlayer();
+            HUDManager.Instance.ShowEndTurnButton();
         });
     }
 
@@ -118,11 +122,6 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnUseAbility;
         SelectionManager.Instance.OnClick += OnUseAbility;
         SelectionManager.Instance.OnHoveredTileChanged += UpdateAbilityEffectArea;
-        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
-        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
-        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
-        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
-        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
         SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
@@ -177,10 +176,13 @@ public class PlayerBrain : Brain
         }
          Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
 
-        
+
+        HUDManager.Instance.HideEndTurnButton();
+
         attackSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
+            HUDManager.Instance.ShowEndTurnButton();
         });
 
         List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);

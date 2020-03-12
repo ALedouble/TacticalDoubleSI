@@ -67,8 +67,6 @@ public class RoundManager : MonoBehaviour
         SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
-
-        
     }
 
     public void StartPlayerTurn(EntityBehaviour entity)
@@ -77,6 +75,7 @@ public class RoundManager : MonoBehaviour
         if (entity.IsChannelingBurst || entity.stasis) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
+        Debug.Log("suce");
 
         entity.OnTurn();
     }
@@ -95,6 +94,7 @@ public class RoundManager : MonoBehaviour
         {
             phase = RoundPhase.AI;
 
+            SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
             SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
             HUDManager.Instance.OnEndTurnPressed -= EndTurn;

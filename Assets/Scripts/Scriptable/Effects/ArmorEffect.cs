@@ -13,6 +13,7 @@ public class ArmorEffect : AbilityEffect
             {
                 int armor = UpgradeArmor(entity, ability);
                 x.CurrentArmor += armor;
+                x.Stretch();
                 HUDManager.DisplayValue("+" + armor.ToString(), Color.yellow, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
         });

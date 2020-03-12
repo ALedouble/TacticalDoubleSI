@@ -38,6 +38,7 @@ public class HealEffect : AbilityEffect
             {
                 float heal = Mathf.Ceil(SetHeal(entity, ability));
                 x.CurrentHealth += heal;
+                x.Stretch();
                 HUDManager.DisplayValue("+" + heal.ToString(), Color.green, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
             }
         });
