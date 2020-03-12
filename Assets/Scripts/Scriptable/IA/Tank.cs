@@ -71,6 +71,8 @@ public class Tank : Brain
 
         if (Walk()) return;
 
+        if (LastActionPossible()) return;
+
         IAUtils.CheckEndTurn(tank, CanMakeAction(), true);
     }
 
@@ -148,6 +150,15 @@ public class Tank : Brain
     private bool Walk()
     {
         haveEndTurn = IAUtils.WalkOnShortest(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
+    }
+
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
         return haveEndTurn;
     }
 }

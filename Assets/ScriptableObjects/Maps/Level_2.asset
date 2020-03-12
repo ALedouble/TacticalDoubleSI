@@ -434,11 +434,14 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
     position: {x: 6, y: 6}
-  - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
-    heldCrystalValue: 2
-    position: {x: 4, y: 7}
   - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
     heldCrystalValue: -1
     position: {x: 4, y: 8}
+  - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
+    heldCrystalValue: -1
+    position: {x: 4, y: 7}
+  - entity: {fileID: 11400000, guid: d4a644c2c4d397e4381a236992987542, type: 2}
+    heldCrystalValue: -1
+    position: {x: 3, y: 5}
   size: 9
   center: {x: 4, y: 3}
