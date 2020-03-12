@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MinionBrain", menuName = "ScriptableObjects/IA_Brain/Minion_Brain", order = 999)]
@@ -70,15 +71,6 @@ public class Minion : Brain
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
-        Debug.LogWarning(playerHealerPathToAttack[0].GetCoordPosition());
-        Debug.LogWarning(playerHealerPathToAttack[0].castTile.GetCoordPosition());
-
-        Debug.LogWarning(playerDPSPathToAttack[0].GetCoordPosition());
-        Debug.LogWarning(playerDPSPathToAttack[0].castTile.GetCoordPosition());
-
-        Debug.LogWarning(playerTankPathToAttack[0].GetCoordPosition());
-        Debug.LogWarning(playerTankPathToAttack[0].castTile.GetCoordPosition());
-
 
         if (IAUtils.CheckEndTurn(minion, CanMakeAction())) return;
 
@@ -89,6 +81,8 @@ public class Minion : Brain
         if (Attack()) return;
 
         if (Walk()) return;
+
+        if (LastActionPossible()) return;
 
         IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
@@ -162,7 +156,6 @@ public class Minion : Brain
      */
     private bool Attack()
     {
-        Debug.LogError(playerHealerPathToAttack[0].castTile.position);
         return IAUtils.AttackWithPriority(minion, playerHealerPathToAttack, playerDPSPathToAttack, playerTankPathToAttack, iaEntityFunction, minionAbilityCall, minion.GetAbilities(0), conditionFunction);
     }
 
@@ -176,6 +169,15 @@ public class Minion : Brain
             haveEndTurn = IAUtils.WalkOnShortest(minion, playerHealer, playerDPS, playerTank, iaEntityFunction, conditionFunction);
         }
 
+        return haveEndTurn;
+    }
+
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(minion, playerHealer, playerDPS, playerTank, iaEntityFunction, conditionFunction);
         return haveEndTurn;
     }
 

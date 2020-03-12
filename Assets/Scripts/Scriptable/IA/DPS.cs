@@ -79,6 +79,8 @@ public class DPS : Brain
 
         if (WalkVersPrio()) return;
 
+        if (LastActionPossible()) return;
+
         IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
     }
 
@@ -215,6 +217,15 @@ public class DPS : Brain
         }
 
         return false;
+    }
+
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(dps, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
     }
 
     /*
