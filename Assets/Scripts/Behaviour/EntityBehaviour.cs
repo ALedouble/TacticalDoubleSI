@@ -262,7 +262,7 @@ public class EntityBehaviour : MonoBehaviour
 
     public void CheckCurrentHealthAndDestroy()
     {
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             MapManager.GetListOfEntity().Remove(this);
             MapManager.DeleteEntity(this);
