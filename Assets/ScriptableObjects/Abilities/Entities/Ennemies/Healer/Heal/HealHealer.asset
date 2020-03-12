@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: HealHealer
   m_EditorClassIdentifier: 
   animationType: 1
+  alignementXP: 0
   displayName: Heal
   description: A simple heal
   cost: 3
   multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 0
+  Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
+  abilitySFX: {fileID: 11400000, guid: cd58c4b5080e24e228f8a27da5fe7de1, type: 2}
   castArea:
     size: 7
     area:
