@@ -14,10 +14,9 @@ public class TemporaryObstacleBrain : Brain
 
         if (turnNumber ==  0)
         {
-            MapManager.GetListOfEntity().Remove(entityBehaviour);
             MapManager.DeleteEntity(entityBehaviour);
             Destroy(entityBehaviour.gameObject);
-            RoundManager.Instance.StartRound();
+            RoundManager.Instance.EndTurn();
             turnNumber = -1;
         } 
     }

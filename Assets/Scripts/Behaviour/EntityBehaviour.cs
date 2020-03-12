@@ -123,11 +123,10 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (data.brain == null)
         {
-            if (data.entityTag == EntityTag.Totem)
-            {
-                RoundManager.Instance.EndTurn();
-                return;
-            }
+
+            RoundManager.Instance.EndTurn();
+            return;
+
             Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
             Debug.Break();
         }

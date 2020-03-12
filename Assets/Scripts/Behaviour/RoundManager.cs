@@ -104,8 +104,6 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            currentEntityTurn++;
-
             // if all AIs have made their turn, launch another round
             if (currentEntityTurn == roundEntities.Count)
             {
@@ -115,10 +113,12 @@ public class RoundManager : MonoBehaviour
             }
             else
             {
+                currentEntityTurn++;
                 // if not, launch the next ai
                 roundEntities[currentEntityTurn].OnTurn();
 
             }
+
         }
     }
 
