@@ -165,7 +165,6 @@ public static class IAUtils
         if (playerHealer != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            if (playerHealerPathToAttack != null) Debug.Log(playerHealerPathToAttack.Count);
             playerHealerPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
@@ -313,8 +312,10 @@ public static class IAUtils
     /*
      * Recupere la ReachableTile par "ValidCastFromTile" si l'on utilise l'Ability "ability", ou "FindShortestPath" si l'on cherche par le plus court chemin
      */
-    public delegate ReachableTile GetReachableTileFromCastOrPath(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove);
-    public static ReachableTile GetReachableTileFromCastOrPathDelegate(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles, Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove)
+    public delegate ReachableTile GetReachableTileFromCastOrPath(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles,
+                                                                        Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove);
+    public static ReachableTile GetReachableTileFromCastOrPathDelegate(bool stopJustBeforeTarget, Ability ability, List<ReachableTile> reachableTiles,
+                                                                            Vector2Int startPosition, Vector2Int target, int range, bool ignoreWeightMove)
     {
         if (ability != null)
         {
@@ -356,7 +357,7 @@ public static class IAUtils
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
-                if (abilityTarget.GetPlayer().stasis) return false;
+                if (abilityTarget.GetPlayer() != null && abilityTarget.GetPlayer().stasis) return false;
 
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
@@ -679,8 +680,8 @@ public static class IAUtils
      * 
      * Si toutes les verifications sont passer, alors on regarde pour ajouter la Place
      */
-    private static bool IsMovementPossible(bool stopJustBeforeTarget, NavigationQueryType navigationType, ref List<ReachableTile> reachableTiles, ReachableTile precedentPlace, TileData lookingTileData, Vector2Int lookingPosition,
-                                     Vector2Int target, bool canWalkOnDamageTile, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
+    private static bool IsMovementPossible(bool stopJustBeforeTarget, NavigationQueryType navigationType, ref List<ReachableTile> reachableTiles, ReachableTile precedentPlace, TileData lookingTileData, 
+                                            Vector2Int lookingPosition, Vector2Int target, bool canWalkOnDamageTile, int range = -1, bool ignoreWalkable = false, bool ignoreWeightMove = false)
     {
         if (!canWalkOnDamageTile && lookingTileData.entities.Find((x) => x.GetEntityTag().Equals(EntityTag.Trap)) != null) return false;
 
@@ -869,15 +870,7 @@ public static class IAUtils
     {
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
 
-
-        Debug.Log(allEntitiesReachableBestTileForCast);
-
-
         if (allEntitiesReachableBestTileForCast == null) return false;
-
-
-
-
 
         for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
         {
