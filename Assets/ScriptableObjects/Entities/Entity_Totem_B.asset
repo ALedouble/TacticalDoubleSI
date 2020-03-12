@@ -28,3 +28,4 @@ MonoBehaviour:
   power: 0
   xpPoint: 1
   totemValue: 1
+  isNotDestructible: 1
