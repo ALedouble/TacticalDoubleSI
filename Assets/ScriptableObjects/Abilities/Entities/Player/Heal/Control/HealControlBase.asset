@@ -14,18 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Pillar
+  displayName: Wall
   description: Create an obtacle that stay 1 turn
   cost: 6
   multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 6202399477133285555, guid: 22e7f5c6a46e0644ba3f5bcc9f805075, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: 4c20b5871d37f5246a35fef500ab149c, type: 2}
+  abilitySFX: {fileID: 0}
   castArea:
     size: 5
     area:

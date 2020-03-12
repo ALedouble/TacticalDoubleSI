@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 1
   alignementXP: 1
   displayName: Blow
-  description: A simple attack
+  description: Melee Attack that deal X DMG
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 0}
