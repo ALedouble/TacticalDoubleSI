@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: EntityAnimations_DPSEn
   m_EditorClassIdentifier: 
   idleAnimation: {fileID: 11400000, guid: 8ac56d6e68e434b4381cf4ca3263b8b3, type: 2}
-  moveAnimation: {fileID: 11400000, guid: 76735f2cf85af214a9b3ed987e6511a3, type: 2}
+  moveAnimation: {fileID: 0}
   hitAnimation: {fileID: 11400000, guid: 4c28df5b2942c2f4eaca60b189e7b549, type: 2}
   deathAnimation: {fileID: 11400000, guid: 199aab28a182b1648a4ae96924c84e34, type: 2}
+  channelingStartAnimation: {fileID: 0}
+  channelingIdleAnimation: {fileID: 0}
   abilityAnimations:
+  - {fileID: 11400000, guid: ff836486dd674914c82951fee616d7f5, type: 2}
   - {fileID: 11400000, guid: ff836486dd674914c82951fee616d7f5, type: 2}
