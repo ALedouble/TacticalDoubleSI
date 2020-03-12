@@ -152,7 +152,7 @@ public class EntityBehaviour : MonoBehaviour
             moveSequence.AppendCallback(() =>
             {
                 animator.PlayAnimation(data.animations.moveAnimation);
-                SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
+                if(data.walkSFX != null) SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
             });
             
             moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), data.alignement == Alignement.Player ? data.animations.moveAnimation.Length-.1f : .3f)

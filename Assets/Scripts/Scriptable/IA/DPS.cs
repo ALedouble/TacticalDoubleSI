@@ -295,7 +295,7 @@ public class DPS : Brain
         EntityBehaviour entityCac;
 
         listOfPathToEntityCac.Deconstruct(out pathToEntityCac, out entityCac);
-
+        Debug.Log(ability2);
         if (ability2Use) return false;
 
         List<TileData> zoneCastDist = null;
@@ -306,7 +306,7 @@ public class DPS : Brain
             {
                 TileData tileToCast = null;
 
-                if (listOfEntity[j] != null) IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
+                if (listOfEntity[j] != null) tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
                 if (tileToCast != null)
                 {
                     return UseAbilityDuringThePathToTarget(pathToEntityCac, tileToCast, zoneCastDist, priorityOnRun);
@@ -330,7 +330,10 @@ public class DPS : Brain
         int deplacementCost;
         if (priorityOnRun) deplacementCost = pathToEntityCac.cost;
         else deplacementCost = intermediateTile.cost;
-
+        Debug.Log(deplacementCost);
+        Debug.Log(deplacementCost);
+        Debug.Log(ability2.cost);
+        Debug.Log(dps.CurrentActionPoints);
         if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
         {
             if(IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast))

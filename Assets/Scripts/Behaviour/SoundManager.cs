@@ -52,6 +52,7 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(Sound _sound, bool loops = false, bool bypassAudioListener = false)
     {
         if (_sound == null) return;
+        if (_sound.clips.Count == 0) return;
 
         if(receptaclePool.Count < 1)
         {
