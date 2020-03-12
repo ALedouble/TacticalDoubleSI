@@ -768,4 +768,4 @@ MonoBehaviour:
     heldCrystalValue: -1
     position: {x: 1, y: 8}
   size: 12
-  center: {x: 6, y: 6}
+  center: {x: 6, y: 5}
