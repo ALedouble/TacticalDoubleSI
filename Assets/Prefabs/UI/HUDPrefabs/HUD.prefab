@@ -3912,7 +3912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudTag: Ability1
+  hudTag: Ability2
 --- !u!95 &748538234354440913
 Animator:
   serializedVersion: 3

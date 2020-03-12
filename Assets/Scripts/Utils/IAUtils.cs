@@ -81,8 +81,10 @@ public static class IAUtils
                 {
                     if ((reachableTiles[i].GetCoordPosition() + attackRangeCast[j] + attackRangeEffect[k]).Equals(target))
                     {
-                        reachableTiles[i].castTile = MapManager.GetTile(reachableTiles[i].GetCoordPosition() + attackRangeCast[j]);
-                        canCastAndHitTarget.Add(reachableTiles[i]);
+                        ReachableTile reachableTile = new ReachableTile(reachableTiles[i].path, reachableTiles[i].cost);
+                        reachableTile.castTile = MapManager.GetTile(reachableTiles[i].GetCoordPosition() + attackRangeCast[j]);
+
+                        canCastAndHitTarget.Add(reachableTile);
                         break;
                     }
                 }
@@ -161,19 +163,20 @@ public static class IAUtils
         if (playerHealer != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerHealerPathToAttack = resultForCast;
+            if (playerHealerPathToAttack != null) Debug.Log(playerHealerPathToAttack.Count);
+            playerHealerPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
         if (playerDPS != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerDPSPathToAttack = resultForCast;
+            playerDPSPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
         if (playerTank != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerTankPathToAttack = resultForCast;
+            playerTankPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
     }
@@ -295,6 +298,13 @@ public static class IAUtils
 
         return null;
     }
+
+    //public static ReachableTile LastChancePath (EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity)
+    //{
+    //    if (firstEntity == null && secondEntity == null && thirdEntity == null) return null;
+
+    //    FindShortestPath(true, current.GetPosition(), firstEntity, true, );
+    //}
     
 
 
@@ -351,6 +361,8 @@ public static class IAUtils
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
+                if (abilityTarget.GetPlayer().stasis) return false;
+
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
 
@@ -382,6 +394,10 @@ public static class IAUtils
             {
                 for (int j = 0; j < allReachableTilesForAllPlayers[i].Count; j++)
                 {
+                    if (allReachableTilesForAllPlayers[i][j] != null && allReachableTilesForAllPlayers[i][j].path != null) Debug.Log(allReachableTilesForAllPlayers[i][j].path.Count);
+                    if (allReachableTilesForAllPlayers[i][j] != null && allReachableTilesForAllPlayers[i][j].path != null) Debug.Log(allReachableTilesForAllPlayers[i][j].GetCoordPosition());
+                    if (allReachableTilesForAllPlayers[i][j] != null && allReachableTilesForAllPlayers[i][j].path != null) Debug.Log(allReachableTilesForAllPlayers[i][j].castTile.GetCoordPosition());
+
                     if (allReachableTilesForAllPlayers[i][j] != null && MoveAndTriggerAbilityIfNeed(current, allReachableTilesForAllPlayers[i][j], iaEntityFunction,
                                                                                     ((functionConditionReachable == null) ? (true) : (functionConditionReachable(allReachableTilesForAllPlayers[i][j]))),
                                                                                     functionToCallAfterTheMove, ability, allReachableTilesForAllPlayers[i][j].castTile))
