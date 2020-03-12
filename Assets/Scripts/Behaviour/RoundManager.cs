@@ -143,12 +143,14 @@ public class RoundManager : MonoBehaviour
 
        if(ennemies.Count <= 0)
         {
-           //Win()
+            //Win()
+            Debug.Log("you win");
         }
 
        if(allies.Count <= 0)
        {
             //Loose()
-       }
+            Debug.Log("you Loose");
+        }
     }
 }

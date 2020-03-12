@@ -130,11 +130,7 @@ public class EntityBehaviour : MonoBehaviour
         }
         else
         {
-           
-            
             data.brain.OnTurnStart(this);
-
-
         }
     }
 
