@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Entity_Enemy_DPS
   m_EditorClassIdentifier: 
   displayName: DPS
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 81bb200257b715548a0fe0683f07dd08, type: 3}
   animations: {fileID: 11400000, guid: 7a6e4f907152b944ba732f5031ffd1d6, type: 2}
   walkSFX: {fileID: 0}
-  hitBySomeoneSFX: {fileID: 0}
+  hitBySomeoneSFX: {fileID: 11400000, guid: d8e5122b3778f49eab288383642bbbd9, type: 2}
   deathSFX: {fileID: 11400000, guid: 29686d95ae798ce4b861a7fd1a468ab8, type: 2}
   pivot: {x: 0.5, y: 0.5}
   maxHealth: 25

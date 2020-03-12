@@ -21,11 +21,14 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
         SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
+        SelectionManager.Instance.OnEntitySelect += DeselectThis;
+
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
 
 
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick += OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
@@ -40,6 +43,19 @@ public class PlayerBrain : Brain
         MapManager.SetReachableTilesPreview(reachableTiles);
 
         
+    }
+
+    void DeselectThis(EntityBehaviour entity)
+    {
+        SelectionManager.Instance.OnEntitySelect -= DeselectThis;
+
+        if (entity == entityBehaviour || entity == null)
+        {
+            return;
+        }
+
+        SelectionManager.Instance.OnClick -= OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
     }
 
     void CanSelectAnotherPlayer()
@@ -78,6 +94,8 @@ public class PlayerBrain : Brain
 
         if (!canReachTile) return;
 
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick -= OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
 

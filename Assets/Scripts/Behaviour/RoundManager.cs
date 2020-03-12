@@ -75,8 +75,6 @@ public class RoundManager : MonoBehaviour
         if (entity.IsChannelingBurst || entity.stasis) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
-        Debug.Log("suce");
-
         entity.OnTurn();
     }
 

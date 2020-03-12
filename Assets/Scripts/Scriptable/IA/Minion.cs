@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MinionBrain", menuName = "ScriptableObjects/IA_Brain/Minion_Brain", order = 999)]
