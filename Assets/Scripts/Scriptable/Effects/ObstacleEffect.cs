@@ -14,8 +14,6 @@ public class ObstacleEffect : AbilityEffect
             if (MapManager.GetTile(effectTiles[i]).IsWalkable)
             {
                 RoundManager.Instance.roundEntities.Add(MapManager.SpawnEntity(spawnedEntity, effectTiles[i], -1));
-
-                
             }
         } 
     }
