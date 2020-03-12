@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using UnityEditorInternal;
 
 public class MapEditorWindow : EditorWindow
 {
@@ -88,7 +89,15 @@ public class MapEditorWindow : EditorWindow
         {
             EditorUtility.SetDirty(map);
         }
+
+        ReorderableList reorderableEnemyList = new ReorderableList(map.entityStartPositions, typeof(EntityRoundStartState));
+
+        reorderableEnemyList.DoLayoutList();
+
+        map.entityStartPositions = reorderableEnemyList.list as List<EntityRoundStartState>;
     }
+
+   
 
     void OnScene(SceneView scene)
     {
