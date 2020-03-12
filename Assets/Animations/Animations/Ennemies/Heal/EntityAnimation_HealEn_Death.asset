@@ -12,5 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_HealEn_Death
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: 4149fad450d575541824048afdac468c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2724dce76c0863d418ecf187e146f202, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0cc9d001b4701cb4cbe3e699028e2b12, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 8c776d23a9da90143a487d1bea64d8e3, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 83484eb2ee3352f4fad2b5ca67170518, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5bb676e6dff4fa847a384b3b6d786e43, type: 3}
+    length: 0.1
   loopMode: 1

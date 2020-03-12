@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e098345db20d1e54dbea9c5d50f1df62, type: 3}
   m_Name: TemporaryObstacleBrain
   m_EditorClassIdentifier: 
-  turnNumber: 0

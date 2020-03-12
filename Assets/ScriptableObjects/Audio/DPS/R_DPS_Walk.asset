@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e4c38d5b51b81a449dce4abfea5499b, type: 3}
-  m_Name: S_PlayerTank_Atk01
+  m_Name: R_DPS_Walk
   m_EditorClassIdentifier: 
   sound:
     clips:
-    - {fileID: 8300000, guid: 7d6409f75a366a646a5b761b09aebced, type: 3}
-    minVolume: 0.5
+    - {fileID: 8300000, guid: a2012b61136d54fcaa16262cededb4c5, type: 3}
+    minVolume: 1
     maxVolume: 1
     minPitch: 1
     maxPitch: 1

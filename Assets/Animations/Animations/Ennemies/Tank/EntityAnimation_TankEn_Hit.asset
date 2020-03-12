@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: EntityAnimation_TankEn_Hit
   m_EditorClassIdentifier: 
   frames:
-  - texture: {fileID: 2800000, guid: bf9d5e4969c10f14cb35929e56f2defb, type: 3}
-    length: 0.1
-  - texture: {fileID: 2800000, guid: 2556aa0b253c8e54eb715d318f93e402, type: 3}
-    length: 0.1
   - texture: {fileID: 2800000, guid: eb8a387c6f381c44a81921df72b5d7e4, type: 3}
     length: 0.1
   - texture: {fileID: 2800000, guid: c1f6d99865015b44abc16414cc81d48b, type: 3}
     length: 0.1
   - texture: {fileID: 2800000, guid: 5edccbf759ce8de448eca5e60146eb98, type: 3}
-    length: 0.1
-  - texture: {fileID: 2800000, guid: 60a2b55f874e8534c87ede94a418590b, type: 3}
     length: 0.1
   loopMode: 1

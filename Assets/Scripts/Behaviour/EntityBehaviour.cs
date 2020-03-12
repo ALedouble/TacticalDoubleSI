@@ -69,16 +69,17 @@ public class EntityBehaviour : MonoBehaviour
     public void Init()
     {
         data = Instantiate(data);
+        if (data.brain != null) data.brain = Instantiate(data.brain);
         name = data.name;
+        
+        // TODO : set armor
+        currentHealth = GetMaxHealth();
 
         if (data.isFx)
         {
             GameObject go = Instantiate(data.fxEntity, transform.position, Quaternion.identity, this.transform);
+            return;
         }
-
-
-        // TODO : set armor
-        currentHealth = GetMaxHealth();
 
         InitAnimations();
     }
@@ -122,11 +123,10 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (data.brain == null)
         {
-            if (data.entityTag == EntityTag.Totem)
-            {
-                RoundManager.Instance.EndTurn();
-                return;
-            }
+
+            RoundManager.Instance.EndTurn();
+            return;
+
             Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
             Debug.Break();
         }
