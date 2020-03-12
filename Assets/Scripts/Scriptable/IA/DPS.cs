@@ -197,6 +197,11 @@ public class DPS : Brain
                     return true;
                 }
             }
+
+            else
+            {
+                return true;
+            }
         }
 
         return false;
