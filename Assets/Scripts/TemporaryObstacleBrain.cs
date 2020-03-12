@@ -10,7 +10,9 @@ public class TemporaryObstacleBrain : Brain
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
         Debug.Log(turnNumber);
-        if(turnNumber == 0)
+        turnNumber++;
+
+        if (turnNumber ==  0)
         {
             MapManager.GetListOfEntity().Remove(entityBehaviour);
             MapManager.DeleteEntity(entityBehaviour);
@@ -18,7 +20,7 @@ public class TemporaryObstacleBrain : Brain
             RoundManager.Instance.StartRound();
         } else
         {
-            turnNumber++;
+            
             Debug.Log("hello");
         }
     }
