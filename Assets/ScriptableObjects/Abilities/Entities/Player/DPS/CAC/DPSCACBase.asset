@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 1
   alignementXP: 1
   displayName: Blow
-  description: A simple attack
+  description: Melee Attack that deal X DMG
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 0}
@@ -26,7 +26,7 @@ MonoBehaviour:
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
-  abilitySFX: {fileID: 11400000, guid: 3e916d5022e5c404d8b3457109d399fe, type: 2}
+  abilitySFX: {fileID: 11400000, guid: 6b595fe6cd8ffb643a062a372b2e5e61, type: 2}
   castArea:
     size: 3
     area:

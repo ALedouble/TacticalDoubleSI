@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
-  m_Name: EntityAnimation_TankEn_Move
+  m_Script: {fileID: 11500000, guid: 0e4c38d5b51b81a449dce4abfea5499b, type: 3}
+  m_Name: R_TankAbility_Resistance
   m_EditorClassIdentifier: 
-  frames: []
-  loopMode: 1
+  sound:
+    clips:
+    - {fileID: 8300000, guid: cd6c5f9ba184c43169378b5e30500571, type: 3}
+    minVolume: 1
+    maxVolume: 1
+    minPitch: 1
+    maxPitch: 1

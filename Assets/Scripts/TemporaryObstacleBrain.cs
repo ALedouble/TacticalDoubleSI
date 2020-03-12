@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TemporaryObstacleBrain", menuName = "ScriptableObjects/TemporaryObstacleBrain", order = 918)]
 public class TemporaryObstacleBrain : Brain
 {
-    public float turnNumber;
+    private float turnNumber = -1;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
@@ -14,14 +14,10 @@ public class TemporaryObstacleBrain : Brain
 
         if (turnNumber ==  0)
         {
-            MapManager.GetListOfEntity().Remove(entityBehaviour);
             MapManager.DeleteEntity(entityBehaviour);
             Destroy(entityBehaviour.gameObject);
-            RoundManager.Instance.StartRound();
-        } else
-        {
-            
-            Debug.Log("hello");
-        }
+            RoundManager.Instance.EndTurn();
+            turnNumber = -1;
+        } 
     }
 }

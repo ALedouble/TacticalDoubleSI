@@ -14,18 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Explosiv arrow
-  description: A shot that explode
+  displayName: Snipe
+  description: Increase range
   cost: 5
   multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 7500815593708707412, guid: bd691484aab0cb14f9456b7af487ac5e, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  abilitySFX: {fileID: 0}
   castArea:
     size: 9
     area:

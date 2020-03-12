@@ -73,8 +73,4 @@ MonoBehaviour:
     length: 0.08
   - texture: {fileID: 2800000, guid: bf2d79aeb4f9091489453fcf4ab2fd1a, type: 3}
     length: 0.08
-  - texture: {fileID: 2800000, guid: d1914317c5a4305429931da6577cbb97, type: 3}
-    length: 0.08
-  - texture: {fileID: 2800000, guid: 7b045a58b5362fe4d8bfd4cb3ca84c07, type: 3}
-    length: 0.08
   loopMode: 0

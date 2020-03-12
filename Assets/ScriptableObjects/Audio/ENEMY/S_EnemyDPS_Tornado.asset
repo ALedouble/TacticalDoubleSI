@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e4c38d5b51b81a449dce4abfea5499b, type: 3}
-  m_Name: S_PlayerTankHits_Random
+  m_Name: S_EnemyDPS_Tornado
   m_EditorClassIdentifier: 
   sound:
     clips:
-    - {fileID: 8300000, guid: ba650cda7cd8a6944ae444089ee887e8, type: 3}
-    - {fileID: 8300000, guid: a26eaa42328753349b6aee5d908d0088, type: 3}
-    - {fileID: 8300000, guid: 2a7b8d98bd65ca64ab6084329c7d069b, type: 3}
-    minVolume: 0.5
+    - {fileID: 8300000, guid: 3f40ea15286df4b019691aa17c214385, type: 3}
+    minVolume: 1
     maxVolume: 1
     minPitch: 1
     maxPitch: 1

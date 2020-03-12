@@ -63,7 +63,6 @@ public class DPS : Brain
      */
     private void IA_DPS()
     {
-        Debug.Log("pass");
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
@@ -75,11 +74,11 @@ public class DPS : Brain
         if (GoToHealer()) return;
 
         if (GoToTank()) return;
-        Debug.Log("att");
+
         if (Attack()) return;
-        Debug.Log("WalkVersPrio");
+
         if (WalkVersPrio()) return;
-        Debug.Log("LastActionPossible");
+
         if (LastActionPossible()) return;
 
         IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
@@ -262,11 +261,7 @@ public class DPS : Brain
     {
         List<ReachableTile> tilesToCastOnEntity;
         ReachableTile tileToWalkOnEntity;
-
-        Debug.Log("find");
-        Debug.Log(entity);
-        Debug.Log((!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)));
-
+        
         if (entity != null && (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)))
         {
             if (walkOnly)
@@ -277,9 +272,7 @@ public class DPS : Brain
 
             else
             {
-                Debug.Log("else");
                 tilesToCastOnEntity = IAUtils.ValidCastFromTile(ability1, reachableTiles, entity.GetPosition());
-                Debug.Log(tilesToCastOnEntity);
                 if (tilesToCastOnEntity.Count > 0)
                 {
                     return new Tuple<ReachableTile, EntityBehaviour>(tilesToCastOnEntity[0], entity);
