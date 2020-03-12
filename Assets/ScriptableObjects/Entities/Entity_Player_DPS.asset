@@ -25,6 +25,7 @@ MonoBehaviour:
   brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
   alignement: 1
   entityTag: 1
-  power: 10
+  power: 8
   xpPoint: 1
   totemValue: -1
+  isNotDestructible: 0
