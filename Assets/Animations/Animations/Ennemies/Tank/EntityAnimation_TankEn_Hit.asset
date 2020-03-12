@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_TankEn_Hit
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: eb8a387c6f381c44a81921df72b5d7e4, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c1f6d99865015b44abc16414cc81d48b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5edccbf759ce8de448eca5e60146eb98, type: 3}
+    length: 0.1
   loopMode: 1

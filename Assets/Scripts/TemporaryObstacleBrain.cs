@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TemporaryObstacleBrain", menuName = "ScriptableObjects/TemporaryObstacleBrain", order = 918)]
 public class TemporaryObstacleBrain : Brain
 {
-    public float turnNumber;
+    private float turnNumber = -1;
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {

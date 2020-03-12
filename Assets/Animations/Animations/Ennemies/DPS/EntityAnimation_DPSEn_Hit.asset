@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_DPSEn_Hit
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: f2b705562396b26459ee5bab85282b09, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b7c183a2f535f3c4399b1bd226932c09, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ed0939082d22a3142b7e7a4e9d0cd7a2, type: 3}
+    length: 0.1
   loopMode: 1
