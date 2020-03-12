@@ -73,7 +73,7 @@ public class EntityBehaviour : MonoBehaviour
 
         if (data.isFx)
         {
-            GameObject go = Instantiate(data.fxEntity, transform.position, Quaternion.identity);
+            GameObject go = Instantiate(data.fxEntity, transform.position, Quaternion.identity, this.transform);
         }
 
 

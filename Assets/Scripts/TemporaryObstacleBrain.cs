@@ -18,10 +18,6 @@ public class TemporaryObstacleBrain : Brain
             MapManager.DeleteEntity(entityBehaviour);
             Destroy(entityBehaviour.gameObject);
             RoundManager.Instance.StartRound();
-        } else
-        {
-            
-            Debug.Log("hello");
-        }
+        } 
     }
 }
