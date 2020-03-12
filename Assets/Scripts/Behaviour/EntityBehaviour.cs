@@ -149,7 +149,7 @@ public class EntityBehaviour : MonoBehaviour
             
             moveSequence.AppendCallback(() =>
             {
-                if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.moveAnimation);
+                animator.PlayAnimation(data.animations.moveAnimation);
                // SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
             });
             
@@ -158,7 +158,7 @@ public class EntityBehaviour : MonoBehaviour
                 .SetDelay(data.alignement == Alignement.Player? .1f : 0)
                 .OnComplete(()=>
                 {
-                    if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.idleAnimation);
+                    animator.PlayAnimation(data.animations.idleAnimation);
                 }));
 
             /*
@@ -189,7 +189,7 @@ public class EntityBehaviour : MonoBehaviour
 
         Debug.Log(name + " is using " + ability.name);
 
-        EntityAnimation anim = data.alignement == Alignement.Player ? data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability)) : null;
+        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
         float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;
 
 
