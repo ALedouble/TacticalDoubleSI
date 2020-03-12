@@ -267,6 +267,7 @@ public class EntityBehaviour : MonoBehaviour
             MapManager.GetListOfEntity().Remove(this);
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
+            RoundManager.Instance.CheckRemainingEntities();
         }
     }
     
