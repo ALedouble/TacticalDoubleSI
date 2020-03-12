@@ -19,4 +19,4 @@ MonoBehaviour:
     length: 0.1
   - texture: {fileID: 2800000, guid: ed0939082d22a3142b7e7a4e9d0cd7a2, type: 3}
     length: 0.1
-  loopMode: 1
+  loopMode: 0
