@@ -88,7 +88,7 @@ public class HUDManager : MonoBehaviour
     RectTransform endTurnButton;
     Tween endTurnButtonTween;
 
-    void ShowEndTurnButton()
+    public void ShowEndTurnButton()
     {
         endTurnButtonTween?.Kill();
         endTurnButtonTween = endTurnButton.DOScale(1, .2f).SetEase(Ease.OutBack);
@@ -101,6 +101,12 @@ public class HUDManager : MonoBehaviour
         {
             OnEndTurnPressed?.Invoke();
         });
+    }
+
+    public void HideEndTurnButton()
+    {
+        endTurnButtonTween?.Kill();
+        endTurnButtonTween = endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack);
     }
 
     EntityBehaviour inspectedEnemy;

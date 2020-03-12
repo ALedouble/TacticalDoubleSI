@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: DPSCACBase
   m_EditorClassIdentifier: 
   animationType: 1
+  alignementXP: 1
   displayName: Blow
   description: A simple attack
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 0}
-  vfxCast: {fileID: 0}
+  vfxCast: {fileID: 1971691301407850121, guid: f102c9ba0e4b6e74683cc54e165d7aff, type: 3}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}

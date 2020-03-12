@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: DPSMovementStage2
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Shoulder dash
   description: A dash that repulse the ennemie
   cost: 4
   multiplicator: 0.6
   displaySprite: {fileID: 0}
-  vfxCast: {fileID: 0}
+  vfxCast: {fileID: 4845524904111660071, guid: bf04a8edb0272ef4ca209f807eabc354, type: 3}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 1
+  Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: 7d2440bf137371e49b16f4501da1c9ea, type: 2}

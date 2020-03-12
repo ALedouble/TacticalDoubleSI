@@ -69,9 +69,11 @@ public class Tank : Brain
         
         if (Attack()) return;
 
-        if (WalkOnShortest()) return;
+        if (Walk()) return;
 
-        IAUtils.CheckEndTurn(tank, CanMakeAction());
+        if (LastActionPossible()) return;
+
+        IAUtils.CheckEndTurn(tank, CanMakeAction(), true);
     }
 
     /*
@@ -83,7 +85,7 @@ public class Tank : Brain
         if (tank.CurrentActionPoints >= ability1.cost) return true;
         if (tank.CurrentActionPoints >= ability2.cost) return true;
 
-        return IAUtils.CanWalkAround(tank, tank.CurrentActionPoints);
+        return IAUtils.CanWalkAround(tank, tank.CurrentActionPoints, true);
     }
 
     /*
@@ -145,22 +147,18 @@ public class Tank : Brain
     /*
      * Cherche l'enemy le plus pres et s'en rapproche
      */
-    private bool WalkOnShortest()
+    private bool Walk()
     {
-        List<ReachableTile> pathToShortestEnemy = IAUtils.ShortestsPathToEnemy(true, tank, playerHealer, playerDPS, playerTank, true, tank.CurrentActionPoints, false, true);
+        haveEndTurn = IAUtils.WalkOnShortest(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
+    }
 
-        if (pathToShortestEnemy != null)
-        {
-            for (int i = 0; i < pathToShortestEnemy.Count; i++)
-            {
-                if (IAUtils.MoveAndTriggerAbilityIfNeed(tank, pathToShortestEnemy[i], iaEntityFunction))
-                {
-                    haveEndTurn = true;
-                    return true;
-                }
-            }
-        }
-
-        return false;
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
     }
 }

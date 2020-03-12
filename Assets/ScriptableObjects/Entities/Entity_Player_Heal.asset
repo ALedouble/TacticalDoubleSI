@@ -15,15 +15,16 @@ MonoBehaviour:
   displayName: HEAL
   portrait: {fileID: 21300000, guid: 4b0b4bf0fe6fa104e8d290cc1ce1dfd5, type: 3}
   animations: {fileID: 11400000, guid: 296f630569233ea46a9168ba855e3449, type: 2}
+  pivot: {x: 0.5, y: 0.5}
   maxHealth: 30
-  maxActionPoints: 10
-  armor: 0
+  maxActionPoints: 12
+  armor: 1
   abilities:
   - {fileID: 11400000, guid: bce6c8f3ca38a4940b2ecd4848a7536a, type: 2}
   abilityLevels: 
   brain: {fileID: 11400000, guid: dc337da567f569643876b661300d023f, type: 2}
   alignement: 1
   entityTag: 0
-  power: 1
+  power: 11
   xpPoint: 1
   totemValue: -1

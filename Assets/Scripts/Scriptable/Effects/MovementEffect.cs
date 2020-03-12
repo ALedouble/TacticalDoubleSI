@@ -26,6 +26,8 @@ public class MovementEffect : AbilityEffect
         Ease pushEase = Ease.InQuad;
         TeleportEnd(entity, castTilePosition);
 
+        teleportSequence.Append(entity.transform.DOMove(new Vector3(castTilePosition.x, 0, castTilePosition.y), 0)
+            .SetDelay(1.5f));
 
         return teleportSequence;
     }
@@ -34,10 +36,6 @@ public class MovementEffect : AbilityEffect
     {
         Sequence teleportEndSequence = DOTween.Sequence();
         Ease pushEase = Ease.InQuad;
-        
-        teleportEndSequence.Append(entity.transform.DOMove(
-            new Vector3(castTilePosition.x, 0, castTilePosition.y),
-            0.25f).SetEase(pushEase));
 
         entity.currentTile = MapManager.MoveEntity(entity, entity.GetPosition(), castTilePosition);
         return teleportEndSequence;

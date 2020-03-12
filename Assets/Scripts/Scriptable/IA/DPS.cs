@@ -79,6 +79,8 @@ public class DPS : Brain
 
         if (WalkVersPrio()) return;
 
+        if (LastActionPossible()) return;
+
         IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
     }
 
@@ -91,7 +93,7 @@ public class DPS : Brain
         if (dps.CurrentActionPoints >= ability1.cost) return true;
         if (!ability2Use && dps.CurrentActionPoints >= ability2.cost) return true;
 
-        return IAUtils.CanWalkAround(dps, dps.CurrentActionPoints);
+        return IAUtils.CanWalkAround(dps, dps.CurrentActionPoints, true);
     }
 
     /*
@@ -157,14 +159,14 @@ public class DPS : Brain
             
             if (listOfPathToTank != null)
             {
-                //if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
-                //{
+                if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
+                {
                     if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, listOfPathToTank[0].Item1, iaEntityFunction))
                     {
                         haveEndTurn = true;
                         return true;
                     }
-                //}
+                }
 
                 else return true;
             }
@@ -198,7 +200,7 @@ public class DPS : Brain
 
     /*
      * Regarde vers quel entity il va se deplace selon l'ordre de priorite :
-     *          Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
+     *           Heal (percentOfLifeNeedForAttackPrio % HP) > DPS (percentOfLifeNeedForAttackPrio % HP) > Tank (percentOfLifeNeedForAttackPrio % HP) > Heal > DPS > Tank
      */
     private bool WalkVersPrio()
     {
@@ -215,6 +217,15 @@ public class DPS : Brain
         }
 
         return false;
+    }
+
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(dps, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
     }
 
     /*
@@ -245,13 +256,11 @@ public class DPS : Brain
         List<ReachableTile> tilesToCastOnEntity;
         ReachableTile tileToWalkOnEntity;
 
-        if (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100))
+        if (entity != null && (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)))
         {
             if (walkOnly)
             {
-                Debug.Log(dps.CurrentActionPoints);
                 tileToWalkOnEntity = IAUtils.FindShortestPath(true, dps.GetPosition(), entity.GetPosition(), true, dps.CurrentActionPoints, true);
-                Debug.Log(tileToWalkOnEntity.cost);
                 return new Tuple<ReachableTile, EntityBehaviour>(tileToWalkOnEntity, entity);
             }
 
@@ -290,7 +299,9 @@ public class DPS : Brain
             zoneCastDist = new List<TileData>() { pathToEntityCac.path[i] };
             for (int j = 0; j < listOfEntity.Count; j++)
             {
-                TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
+                TileData tileToCast = null;
+
+                if (listOfEntity[j] != null) IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
                 if (tileToCast != null)
                 {
                     return UseAbilityDuringThePathToTarget(pathToEntityCac, tileToCast, zoneCastDist, priorityOnRun);

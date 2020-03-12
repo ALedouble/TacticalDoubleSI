@@ -180,5 +180,12 @@ MonoBehaviour:
     type: 3}
   speedTilePrefab: {fileID: 7926910938319154196, guid: c925c725592f84448bede459b755811e,
     type: 3}
+  spawnTile: {fileID: 6795266213921461252, guid: 00043ac6d19adee4a8da1793a6efe0d6,
+    type: 3}
+  movementTile: {fileID: 9220724682693865938, guid: aea681653ab0c8048a4cda8f3a854ee1,
+    type: 3}
+  pathRenderer: {fileID: 0}
+  placePlayerTile: []
   castableTiles: []
   effectTiles: []
+  movementTiles: []

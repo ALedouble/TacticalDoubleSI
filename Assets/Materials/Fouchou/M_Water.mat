@@ -83,7 +83,7 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalSpeed: 1
+    - _NormalSpeed: 0.5
     - _NormalStrength: 1
     - _NormalTile: 1
     - _OcclusionStrength: 1
@@ -94,9 +94,9 @@ Material:
     - _SrcBlend: 1
     - _Tesselation: 2
     - _UVSec: 0
-    - _WaveHeight: 0.1
-    - _WaveSpeed: 0.64
-    - _WaveTile: 1.63
+    - _WaveHeight: 0.05
+    - _WaveSpeed: 0.3
+    - _WaveTile: 1
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:

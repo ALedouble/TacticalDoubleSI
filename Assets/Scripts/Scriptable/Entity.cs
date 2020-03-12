@@ -14,6 +14,7 @@ public class Entity : ScriptableObject
     public string displayName;
     public Sprite portrait;
     public EntityAnimations animations;
+    public Vector2 pivot = new Vector2(0.5f, 0.5f);
 
     [Space]
 
@@ -32,6 +33,7 @@ public class Entity : ScriptableObject
     [Space]
 
     public int totemValue = -1;
+    public bool isNotDestructible = false;
 
     public int GetAbilityNumber(Ability ability)
     {

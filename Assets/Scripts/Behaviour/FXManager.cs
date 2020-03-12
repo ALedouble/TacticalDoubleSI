@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class FXManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class FXManager : MonoBehaviour
     public GameObject HoverTilePrefab;
     public GameObject slowTilePrefab;
     public GameObject speedTilePrefab;
+    public GameObject spawnTile;
+    public GameObject movementTile;
 
     [HideInInspector] public LineRenderer pathRenderer;
 
@@ -43,7 +46,7 @@ public class FXManager : MonoBehaviour
 
             if (tiles[i].canPlacePlayerEntity)
             {
-                placePlayerTile.Add(PoolManager.InstantiatePooled(castAreaTilePrefab, new Vector3(tiles[i].position.x, 0.01f, tiles[i].position.y), this.transform));
+                placePlayerTile.Add(Instantiate(spawnTile, new Vector3(tiles[i].position.x, 0.01f, tiles[i].position.y), spawnTile.transform.rotation));
             }
         }
 
@@ -51,7 +54,7 @@ public class FXManager : MonoBehaviour
         {
             for (int i = 0; i < placePlayerTile.Count; i++)
             {
-                PoolManager.Recycle(placePlayerTile[i]);
+                Destroy(placePlayerTile[i]);
             }
             placePlayerTile.Clear();
         };
@@ -176,11 +179,23 @@ public class FXManager : MonoBehaviour
 
         for (int i = 0; i < obj.Count; i++)
         {
-            movementTiles.Add(PoolManager.InstantiatePooled(effectAreaTilePrefab, new Vector3(obj[i].GetCoordPosition().x, 0.01f, obj[i].GetCoordPosition().y), this.transform));
+            movementTiles.Add(PoolManager.InstantiatePooled(movementTile, new Vector3(obj[i].GetCoordPosition().x, 0.01f, obj[i].GetCoordPosition().y), this.transform));
             ParticleSystem ps;
             ps = movementTiles[i].GetComponent<ParticleSystem>();
             ps.Clear(true);
             ps.Play(true);
         }
+    }
+
+    public static GameObject SpawnFX(GameObject go, Vector2Int position, Vector2 direction)
+    {
+        GameObject fx = PoolManager.InstantiatePooled(go, new Vector3(position.x, 0.01f, position.y), FXManager.Instance.transform);
+        Sequence seq = DOTween.Sequence();
+        seq.AppendCallback(() =>
+        {
+            PoolManager.Recycle(fx);
+        });
+        seq.SetDelay(10);
+        return fx;
     }
 }

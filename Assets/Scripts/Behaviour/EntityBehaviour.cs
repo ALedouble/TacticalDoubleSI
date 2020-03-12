@@ -51,7 +51,9 @@ public class EntityBehaviour : MonoBehaviour
 
     Vector2Int effectPosition;
     public int channelingRoundsLeft = -1;
+    public int stasisRoundsLeft = -1;
 
+    public bool stasis { get => stasisRoundsLeft > 0; }
 
     //For PropertyDrawer
     List<Vector2Int> tilesForCast;
@@ -60,7 +62,7 @@ public class EntityBehaviour : MonoBehaviour
 
     [HideInInspector] public int heldCrystalValue = -1;
 
-    EntityAnimator animator;
+    [HideInInspector] public EntityAnimator animator;
 
     public Ability channelingAbility; 
 
@@ -80,6 +82,11 @@ public class EntityBehaviour : MonoBehaviour
         SelectionManager.Instance.OnHoveredEntityChanged += Squish;
     }
 
+    private void OnDestroy()
+    {
+        SelectionManager.Instance.OnHoveredEntityChanged -= Squish;
+    }
+
     Tween squishTween;
     void Squish(EntityBehaviour entity)
     {
@@ -97,16 +104,13 @@ public class EntityBehaviour : MonoBehaviour
         animator.mat = Resources.Load("Mat_Entity") as Material;
 
         animator.Init();
+        animator.transform.GetChild(0).localPosition = new Vector3(data.pivot.x - .5f, animator.transform.GetChild(0).localPosition.y, data.pivot.y - .5f);
 
         animator.PlayAnimation(data.animations.idleAnimation);
 
         animator.Update();
     }
 
-    private void Update()
-    {
-
-    }
 
     public void OnTurn()
     {
@@ -183,18 +187,44 @@ public class EntityBehaviour : MonoBehaviour
         abilitySequence.AppendCallback(() =>
         {
             animator.PlayAnimation(anim);
-            
+
+            if (ability.playEffectsAtStart)
+            {
+                List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
+
+                for (int i = 0; i < fxPositions.Count; i++)
+                {
+                    FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
+                }
+
+                earnedXPThisAbility = false;
+
+                for (int i = 0; i < ability.abilityEffect.Count; i++)
+                {
+                    ability.abilityEffect[i].Activate(this, ability, targetTile);
+                }
+            }
         });
 
         abilitySequence.AppendInterval(duration);
 
         abilitySequence.AppendCallback(() =>
         {
-            earnedXPThisAbility = false;
-
-            for (int i = 0; i < ability.abilityEffect.Count; i++)
+            if (!ability.playEffectsAtStart)
             {
-                ability.abilityEffect[i].Activate(this, ability, targetTile);
+                List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
+
+                for (int i = 0; i < fxPositions.Count; i++)
+                {
+                    FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
+                }
+
+                earnedXPThisAbility = false;
+
+                for (int i = 0; i < ability.abilityEffect.Count; i++)
+                {
+                    ability.abilityEffect[i].Activate(this, ability, targetTile);
+                }
             }
             animator.PlayAnimation(data.animations.idleAnimation);
 
@@ -221,6 +251,26 @@ public class EntityBehaviour : MonoBehaviour
 
         return abilitySequence;
     }
+
+    public void CheckCurrentHealthAndDestroy()
+    {
+        if (currentHealth <= 0)
+        {
+            MapManager.GetListOfEntity().Remove(this);
+            MapManager.DeleteEntity(this);
+            Destroy(gameObject);
+            RoundManager.Instance.CheckRemainingEntities();
+        }
+    }
     
+    public void Shake()
+    {
+        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.8f, 0, 0), 30, 90, false, true);
+    }
+
+    public void Stretch()
+    {
+        transform.DOPunchScale(Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(-.2f, .2f, 0), .2f, 15, 1f);
+    }
 }
 

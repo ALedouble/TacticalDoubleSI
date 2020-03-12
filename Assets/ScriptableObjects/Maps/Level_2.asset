@@ -20,27 +20,27 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 0, y: 1}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 0, y: 2}
-    tileType: 2
-    canPlacePlayerEntity: 1
+    tileType: 0
+    canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 0, y: 3}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 0, y: 4}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 0, y: 5}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -60,13 +60,13 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 1, y: 0}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 1, y: 1}
     tileType: 2
-    canPlacePlayerEntity: 1
+    canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 1, y: 2}
@@ -81,7 +81,7 @@ MonoBehaviour:
   - entities: []
     position: {x: 1, y: 4}
     tileType: 2
-    canPlacePlayerEntity: 1
+    canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 1, y: 5}
@@ -106,7 +106,7 @@ MonoBehaviour:
   - entities: []
     position: {x: 2, y: 0}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 1}
@@ -120,12 +120,12 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 3}
-    tileType: 2
-    canPlacePlayerEntity: 1
+    tileType: 1
+    canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 4}
-    tileType: 2
+    tileType: 1
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -140,23 +140,23 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 7}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 2, y: 8}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 0}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 1}
-    tileType: 1
-    canPlacePlayerEntity: 0
+    tileType: 2
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 2}
@@ -170,47 +170,47 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 4}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 5}
-    tileType: 1
-    canPlacePlayerEntity: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - entities: []
-    position: {x: 3, y: 6}
     tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
+    position: {x: 3, y: 6}
+    tileType: 3
+    canPlacePlayerEntity: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
     position: {x: 3, y: 7}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 3, y: 8}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 0}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 1}
-    tileType: 1
-    canPlacePlayerEntity: 0
+    tileType: 2
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 2}
-    tileType: 0
-    canPlacePlayerEntity: 0
+    tileType: 2
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 3}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -220,7 +220,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 5}
-    tileType: 1
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -230,23 +230,23 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 7}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 4, y: 8}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 0}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 1}
-    tileType: 1
-    canPlacePlayerEntity: 0
+    tileType: 2
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 2}
@@ -255,38 +255,38 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 3}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 4}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 5}
-    tileType: 1
-    canPlacePlayerEntity: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - entities: []
-    position: {x: 5, y: 6}
     tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
+    position: {x: 5, y: 6}
+    tileType: 3
+    canPlacePlayerEntity: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
     position: {x: 5, y: 7}
-    tileType: 0
+    tileType: 3
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 8}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 6, y: 0}
     tileType: 2
-    canPlacePlayerEntity: 0
+    canPlacePlayerEntity: 1
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 6, y: 1}
@@ -295,17 +295,17 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 6, y: 2}
-    tileType: 3
-    canPlacePlayerEntity: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - entities: []
-    position: {x: 6, y: 3}
     tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
+    position: {x: 6, y: 3}
+    tileType: 1
+    canPlacePlayerEntity: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - entities: []
     position: {x: 6, y: 4}
-    tileType: 3
+    tileType: 1
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -320,12 +320,12 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 6, y: 7}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 6, y: 8}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -340,7 +340,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 7, y: 2}
-    tileType: 3
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -350,7 +350,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 7, y: 4}
-    tileType: 3
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -360,7 +360,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 7, y: 6}
-    tileType: 0
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -380,27 +380,27 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 8, y: 1}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 8, y: 2}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 8, y: 3}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 8, y: 4}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 8, y: 5}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -419,26 +419,26 @@ MonoBehaviour:
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   entityStartPositions:
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
-    position: {x: 5, y: 0}
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
-    position: {x: 6, y: 1}
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
-    position: {x: 6, y: 5}
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
-    position: {x: 5, y: 6}
-  - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
-    heldCrystalValue: 2
-    position: {x: 7, y: 3}
-  - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
-    heldCrystalValue: -1
-    position: {x: 8, y: 3}
   - entity: {fileID: 11400000, guid: 74c6a767695a4c944af7e32fb0f986d6, type: 2}
     heldCrystalValue: -1
-    position: {x: 6, y: 3}
+    position: {x: 4, y: 6}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 1, y: 5}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 2, y: 6}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 7, y: 5}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 6, y: 6}
+  - entity: {fileID: 11400000, guid: 11bb40f06f81b9c49aa48b5b4dee63e8, type: 2}
+    heldCrystalValue: 2
+    position: {x: 4, y: 7}
+  - entity: {fileID: 11400000, guid: 2597a7d3eef2c4343b00d55c758dc1d3, type: 2}
+    heldCrystalValue: -1
+    position: {x: 4, y: 8}
   size: 9
   center: {x: 4, y: 3}

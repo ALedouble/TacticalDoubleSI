@@ -17,11 +17,9 @@ public class PlayerBrain : Brain
        
         this.entityBehaviour = entityBehaviour;
 
-        if (this.entityBehaviour.IsChannelingBurst)
-        {
-            CanSelectAnotherPlayer();
-            return;
-        }
+        CancelEverything();
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
@@ -54,6 +52,7 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnClick -= OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
         SelectionManager.Instance.OnHoveredTileChanged -= UpdateAbilityEffectArea;
+        SelectionManager.Instance.OnClick -= OnUseAbility;
 
         MapManager.SetCastableTilesPreview(null);
         MapManager.SetEffectTilesPreview(null);
@@ -97,10 +96,13 @@ public class PlayerBrain : Brain
 
         Sequence moveSequence = entityBehaviour.MoveTo(reachableTile);
 
+        HUDManager.Instance.HideEndTurnButton();
+
         moveSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
-            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            CanSelectAnotherPlayer();
+            HUDManager.Instance.ShowEndTurnButton();
         });
     }
 
@@ -124,6 +126,8 @@ public class PlayerBrain : Brain
 
         castableTiles = entityBehaviour.data.abilities[index].castArea.GetWorldSpace(entityBehaviour.GetPosition());
 
+        SelectionManager.Instance.OnClick += CancelAbility;
+
         if (!entityBehaviour.data.abilities[index].canCastOnEntityPosition)
         {
             castableTiles.RemoveAll(x => !MapManager.GetTile(x).IsWalkable);
@@ -131,6 +135,19 @@ public class PlayerBrain : Brain
         castableTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
 
         MapManager.SetCastableTilesPreview(castableTiles);
+    }
+
+    void CancelAbility(MapRaycastHit mapHit)
+    {
+        SelectionManager.Instance.OnClick -= CancelAbility;
+
+        if (castableTiles.Contains(mapHit.position))
+        {
+            return;
+        }
+
+        CancelEverything();
+        CanSelectAnotherPlayer();
     }
 
     void OnUseAbility(MapRaycastHit hit)
@@ -151,17 +168,21 @@ public class PlayerBrain : Brain
         if (entityBehaviour.GetAbilities(selectedAbilityIndex).Channeling)
         {
             entityBehaviour.channelingRoundsLeft = 1;
+            
             entityBehaviour.channelingAbility = entityBehaviour.GetAbilities(selectedAbilityIndex);
             SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            animBlastOut(entityBehaviour, entityBehaviour.channelingAbility);
             return;
         }
          Sequence attackSequence = entityBehaviour.UseAbility(entityBehaviour.GetAbilities(selectedAbilityIndex), hit.tile);
 
-        
+
+        HUDManager.Instance.HideEndTurnButton();
+
         attackSequence.OnComplete(() =>
         {
             OnTurnStart(entityBehaviour);
-            SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
+            HUDManager.Instance.ShowEndTurnButton();
         });
 
         List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);
@@ -181,5 +202,28 @@ public class PlayerBrain : Brain
         effectTiles.RemoveAll(x => MapManager.GetTile(x.x, x.y).tileType == TileType.Solid);
 
         MapManager.SetEffectTilesPreview(effectTiles);
+    }
+
+    Sequence animBlastOut(EntityBehaviour entity, Ability ability)
+    {
+        Sequence blastOutSequence = DOTween.Sequence();
+
+        EntityAnimation anim = entity.data.animations.channelingStartAnimation;
+        blastOutSequence.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(anim);
+        });
+
+        blastOutSequence.AppendInterval(3f);
+
+       
+
+        blastOutSequence.AppendCallback(() =>
+        {
+            anim = entity.data.animations.channelingIdleAnimation;
+            entity.animator.PlayAnimation(anim);
+        });
+
+            return blastOutSequence;
     }
 }
