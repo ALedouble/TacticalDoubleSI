@@ -84,9 +84,9 @@ public class PlayerTeamManager : MonoBehaviour
 
         int index = playerEntities.FindIndex(x => x.displayName == entity.displayName);
         Debug.Log(index);
-        entity.maxActionPoints += playerProgression[index].actionPointsIncrement;
-        entity.maxHealth += playerProgression[index].healthIncrement;
-        entity.armor += entity.armor;
+        entity.maxActionPoints += Mathf.Ceil(playerProgression[index].actionPointsIncrement);
+        entity.maxHealth += Mathf.Ceil(playerProgression[index].healthIncrement);
+        entity.armor += Mathf.Ceil(entity.armor);
 
         entity.power++;
     }
