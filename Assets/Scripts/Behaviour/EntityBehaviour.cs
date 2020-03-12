@@ -215,7 +215,7 @@ public class EntityBehaviour : MonoBehaviour
                 }
             }
         });
-
+        
         abilitySequence.AppendInterval(duration);
 
         abilitySequence.AppendCallback(() =>
