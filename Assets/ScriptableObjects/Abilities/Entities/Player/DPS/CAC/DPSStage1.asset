@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 1
-  displayName: Cleave
-  description: A melee cleave
+  displayName: Blow
+  description: Increase area of the attack
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 0}
@@ -26,7 +26,7 @@ MonoBehaviour:
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
-  abilitySFX: {fileID: 11400000, guid: 6b595fe6cd8ffb643a062a372b2e5e61, type: 2}
+  abilitySFX: {fileID: 0}
   castArea:
     size: 3
     area:

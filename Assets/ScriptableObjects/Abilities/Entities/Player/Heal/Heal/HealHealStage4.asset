@@ -14,18 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Greater heal
-  description: A massive area heal
+  displayName: Heal
+  description: Increase area of effect
   cost: 5
   multiplicator: 1
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 6916434496687535762, guid: 2911a751042a52248b07d53f1259c748, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
+  abilitySFX: {fileID: 0}
   castArea:
     size: 9
     area:
