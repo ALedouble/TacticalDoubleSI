@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MinionBrain", menuName = "ScriptableObjects/IA_Brain/Minion_Brain", order = 999)]
@@ -80,6 +81,8 @@ public class Minion : Brain
         if (Attack()) return;
 
         if (Walk()) return;
+
+        if (LastActionPossible()) return;
 
         IAUtils.CheckEndTurn(minion, CanMakeAction(), true);
     }
@@ -166,6 +169,15 @@ public class Minion : Brain
             haveEndTurn = IAUtils.WalkOnShortest(minion, playerHealer, playerDPS, playerTank, iaEntityFunction, conditionFunction);
         }
 
+        return haveEndTurn;
+    }
+
+    /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(minion, playerHealer, playerDPS, playerTank, iaEntityFunction, conditionFunction);
         return haveEndTurn;
     }
 
