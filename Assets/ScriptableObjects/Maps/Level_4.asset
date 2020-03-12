@@ -320,7 +320,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 5, y: 1}
-    tileType: 2
+    tileType: 0
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -740,15 +740,9 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: 74c6a767695a4c944af7e32fb0f986d6, type: 2}
     heldCrystalValue: -1
     position: {x: 6, y: 5}
-  - entity: {fileID: 11400000, guid: 0a21d3fbf7a82174793d88704d2a41f8, type: 2}
-    heldCrystalValue: -1
-    position: {x: 2, y: 2}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
     position: {x: 9, y: 10}
-  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
-    heldCrystalValue: -1
-    position: {x: 1, y: 9}
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
     position: {x: 0, y: 5}
@@ -767,5 +761,11 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
     heldCrystalValue: -1
     position: {x: 11, y: 1}
+  - entity: {fileID: 11400000, guid: 0a21d3fbf7a82174793d88704d2a41f8, type: 2}
+    heldCrystalValue: -1
+    position: {x: 2, y: 2}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 1, y: 8}
   size: 12
-  center: {x: 0, y: 0}
+  center: {x: 6, y: 6}
