@@ -243,9 +243,9 @@ public class Healer : Brain
         for (int i = 0; i < reachableTiles.Count; i++)
         {
             furthestTile = 0;
-            furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerHealer.GetPosition());
-            furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerDPS.GetPosition());
-            furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerTank.GetPosition());
+            if (playerHealer != null) furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerHealer.GetPosition());
+            if (playerDPS != null) furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerDPS.GetPosition());
+            if (playerTank != null) furthestTile += Vector2Int.Distance(reachableTiles[i].GetCoordPosition(), playerTank.GetPosition());
 
             if (bestMoyenne <= furthestTile)
             {

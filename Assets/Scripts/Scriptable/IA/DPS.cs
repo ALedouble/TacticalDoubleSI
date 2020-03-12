@@ -157,14 +157,14 @@ public class DPS : Brain
             
             if (listOfPathToTank != null)
             {
-                //if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
-                //{
+                if(!SeeToUseAbilityDuringThePathToTarget(listOfPathToTank[0], false))
+                {
                     if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, listOfPathToTank[0].Item1, iaEntityFunction))
                     {
                         haveEndTurn = true;
                         return true;
                     }
-                //}
+                }
 
                 else return true;
             }
@@ -249,9 +249,7 @@ public class DPS : Brain
         {
             if (walkOnly)
             {
-                Debug.Log(dps.CurrentActionPoints);
                 tileToWalkOnEntity = IAUtils.FindShortestPath(true, dps.GetPosition(), entity.GetPosition(), true, dps.CurrentActionPoints, true);
-                Debug.Log(tileToWalkOnEntity.cost);
                 return new Tuple<ReachableTile, EntityBehaviour>(tileToWalkOnEntity, entity);
             }
 
