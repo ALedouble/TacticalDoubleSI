@@ -21,7 +21,7 @@ Material:
     m_TexEnvs:
     - _WaterBump1:
         m_Texture: {fileID: 2800000, guid: a1be982624122584d90046922d9300df, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
@@ -30,9 +30,9 @@ Material:
     m_Floats:
     - __dirty: 0
     m_Colors:
-    - _BaseColor: {r: 0.4590993, g: 0, b: 1, a: 0}
+    - _BaseColor: {r: 0.43241262, g: 0, b: 1, a: 0}
     - _Color: {r: 0.2627451, g: 0, b: 1, a: 0}
     - _Color0: {r: 0.2627451, g: 0, b: 1, a: 0}
-    - _MulitplyColor: {r: 4, g: 3, b: 3, a: 3}
-    - _NoiseColor: {r: 0.4592381, g: 0.37121755, b: 0.8113208, a: 0}
-    - _NoiseSpeed: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - _MulitplyColor: {r: 12.1, g: 4, b: 34.67, a: 3}
+    - _NoiseColor: {r: 0.44130173, g: 0.37254906, b: 0.8117647, a: 0}
+    - _NoiseSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
