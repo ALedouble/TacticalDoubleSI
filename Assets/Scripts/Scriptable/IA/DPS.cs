@@ -288,7 +288,9 @@ public class DPS : Brain
             zoneCastDist = new List<TileData>() { pathToEntityCac.path[i] };
             for (int j = 0; j < listOfEntity.Count; j++)
             {
-                TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
+                TileData tileToCast = null;
+
+                if (listOfEntity[j] != null) IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
                 if (tileToCast != null)
                 {
                     return UseAbilityDuringThePathToTarget(pathToEntityCac, tileToCast, zoneCastDist, priorityOnRun);

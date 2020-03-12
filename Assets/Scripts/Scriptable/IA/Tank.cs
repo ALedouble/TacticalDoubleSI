@@ -71,7 +71,7 @@ public class Tank : Brain
 
         if (Walk()) return;
 
-        IAUtils.CheckEndTurn(tank, CanMakeAction());
+        IAUtils.CheckEndTurn(tank, CanMakeAction(), true);
     }
 
     /*
