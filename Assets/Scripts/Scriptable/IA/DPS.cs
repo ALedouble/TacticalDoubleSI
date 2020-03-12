@@ -63,6 +63,7 @@ public class DPS : Brain
      */
     private void IA_DPS()
     {
+        Debug.Log("pass");
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
@@ -74,10 +75,12 @@ public class DPS : Brain
         if (GoToHealer()) return;
 
         if (GoToTank()) return;
-
+        Debug.Log("att");
         if (Attack()) return;
-
+        Debug.Log("WalkVersPrio");
         if (WalkVersPrio()) return;
+        Debug.Log("LastActionPossible");
+        if (LastActionPossible()) return;
 
         IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
     }
@@ -103,12 +106,10 @@ public class DPS : Brain
     {
         if ((float)dps.CurrentHealth < (float)((dps.GetMaxHealth() * percentOfLifeNeedForRunToHealer) / 100))
         {
-            Debug.Log("heal");
             List<Tuple<ReachableTile, EntityBehaviour>> listOfPathToHealer = IAUtils.PathToCastOrToJoin(true, IAUtils.GetReachableTileFromCastOrPathDelegate, dps, enemyHealer, reachableTiles, null, true);
 
             if (listOfPathToHealer != null)
             {
-                Debug.Log("find");
                 ReachableTile pathToHealer;
                 EntityBehaviour healer;
 
@@ -184,16 +185,22 @@ public class DPS : Brain
     private bool Attack()
     {
         reachableTiles = IAUtils.FindAllReachablePlace(dps.GetPosition(), dps.CurrentActionPoints - ability1.cost, true);
-        Tuple<ReachableTile, EntityBehaviour> target = FindPriorityForAllEntity();
+        List<Tuple<ReachableTile, EntityBehaviour>> target = FindPriorityForAllEntity();
 
         if (target == null) return false;
 
-        if (!SeeToUseAbilityDuringThePathToTarget(target, true))
+        for (int i = 0; i < target.Count; i++)
         {
-            return IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction, true, dpsAbilityCall, ability1, target.Item1.castTile);
+            if (!SeeToUseAbilityDuringThePathToTarget(target[i], true))
+            {
+                if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, target[i].Item1, iaEntityFunction, true, dpsAbilityCall, ability1, target[i].Item1.castTile))
+                {
+                    return true;
+                }
+            }
         }
 
-        return true;
+        return false;
     }
 
     /*
@@ -203,11 +210,13 @@ public class DPS : Brain
     private bool WalkVersPrio()
     {
         reachableTiles = IAUtils.FindAllReachablePlace(dps.GetPosition(), dps.CurrentActionPoints, true);
-        Tuple<ReachableTile, EntityBehaviour> target = FindPriorityForAllEntity(true);
+        List<Tuple<ReachableTile, EntityBehaviour>> target = FindPriorityForAllEntity(true);
 
-        if (target != null)
-        { 
-            if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, target.Item1, iaEntityFunction))
+        if (target == null) return false;
+
+        for (int i = 0; i < target.Count; i++)
+        {
+            if (IAUtils.MoveAndTriggerAbilityIfNeed(dps, target[i].Item1, iaEntityFunction))
             {
                 haveEndTurn = true;
                 return true;
@@ -218,23 +227,32 @@ public class DPS : Brain
     }
 
     /*
+     * Permet de se deplacer meme si aucun chemin n'est disponible jusque le player
+     */
+    private bool LastActionPossible()
+    {
+        haveEndTurn = IAUtils.LastChancePath(dps, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        return haveEndTurn;
+    }
+
+    /*
      * Trouve parmis les unite du player, laquelle le dps doit cibler en priorite
      */
-    private Tuple<ReachableTile, EntityBehaviour> FindPriorityForAllEntity(bool walkOnly = false)
+    private List<Tuple<ReachableTile, EntityBehaviour>> FindPriorityForAllEntity(bool walkOnly = false)
     {
-        Tuple<ReachableTile, EntityBehaviour> tilesToCastOnEntity;
+        List<Tuple<ReachableTile, EntityBehaviour>> listOfTileToAttack = new List<Tuple<ReachableTile, EntityBehaviour>>();
         List<bool> conditionOnPlayer = new List<bool>() { true, false };
         
         for (int i = 0; i < conditionOnPlayer.Count; i++)
         {
             for (int j = 0; j < listOfEntity.Count; j++)
             {
-                tilesToCastOnEntity = FindPriorityForEntity(listOfEntity[j], conditionOnPlayer[i], walkOnly);
-                if (tilesToCastOnEntity != null) return tilesToCastOnEntity;
+                Tuple<ReachableTile, EntityBehaviour> temp = FindPriorityForEntity(listOfEntity[j], conditionOnPlayer[i], walkOnly);
+                if (temp != null) listOfTileToAttack.Add(temp);
             }
         }
 
-        return null;
+        return listOfTileToAttack;
     }
 
     /*
@@ -245,18 +263,23 @@ public class DPS : Brain
         List<ReachableTile> tilesToCastOnEntity;
         ReachableTile tileToWalkOnEntity;
 
+        Debug.Log("find");
+        Debug.Log(entity);
+        Debug.Log((!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)));
+
         if (entity != null && (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)))
         {
             if (walkOnly)
             {
                 tileToWalkOnEntity = IAUtils.FindShortestPath(true, dps.GetPosition(), entity.GetPosition(), true, dps.CurrentActionPoints, true);
-                return new Tuple<ReachableTile, EntityBehaviour>(tileToWalkOnEntity, entity);
+                if (tileToWalkOnEntity != null) return new Tuple<ReachableTile, EntityBehaviour>(tileToWalkOnEntity, entity);
             }
 
             else
             {
+                Debug.Log("else");
                 tilesToCastOnEntity = IAUtils.ValidCastFromTile(ability1, reachableTiles, entity.GetPosition());
-
+                Debug.Log(tilesToCastOnEntity);
                 if (tilesToCastOnEntity.Count > 0)
                 {
                     return new Tuple<ReachableTile, EntityBehaviour>(tilesToCastOnEntity[0], entity);

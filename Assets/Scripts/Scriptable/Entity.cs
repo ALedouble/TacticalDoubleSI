@@ -14,6 +14,9 @@ public class Entity : ScriptableObject
     public string displayName;
     public Sprite portrait;
     public EntityAnimations animations;
+    public SoundReference walkSFX;
+    public SoundReference hitBySomeoneSFX;
+    public SoundReference deathSFX;
     public Vector2 pivot = new Vector2(0.5f, 0.5f);
 
     [Space]
@@ -34,6 +37,8 @@ public class Entity : ScriptableObject
 
     public int totemValue = -1;
     public bool isNotDestructible = false;
+    public bool isFx = false;
+    public GameObject fxEntity;
 
     public int GetAbilityNumber(Ability ability)
     {

@@ -38,9 +38,6 @@ public class Ability : ScriptableObject
     [Tooltip("VFX quand on lance l'attaque")]
     public GameObject vfxCast;
 
-    [Tooltip("SFX quand on lance l'attaque")]
-    public AudioSource sfxCast;
-
     [Tooltip("Est-ce possible de se le lancer dessus")]
     public bool canCastOnEntityPosition;
 
@@ -53,6 +50,9 @@ public class Ability : ScriptableObject
 
     [Tooltip("Les effets que la capacité va appeller")]
     public List<AbilityEffect> abilityEffect;
+
+    [Tooltip("SFX de l'abilité")]
+    public SoundReference abilitySFX;
 
     [Tooltip("Zone ou la capcité pourra être lancé, à définir par sélection des tiles (gris foncé = notre position)")]
     public TileArea castArea;

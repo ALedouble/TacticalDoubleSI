@@ -29,33 +29,19 @@ public class HUDManager : MonoBehaviour
         canvas = FindObjectOfType<Canvas>();
 
         playerInfoGroup.alpha = 0;
-        enemyInfoGroup.alpha = 0;
+        //enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
         finishPlacementButton.DOScale(0, 0);
 
-        SelectionManager.Instance.OnEntitySelect += (x)=> 
-        {
-            switch (x.data.alignement)
-            {
-                case Alignement.Enemy:
-                    inspectedEnemy = x;
-                    break;
-                case Alignement.Player:
-                    inspectedPlayer = x;
-                    break;
-                default:
-                    break;
-            }
-            UpdateEntityInfo(x);
-        };
-        SelectionManager.Instance.OnHoveredEntityChanged += UpdateEntityInfo;
+        SelectionManager.Instance.OnEntitySelect += UpdateEntityInfo;
+
+        //SelectionManager.Instance.OnHoveredEntityChanged += UpdateEntityInfo;
         SelectionManager.Instance.OnCancel += () =>
         {
             inspectedEnemy = null;
             inspectedPlayer = null;
 
-            UpdateEntityInfo(null);
             UpdateEntityInfo(null);
         };
 
@@ -126,14 +112,14 @@ public class HUDManager : MonoBehaviour
     Image playerIcon;
     Image enemyIcon;
 
-    void UpdateEntityInfo(EntityBehaviour entity)
+    public void UpdateEntityInfo(EntityBehaviour entity)
     {
         if (entity == null)
         {
             if (inspectedEnemy == null)
             {
-                enemyInfoFade?.Kill();
-                enemyInfoGroup.DOFade(0, 0.05f);
+                //enemyInfoFade?.Kill();
+                //enemyInfoGroup.DOFade(0, 0.05f);
             }
             if (inspectedPlayer == null)
             {
@@ -147,6 +133,17 @@ public class HUDManager : MonoBehaviour
             return;
         }
 
+        switch (entity.data.alignement)
+        {
+            case Alignement.Enemy:
+                inspectedEnemy = entity;
+                break;
+            case Alignement.Player:
+                inspectedPlayer = entity;
+                break;
+            default:
+                break;
+        }
 
         TextMeshProUGUI HPtextMesh = null;
         TextMeshProUGUI PAtextMesh = null;
@@ -160,6 +157,8 @@ public class HUDManager : MonoBehaviour
         {
             case Alignement.Enemy :
 
+                return;
+                
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
 
@@ -178,6 +177,8 @@ public class HUDManager : MonoBehaviour
                 fade = playerInfoFade;
 
                 icon = playerIcon;
+
+                //if (inspectedPlayer != null) return;
 
                 break;
             case Alignement.Neutral:
@@ -204,8 +205,11 @@ public class HUDManager : MonoBehaviour
         icon.sprite = entity.data.portrait;
         icon.preserveAspect = true;
 
-        HPtextMesh.text = entity.CurrentHealth.ToString() + "/" + entity.data.maxHealth;
-        PAtextMesh.text = entity.CurrentActionPoints.ToString() + "/" + entity.data.maxActionPoints;
+        string healthString = "<size=50><color=#59c23d>" + entity.CurrentHealth + "</color></size>" + "/" + entity.data.maxHealth;
+        string paString = "<size=50><color=#FFF32F>" + entity.CurrentActionPoints + "</color></size>" + "/" + entity.data.maxActionPoints;
+
+        HPtextMesh.text = healthString;
+        PAtextMesh.text = paString;
     }
 
     CanvasGroup tileInfoGroup;
