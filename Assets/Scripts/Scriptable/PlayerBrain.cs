@@ -29,6 +29,7 @@ public class PlayerBrain : Brain
 
 
         SelectionManager.Instance.OnClick -= OnMovement;
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick += OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
         HUDManager.Instance.OnAbilityClicked += OnAbilitySelected;
@@ -48,7 +49,7 @@ public class PlayerBrain : Brain
     {
         SelectionManager.Instance.OnEntitySelect -= DeselectThis;
 
-        if (entity == entityBehaviour)
+        if (entity == entityBehaviour || entity == null)
         {
             return;
         }
@@ -80,8 +81,6 @@ public class PlayerBrain : Brain
     {
         if (hit.tile == null) return;
 
-        Debug.Log("moving " + entityBehaviour);
-
         bool canReachTile = false;
         for (int i = 0; i < reachableTiles.Count; i++)
         {
@@ -95,6 +94,8 @@ public class PlayerBrain : Brain
 
         if (!canReachTile) return;
 
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick -= OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
 
