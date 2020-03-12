@@ -15,6 +15,9 @@ MonoBehaviour:
   displayName: M
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 516e460b22715f540ba5fb92649c7696, type: 2}
+  walkSFX: {fileID: 0}
+  hitBySomeoneSFX: {fileID: 0}
+  deathSFX: {fileID: 11400000, guid: 29686d95ae798ce4b861a7fd1a468ab8, type: 2}
   pivot: {x: 0.5, y: 0.5}
   maxHealth: 13
   maxActionPoints: 10
@@ -28,3 +31,6 @@ MonoBehaviour:
   power: 7
   xpPoint: 1
   totemValue: -1
+  isNotDestructible: 0
+  isFx: 0
+  fxEntity: {fileID: 0}
