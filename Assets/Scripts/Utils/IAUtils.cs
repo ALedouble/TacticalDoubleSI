@@ -23,7 +23,8 @@ public static class IAUtils
     /*
      * Trouve l'ensemble des positions atteignables depuis "startPosition"
      */
-    public static List<ReachableTile> FindAllReachablePlace(Vector2Int startPosition, int range, bool ignoreWeightMove = false, bool ignoreWalkable = false, bool canWalkOnDamageTile = true, bool stopJustBeforeTarget = false)
+    public static List<ReachableTile> FindAllReachablePlace(Vector2Int startPosition, int range,
+                                                                bool ignoreWeightMove = false, bool ignoreWalkable = false, bool canWalkOnDamageTile = true, bool stopJustBeforeTarget = false)
     {
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { MapManager.GetTile(startPosition) }, 0) };
 
@@ -35,14 +36,15 @@ public static class IAUtils
     /*
      * Trouve le plus court chemin depuis "startPosition" a "target", calculer par la fonction de l'IA
      */
-    public static ReachableTile FindShortestPath(bool stopJustBeforeTarget, Vector2Int startPosition, Vector2Int target, bool canWalkOnDamageTile = true, int range = -1, bool ignoreWeightMove = false)
+    public static ReachableTile FindShortestPath(bool stopJustBeforeTarget, Vector2Int startPosition, Vector2Int target, 
+                                                    bool canWalkOnDamageTile = true, int range = -1, bool ignoreWeightMove = false, bool ignoreWalkable = false)
     {
         List<ReachableTile> reachableTiles = new List<ReachableTile>() { new ReachableTile(new List<TileData>() { MapManager.GetTile(startPosition) }, 0) };
         List<Vector2Int> deletedPlaces = new List<Vector2Int>();
 
         if (!startPosition.Equals(target))
         {
-            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range, false, ignoreWeightMove))
+            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range, ignoreWalkable, ignoreWeightMove))
             {
                 deletedPlaces.Add(reachableTiles[0].GetCoordPosition());
                 reachableTiles.RemoveAt(0);
@@ -81,8 +83,10 @@ public static class IAUtils
                 {
                     if ((reachableTiles[i].GetCoordPosition() + attackRangeCast[j] + attackRangeEffect[k]).Equals(target))
                     {
-                        reachableTiles[i].castTile = MapManager.GetTile(reachableTiles[i].GetCoordPosition() + attackRangeCast[j]);
-                        canCastAndHitTarget.Add(reachableTiles[i]);
+                        ReachableTile reachableTile = new ReachableTile(reachableTiles[i].path, reachableTiles[i].cost);
+                        reachableTile.castTile = MapManager.GetTile(reachableTiles[i].GetCoordPosition() + attackRangeCast[j]);
+
+                        canCastAndHitTarget.Add(reachableTile);
                         break;
                     }
                 }
@@ -161,19 +165,20 @@ public static class IAUtils
         if (playerHealer != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerHealerPathToAttack = resultForCast;
+            if (playerHealerPathToAttack != null) Debug.Log(playerHealerPathToAttack.Count);
+            playerHealerPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
         if (playerDPS != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerDPSPathToAttack = resultForCast;
+            playerDPSPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
         if (playerTank != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
-            playerTankPathToAttack = resultForCast;
+            playerTankPathToAttack = new List<ReachableTile>(resultForCast);
         }
 
     }
@@ -351,6 +356,8 @@ public static class IAUtils
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
+                if (abilityTarget.GetPlayer().stasis) return false;
+
                 current.MoveTo(moveTarget).OnComplete(() => { functionToCallAfterTheMove(current, ability, abilityTarget, iaEntityFunction); });
             }
 
@@ -467,6 +474,58 @@ public static class IAUtils
                     if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction))
                     {
                         return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Trouve un chemin avec priorite pour ce deplacer, meme si la destination final n'est pas atteignable
+     */
+    public static bool LastChancePath(EntityBehaviour current, EntityBehaviour firstEntity, EntityBehaviour secondEntity, EntityBehaviour thirdEntity, IAEntity iaEntityFunction, 
+                                        SpecificConditionReachable functionConditionReachable = null)
+    {
+        List<EntityBehaviour> entities = new List<EntityBehaviour>();
+        if (firstEntity != null) entities.Add(firstEntity);
+        if (secondEntity != null) entities.Add(secondEntity);
+        if (thirdEntity != null) entities.Add(thirdEntity);
+
+        ReachableTile maxReachableTile = null;
+        ReachableTile shortReachableTile = null;
+
+        for (int i = 0; i < entities.Count; i++)
+        {
+            maxReachableTile = FindShortestPath(true, current.GetPosition(), entities[i].GetPosition(), true, -1, true, true);
+            if (maxReachableTile != null && maxReachableTile.path != null)
+            {
+                for (int j = maxReachableTile.path.Count - 1; j >= 0; j--)
+                {
+                    if (maxReachableTile.path[j].IsWalkable)
+                    {
+                        shortReachableTile = FindShortestPath(true, current.GetPosition(), maxReachableTile.path[j].GetCoordPosition(), true, current.CurrentActionPoints, true);
+                        if (shortReachableTile != null && shortReachableTile.path.Count > 0)
+                        {
+                            bool minionCondition = false;
+                            if (functionConditionReachable != null)
+                            {
+                                minionCondition = true;
+                                if (functionConditionReachable(shortReachableTile))
+                                {
+                                    minionCondition = false;
+                                }
+                            }
+
+                            if (!minionCondition)
+                            {
+                                if (MoveAndTriggerAbilityIfNeed(current, shortReachableTile, iaEntityFunction))
+                                {
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -601,7 +660,7 @@ public static class IAUtils
                 IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, range, ignoreWalkable, ignoreWeightMove);
             }
 
-            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, -1, false, ignoreWeightMove))
+            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, -1, ignoreWalkable, ignoreWeightMove))
             {
                 return true;
             }

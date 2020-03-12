@@ -57,4 +57,17 @@ public class TileData
         return this.position;
     }
 
+    public EntityBehaviour GetPlayer()
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            if (entities[i].GetAlignement().Equals(Alignement.Player))
+            {
+                return entities[i];
+            }
+        }
+
+        return null;
+    }
+
 }
