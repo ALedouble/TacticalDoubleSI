@@ -111,10 +111,6 @@ public class EntityBehaviour : MonoBehaviour
         animator.Update();
     }
 
-    private void Update()
-    {
-
-    }
 
     public void OnTurn()
     {

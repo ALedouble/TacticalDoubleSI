@@ -33,6 +33,7 @@ public class Entity : ScriptableObject
     [Space]
 
     public int totemValue = -1;
+    public bool isNotDestructible = false;
 
     public int GetAbilityNumber(Ability ability)
     {
