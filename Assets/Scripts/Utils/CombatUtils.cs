@@ -23,6 +23,7 @@ public static class CombatUtils
         for (int i = 0; i < entity.GetAbilities().Count; i++)
         {
             float heal = ((entity.data.power * ability.multiplicator));
+            
             healValue = heal;
         }
 

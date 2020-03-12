@@ -111,10 +111,6 @@ public class EntityBehaviour : MonoBehaviour
         animator.Update();
     }
 
-    private void Update()
-    {
-
-    }
 
     public void OnTurn()
     {
@@ -130,11 +126,7 @@ public class EntityBehaviour : MonoBehaviour
         }
         else
         {
-           
-            
             data.brain.OnTurnStart(this);
-
-
         }
     }
 
