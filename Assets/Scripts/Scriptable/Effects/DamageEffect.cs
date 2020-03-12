@@ -43,7 +43,7 @@ public class DamageEffect : AbilityEffect
             if (x.data.alignement != entity.data.alignement && !x.data.isNotDestructible)
             {
                 x.animator.PlayAnimation(x.data.animations.hitAnimation);
-                //SoundManager.Instance.PlaySound(x.data.hitBySomeoneSFX.sound, false);
+                SoundManager.Instance.PlaySound(x.data.hitBySomeoneSFX.sound, false);
                 float damage = Mathf.Ceil(SetDamage(entity, ability) - x.CurrentArmor);
                 x.CurrentHealth -= (int)damage;
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));

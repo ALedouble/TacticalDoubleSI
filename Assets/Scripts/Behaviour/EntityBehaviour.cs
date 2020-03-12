@@ -152,7 +152,7 @@ public class EntityBehaviour : MonoBehaviour
             moveSequence.AppendCallback(() =>
             {
                 animator.PlayAnimation(data.animations.moveAnimation);
-               // SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
+                SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
             });
             
             moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), data.alignement == Alignement.Player ? data.animations.moveAnimation.Length-.1f : .3f)
@@ -185,7 +185,7 @@ public class EntityBehaviour : MonoBehaviour
     {
         CurrentActionPoints -= ability.cost;
         Sequence abilitySequence = DOTween.Sequence();
-       // SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
+        SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
@@ -269,7 +269,7 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-           // SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
+            SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
             MapManager.GetListOfEntity().Remove(this);
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
