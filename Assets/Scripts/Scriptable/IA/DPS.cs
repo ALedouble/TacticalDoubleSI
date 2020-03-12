@@ -245,7 +245,7 @@ public class DPS : Brain
         List<ReachableTile> tilesToCastOnEntity;
         ReachableTile tileToWalkOnEntity;
 
-        if (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100))
+        if (entity != null && (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)))
         {
             if (walkOnly)
             {
