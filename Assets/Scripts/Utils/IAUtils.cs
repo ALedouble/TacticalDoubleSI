@@ -42,7 +42,7 @@ public static class IAUtils
 
         if (!startPosition.Equals(target))
         {
-            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range))
+            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range, false, ignoreWeightMove))
             {
                 deletedPlaces.Add(reachableTiles[0].GetCoordPosition());
                 reachableTiles.RemoveAt(0);
@@ -156,21 +156,21 @@ public static class IAUtils
                                         ref List<ReachableTile> playerHealerPathToAttack, ref List<ReachableTile> playerDPSPathToAttack, ref List<ReachableTile> playerTankPathToAttack,
                                         EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank)
     {
-        List<ReachableTile> resultForCast;
+        List<ReachableTile> resultForCast = null;
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
+        if (playerHealer != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerHealerPathToAttack = resultForCast;
         }
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
+        if (playerDPS != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerDPSPathToAttack = resultForCast;
         }
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
+        if (playerTank != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerTankPathToAttack = resultForCast;
@@ -601,7 +601,7 @@ public static class IAUtils
                 IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, range, ignoreWalkable, ignoreWeightMove);
             }
 
-            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile))
+            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, -1, false, ignoreWeightMove))
             {
                 return true;
             }
@@ -629,12 +629,12 @@ public static class IAUtils
         {
             ReachableTile currentPlaceAlreadyFind = reachableTiles.Where(elem => elem.GetCoordPosition().Equals(lookingPosition)).FirstOrDefault();
 
+            int cout;
+            if (ignoreWeightMove) cout = precedentPlace.cost + fixedWeight;
+            else cout = precedentPlace.cost + (int)lookingTileData.tileType;
+
             if (navigationType.Equals(NavigationQueryType.Area))
             {
-                int cout;
-                if (ignoreWeightMove) cout = precedentPlace.cost + fixedWeight;
-                else cout = precedentPlace.cost + (int)lookingTileData.tileType;
-
                 if (cout <= range) // S'il nous reste assez de points de deplacement pour aller sur lookingTileData
                 {
                     ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
@@ -644,7 +644,7 @@ public static class IAUtils
 
             else
             {
-                ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, precedentPlace.cost + (int)lookingTileData.tileType);
+                ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
                 return AddTilesInList(stopJustBeforeTarget, navigationType, ref reachableTiles, currentPlaceAlreadyFind, currentPlace, target, canWalkOnDamageTile);
             }
         }

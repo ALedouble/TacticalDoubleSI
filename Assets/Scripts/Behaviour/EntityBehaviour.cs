@@ -130,11 +130,7 @@ public class EntityBehaviour : MonoBehaviour
         }
         else
         {
-           
-            
             data.brain.OnTurnStart(this);
-
-
         }
     }
 
@@ -195,25 +191,44 @@ public class EntityBehaviour : MonoBehaviour
         abilitySequence.AppendCallback(() =>
         {
             animator.PlayAnimation(anim);
-            
+
+            if (ability.playEffectsAtStart)
+            {
+                List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
+
+                for (int i = 0; i < fxPositions.Count; i++)
+                {
+                    FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
+                }
+
+                earnedXPThisAbility = false;
+
+                for (int i = 0; i < ability.abilityEffect.Count; i++)
+                {
+                    ability.abilityEffect[i].Activate(this, ability, targetTile);
+                }
+            }
         });
 
         abilitySequence.AppendInterval(duration);
 
         abilitySequence.AppendCallback(() =>
         {
-            List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
-
-            for (int i = 0; i < fxPositions.Count; i++)
+            if (!ability.playEffectsAtStart)
             {
-                FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
-            }
+                List<Vector2Int> fxPositions = ability.effectArea.GetWorldSpaceRotated(GetPosition(), targetTile.position);
 
-            earnedXPThisAbility = false;
+                for (int i = 0; i < fxPositions.Count; i++)
+                {
+                    FXManager.SpawnFX(ability.vfxCast, fxPositions[i], targetTile.position - GetPosition());
+                }
 
-            for (int i = 0; i < ability.abilityEffect.Count; i++)
-            {
-                ability.abilityEffect[i].Activate(this, ability, targetTile);
+                earnedXPThisAbility = false;
+
+                for (int i = 0; i < ability.abilityEffect.Count; i++)
+                {
+                    ability.abilityEffect[i].Activate(this, ability, targetTile);
+                }
             }
             animator.PlayAnimation(data.animations.idleAnimation);
 
@@ -243,17 +258,23 @@ public class EntityBehaviour : MonoBehaviour
 
     public void CheckCurrentHealthAndDestroy()
     {
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             MapManager.GetListOfEntity().Remove(this);
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
+            RoundManager.Instance.CheckRemainingEntities();
         }
     }
     
     public void Shake()
     {
-        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.5f, 0, .5f), 10, 90, false, true);
+        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.8f, 0, 0), 30, 90, false, true);
+    }
+
+    public void Stretch()
+    {
+        transform.DOPunchScale(Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(-.2f, .2f, 0), .2f, 15, 1f);
     }
 }
 
