@@ -21,6 +21,8 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
         SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
+        SelectionManager.Instance.OnEntitySelect += DeselectThis;
+
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
@@ -40,6 +42,19 @@ public class PlayerBrain : Brain
         MapManager.SetReachableTilesPreview(reachableTiles);
 
         
+    }
+
+    void DeselectThis(EntityBehaviour entity)
+    {
+        SelectionManager.Instance.OnEntitySelect -= DeselectThis;
+
+        if (entity == entityBehaviour)
+        {
+            return;
+        }
+
+        SelectionManager.Instance.OnClick -= OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
     }
 
     void CanSelectAnotherPlayer()
@@ -64,6 +79,8 @@ public class PlayerBrain : Brain
     void OnMovement(MapRaycastHit hit)
     {
         if (hit.tile == null) return;
+
+        Debug.Log("moving " + entityBehaviour);
 
         bool canReachTile = false;
         for (int i = 0; i < reachableTiles.Count; i++)

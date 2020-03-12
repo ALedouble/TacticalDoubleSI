@@ -26,7 +26,7 @@ MonoBehaviour:
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: fb4425e52c2b37b4ea7e9b9314c81655, type: 2}
-  abilitySFX: {fileID: 0}
+  abilitySFX: {fileID: 11400000, guid: a9da3fd3b663a4e43aa1be98c84e8a47, type: 2}
   castArea:
     size: 7
     area:

@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: RAngeHealerElite
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Fire Wall
   description: A burning wall of fire
   cost: 3
   multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 0
+  Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  abilitySFX: {fileID: 11400000, guid: cd58c4b5080e24e228f8a27da5fe7de1, type: 2}
   castArea:
     size: 7
     area:
