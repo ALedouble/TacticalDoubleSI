@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Entity_Enemy_Heal
   m_EditorClassIdentifier: 
   displayName: H
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 67aff26774a717e45910dd874012e585, type: 3}
   animations: {fileID: 11400000, guid: 58cacbc232551144d87517c2e27f8a95, type: 2}
   walkSFX: {fileID: 0}
-  hitBySomeoneSFX: {fileID: 0}
+  hitBySomeoneSFX: {fileID: 11400000, guid: d8e5122b3778f49eab288383642bbbd9, type: 2}
   deathSFX: {fileID: 11400000, guid: 29686d95ae798ce4b861a7fd1a468ab8, type: 2}
   pivot: {x: 0.5, y: 0.5}
   maxHealth: 20
