@@ -13,18 +13,21 @@ MonoBehaviour:
   m_Name: BashTank
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Bash
   description: A blow that push away ennemies
   cost: 4
   multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 0
+  Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   - {fileID: 11400000, guid: be1d7f3a61156174c913c0689d3d64d7, type: 2}
+  abilitySFX: {fileID: 11400000, guid: 1f973c188743948b783c6be1294530bd, type: 2}
   castArea:
     size: 3
     area:

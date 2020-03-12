@@ -27,7 +27,7 @@ MonoBehaviour:
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   - {fileID: 11400000, guid: a6535086c89a85a438f516d967cbac61, type: 2}
-  abilitySFX: {fileID: 0}
+  abilitySFX: {fileID: 11400000, guid: 153086573dac54973a14e4ec314ec094, type: 2}
   castArea:
     size: 5
     area:
