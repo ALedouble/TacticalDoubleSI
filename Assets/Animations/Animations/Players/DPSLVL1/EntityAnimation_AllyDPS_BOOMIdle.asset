@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyDPS_BOOMIdle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 0a32928cf5d2bfd479ed9492c1da9684, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 8830ed036190235419f34e4dec63817b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 540a277e7caa2cd4f8bf281a1812897e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: d85a0482aeda7f044b655cdd79beaee5, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7f6a7d57bc129aa4a82d0fffd30dea26, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 120cd2368cde778428a8c7e23426ddcb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 24469c40849c2184abdc37709a3211f8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2bc4d74c2ce0a614ebb20e8c7c17838e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e05ab157aed8ec44b895f8dbf982c8de, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 51af7bbfb6073be409a878d8798ea4c1, type: 3}
+    length: 0.1
+  loopMode: 1

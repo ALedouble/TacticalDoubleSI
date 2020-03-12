@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: H
   portrait: {fileID: 0}
-  animations: {fileID: 11400000, guid: 93694fe3ad023664cbaef2a33aa79954, type: 2}
-  maxHealth: 0
-  maxActionPoints: 0
+  animations: {fileID: 0}
+  pivot: {x: 0.5, y: 0.5}
+  maxHealth: 25
+  maxActionPoints: 10
+  armor: 2
   abilities:
   - {fileID: 11400000, guid: 6eb629cca321d354dba2d17ecfdcc1bf, type: 2}
   - {fileID: 11400000, guid: e638a709f4b4d4d4cb3bdd7d053341d2, type: 2}
+  abilityLevels: 
   brain: {fileID: 0}
   alignement: 0
   entityTag: 0
-  power: 0
+  power: 8
+  xpPoint: 1
   totemValue: -1

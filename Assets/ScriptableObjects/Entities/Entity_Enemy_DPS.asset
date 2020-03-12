@@ -15,14 +15,17 @@ MonoBehaviour:
   displayName: DPS
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 7a6e4f907152b944ba732f5031ffd1d6, type: 2}
-  maxHealth: 10
+  pivot: {x: 0.5, y: 0.5}
+  maxHealth: 25
   maxActionPoints: 10
-  armor: 0
+  armor: 1
   abilities:
   - {fileID: 11400000, guid: 69ff57cc060f64743bc1fc560a7db716, type: 2}
   - {fileID: 11400000, guid: c60fa934a2f342641ba2386d7bb88615, type: 2}
+  abilityLevels: 
   brain: {fileID: 11400000, guid: d89fb07e551e94b4bba6dbb59a891b95, type: 2}
   alignement: 0
   entityTag: 1
-  power: 0
+  power: 9
+  xpPoint: 1
   totemValue: -1

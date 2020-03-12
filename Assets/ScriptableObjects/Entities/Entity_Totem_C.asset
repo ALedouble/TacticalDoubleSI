@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: T_C
   portrait: {fileID: 0}
   animations: {fileID: 11400000, guid: 17bc8f2a37bdd77408a7c8dcdfca9a7c, type: 2}
+  pivot: {x: 0.8, y: 0.2}
   maxHealth: 0
   maxActionPoints: 0
   armor: 0
@@ -25,4 +26,5 @@ MonoBehaviour:
   alignement: 2
   entityTag: 4
   power: 0
+  xpPoint: 1
   totemValue: 2

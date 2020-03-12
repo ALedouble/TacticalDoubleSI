@@ -42,7 +42,7 @@ public static class IAUtils
 
         if (!startPosition.Equals(target))
         {
-            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range))
+            while (reachableTiles.Count > 0 && !LookAround(stopJustBeforeTarget, NavigationQueryType.Path, ref reachableTiles, reachableTiles[0], target, canWalkOnDamageTile, range, false, ignoreWeightMove))
             {
                 deletedPlaces.Add(reachableTiles[0].GetCoordPosition());
                 reachableTiles.RemoveAt(0);
@@ -156,21 +156,21 @@ public static class IAUtils
                                         ref List<ReachableTile> playerHealerPathToAttack, ref List<ReachableTile> playerDPSPathToAttack, ref List<ReachableTile> playerTankPathToAttack,
                                         EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank)
     {
-        List<ReachableTile> resultForCast;
+        List<ReachableTile> resultForCast = null;
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
+        if (playerHealer != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerHealer.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerHealerPathToAttack = resultForCast;
         }
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
+        if (playerDPS != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerDPS.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerDPSPathToAttack = resultForCast;
         }
 
-        resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
+        if (playerTank != null) resultForCast = ValidCastFromTile(ability, reachableTiles, playerTank.GetPosition());
         if (resultForCast != null && resultForCast.Count > 0)
         {
             playerTankPathToAttack = resultForCast;
@@ -295,7 +295,7 @@ public static class IAUtils
 
         return null;
     }
-
+    
 
 
     //#################################################################################################################################################################################################
@@ -343,10 +343,11 @@ public static class IAUtils
     {
 
         if (moveTarget == null) return false;
-        if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
 
         if (condition)
         {
+            if (moveTarget.path != null && moveTarget.path.Count > 0 && moveTarget.path[0].GetCoordPosition().Equals(current.GetPosition())) moveTarget.path.RemoveAt(0);
+
             if (functionToCallAfterTheMove != null)
             {
                 if (current.CurrentActionPoints < ability.cost) return false;
@@ -441,6 +442,39 @@ public static class IAUtils
         return false;
     }
 
+    /*
+     * Se rapproche de l'ally le plus proche
+     */
+    public static bool WalkOnShortest(EntityBehaviour current, EntityBehaviour playerHealer, EntityBehaviour playerDPS, EntityBehaviour playerTank,
+                                            IAEntity iaEntityFunction, SpecificConditionReachable conditionReachable = null)
+    {
+        List<ReachableTile> pathToShortestEnemy = ShortestsPathToEnemy(true, current, playerHealer, playerDPS, playerTank, true, current.CurrentActionPoints, false, true);
+
+        if (pathToShortestEnemy != null)
+        {
+            for (int i = 0; i < pathToShortestEnemy.Count; i++)
+            {
+                if (conditionReachable != null)
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction, conditionReachable(pathToShortestEnemy[i])))
+                    {
+                        return true;
+                    }
+                }
+
+                else
+                {
+                    if (MoveAndTriggerAbilityIfNeed(current, pathToShortestEnemy[i], iaEntityFunction))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 
 
     //#################################################################################################################################################################################################
@@ -479,7 +513,7 @@ public static class IAUtils
                                                                             SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
                                                                             Ability ability = null, bool ignoreWeightMove = false)
     {
-        ReachableTile pathToUseAbility = null;
+        List<ReachableTile> pathToUseAbility = null;
 
         GetReachableTileFromCastOrPath pathTo = GetReachableTileFromCastOrPathDelegate;
 
@@ -487,7 +521,7 @@ public static class IAUtils
                                                                     ref pathToUseAbility, null, functionConditionEntity, functionConditionReachable, true, ignoreWeightMove);
     }
     public static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles, IAEntity iaEntityFunction,
-                                                                            Ability ability, ref ReachableTile pathToUseAbility, LambdaAbilityCall functionToCallAfterTheMove,
+                                                                            Ability ability, ref List<ReachableTile> pathToUseAbility, LambdaAbilityCall functionToCallAfterTheMove,
                                                                             SpecificConditionEntity functionConditionEntity = null, SpecificConditionReachable functionConditionReachable = null,
                                                                             bool ignoreWeightMove = false)
     {
@@ -567,7 +601,7 @@ public static class IAUtils
                 IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, range, ignoreWalkable, ignoreWeightMove);
             }
 
-            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile))
+            else if (IsMovementPossible(stopJustBeforeTarget, navigationType, ref reachableTile, precedentPlace, lookingTileData, lookingPosition, target, canWalkOnDamageTile, -1, false, ignoreWeightMove))
             {
                 return true;
             }
@@ -595,12 +629,12 @@ public static class IAUtils
         {
             ReachableTile currentPlaceAlreadyFind = reachableTiles.Where(elem => elem.GetCoordPosition().Equals(lookingPosition)).FirstOrDefault();
 
+            int cout;
+            if (ignoreWeightMove) cout = precedentPlace.cost + fixedWeight;
+            else cout = precedentPlace.cost + (int)lookingTileData.tileType;
+
             if (navigationType.Equals(NavigationQueryType.Area))
             {
-                int cout;
-                if (ignoreWeightMove) cout = precedentPlace.cost + fixedWeight;
-                else cout = precedentPlace.cost + (int)lookingTileData.tileType;
-
                 if (cout <= range) // S'il nous reste assez de points de deplacement pour aller sur lookingTileData
                 {
                     ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
@@ -610,7 +644,7 @@ public static class IAUtils
 
             else
             {
-                ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, precedentPlace.cost + (int)lookingTileData.tileType);
+                ReachableTile currentPlace = new ReachableTile(new List<TileData>(precedentPlace.path) { lookingTileData }, cout);
                 return AddTilesInList(stopJustBeforeTarget, navigationType, ref reachableTiles, currentPlaceAlreadyFind, currentPlace, target, canWalkOnDamageTile);
             }
         }
@@ -770,13 +804,21 @@ public static class IAUtils
     * Sinon, return false
     */
     private static bool MoveAndTriggerAbilityIfNeedOnTheShortestOfAGroup(GetReachableTileFromCastOrPath pathTo, EntityBehaviour current, List<EntityBehaviour> listEntity, List<ReachableTile> reachableTiles,
-                                                                            IAEntity iaEntityFunction, bool useAbility, Ability ability, ref ReachableTile pathToUseAbility,
+                                                                            IAEntity iaEntityFunction, bool useAbility, Ability ability, ref List<ReachableTile> pathToUseAbility,
                                                                             LambdaAbilityCall functionToCallAfterTheMove, SpecificConditionEntity functionConditionEntity,
                                                                             SpecificConditionReachable functionConditionReachable, bool stopJustBeforeTarget = false, bool ignoreWeightMove = false)
     {
         List<Tuple<ReachableTile, EntityBehaviour>> allEntitiesReachableBestTileForCast = PathToCastOrToJoin(stopJustBeforeTarget, pathTo, current, listEntity, reachableTiles, ability, ignoreWeightMove);
 
+
+        Debug.Log(allEntitiesReachableBestTileForCast);
+
+
         if (allEntitiesReachableBestTileForCast == null) return false;
+
+
+
+
 
         for (int i = 0; i < allEntitiesReachableBestTileForCast.Count; i++)
         {
@@ -797,7 +839,10 @@ public static class IAUtils
 
             if (useAbility && pathToUseAbility == null)
             {
-                pathToUseAbility = allEntitiesReachableBestTileForCast[i].Item1;
+                if (allEntitiesReachableBestTileForCast[i].Item2.CurrentHealth < allEntitiesReachableBestTileForCast[i].Item2.data.maxHealth)
+                {
+                    pathToUseAbility.Add(allEntitiesReachableBestTileForCast[i].Item1);
+                }
             }
         }
 

@@ -44,6 +44,8 @@ public class Ability : ScriptableObject
     [Tooltip("Est-ce possible de se le lancer dessus")]
     public bool canCastOnEntityPosition;
 
+    public bool playEffectsAtStart = false;
+
     public bool Channeling = false;
 
     [Tooltip("Cooldown (si 0, retourne null)")]

@@ -39,29 +39,43 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
         {
             PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingRoundsLeft--;
+
+
+            if (PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingRoundsLeft == 0)
+            {
+                PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
+                    PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
+                    PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
+            }
+
+            PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
+
+            if (PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft == 0)
+            {
+
+            }
         }
 
         for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
         {
             // TODO : carry over a part of previous action points
             MapManager.GetListOfEntity()[i].CurrentActionPoints = Mathf.CeilToInt(MapManager.GetListOfEntity()[i].data.maxActionPoints);
-            
-            
+
+
         }
 
-        SelectionManager.Instance.OnEntitySelect += StartPlayerTurn;
+        SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
         HUDManager.Instance.OnEndTurnPressed += EndTurn;
-
-        
     }
 
     public void StartPlayerTurn(EntityBehaviour entity)
     {
         if (entity.data.alignement != Alignement.Player) return;
-        if (entity.IsChannelingBurst) return;
+        if (entity.IsChannelingBurst || entity.stasis) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
+        Debug.Log("suce");
 
         entity.OnTurn();
     }
@@ -80,6 +94,7 @@ public class RoundManager : MonoBehaviour
         {
             phase = RoundPhase.AI;
 
+            SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
             SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
             HUDManager.Instance.OnEndTurnPressed -= EndTurn;
@@ -104,6 +119,38 @@ public class RoundManager : MonoBehaviour
                 roundEntities[currentEntityTurn].OnTurn();
 
             }
+        }
+    }
+
+    public void CheckRemainingEntities()
+    {
+        List<EntityBehaviour> ennemies = new List<EntityBehaviour>();
+        List<EntityBehaviour> allies = new List<EntityBehaviour>();
+
+        for (int i = 0; i < MapManager.GetListOfEntity().Count; i++)
+        {
+            if (MapManager.GetListOfEntity()[i].data.alignement == Alignement.Enemy)
+            {
+                ennemies.Add(MapManager.GetListOfEntity()[i]);
+            }
+
+            if (MapManager.GetListOfEntity()[i].data.alignement == Alignement.Player)
+            {
+                allies.Add(MapManager.GetListOfEntity()[i]);
+            }
+
+        }
+
+       if(ennemies.Count <= 0)
+        {
+            //Win()
+            Debug.Log("you win");
+        }
+
+       if(allies.Count <= 0)
+       {
+            //Loose()
+            Debug.Log("you Loose");
         }
     }
 }

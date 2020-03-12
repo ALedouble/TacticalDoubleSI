@@ -43,15 +43,13 @@ public class DamageEffect : AbilityEffect
             if (x.data.alignement != entity.data.alignement)
             {
                 float damage = Mathf.Ceil(SetDamage(entity, ability) - x.CurrentArmor);
-                x.CurrentHealth -= damage;
-                Debug.Log(damage);
-                Debug.Log(damage.ToString());
+                x.CurrentHealth -= (int)damage;
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
+                x.CheckCurrentHealthAndDestroy();
+                x.Shake();
             }
         });
 
-        Debug.Log(entitiesFounded);
-        Debug.Log(PlayerTeamManager.Instance.teamXp);
         
     }
 

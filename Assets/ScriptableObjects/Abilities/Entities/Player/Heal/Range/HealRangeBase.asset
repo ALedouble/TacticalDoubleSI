@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: HealRangeBase
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Fireball
   description: A simple damaging projectile
   cost: 4
   multiplicator: 0.7
-  experience: 0
   displaySprite: {fileID: 0}
-  vfxCast: {fileID: 0}
+  vfxCast: {fileID: 121291155246810588, guid: c8d798f640912004f8daa92838573652, type: 3}
   sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
