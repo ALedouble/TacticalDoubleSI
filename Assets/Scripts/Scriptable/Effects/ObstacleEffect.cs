@@ -15,11 +15,6 @@ public class ObstacleEffect : AbilityEffect
             {
                 RoundManager.Instance.roundEntities.Add(MapManager.SpawnEntity(spawnedEntity, effectTiles[i], -1));
             }
-            
-        }
-
-        
+        } 
     }
-
-    
 }
