@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Obstacle
   portrait: {fileID: 21300000, guid: 6cdb2068fa756c247ac8bc32eed196b1, type: 3}
-  animations: {fileID: 11400000, guid: 17bc8f2a37bdd77408a7c8dcdfca9a7c, type: 2}
+  animations: {fileID: 0}
+  walkSFX: {fileID: 0}
+  hitBySomeoneSFX: {fileID: 0}
+  deathSFX: {fileID: 0}
+  pivot: {x: 0.5, y: 0.5}
   maxHealth: 0
   maxActionPoints: 0
   armor: 0
@@ -24,4 +28,9 @@ MonoBehaviour:
   alignement: 2
   entityTag: 6
   power: 1
+  xpPoint: 1
   totemValue: -1
+  isNotDestructible: 0
+  isFx: 1
+  fxEntity: {fileID: 8732769065514567242, guid: 17fb56c02099e274bb51ef693f772777,
+    type: 3}

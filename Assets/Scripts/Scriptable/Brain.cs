@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Brain : ScriptableObject
 {
+
     public virtual void OnTurnStart(EntityBehaviour entityBehaviour)
     {
     }

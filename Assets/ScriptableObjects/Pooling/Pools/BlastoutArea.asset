@@ -13,7 +13,27 @@ MonoBehaviour:
   m_Name: BlastoutArea
   m_EditorClassIdentifier: 
   prefab: {fileID: 8380234595475707925, guid: 34f4d392f77550a47a4afe8b92c58581, type: 3}
-  size: 1
+  size: 20
   renaming: 0
-  inactiveObjects: []
+  inactiveObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   activeObjects: []

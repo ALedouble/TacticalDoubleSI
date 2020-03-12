@@ -70,6 +70,7 @@ public class PlayerBrain : Brain
         {
             if (reachableTiles[i].GetCoordPosition() == hit.position)
             {
+                
                 canReachTile = true;
                 break;
             }
