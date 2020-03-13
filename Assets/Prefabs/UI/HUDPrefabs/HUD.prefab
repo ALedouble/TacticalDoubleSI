@@ -1059,7 +1059,7 @@ GameObject:
   - component: {fileID: 1570517953300381072}
   - component: {fileID: 8011571115813297682}
   m_Layer: 5
-  m_Name: BlastoutTileText
+  m_Name: BlastoutTitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3163,6 +3163,7 @@ GameObject:
   - component: {fileID: 7040651540794932163}
   - component: {fileID: 3141570306665195770}
   - component: {fileID: 6887154240340280088}
+  - component: {fileID: 4172340850944365137}
   m_Layer: 5
   m_Name: BlastoutDescription
   m_TagString: Untagged
@@ -3310,6 +3311,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4172340850944365137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462302052877535927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: BlastoutDescription
 --- !u!1 &4620738137013124231
 GameObject:
   m_ObjectHideFlags: 0
