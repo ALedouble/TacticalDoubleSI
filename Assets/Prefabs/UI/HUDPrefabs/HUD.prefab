@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 165948165638125940}
   - component: {fileID: 6992395885496426301}
   - component: {fileID: 6759414834118862446}
+  - component: {fileID: 2979829836132208234}
   m_Layer: 5
-  m_Name: BlastoutDescription (1)
+  m_Name: AbilityDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 366, y: -27.7}
+  m_AnchoredPosition: {x: 366, y: -30.9}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6992395885496426301
@@ -156,6 +157,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2979829836132208234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554942419673351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbility2
 --- !u!1 &94496988138805371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1059,7 @@ GameObject:
   - component: {fileID: 1570517953300381072}
   - component: {fileID: 8011571115813297682}
   m_Layer: 5
-  m_Name: BlastoutTileText
+  m_Name: BlastoutTitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1467,6 +1481,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   tileDescriptions: {fileID: 11400000, guid: 6fbe35a037623c34395c0fe854fdd96e, type: 2}
+  abilityColors:
+  - {r: 1, g: 0.6627451, b: 0.40000004, a: 1}
+  - {r: 0.8431373, g: 0.69411767, b: 0.93725497, a: 1}
+  - {r: 0.4901961, g: 0.7843138, b: 0.9960785, a: 1}
   displayValueHUDPrefab: {fileID: 5192998135264269959, guid: b3068e2a6a039f545a77a8b4f5a20901,
     type: 3}
 --- !u!1 &2655977769368354031
@@ -2016,6 +2034,7 @@ GameObject:
   - component: {fileID: 5813654835435311701}
   - component: {fileID: 1646632454781129808}
   - component: {fileID: 7842202528637351507}
+  - component: {fileID: 1448688742439212166}
   m_Layer: 0
   m_Name: AbilitiesDescriptionGlow
   m_TagString: Untagged
@@ -2039,8 +2058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 435.03, y: 17.54}
-  m_SizeDelta: {x: 429.47, y: 208.74}
+  m_AnchoredPosition: {x: 435.03, y: 26.76}
+  m_SizeDelta: {x: 429.47, y: 227.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1646632454781129808
 CanvasRenderer:
@@ -2078,6 +2097,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2.5
+--- !u!114 &1448688742439212166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417446435224704233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbilityGlow
 --- !u!1 &3471960684748037699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,6 +3163,7 @@ GameObject:
   - component: {fileID: 7040651540794932163}
   - component: {fileID: 3141570306665195770}
   - component: {fileID: 6887154240340280088}
+  - component: {fileID: 4172340850944365137}
   m_Layer: 5
   m_Name: BlastoutDescription
   m_TagString: Untagged
@@ -3278,6 +3311,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4172340850944365137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462302052877535927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: BlastoutDescription
 --- !u!1 &4620738137013124231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,8 +3481,9 @@ GameObject:
   - component: {fileID: 6779618190657487176}
   - component: {fileID: 8314924648447580228}
   - component: {fileID: 4248390466792285769}
+  - component: {fileID: 3692699014720714763}
   m_Layer: 5
-  m_Name: BlastoutTileText (1)
+  m_Name: PopupAbilityDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3458,7 +3505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336.99997, y: 47.5}
+  m_AnchoredPosition: {x: 336.99997, y: 53.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8314924648447580228
@@ -3516,8 +3563,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 15.5
-  m_fontSizeBase: 15.5
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3533,7 +3580,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 30
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -3554,7 +3601,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 20.764776, y: 0, z: -179.92796, w: 17.166468}
+  m_margin: {x: 20.764776, y: 0, z: -179.25566, w: 17.166468}
   m_textInfo:
     textComponent: {fileID: 4248390466792285769}
     characterCount: 36
@@ -3562,7 +3609,7 @@ MonoBehaviour:
     spaceCount: 6
     wordCount: 7
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -3580,6 +3627,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3692699014720714763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843577986080187844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbility0
 --- !u!1 &4908205879340363726
 GameObject:
   m_ObjectHideFlags: 0
@@ -3756,6 +3816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4734237008080437398}
   - component: {fileID: 7171456589209364689}
+  - component: {fileID: 7167126079524392080}
   m_Layer: 5
   m_Name: BlastDescription
   m_TagString: Untagged
@@ -3794,10 +3855,23 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4951278826129109469}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &7167126079524392080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4951278826129109469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupBlastoutGroup
 --- !u!1 &5541318605599437455
 GameObject:
   m_ObjectHideFlags: 0
@@ -3932,8 +4006,9 @@ GameObject:
   - component: {fileID: 6376037810579878837}
   - component: {fileID: 5297045112104304809}
   - component: {fileID: 5986165234756206428}
+  - component: {fileID: 4470069410825439840}
   m_Layer: 5
-  m_Name: BlastoutDescription
+  m_Name: AbilityDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3955,7 +4030,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 366, y: 6.9}
+  m_AnchoredPosition: {x: 366, y: 3.7000268}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5297045112104304809
@@ -4077,6 +4152,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4470069410825439840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542939809340002503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbility1
 --- !u!1 &5733201312197473659
 GameObject:
   m_ObjectHideFlags: 0
@@ -4088,8 +4176,9 @@ GameObject:
   - component: {fileID: 771787752202961478}
   - component: {fileID: 5779002487320178164}
   - component: {fileID: 7622148552578792693}
+  - component: {fileID: 1487923705249497621}
   m_Layer: 5
-  m_Name: BlastoutTileText
+  m_Name: PopupAbilityTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4111,7 +4200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336.99997, y: 71.1}
+  m_AnchoredPosition: {x: 336.99997, y: 94.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5779002487320178164
@@ -4175,7 +4264,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 513
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4233,6 +4322,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1487923705249497621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733201312197473659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbilityTitle
 --- !u!1 &5910792411411248695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4243,6 +4345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1969902445743198450}
   - component: {fileID: 4195899586643566470}
+  - component: {fileID: 1561501143346637359}
   m_Layer: 5
   m_Name: AbilityDescription
   m_TagString: Untagged
@@ -4284,10 +4387,23 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5910792411411248695}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &1561501143346637359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910792411411248695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbilityGroup
 --- !u!1 &6024190945403867979
 GameObject:
   m_ObjectHideFlags: 0
@@ -6066,8 +6182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 434.94995, y: 17.95}
-  m_SizeDelta: {x: 401.2, y: 180.59}
+  m_AnchoredPosition: {x: 434.94995, y: 27.21}
+  m_SizeDelta: {x: 401.2, y: 196.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8832358294964624083
 CanvasRenderer:
@@ -6203,8 +6319,9 @@ GameObject:
   - component: {fileID: 5668543769284244112}
   - component: {fileID: 2492096961103801043}
   - component: {fileID: 2011317787215771457}
+  - component: {fileID: 4627204872919508028}
   m_Layer: 5
-  m_Name: BlastoutDescription (2)
+  m_Name: AbilityDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6226,7 +6343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 366, y: -60.8}
+  m_AnchoredPosition: {x: 366, y: -63.999977}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2492096961103801043
@@ -6348,3 +6465,16 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4627204872919508028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081407738647812539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3cf47ad4c7a2f45874681aea3730c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudTag: PopupAbility3
