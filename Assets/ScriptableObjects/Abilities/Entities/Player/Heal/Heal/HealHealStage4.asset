@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Increase area of effect
   cost: 5
   multiplicator: 1
-  displaySprite: {fileID: 0}
+  displaySprite: {fileID: 21300000, guid: 3a2afbfcdb6c7884eb4e8d394ba095d0, type: 3}
   vfxCast: {fileID: 6916434496687535762, guid: 2911a751042a52248b07d53f1259c748, type: 3}
   canCastOnEntityPosition: 1
   playEffectsAtStart: 0
