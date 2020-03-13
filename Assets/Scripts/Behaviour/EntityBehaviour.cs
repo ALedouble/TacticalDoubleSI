@@ -143,6 +143,8 @@ public class EntityBehaviour : MonoBehaviour
         currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
         CurrentActionPoints -= reachableTile.cost;
 
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
 
@@ -184,7 +186,12 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         CurrentActionPoints -= ability.cost;
+
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         Sequence abilitySequence = DOTween.Sequence();
+        Debug.Log(ability);
+        Debug.Log(ability.displayName);
         SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
@@ -267,13 +274,21 @@ public class EntityBehaviour : MonoBehaviour
 
     public void CheckCurrentHealthAndDestroy()
     {
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         if (currentHealth <= 0)
         {
             SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
             MapManager.GetListOfEntity().Remove(this);
+            RoundManager.Instance.CheckRemainingEntities();
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
-            RoundManager.Instance.CheckRemainingEntities();
+            if(this.GetAlignement() == Alignement.Enemy)
+            {
+                PlayerTeamManager.Instance.teamXp += 2;
+                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
+            }
+
         }
     }
     

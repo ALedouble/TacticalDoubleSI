@@ -149,7 +149,7 @@ public class Tank : Brain
      */
     private bool Walk()
     {
-        haveEndTurn = IAUtils.WalkOnShortest(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        haveEndTurn = IAUtils.WalkOnShortest(tank, playerDPS, playerTank, playerHealer, iaEntityFunction);
         return haveEndTurn;
     }
 
@@ -158,7 +158,7 @@ public class Tank : Brain
      */
     private bool LastActionPossible()
     {
-        haveEndTurn = IAUtils.LastChancePath(tank, playerHealer, playerDPS, playerTank, iaEntityFunction);
+        haveEndTurn = IAUtils.LastChancePath(tank, playerDPS, playerTank, playerHealer, iaEntityFunction);
         return haveEndTurn;
     }
 }

@@ -13,6 +13,7 @@ public class PlayerTeamManager : MonoBehaviour
     [HideInInspector] public int teamXp = 0;
 
     public List<EntityBehaviour> playerEntitybehaviours = new List<EntityBehaviour>();
+    public Action OnXPChanged;
 
     private void Awake()
     {

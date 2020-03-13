@@ -115,6 +115,7 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateEntityInfo(EntityBehaviour entity)
     {
+
         if (entity == null)
         {
             if (inspectedEnemy == null)
@@ -155,6 +156,8 @@ public class HUDManager : MonoBehaviour
         CanvasGroup canvasGroup = null;
         Tween fade = null;
 
+
+        Debug.Log("UpdatetingInfo");
 
         switch (entity.data.alignement)
         {
@@ -238,7 +241,7 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
-            //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
+            tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
             tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType - 1];
             tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType - 1];
 
@@ -280,7 +283,7 @@ public class HUDManager : MonoBehaviour
 
             if (GetButtonReferences(tag, HUDReferences[i])) continue;
 
-            if (tag == "TilePreview") enemyIcon = HUDReferences[i].GetComponent<Image>();
+            if (tag == "TilePreview") tilePreview = HUDReferences[i].GetComponent<Image>();
             if (tag == "TileName") tileName = HUDReferences[i].GetComponent<TextMeshProUGUI>();
             if (tag == "TileEffect") tileDescription = HUDReferences[i].GetComponent<TextMeshProUGUI>();
         }
