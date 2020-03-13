@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Increase range
   cost: 5
   multiplicator: 0.8
-  displaySprite: {fileID: 0}
+  displaySprite: {fileID: 21300000, guid: bc4e2d63ccbe65d46a36a41c73169e5d, type: 3}
   vfxCast: {fileID: 7500815593708707412, guid: bd691484aab0cb14f9456b7af487ac5e, type: 3}
   canCastOnEntityPosition: 1
   playEffectsAtStart: 0

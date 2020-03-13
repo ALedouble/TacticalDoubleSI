@@ -12,7 +12,8 @@ public class PlayerBrain : Brain
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
-       
+        HUDManager.Instance.DeselectAbility();
+
         base.OnTurnStart(entityBehaviour);
        
         this.entityBehaviour = entityBehaviour;
@@ -75,6 +76,8 @@ public class PlayerBrain : Brain
         MapManager.SetReachableTilesPreview(null);
 
         SelectionManager.Instance.OnCancel -= CanSelectAnotherPlayer;
+
+        HUDManager.Instance.DeselectAbility();
     }
 
     void OnMovement(MapRaycastHit hit)
@@ -134,6 +137,8 @@ public class PlayerBrain : Brain
         if (entityBehaviour.CurrentActionPoints < entityBehaviour.data.abilities[index].cost) return;
 
         selectedAbilityIndex = index;
+
+        if(index<=2) HUDManager.Instance.SelectAbility(index);
 
         SelectionManager.Instance.OnClick -= OnMovement;
         MapManager.SetReachableTilesPreview(null);
