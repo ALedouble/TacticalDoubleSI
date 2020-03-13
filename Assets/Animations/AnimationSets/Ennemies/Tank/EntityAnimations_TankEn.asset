@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: EntityAnimations_TankEn
   m_EditorClassIdentifier: 
   idleAnimation: {fileID: 11400000, guid: 5629517558bf2714fa2273b7edf32402, type: 2}
-  moveAnimation: {fileID: 11400000, guid: 8d1b544a6362f5246b28d289bbd6e7e8, type: 2}
+  moveAnimation: {fileID: 0}
   hitAnimation: {fileID: 11400000, guid: 76f9bca9e78afce41b61b691175ec3c8, type: 2}
   deathAnimation: {fileID: 11400000, guid: 22946d9c34bebbf44ba61fbfe7c394b4, type: 2}
+  channelingStartAnimation: {fileID: 0}
+  channelingIdleAnimation: {fileID: 0}
   abilityAnimations:
+  - {fileID: 11400000, guid: 155c9eeb682962a4cba859bb93313555, type: 2}
   - {fileID: 11400000, guid: 155c9eeb682962a4cba859bb93313555, type: 2}

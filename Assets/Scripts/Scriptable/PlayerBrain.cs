@@ -12,7 +12,8 @@ public class PlayerBrain : Brain
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
-       
+        HUDManager.Instance.DeselectAbility();
+
         base.OnTurnStart(entityBehaviour);
        
         this.entityBehaviour = entityBehaviour;
@@ -21,11 +22,14 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
         SelectionManager.Instance.OnEntitySelect += RoundManager.Instance.StartPlayerTurn;
 
+        SelectionManager.Instance.OnEntitySelect += DeselectThis;
+
         SelectionManager.Instance.OnCancel += CancelEverything;
         SelectionManager.Instance.OnCancel += CanSelectAnotherPlayer;
         HUDManager.Instance.OnEndTurnPressed += CancelEverything;
 
 
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick += OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
@@ -40,6 +44,19 @@ public class PlayerBrain : Brain
         MapManager.SetReachableTilesPreview(reachableTiles);
 
         
+    }
+
+    void DeselectThis(EntityBehaviour entity)
+    {
+        SelectionManager.Instance.OnEntitySelect -= DeselectThis;
+
+        if (entity == entityBehaviour || entity == null)
+        {
+            return;
+        }
+
+        SelectionManager.Instance.OnClick -= OnMovement;
+        HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
     }
 
     void CanSelectAnotherPlayer()
@@ -59,6 +76,8 @@ public class PlayerBrain : Brain
         MapManager.SetReachableTilesPreview(null);
 
         SelectionManager.Instance.OnCancel -= CanSelectAnotherPlayer;
+
+        HUDManager.Instance.DeselectAbility();
     }
 
     void OnMovement(MapRaycastHit hit)
@@ -78,6 +97,8 @@ public class PlayerBrain : Brain
 
         if (!canReachTile) return;
 
+        SelectionManager.Instance.OnEntitySelect -= RoundManager.Instance.StartPlayerTurn;
+        SelectionManager.Instance.OnClick -= OnMovement;
         SelectionManager.Instance.OnClick -= OnMovement;
         HUDManager.Instance.OnAbilityClicked -= OnAbilitySelected;
 
@@ -116,6 +137,8 @@ public class PlayerBrain : Brain
         if (entityBehaviour.CurrentActionPoints < entityBehaviour.data.abilities[index].cost) return;
 
         selectedAbilityIndex = index;
+
+        if(index<=2) HUDManager.Instance.SelectAbility(index);
 
         SelectionManager.Instance.OnClick -= OnMovement;
         MapManager.SetReachableTilesPreview(null);

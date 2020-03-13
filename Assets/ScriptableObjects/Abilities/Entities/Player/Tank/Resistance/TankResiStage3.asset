@@ -14,18 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: 
-  description: 
-  cost: 6
+  displayName: Harden
+  description: 'Increase range '
+  cost: 5
   multiplicator: 1
-  displaySprite: {fileID: 0}
+  displaySprite: {fileID: 21300000, guid: e3b3117966ebe2e4bab09b1bc3d01ad1, type: 3}
   vfxCast: {fileID: 6439881731162528523, guid: 6ff12f42296e62e4ca356baff79cab5f, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: 1eb1993e66a6fc047ad3694fd97b90f7, type: 2}
+  abilitySFX: {fileID: 11400000, guid: eb5b72abc1dbb451798140058f9344b8, type: 2}
   castArea:
     size: 5
     area:

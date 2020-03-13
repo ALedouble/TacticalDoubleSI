@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Entity_Enemy_Minion
   m_EditorClassIdentifier: 
   displayName: M
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 6a573ccfa5adbd3419badde4b3a53aba, type: 3}
   animations: {fileID: 11400000, guid: 516e460b22715f540ba5fb92649c7696, type: 2}
+  walkSFX: {fileID: 11400000, guid: 7f1823b34c44243edb0572cc48eeb4ba, type: 2}
+  hitBySomeoneSFX: {fileID: 11400000, guid: d8e5122b3778f49eab288383642bbbd9, type: 2}
+  deathSFX: {fileID: 11400000, guid: 29686d95ae798ce4b861a7fd1a468ab8, type: 2}
   pivot: {x: 0.5, y: 0.5}
   maxHealth: 13
   maxActionPoints: 10
@@ -28,3 +31,6 @@ MonoBehaviour:
   power: 7
   xpPoint: 1
   totemValue: -1
+  isNotDestructible: 0
+  isFx: 0
+  fxEntity: {fileID: 0}

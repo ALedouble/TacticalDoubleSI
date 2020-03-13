@@ -29,10 +29,11 @@ public class HUDManager : MonoBehaviour
         canvas = FindObjectOfType<Canvas>();
 
         playerInfoGroup.alpha = 0;
-        //enemyInfoGroup.alpha = 0;
+        enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
         finishPlacementButton.DOScale(0, 0);
+        abilityOutline.gameObject.SetActive(false);
 
         SelectionManager.Instance.OnEntitySelect += UpdateEntityInfo;
 
@@ -83,7 +84,7 @@ public class HUDManager : MonoBehaviour
     void OnEndTurn()
     {
         endTurnButtonTween?.Kill();
-        endTurnButtonTween = endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack).OnComplete(()=>
+        endTurnButtonTween = endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack).OnComplete(() =>
         {
             OnEndTurnPressed?.Invoke();
         });
@@ -133,6 +134,8 @@ public class HUDManager : MonoBehaviour
             return;
         }
 
+        if (entity.data.alignement == Alignement.Neutral) return;
+
         switch (entity.data.alignement)
         {
             case Alignement.Enemy:
@@ -155,10 +158,8 @@ public class HUDManager : MonoBehaviour
 
         switch (entity.data.alignement)
         {
-            case Alignement.Enemy :
+            case Alignement.Enemy:
 
-                return;
-                
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
 
@@ -177,6 +178,14 @@ public class HUDManager : MonoBehaviour
                 fade = playerInfoFade;
 
                 icon = playerIcon;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    abilitySprites[i].sprite = entity.data.abilities[i].displaySprite;
+                    Color originalColor = abilitySprites[i].color;
+                    if (entity.CurrentActionPoints < entity.data.abilities[i].cost) abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, .2f);
+                    else abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+                }
 
                 //if (inspectedPlayer != null) return;
 
@@ -230,22 +239,35 @@ public class HUDManager : MonoBehaviour
         else
         {
             //tilePreview.sprite = tileDescriptions.tileSprites[(int)mapHit.tile.TileType-1];
-            tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType-1];
-            tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType-1];
+            tileName.text = tileDescriptions.tileNames[(int)mapHit.tile.TileType - 1];
+            tileDescription.text = tileDescriptions.tileEffects[(int)mapHit.tile.TileType - 1];
 
             tileInfoFade?.Kill();
             tileInfoGroup.DOFade(1, .05f);
         }
     }
 
+    RectTransform abilityOutline;
+
     HUDReferencer[] HUDReferences;
     void GetReferences()
     {
         HUDReferences = FindObjectsOfType<HUDReferencer>();
 
+        for (int i = 0; i < 3; i++)
+        {
+            abilitySprites.Add(null);
+        }
+
         for (int i = 0; i < HUDReferences.Length; i++)
         {
             string tag = HUDReferences[i].hudTag;
+
+            if (tag == "AbilityOutline")
+            {
+                abilityOutline = HUDReferences[i].GetComponent<RectTransform>();
+                continue;
+            }
 
             if (GetAbilityReferences(tag, HUDReferences[i])) continue;
 
@@ -264,21 +286,29 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    List<Image> abilitySprites = new List<Image>();
+
     bool GetAbilityReferences(string tag, HUDReferencer reference)
     {
         if (tag.Contains("Ability"))
         {
-            tag = tag.Replace("Ability", "");
-            int abilityNumber = Int32.Parse(tag);
-
-            Button abilityButton = reference.GetComponent<Button>();
-
-            abilityButton.onClick.AddListener(() =>
+            string numberTag = tag.Replace("Ability", "");
+            int abilityNumber = -1;
+                
+            if (Int32.TryParse(numberTag, out abilityNumber))
             {
-                OnAbilityClicked?.Invoke(abilityNumber);
-            });
+                Button abilityButton = reference.GetComponent<Button>();
 
-            return true;
+                abilityButton.onClick.AddListener(() =>
+                {
+                    OnAbilityClicked?.Invoke(abilityNumber);
+                });
+
+                if (abilityNumber <= 2) abilitySprites[abilityNumber] = reference.GetComponentInChildren<Image>();
+
+                return true;
+            }
+            return false;
         }
 
         return false;
@@ -370,10 +400,21 @@ public class HUDManager : MonoBehaviour
         textMesh.text = value;
         textMesh.color = color;
 
+        rect.DOAnchorPosX(rect.anchoredPosition.x + 50, .5f);
         rect.DOAnchorPosY(rect.anchoredPosition.y + 1, .5f).SetEase(Ease.OutBack, 100);
         textMesh.DOFade(0, 1f).SetDelay(.5f).OnComplete(()=>
         {
             PoolManager.Recycle(rect.gameObject);
         });
+    }
+
+    public void SelectAbility(int abilityNumber)
+    {
+        abilityOutline.gameObject.SetActive(true);
+        abilityOutline.anchoredPosition = abilitySprites[abilityNumber].rectTransform.parent.GetComponent<RectTransform>().anchoredPosition;
+    }
+    public void DeselectAbility()
+    {
+        abilityOutline.gameObject.SetActive(false);
     }
 }

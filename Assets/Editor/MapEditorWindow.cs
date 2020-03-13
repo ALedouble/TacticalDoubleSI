@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
-using UnityEditorInternal;
+using Rotorz.ReorderableList;
 
 public class MapEditorWindow : EditorWindow
 {
@@ -90,11 +90,15 @@ public class MapEditorWindow : EditorWindow
             EditorUtility.SetDirty(map);
         }
 
-        ReorderableList reorderableEnemyList = new ReorderableList(map.entityStartPositions, typeof(EntityRoundStartState));
 
-        reorderableEnemyList.DoLayoutList();
+        EditorGUI.BeginChangeCheck();
+        //ReorderableListGUI.ListField(map.entityStartPositions,);
+        if (EditorGUI.EndChangeCheck())
+        {
+            //map.entityStartPositions = reorderableEnemyList.list as List<EntityRoundStartState>;
+            EditorUtility.SetDirty(map);
+        }
 
-        map.entityStartPositions = reorderableEnemyList.list as List<EntityRoundStartState>;
     }
 
    

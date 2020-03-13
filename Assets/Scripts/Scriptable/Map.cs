@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System;
 
 /// <summary>
 /// Contains the positions of all entities at the start of the level
@@ -27,7 +30,7 @@ public class Map : ScriptableObject
 {
     public List<TileData> map = new List<TileData>();
 
-    public List<EntityRoundStartState> entityStartPositions = new List<EntityRoundStartState>();
+    [HideInInspector] public List<EntityRoundStartState> entityStartPositions = new List<EntityRoundStartState>();
 
     public int size;
     public Vector2 center;
