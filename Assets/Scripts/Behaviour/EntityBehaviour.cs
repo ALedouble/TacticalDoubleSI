@@ -294,7 +294,7 @@ public class EntityBehaviour : MonoBehaviour
     
     public void Shake()
     {
-        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.8f, 0, 0), 30, 90, false, true);
+        transform.DOShakePosition(.5f, Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(.8f, 0, 0), 30, 90, false, true);
     }
 
     public void Stretch()

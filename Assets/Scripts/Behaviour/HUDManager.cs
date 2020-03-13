@@ -61,6 +61,15 @@ public class HUDManager : MonoBehaviour
 
         RoundManager.Instance.OnPlayerTurn += ShowEndTurnButton;
 
+        XPFill.fillAmount = 0;
+        PlayerTeamManager.Instance.OnXPChanged += UpdateFill;
+    }
+
+    Image XPFill;
+
+    void UpdateFill()
+    {
+        XPFill.DOFillAmount((float)PlayerTeamManager.Instance.teamXp / 10f, .1f);
     }
 
     CanvasGroup roundHUDGroup;
@@ -216,12 +225,17 @@ public class HUDManager : MonoBehaviour
                 icon = playerIcon;
 
                 int playerIndex = PlayerTeamManager.Instance.GetPlayerIndex(entity);
+                Ability ability = null;
 
                 for (int j = 0; j < 3; j++)
                 {
                     for (int x = 0; x < 4; x++)
                     {
-                        abilityDescriptions[j, x] = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[x].description;
+                        ability = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[x];
+                        abilityDescriptions[j, x] = ability.description;
+                        abilityDescriptions[j, x] = abilityDescriptions[j, x].Replace("[damage]", (Mathf.Ceil(CombatUtils.ComputeDamage(entity, ability))).ToString());
+                        abilityDescriptions[j, x] = abilityDescriptions[j, x].Replace("[heal]", CombatUtils.ComputeHeal(entity, ability).ToString());
+                        abilityDescriptions[j, x] = abilityDescriptions[j, x].Replace("[armor]", "1");
                     }
                     abilityTitles[j] = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[0].displayName;
                 }
@@ -234,7 +248,12 @@ public class HUDManager : MonoBehaviour
                     else abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
                 }
 
-                blastoutDescription = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[3].abilities[0].description;
+                ability = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[3].abilities[0];
+                blastoutDescription = ability.description;
+
+                blastoutDescription = blastoutDescription.Replace("[damage]", (Mathf.Ceil(CombatUtils.ComputeDamage(entity, ability))).ToString());
+                blastoutDescription = blastoutDescription.Replace("[heal]", CombatUtils.ComputeHeal(entity, ability).ToString());
+                blastoutDescription = blastoutDescription.Replace("[armor]", "1");
 
                 //if (inspectedPlayer != null) return;
 
@@ -372,6 +391,10 @@ public class HUDManager : MonoBehaviour
             {
                 PADisplay = HUDReferences[i].GetComponent<TextMeshProUGUI>();
                 continue;
+            }
+            if (tag == "XPFill")
+            {
+                XPFill = HUDReferences[i].GetComponent<Image>();
             }
 
             if (GetAbilityPopupReferences(tag, HUDReferences[i])) continue;

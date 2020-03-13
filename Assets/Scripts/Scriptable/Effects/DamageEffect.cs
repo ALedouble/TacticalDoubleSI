@@ -16,29 +16,13 @@ public class DamageEffect : AbilityEffect
 
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
-        bool entitiesFounded = false;
         List<EntityBehaviour> entities = new List<EntityBehaviour>();
         List<Vector2Int> effectTiles = ability.effectArea.GetWorldSpaceRotated(entity.GetPosition(), castTile.position);
         for (int i = 0; i < effectTiles.Count; i++)
         {
             entities.AddRange(MapManager.GetTile(effectTiles[i]).entities);
 
-            if (entities.Count > 0)
-            {
-                entitiesFounded = true;
-            }
         }
-
-        if (entitiesFounded && ability.alignementXP == OnEntityAlignementXp.Ennemies)
-        {
-            if (!entity.earnedXPThisAbility)
-            {
-                PlayerTeamManager.Instance.teamXp += 1;
-                entity.earnedXPThisAbility = true;
-                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
-            }
-        }
-
 
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.alignement != entity.data.alignement && !x.data.isNotDestructible)
@@ -57,7 +41,13 @@ public class DamageEffect : AbilityEffect
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
                 x.CheckCurrentHealthAndDestroy();
                 x.Shake();
-                
+
+                if (!entity.earnedXPThisAbility && entity.data.alignement == Alignement.Player)
+                {
+                    PlayerTeamManager.Instance.teamXp += 1;
+                    entity.earnedXPThisAbility = true;
+                    PlayerTeamManager.Instance.OnXPChanged?.Invoke();
+                }
             }
 
             
