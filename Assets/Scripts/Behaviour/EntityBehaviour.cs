@@ -143,6 +143,8 @@ public class EntityBehaviour : MonoBehaviour
         currentTile = MapManager.MoveEntity(this, currentTile.position, reachableTile);
         CurrentActionPoints -= reachableTile.cost;
 
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         Sequence moveSequence = DOTween.Sequence();
         Ease movementEase = Ease.InOutSine;
 
@@ -184,6 +186,9 @@ public class EntityBehaviour : MonoBehaviour
     public Sequence UseAbility(Ability ability, TileData targetTile)
     {
         CurrentActionPoints -= ability.cost;
+
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         Sequence abilitySequence = DOTween.Sequence();
         SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
@@ -267,6 +272,8 @@ public class EntityBehaviour : MonoBehaviour
 
     public void CheckCurrentHealthAndDestroy()
     {
+        HUDManager.Instance.UpdateEntityInfo(null);
+
         if (currentHealth <= 0)
         {
             SoundManager.Instance.PlaySound(data.deathSFX.sound, false);

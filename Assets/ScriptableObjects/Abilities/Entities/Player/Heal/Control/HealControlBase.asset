@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Create an obtacle that stay 1 turn
   cost: 6
   multiplicator: 1
-  displaySprite: {fileID: 21300000, guid: d2fcc78a80ecee341bdd9a30346dddc4, type: 3}
+  displaySprite: {fileID: 21300000, guid: 27b65b853f69e8042a36654265274d12, type: 3}
   vfxCast: {fileID: 6202399477133285555, guid: 22e7f5c6a46e0644ba3f5bcc9f805075, type: 3}
   canCastOnEntityPosition: 0
   playEffectsAtStart: 0
