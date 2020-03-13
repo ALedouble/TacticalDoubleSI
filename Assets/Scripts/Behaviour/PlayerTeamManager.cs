@@ -55,7 +55,7 @@ public class PlayerTeamManager : MonoBehaviour
         EntityBehaviour entityBehaviour = MapManager.SpawnEntity(playerEntities[placedEntities], hit.position, -1);
 
         playerEntitybehaviours.Add(entityBehaviour);
-
+        SoundManager.Instance.PlaySound(playerEntities[placedEntities].placedEntitiesSFX.sound, false);
         placedEntities++;
 
         if (placedEntities == playerEntities.Count)
