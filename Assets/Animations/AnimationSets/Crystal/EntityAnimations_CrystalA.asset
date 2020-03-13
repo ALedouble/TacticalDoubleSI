@@ -15,7 +15,7 @@ MonoBehaviour:
   idleAnimation: {fileID: 11400000, guid: b09bbc66e888dc04a93cd26f5034182a, type: 2}
   moveAnimation: {fileID: 0}
   hitAnimation: {fileID: 0}
-  deathAnimation: {fileID: 0}
+  deathAnimation: {fileID: 11400000, guid: 1a6d9003875c0694fb058933f2ea10a5, type: 2}
   channelingStartAnimation: {fileID: 0}
   channelingIdleAnimation: {fileID: 0}
   abilityAnimations: []

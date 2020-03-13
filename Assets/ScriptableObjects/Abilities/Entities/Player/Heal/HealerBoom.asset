@@ -15,7 +15,9 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Blast Out
-  description: 
+  description: 'Deals [damage] damage in a cross pattern to any enemy found on all
+    the tiles at his left, right, top and bottom postition while restoring [heal]
+    HP to any ally found in the same zone. '
   cost: 0
   multiplicator: 1
   displaySprite: {fileID: 0}
