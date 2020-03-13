@@ -22,6 +22,7 @@ public class PlayerTeamManager : MonoBehaviour
         bool firstInit = false;
         if (SaveManager.Instance.SaveEntitiesWin == null || SaveManager.Instance.SaveEntitiesWin.Count <= 0)
         {
+            Debug.Log("Initializing save");
             SaveManager.Instance.SaveEntitiesWin = new List<Entity>(playerEntities);
             SaveManager.Instance.SaveEntitiesLose = new List<Entity>(playerEntities);
             firstInit = true;
@@ -29,20 +30,19 @@ public class PlayerTeamManager : MonoBehaviour
 
         for (int i = 0; i < SaveManager.Instance.SaveEntitiesWin.Count; i++)
         {
-            SaveManager.Instance.SaveEntitiesLose[i] = SaveManager.Instance.SaveEntitiesWin[i];
-            playerEntities[i] = Instantiate(SaveManager.Instance.SaveEntitiesWin[i]);
-
-
             if (firstInit)
             {
-                playerEntities[i].abilities.Clear();
+                SaveManager.Instance.SaveEntitiesWin[i].abilities.Clear();
                 for (int j = 0; j < 4; j++)
                 {
-                    playerEntities[i].abilityLevels.Add(0);
+                    SaveManager.Instance.SaveEntitiesWin[i].abilityLevels.Add(0);
 
-                    playerEntities[i].abilities.Add(playerProgression[i].abilityProgression[j].abilities[0]);
+                    SaveManager.Instance.SaveEntitiesWin[i].abilities.Add(playerProgression[i].abilityProgression[j].abilities[0]);
                 }
             }
+
+            SaveManager.Instance.SaveEntitiesLose[i] = SaveManager.Instance.SaveEntitiesWin[i];
+            playerEntities[i] = Instantiate(SaveManager.Instance.SaveEntitiesWin[i]);
         }
     }
 
