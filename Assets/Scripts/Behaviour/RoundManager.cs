@@ -47,7 +47,7 @@ public class RoundManager : MonoBehaviour
                 PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
-                //StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
+                StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
             }
 
             PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
@@ -76,8 +76,6 @@ public class RoundManager : MonoBehaviour
     {
         if (entity.data.alignement != Alignement.Player) return;
         if (entity.IsChannelingBurst || entity.stasis) return;
-
-        Debug.Log(entity.stasis);
        
 
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
@@ -129,7 +127,6 @@ public class RoundManager : MonoBehaviour
 
     public void CheckRemainingEntities()
     {
-        Debug.Log(PlayerTeamManager.Instance.playerEntitybehaviours.Count);
         List<EntityBehaviour> ennemies = new List<EntityBehaviour>();
         List<EntityBehaviour> allies = new List<EntityBehaviour>();
 
@@ -159,7 +156,6 @@ public class RoundManager : MonoBehaviour
 
             DOTween.KillAll();
             SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
-            Debug.Log("you win");
         }
 
        if(PlayerTeamManager.Instance.playerEntitybehaviours.Count <= 1)
@@ -171,7 +167,6 @@ public class RoundManager : MonoBehaviour
 
             DOTween.KillAll();
             SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
-            Debug.Log("you Loose");
         }
     }
 

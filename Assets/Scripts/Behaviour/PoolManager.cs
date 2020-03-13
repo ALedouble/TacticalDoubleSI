@@ -37,7 +37,6 @@ public class PoolManager : MonoBehaviour
     {
         if (gameObject == null)
         {
-            Debug.LogError("GameObject is null !");
             return null;
         }
 

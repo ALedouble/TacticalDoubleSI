@@ -40,7 +40,6 @@ public class EntityAnimation : ScriptableObject
 
         if (time > Length) return frames[frames.Count - 1].texture;
 
-        Debug.LogError("Something is fucky with the animation system");
         Debug.Break();
 
         return null;

@@ -34,8 +34,6 @@ public class DPS : Brain
         iaEntityFunction = IA_DPS;
         dpsAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
-        Debug.Log("New DPS");
-
         InitStart(entityBehaviour);
         iaEntityFunction();
     }
@@ -342,10 +340,6 @@ public class DPS : Brain
         int deplacementCost;
         if (priorityOnRun) deplacementCost = pathToEntityCac.cost;
         else deplacementCost = intermediateTile.cost;
-        Debug.Log(deplacementCost);
-        Debug.Log(deplacementCost);
-        Debug.Log(ability2.cost);
-        Debug.Log(dps.CurrentActionPoints);
         if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
         {
             if(IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast))

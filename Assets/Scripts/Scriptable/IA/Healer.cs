@@ -41,8 +41,6 @@ public class Healer : Brain
         conditionFunction = ConditionHealthToHeal;
         healerAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
-        Debug.Log("New Healer");
-        Debug.Log(entityBehaviour.currentTile.position);
 
         InitStart(entityBehaviour);
         iaEntityFunction();

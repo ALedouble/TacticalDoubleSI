@@ -160,10 +160,6 @@ public class MapManager : MonoBehaviour
     }
     public static TileData MoveEntity(EntityBehaviour entity, Vector2Int origin, Vector2Int target)
     {
-
-        Debug.Log("moving " + entity.name + " from " + origin + " to " + target);
-
-
         GetTile(origin).entities.Remove(entity);
 
         GetTile(target).entities.Add(entity);

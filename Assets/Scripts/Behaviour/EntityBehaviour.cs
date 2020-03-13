@@ -128,7 +128,7 @@ public class EntityBehaviour : MonoBehaviour
             RoundManager.Instance.EndTurn();
             return;
 
-            Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
+            
             Debug.Break();
         }
         else
@@ -190,13 +190,10 @@ public class EntityBehaviour : MonoBehaviour
         HUDManager.Instance.UpdateEntityInfo(null);
 
         Sequence abilitySequence = DOTween.Sequence();
-        Debug.Log(ability);
-        Debug.Log(ability.displayName);
         SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
-        Debug.Log(name + " is using " + ability.name);
 
         EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
         float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;

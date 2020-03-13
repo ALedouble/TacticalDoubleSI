@@ -109,7 +109,6 @@ public class PlayerBrain : Brain
 
         if (reachableTile == null)
         {
-            Debug.LogError("Entity " + entityBehaviour.name + " cannot move to " + hit.position, entityBehaviour.gameObject);
             Debug.Break();
         }
 

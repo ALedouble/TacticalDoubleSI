@@ -9,7 +9,6 @@ public class TemporaryObstacleBrain : Brain
 
     public override void OnTurnStart(EntityBehaviour entityBehaviour)
     {
-        Debug.Log(turnNumber);
         turnNumber++;
 
         if (turnNumber ==  0)

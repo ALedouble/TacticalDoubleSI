@@ -15,7 +15,7 @@ public class MovementEffect : AbilityEffect
 
     public override void Activate(EntityBehaviour entity, Ability ability, TileData castTile)
     {
-            Debug.Log("hello");
+            
             TeleportBegin(entity, castTile.position);
 
     }

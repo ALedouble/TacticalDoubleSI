@@ -36,7 +36,6 @@ public class PushEffect : AbilityEffect
         Vector2Int grabDirection = entity.GetPosition() - castTile.position;
         grabDirection.x = grabDirection.x == 0 ? 0 : (int)Mathf.Sign(grabDirection.x);
         grabDirection.y = grabDirection.y == 0 ? 0 : (int)Mathf.Sign(grabDirection.y);
-        Debug.Log(grabDirection);
 
         for (int i = 0; i < entities.Count; i++)
         {
@@ -49,9 +48,6 @@ public class PushEffect : AbilityEffect
                     Push(entities[i], finalTile);
                 }
             }
-
-
-          //  finalTile -= grabDirection;
 
            
         }

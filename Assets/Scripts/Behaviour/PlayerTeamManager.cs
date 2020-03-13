@@ -32,7 +32,6 @@ public class PlayerTeamManager : MonoBehaviour
             SaveManager.Instance.SaveEntitiesLose[i] = SaveManager.Instance.SaveEntitiesWin[i];
             playerEntities[i] = Instantiate(SaveManager.Instance.SaveEntitiesWin[i]);
 
-            Debug.Log(playerEntities[i]);
 
             if (firstInit)
             {
@@ -91,14 +90,7 @@ public class PlayerTeamManager : MonoBehaviour
 
     public void LevelUpPlayerEntity(Entity entity)
     {
-        if (entity.alignement != Alignement.Player)
-        {
-            Debug.LogError("Can't level up a enemy or neutral entity");
-        }
-
-
         int index = playerEntities.FindIndex(x => x.displayName == entity.displayName);
-        Debug.Log(index);
         entity.maxActionPoints += Mathf.Ceil(playerProgression[index].actionPointsIncrement);
         entity.maxHealth += Mathf.Ceil(playerProgression[index].healthIncrement);
         entity.armor += Mathf.Ceil(entity.armor);
@@ -108,11 +100,6 @@ public class PlayerTeamManager : MonoBehaviour
 
     public void LevelUpPlayerAbility(Entity entity, int totemValue)
     {
-        if (entity.alignement != Alignement.Player)
-        {
-            Debug.LogError("Can't level up a enemy or neutral entity");
-        }
-
         int index = playerEntities.FindIndex(x => x.displayName == entity.displayName);
 
         int abilityNumber = totemValue;

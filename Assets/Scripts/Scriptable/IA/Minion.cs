@@ -33,9 +33,6 @@ public class Minion : Brain
         iaEntityFunction = IAMinion;
         conditionFunction = SpecificConditionForMove;
         minionAbilityCall = IAUtils.LambdaAbilityCallDelegate;
-
-        Debug.Log("New Minion");
-
         InitStart(entityBehaviour);
         iaEntityFunction();
     }
@@ -73,11 +70,6 @@ public class Minion : Brain
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
                 
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
-
-        Debug.Log(playerHealer);
-        Debug.Log(playerDPS);
-        Debug.Log(playerTank);
-            
 
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 

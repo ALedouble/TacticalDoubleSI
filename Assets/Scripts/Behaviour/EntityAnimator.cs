@@ -38,7 +38,7 @@ public class EntityAnimator : MonoBehaviour
     {
         if (animation == null || (animation.frames.Count == 0))
         {
-            Debug.LogWarning("Animation is null on " + gameObject.name);
+
             return;
         }
 

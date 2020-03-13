@@ -31,7 +31,6 @@ public class Tank : Brain
         iaEntityFunction = IATank;
         tankAbilityCall = IAUtils.LambdaAbilityCallDelegate;
 
-        Debug.Log("New Tank");
 
         InitStart(entityBehaviour);
         iaEntityFunction();

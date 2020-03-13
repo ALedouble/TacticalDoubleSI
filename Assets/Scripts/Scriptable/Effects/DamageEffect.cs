@@ -27,7 +27,6 @@ public class DamageEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.alignement != entity.data.alignement && !x.data.isNotDestructible)
             {
-                Debug.Log(x.IsChannelingBurst);
                 if (!x.IsChannelingBurst)
                 {
                     x.animator.PlayAnimation(x.data.animations.hitAnimation);
