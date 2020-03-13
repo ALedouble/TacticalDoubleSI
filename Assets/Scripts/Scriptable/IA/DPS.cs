@@ -36,20 +36,16 @@ public class DPS : Brain
 
         Debug.Log("New DPS");
 
-        Init(entityBehaviour);
+        InitStart(entityBehaviour);
         iaEntityFunction();
     }
 
-    private void Init(EntityBehaviour entityBehaviour)
+    private void InitStart(EntityBehaviour entityBehaviour)
     {
         dps = entityBehaviour;
 
         enemyTank = new List<EntityBehaviour>();
         enemyHealer = new List<EntityBehaviour>();
-
-        playerHealer = null;
-        playerDPS = null;
-        playerTank = null;
 
         ability1 = dps.GetAbilities(0);
         ability2 = dps.GetAbilities(1);
@@ -58,11 +54,20 @@ public class DPS : Brain
         haveEndTurn = false;
     }
 
+    private void InitEachLoop()
+    {
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+    }
+
     /*
      * Gere un deplacement/attack du Minion
      */
     private void IA_DPS()
     {
+        InitEachLoop();
+
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
@@ -119,7 +124,8 @@ public class DPS : Brain
 
                 for (int i = 0; i < listOfEntity.Count; i++)
                 {
-                    TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
+                    TileData tileToCast = null;
+                    if (listOfEntity[i] != null) tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
                     if (tileToCast != null)
                     {
                         canCast = IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast);
@@ -330,7 +336,8 @@ public class DPS : Brain
      */
     private bool UseAbilityDuringThePathToTarget(ReachableTile pathToEntityCac, TileData tileToCast, List<TileData> zoneCastDist, bool priorityOnRun)
     {
-        ReachableTile intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
+        ReachableTile intermediateTile = null;
+        if (zoneCastDist[0] != null) intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
 
         int deplacementCost;
         if (priorityOnRun) deplacementCost = pathToEntityCac.cost;

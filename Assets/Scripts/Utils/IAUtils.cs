@@ -109,7 +109,7 @@ public static class IAUtils
 
         for (int i = 0; i < tilesOnPath.Count; i++)
         {
-            for (int j = 0; j < attackRangeCast.Count; j++)
+                for (int j = 0; j < attackRangeCast.Count; j++)
             {
                 attackRangeEffect = ability.effectArea.GetRotatedTiles(tilesOnPath[i].GetCoordPosition(), tilesOnPath[i].GetCoordPosition() + attackRangeCast[j]);
                 for (int k = 0; k < attackRangeEffect.Count; k++)

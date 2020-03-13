@@ -190,6 +190,8 @@ public class EntityBehaviour : MonoBehaviour
         HUDManager.Instance.UpdateEntityInfo(null);
 
         Sequence abilitySequence = DOTween.Sequence();
+        Debug.Log(ability);
+        Debug.Log(ability.displayName);
         SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
@@ -278,9 +280,15 @@ public class EntityBehaviour : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
             MapManager.GetListOfEntity().Remove(this);
+            RoundManager.Instance.CheckRemainingEntities();
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
-            RoundManager.Instance.CheckRemainingEntities();
+            if(this.GetAlignement() == Alignement.Enemy)
+            {
+                PlayerTeamManager.Instance.teamXp += 2;
+                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
+            }
+
         }
     }
     

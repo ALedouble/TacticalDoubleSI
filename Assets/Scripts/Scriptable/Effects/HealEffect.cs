@@ -30,6 +30,7 @@ public class HealEffect : AbilityEffect
         {
             PlayerTeamManager.Instance.teamXp += 1;
             entity.earnedXPThisAbility = true;
+            PlayerTeamManager.Instance.OnXPChanged?.Invoke();
         }
 
 

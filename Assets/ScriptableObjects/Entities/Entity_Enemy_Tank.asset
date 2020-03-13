@@ -19,9 +19,9 @@ MonoBehaviour:
   hitBySomeoneSFX: {fileID: 11400000, guid: d8e5122b3778f49eab288383642bbbd9, type: 2}
   deathSFX: {fileID: 11400000, guid: 29686d95ae798ce4b861a7fd1a468ab8, type: 2}
   pivot: {x: 0.5, y: 0.5}
-  maxHealth: 35
+  maxHealth: 30
   maxActionPoints: 8
-  armor: 3
+  armor: 2
   abilities:
   - {fileID: 11400000, guid: 43e7699322e51ab4191644bfa1e0b3da, type: 2}
   - {fileID: 11400000, guid: 40f5568757f006043b9ed08b2afcca3a, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
   brain: {fileID: 11400000, guid: 73b9a169b18349e4daf35a1eff00d0d9, type: 2}
   alignement: 0
   entityTag: 2
-  power: 8
+  power: 7
   xpPoint: 1
   totemValue: -1
   isNotDestructible: 0

@@ -41,6 +41,8 @@ public class Entity : ScriptableObject
     public GameObject fxEntity;
     public Color color;
 
+    public SoundReference placedEntitiesSFX;
+
     public int GetAbilityNumber(Ability ability)
     {
         return abilities.FindIndex(x => x == ability);
