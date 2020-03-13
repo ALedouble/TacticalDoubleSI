@@ -44,13 +44,13 @@ public class Healer : Brain
         Debug.Log("New Healer");
         Debug.Log(entityBehaviour.currentTile.position);
 
-        Init(entityBehaviour);
+        InitStart(entityBehaviour);
         iaEntityFunction();
 
         saveOfLife = healer.CurrentHealth;
     }
 
-    private void Init(EntityBehaviour entityBehaviour)
+    private void InitStart(EntityBehaviour entityBehaviour)
     {
         healer = entityBehaviour;
 
@@ -58,14 +58,6 @@ public class Healer : Brain
         enemyDPS = new List<EntityBehaviour>();
         enemyHealer = new List<EntityBehaviour>();
         enemyMinion = new List<EntityBehaviour>();
-
-        playerHealer = null;
-        playerDPS = null;
-        playerTank = null;
-
-        playerHealerPathToAttack = null;
-        playerDPSPathToAttack = null;
-        playerTankPathToAttack = null;
 
         ability1 = healer.GetAbilities(0);
         ability2 = healer.GetAbilities(1);
@@ -82,11 +74,24 @@ public class Healer : Brain
         }
     }
 
+    private void InitEachLoop()
+    {
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        playerHealerPathToAttack = null;
+        playerDPSPathToAttack = null;
+        playerTankPathToAttack = null;
+    }
+
     /*
      * Gere un deplacement/attack du Healer
      */
     private void IAHealer()
     {
+        InitEachLoop();
+
         IAUtils.GetAllEntity(healer, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyDPS, ref enemyHealer, ref enemyMinion);
 
         if (IAUtils.CheckEndTurn(healer, CanMakeAction())) return;

@@ -34,5 +34,8 @@ MonoBehaviour:
   isNotDestructible: 0
   isFx: 0
   fxEntity: {fileID: 0}
-  placedEntitiesSFX: {fileID: 11400000, guid: 173f1709434fc7a4bad23ae8dedcd6a8, type: 2}
+<<<<<<< HEAD
   color: {r: 0.90196085, g: 0.9215687, b: 0.10196079, a: 1}
+=======
+  placedEntitiesSFX: {fileID: 11400000, guid: 173f1709434fc7a4bad23ae8dedcd6a8, type: 2}
+>>>>>>> de70647b9af027f7026d2eed9e6829028b8e99ae
