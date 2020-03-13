@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyHeal_BOOM_SpawnD
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 7ad6abe7af855e94c8fae144da07fd5f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 8b3f89877141e6e4eb280df64ee8d0ac, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: be343ee99f09b184db3ce1c060201fd8, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7b42ad1b2148ff24ba12d13f9179668a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 3ad63de79eccc4b42bbe774b9b8d508b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 21ec5d603ca498840b64c9f5dec5b169, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: c309972f9fa51d74abe73d7d520c7a1b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 99b72be9345626a43853ebc403a1262c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 36a569fbfc688624989dbfc3a1b29af5, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 00f8ef831632be74dbe1fb9c2c7b252e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5a9d004a7ae6eea448ca3003f66bbd57, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 8584fdd3e3e32b24aa012268e28ed5bc, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 3079c3c5db49007489b8f33cf3c6452f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: fab23d832544c3d46a1bf82bc6bd6657, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 075a6a9d0587ddc418a68c7ca7072aba, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: f7211152df8c8794aaa43b0802ca76e5, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4a93a60c3d7b6de46a9975cc8286d6fc, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 170b94c6497826345819dad53ff2c374, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 01c60630950c2174dbcae0c34c73727f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0152b4f264cba8747b5838a6eb2be5ad, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 8cc3ac81615b170469b50f4f2950613f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 539a1d98ce0deca48b30c6f92429783c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 1d06b2840860319469b10f756798475f, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: bf4d4be97b8b1444a94d8e58cbd0238a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 65fb3e99edd63bd46a300598e8154252, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 6b42a7a5c9f3f454c89c888963182bbb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: d61cd35661d2914439b8788db42ff8c9, type: 3}
+    length: 0.1
+  loopMode: 1
