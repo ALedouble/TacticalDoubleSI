@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: EntityAnimation_AllyHeal_Hit
   m_EditorClassIdentifier: 
   frames:
-  - texture: {fileID: 2800000, guid: 19c52299ee677aa4793f4b13dabe8ab1, type: 3}
+  - texture: {fileID: 2800000, guid: 333d274b5c2304249aa93b2a2e141519, type: 3}
     length: 0.1
-  loopMode: 0
+  - texture: {fileID: 2800000, guid: 4a24662d54e25484fb23889eee059c7a, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: f733249b30117a34b885801fc17f95a4, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5b0c3c2b6fb66ef47b6b9150e49f9ac3, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: e59c9fd14796fa149911fce5663b064a, type: 3}
+    length: 0.1
+  loopMode: 1

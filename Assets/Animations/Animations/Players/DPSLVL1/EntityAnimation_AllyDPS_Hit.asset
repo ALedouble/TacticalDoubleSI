@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: EntityAnimation_AllyDPS_Hit
   m_EditorClassIdentifier: 
   frames:
-  - texture: {fileID: 2800000, guid: f0b8e3e8d9e193b4aaa6ee76d9885148, type: 3}
+  - texture: {fileID: 2800000, guid: f1959887a6781b14bafd1e6837fca31e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b215d9ab5e83334489f4f1eaaef599c0, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: b1af412b2216ccb4ab833776acba7551, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 2e9aa0e73167a70419d00e6b053b4f22, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 0a2f312418dcfe94f9cbeee340772979, type: 3}
     length: 0.1
   loopMode: 0
