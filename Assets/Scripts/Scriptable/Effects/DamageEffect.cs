@@ -42,14 +42,21 @@ public class DamageEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.alignement != entity.data.alignement && !x.data.isNotDestructible)
             {
-                x.animator.PlayAnimation(x.data.animations.hitAnimation);
+                Debug.Log(x.IsChannelingBurst);
+                if (!x.IsChannelingBurst)
+                {
+                    x.animator.PlayAnimation(x.data.animations.hitAnimation);
+                    returnInIdle(x);
+                }
+                    
+
                 SoundManager.Instance.PlaySound(x.data.hitBySomeoneSFX.sound, false);
                 float damage = Mathf.Ceil(SetDamage(entity, ability) - x.CurrentArmor);
                 x.CurrentHealth -= (int)damage;
                 HUDManager.DisplayValue("-" + damage.ToString(), Color.red, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
                 x.CheckCurrentHealthAndDestroy();
                 x.Shake();
-                returnInIdle(x);
+                
             }
 
             
