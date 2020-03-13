@@ -33,21 +33,13 @@ public class Tank : Brain
 
         Debug.Log("New Tank");
 
-        Init(entityBehaviour);
+        InitStart(entityBehaviour);
         iaEntityFunction();
     }
 
-    private void Init(EntityBehaviour entityBehaviour)
+    private void InitStart(EntityBehaviour entityBehaviour)
     {
         tank = entityBehaviour;
-
-        playerHealer = null;
-        playerDPS = null;
-        playerTank = null;
-
-        playerHealerPathToAttack = null;
-        playerDPSPathToAttack = null;
-        playerTankPathToAttack = null;
 
         ability1 = tank.GetAbilities(0);
         ability2 = tank.GetAbilities(1);
@@ -56,11 +48,24 @@ public class Tank : Brain
         haveEndTurn = false;
     }
 
+    private void InitEachLoop()
+    {
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+
+        playerHealerPathToAttack = null;
+        playerDPSPathToAttack = null;
+        playerTankPathToAttack = null;
+    }
+
     /*
      * Gere un deplacement/attack du Tank
      */
     private void IATank()
     {
+        InitEachLoop();
+
         IAUtils.GetAllEntity(tank, ref playerHealer, ref playerDPS, ref playerTank);
 
         if (IAUtils.CheckEndTurn(tank, CanMakeAction())) return;

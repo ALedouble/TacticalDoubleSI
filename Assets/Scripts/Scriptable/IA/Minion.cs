@@ -36,16 +36,23 @@ public class Minion : Brain
 
         Debug.Log("New Minion");
 
-        Init(entityBehaviour);
+        InitStart(entityBehaviour);
         iaEntityFunction();
     }
 
-    private void Init(EntityBehaviour entityBehaviour)
+    private void InitStart(EntityBehaviour entityBehaviour)
     {
         minion = entityBehaviour;
 
         enemyTank = new List<EntityBehaviour>();
 
+        firstActionInTurn = true;
+        lowLife = false;
+        haveEndTurn = false;
+    }
+
+    private void InitEachLoop()
+    {
         playerHealer = null;
         playerDPS = null;
         playerTank = null;
@@ -53,10 +60,6 @@ public class Minion : Brain
         playerHealerPathToAttack = null;
         playerDPSPathToAttack = null;
         playerTankPathToAttack = null;
-
-        firstActionInTurn = true;
-        lowLife = false;
-        haveEndTurn = false;
     }
 
     /*
@@ -64,10 +67,18 @@ public class Minion : Brain
      */
     private void IAMinion()
     {
+        InitEachLoop();
+
         if (lowLife) reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), rangeAttackWhenLowLife, true);
         else reachableTiles = IAUtils.FindAllReachablePlace(minion.GetPosition(), minion.CurrentActionPoints - minion.GetAbilities(0).cost, true);
                 
         IAUtils.GetAllEntity(minion, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank);
+
+        Debug.Log(playerHealer);
+        Debug.Log(playerDPS);
+        Debug.Log(playerTank);
+            
+
         IAUtils.GetPlayerInRange(reachableTiles, minion.GetAbilities(0), ref playerHealerPathToAttack, ref playerDPSPathToAttack, ref playerTankPathToAttack, playerHealer, playerDPS, playerTank);
 
 

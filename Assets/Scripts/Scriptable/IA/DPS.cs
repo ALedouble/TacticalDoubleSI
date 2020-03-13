@@ -36,20 +36,16 @@ public class DPS : Brain
 
         Debug.Log("New DPS");
 
-        Init(entityBehaviour);
+        InitStart(entityBehaviour);
         iaEntityFunction();
     }
 
-    private void Init(EntityBehaviour entityBehaviour)
+    private void InitStart(EntityBehaviour entityBehaviour)
     {
         dps = entityBehaviour;
 
         enemyTank = new List<EntityBehaviour>();
         enemyHealer = new List<EntityBehaviour>();
-
-        playerHealer = null;
-        playerDPS = null;
-        playerTank = null;
 
         ability1 = dps.GetAbilities(0);
         ability2 = dps.GetAbilities(1);
@@ -58,11 +54,20 @@ public class DPS : Brain
         haveEndTurn = false;
     }
 
+    private void InitEachLoop()
+    {
+        playerHealer = null;
+        playerDPS = null;
+        playerTank = null;
+    }
+
     /*
      * Gere un deplacement/attack du Minion
      */
     private void IA_DPS()
     {
+        InitEachLoop();
+
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
