@@ -30,6 +30,7 @@ public class HealEffect : AbilityEffect
         {
             PlayerTeamManager.Instance.teamXp += 1;
             entity.earnedXPThisAbility = true;
+            PlayerTeamManager.Instance.OnXPChanged?.Invoke();
         }
 
 
@@ -45,6 +46,8 @@ public class HealEffect : AbilityEffect
                 }
                 x.Stretch();
                 HUDManager.DisplayValue("+" + heal.ToString(), Color.green, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));
+
+                HUDManager.Instance.UpdateEntityInfo(null);
             }
         });
     }
