@@ -2476,7 +2476,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: a161a2ced5168334387898794f8b90c9, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3594,6 +3594,7 @@ GameObject:
   - component: {fileID: 1410581373543981206}
   - component: {fileID: 619802754549755563}
   - component: {fileID: 3259484739779374096}
+  - component: {fileID: 5127843035965474304}
   m_Layer: 5
   m_Name: BlastOut - Button
   m_TagString: Untagged
@@ -3726,6 +3727,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!95 &5127843035965474304
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908205879340363726}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c320ebc3d16d62c45a5ac1710126daf2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4951278826129109469
 GameObject:
   m_ObjectHideFlags: 0
@@ -5181,6 +5201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1719769498977542129}
+  - component: {fileID: 6056546041654469615}
   m_Layer: 0
   m_Name: BlastOut
   m_TagString: Untagged
@@ -5213,6 +5234,14 @@ RectTransform:
   m_AnchoredPosition: {x: 24, y: 73}
   m_SizeDelta: {x: 315.6, y: 256.4}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &6056546041654469615
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263899498188282451}
+  m_CullTransparentMesh: 0
 --- !u!1 &7308146963567166241
 GameObject:
   m_ObjectHideFlags: 0
@@ -6136,7 +6165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
