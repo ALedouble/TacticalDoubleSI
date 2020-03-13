@@ -78,6 +78,9 @@ public class PlayerBrain : Brain
         SelectionManager.Instance.OnCancel -= CanSelectAnotherPlayer;
 
         HUDManager.Instance.DeselectAbility();
+
+        SelectionManager.Instance.OnEntitySelect -= HUDManager.Instance.UpdateEntityInfo;
+        SelectionManager.Instance.OnEntitySelect += HUDManager.Instance.UpdateEntityInfo;
     }
 
     void OnMovement(MapRaycastHit hit)
@@ -139,6 +142,9 @@ public class PlayerBrain : Brain
         selectedAbilityIndex = index;
 
         if(index<=2) HUDManager.Instance.SelectAbility(index);
+
+        SelectionManager.Instance.OnEntitySelect -= HUDManager.Instance.UpdateEntityInfo;
+        SelectionManager.Instance.OnEntitySelect -= HUDManager.Instance.UpdateEntityInfo;
 
         SelectionManager.Instance.OnClick -= OnMovement;
         MapManager.SetReachableTilesPreview(null);
@@ -207,6 +213,7 @@ public class PlayerBrain : Brain
         {
             OnTurnStart(entityBehaviour);
             HUDManager.Instance.ShowEndTurnButton();
+            SelectionManager.Instance.OnEntitySelect += HUDManager.Instance.UpdateEntityInfo;
         });
 
         List<Vector2Int> effectTiles = entityBehaviour.data.abilities[selectedAbilityIndex].effectArea.GetWorldSpaceRotated(entityBehaviour.GetPosition(), hit.position);

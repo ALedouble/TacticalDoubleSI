@@ -21,6 +21,6 @@ MonoBehaviour:
   - Costs 2 AP to traverse
   - Costs 3 AP to traverse
   tileSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 4f13cec67e50d104d90c49e18a8ad268, type: 3}
+  - {fileID: 21300000, guid: afe79ac0971b35245ae20ae177028058, type: 3}
+  - {fileID: 21300000, guid: b22a8d08474b43a4caada17ad1a9fc99, type: 3}
