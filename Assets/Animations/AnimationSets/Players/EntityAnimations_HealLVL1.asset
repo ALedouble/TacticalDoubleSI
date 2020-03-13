@@ -18,8 +18,13 @@ MonoBehaviour:
   deathAnimation: {fileID: 11400000, guid: a235cdec87df2cf41b63d77516ecd36e, type: 2}
   channelingStartAnimation: {fileID: 11400000, guid: 1672f70a86e71034691b99f5c0c8514a,
     type: 2}
-  channelingIdleAnimation: {fileID: 11400000, guid: fe3876eb14426da41a7c5e0d7a0f5721,
+  channelingIdleAnimation: {fileID: 11400000, guid: 2226d08f06c50ba49833f48d38f11518,
     type: 2}
+  stasisStartAnimation: {fileID: 11400000, guid: 75f8a8014f704f14da67739fecb03305,
+    type: 2}
+  stasisIdleAnimation: {fileID: 11400000, guid: fe3876eb14426da41a7c5e0d7a0f5721,
+    type: 2}
+  stasisEndAnimation: {fileID: 11400000, guid: 1e0563741bb85634eb44aa0e42518e3e, type: 2}
   abilityAnimations:
   - {fileID: 11400000, guid: 96509185106577b418c7147b5578a959, type: 2}
   - {fileID: 11400000, guid: fa249d32486703247b885e10e520c873, type: 2}

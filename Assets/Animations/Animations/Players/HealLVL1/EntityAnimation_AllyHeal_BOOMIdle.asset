@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
+  m_Name: EntityAnimation_AllyHeal_BOOMIdle
+  m_EditorClassIdentifier: 
+  frames:
+  - texture: {fileID: 2800000, guid: 873d882a463777341a0138feec8933a4, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 3bdd60bd123e1bd459d1c0eb602a5e8b, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 23b4e1e98409b314dabbc984ca4629cb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 324f17db6758cfa45b2dd8b2d6100afb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: dabace9865f559742b4f7a15235d7978, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: a9b7a674403350f498b59a287c28d82e, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 273cd38a071994b47a33960b2d9542db, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 7c971a815a7064444b7075d950938e86, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 77249efb5d65eed43a0036c8d53ff0c7, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 5c7110fea1480ca41a3b79716280b73d, type: 3}
+    length: 0.1
+  loopMode: 1
