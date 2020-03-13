@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [CreateAssetMenu(fileName = "ExplodeEffect", menuName = "ScriptableObjects/ExplodeEffect", order = 108)]
 public class ExplodeEffect : AbilityEffect
@@ -13,11 +14,26 @@ public class ExplodeEffect : AbilityEffect
         ApplyEffect(entity, ability, castTile, (x) => {
             if (x.data.entityTag == EntityTag.Totem)
             {
+                x.animator.PlayAnimation(x.data.animations.deathAnimation);
                 PlayerTeamManager.Instance.LevelUpPlayerAbility(entity.data, x.data.totemValue);
 
-                MapManager.DeleteEntity(x);
-                Destroy(x.gameObject);
+                Death(x);
+                
             }
         });
+    }
+
+    public Sequence Death(EntityBehaviour entity)
+    {
+        Sequence deathSequence = DOTween.Sequence();
+
+        deathSequence.AppendInterval(2.5f);
+        deathSequence.AppendCallback(() =>
+        {
+            MapManager.DeleteEntity(entity);
+            Destroy(entity.gameObject);
+        });
+
+        return deathSequence;
     }
 }

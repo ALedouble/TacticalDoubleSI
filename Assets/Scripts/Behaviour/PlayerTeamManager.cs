@@ -121,4 +121,9 @@ public class PlayerTeamManager : MonoBehaviour
 
         entity.abilities[abilityNumber] = playerProgression[index].abilityProgression[abilityNumber].abilities[entity.abilityLevels[abilityNumber]];
     }
+
+    public int GetPlayerIndex(EntityBehaviour entity)
+    {
+        return playerEntities.FindIndex(x => x.displayName == entity.data.displayName);
+    }
 }

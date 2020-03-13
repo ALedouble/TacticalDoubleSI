@@ -7,7 +7,7 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-
+    public AudioSource bloupSound;
     Tween squishTween;
    
     public void Squish(GameObject button)
@@ -25,6 +25,11 @@ public class MenuManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void PlayBloupSound()
+    {
+        bloupSound.DOPlay();
     }
 
 }

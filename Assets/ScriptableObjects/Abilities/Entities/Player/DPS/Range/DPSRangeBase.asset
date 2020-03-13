@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Snipe
-  description: A simple shot
+  displayName: Precision Shot
+  description: Use your bow to shoot a ranged target!
   cost: 5
   multiplicator: 0.8
   displaySprite: {fileID: 21300000, guid: bc4e2d63ccbe65d46a36a41c73169e5d, type: 3}

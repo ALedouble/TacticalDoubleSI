@@ -18,6 +18,13 @@ public class EntityAnimations : ScriptableObject
     public EntityAnimation channelingStartAnimation;
     [SerializeField]
     public EntityAnimation channelingIdleAnimation;
+    [SerializeField]
+    public EntityAnimation stasisStartAnimation;
+    [SerializeField]
+    public EntityAnimation stasisIdleAnimation;
+    [SerializeField]
+    public EntityAnimation stasisEndAnimation;
+
 
     [SerializeField]
     private List<EntityAnimation> abilityAnimations;

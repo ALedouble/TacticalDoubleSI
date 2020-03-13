@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 public class HUDManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class HUDManager : MonoBehaviour
     [HideInInspector] public Canvas canvas;
 
     public TileDescriptions tileDescriptions;
+
+    public List<Color> abilityColors = new List<Color>();
 
     public Action<int> OnAbilityClicked;
     public Action OnFinishPlacement;
@@ -32,8 +35,12 @@ public class HUDManager : MonoBehaviour
         enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
+        abilityPopupGroup.alpha = 0;
+        blastoutPopupGroup.alpha = 0;
         finishPlacementButton.DOScale(0, 0);
         abilityOutline.gameObject.SetActive(false);
+        hpDisplay.transform.parent.gameObject.SetActive(false);
+        PADisplay.gameObject.SetActive(false);
 
         SelectionManager.Instance.OnEntitySelect += UpdateEntityInfo;
 
@@ -47,6 +54,7 @@ public class HUDManager : MonoBehaviour
         };
 
         SelectionManager.Instance.OnHoveredTileChanged += UpdateTileInfo;
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateHPDisplay;
 
         PlayerTeamManager.Instance.OnPlacedAllPlayers += ShowFinishPlacementButton;
         PlayerTeamManager.Instance.OnFinishPlacement += OnFinishPlacementConfirmed;
@@ -94,6 +102,33 @@ public class HUDManager : MonoBehaviour
     {
         endTurnButtonTween?.Kill();
         endTurnButtonTween = endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack);
+    }
+
+    void UpdateHPDisplay(MapRaycastHit mapHit)
+    {
+        if (mapHit.tile == null || mapHit.tile.entities.Count <= 0 || mapHit.tile.entities[0].data.alignement == Alignement.Neutral)
+        {
+            hpDisplay.transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            hpDisplay.transform.parent.gameObject.SetActive(true);
+
+            currentHoveredTile = mapHit.tile;
+            hpDisplay.transform.parent.GetComponent<RectTransform>().anchoredPosition = canvas.WorldToCanvas(new Vector3(mapHit.position.x, 2, mapHit.position.y));
+        }
+    }
+
+    TileData currentHoveredTile;
+    TextMeshProUGUI hpDisplay;
+
+    [HideInInspector] public TextMeshProUGUI PADisplay;
+
+    private void Update()
+    {
+        hpDisplay.text = currentHoveredTile != null ? 
+            currentHoveredTile.entities.Count > 0 ?
+            currentHoveredTile.entities[0].CurrentHealth.ToString() : "/" : "/";
     }
 
     EntityBehaviour inspectedEnemy;
@@ -157,8 +192,6 @@ public class HUDManager : MonoBehaviour
         Tween fade = null;
 
 
-        Debug.Log("UpdatetingInfo");
-
         switch (entity.data.alignement)
         {
             case Alignement.Enemy:
@@ -182,6 +215,17 @@ public class HUDManager : MonoBehaviour
 
                 icon = playerIcon;
 
+                int playerIndex = PlayerTeamManager.Instance.GetPlayerIndex(entity);
+
+                for (int j = 0; j < 3; j++)
+                {
+                    for (int x = 0; x < 4; x++)
+                    {
+                        abilityDescriptions[j, x] = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[x].description;
+                    }
+                    abilityTitles[j] = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[0].displayName;
+                }
+
                 for (int i = 0; i < 3; i++)
                 {
                     abilitySprites[i].sprite = entity.data.abilities[i].displaySprite;
@@ -189,6 +233,8 @@ public class HUDManager : MonoBehaviour
                     if (entity.CurrentActionPoints < entity.data.abilities[i].cost) abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, .2f);
                     else abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
                 }
+
+                blastoutDescription = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[3].abilities[0].description;
 
                 //if (inspectedPlayer != null) return;
 
@@ -224,11 +270,47 @@ public class HUDManager : MonoBehaviour
         PAtextMesh.text = paString;
     }
 
+
+    Tween abilityPopupFade;
+    Tween blastoutPopupFade;
+    void ShowAbilityPopup(int index)
+    {
+        if (index < 3)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                abilityDescriptionsText[i].text = abilityDescriptions[index, i];
+            }
+            abilityTitle.text = abilityTitles[index];
+            abilityGlow.color = abilityColors[index];
+
+            abilityPopupFade?.Kill();
+            abilityPopupFade = abilityPopupGroup.DOFade(1, .1f);
+        }
+        else
+        {
+            blastoutDescriptionText.text = blastoutDescription;
+
+            blastoutPopupFade?.Kill();
+            blastoutPopupFade = blastoutPopupGroup.DOFade(1, .1f);
+        }
+
+    }
+    void HideAbilityPopup(int i)
+    {
+        abilityPopupFade?.Kill();
+        abilityPopupGroup.DOFade(0, .1f);
+
+        blastoutPopupFade?.Kill();
+        blastoutPopupFade = blastoutPopupGroup.DOFade(0, .1f);
+    }
+
     CanvasGroup tileInfoGroup;
     Tween tileInfoFade;
     Image tilePreview;
     TextMeshProUGUI tileName;
     TextMeshProUGUI tileDescription;
+
 
 
     void UpdateTileInfo(MapRaycastHit mapHit)
@@ -271,6 +353,28 @@ public class HUDManager : MonoBehaviour
                 abilityOutline = HUDReferences[i].GetComponent<RectTransform>();
                 continue;
             }
+            if (tag == "PopupBlastoutGroup")
+            {
+                blastoutPopupGroup = HUDReferences[i].GetComponent<CanvasGroup>();
+                continue;
+            }
+            if (tag == "BlastoutDescription")
+            {
+                blastoutDescriptionText = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+                continue;
+            }
+            if (tag == "HPDisplay")
+            {
+                hpDisplay = HUDReferences[i].GetComponentInChildren<TextMeshProUGUI>();
+                continue;
+            }
+            if (tag == "PADisplay")
+            {
+                PADisplay = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+                continue;
+            }
+
+            if (GetAbilityPopupReferences(tag, HUDReferences[i])) continue;
 
             if (GetAbilityReferences(tag, HUDReferences[i])) continue;
 
@@ -286,6 +390,7 @@ public class HUDManager : MonoBehaviour
             if (tag == "TilePreview") tilePreview = HUDReferences[i].GetComponent<Image>();
             if (tag == "TileName") tileName = HUDReferences[i].GetComponent<TextMeshProUGUI>();
             if (tag == "TileEffect") tileDescription = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+
         }
     }
 
@@ -307,7 +412,79 @@ public class HUDManager : MonoBehaviour
                     OnAbilityClicked?.Invoke(abilityNumber);
                 });
 
+                EventTrigger trigger = abilityButton.gameObject.AddComponent<EventTrigger>();
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerEnter;
+                entry.callback.AddListener((x) =>
+                {
+                    ShowAbilityPopup(abilityNumber);
+                });
+                trigger.triggers.Add(entry);
+                entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.PointerExit;
+                entry.callback.AddListener((x) =>
+                {
+                    HideAbilityPopup(abilityNumber);
+                });
+                trigger.triggers.Add(entry);
+
+
                 if (abilityNumber <= 2) abilitySprites[abilityNumber] = reference.GetComponentInChildren<Image>();
+
+                return true;
+            }
+            return false;
+        }
+
+        return false;
+    }
+
+
+    string[,] abilityDescriptions = new string[3, 4];
+    List<TextMeshProUGUI> abilityDescriptionsText = new List<TextMeshProUGUI>();
+    string[] abilityTitles = new string[3];
+    TextMeshProUGUI abilityTitle;
+    CanvasGroup abilityPopupGroup;
+    Image abilityGlow;
+    CanvasGroup blastoutPopupGroup;
+    TextMeshProUGUI blastoutDescriptionText;
+    string blastoutDescription;
+
+    bool GetAbilityPopupReferences(string tag, HUDReferencer reference)
+    {
+        if (abilityDescriptionsText.Count == 0)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                abilityDescriptionsText.Add(null);
+            }
+        }
+
+        if (tag.Contains("PopupAbility"))
+        {
+            string numberTag = tag.Replace("PopupAbility", "");
+            int abilityNumber = -1;
+
+            if (Int32.TryParse(numberTag, out abilityNumber))
+            {
+                abilityDescriptionsText[abilityNumber] = reference.GetComponent<TextMeshProUGUI>();
+
+                return true;
+            }
+            else
+            {
+                if (tag == "PopupAbilityTitle")
+                {
+                    abilityTitle = reference.GetComponent<TextMeshProUGUI>();
+                }
+                if (tag == "PopupAbilityGroup")
+                {
+                    abilityPopupGroup = reference.GetComponent<CanvasGroup>();
+                }
+                if (tag == "PopupAbilityGlow")
+                {
+                    abilityGlow = reference.GetComponent<Image>();
+                }
 
                 return true;
             }

@@ -47,13 +47,15 @@ public class RoundManager : MonoBehaviour
                 PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
+                StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
             }
 
             PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
+            
 
             if (PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft == 0)
             {
-
+                PlayerTeamManager.Instance.playerEntitybehaviours[i].animator.PlayAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i].data.animations.stasisEndAnimation);
             }
         }
 
@@ -74,6 +76,10 @@ public class RoundManager : MonoBehaviour
     {
         if (entity.data.alignement != Alignement.Player) return;
         if (entity.IsChannelingBurst || entity.stasis) return;
+
+        Debug.Log(entity.stasis);
+       
+
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
         entity.OnTurn();
@@ -167,5 +173,29 @@ public class RoundManager : MonoBehaviour
             SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
             Debug.Log("you Loose");
         }
+    }
+
+    Sequence StasisAnimation(EntityBehaviour entity)
+    {
+        Sequence startStasis = DOTween.Sequence();
+
+        startStasis.AppendInterval(0.5f);
+        startStasis.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(entity.data.animations.stasisStartAnimation);
+            Debug.Log("hello");
+        });
+
+        startStasis.AppendInterval(2.7f);
+        startStasis.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(entity.data.animations.stasisIdleAnimation);
+            Debug.Log("hello");
+        });
+
+        
+
+
+        return startStasis;
     }
 }
