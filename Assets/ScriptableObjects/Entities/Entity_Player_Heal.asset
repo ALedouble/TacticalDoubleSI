@@ -34,3 +34,4 @@ MonoBehaviour:
   isNotDestructible: 0
   isFx: 0
   fxEntity: {fileID: 0}
+  color: {r: 0.90196085, g: 0.9215687, b: 0.10196079, a: 1}

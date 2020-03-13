@@ -39,6 +39,7 @@ public class Entity : ScriptableObject
     public bool isNotDestructible = false;
     public bool isFx = false;
     public GameObject fxEntity;
+    public Color color;
 
     public int GetAbilityNumber(Ability ability)
     {
