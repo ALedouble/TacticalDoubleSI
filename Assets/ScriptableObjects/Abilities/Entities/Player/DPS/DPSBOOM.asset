@@ -20,13 +20,14 @@ MonoBehaviour:
   multiplicator: 2
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 8380234595475707925, guid: 34f4d392f77550a47a4afe8b92c58581, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 1
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   - {fileID: 11400000, guid: e5ec334204ae7b04890e2360f5962227, type: 2}
+  abilitySFX: {fileID: 11400000, guid: aba23a3a148465d4abf89df6d0e206ce, type: 2}
   castArea:
     size: 3
     area:
