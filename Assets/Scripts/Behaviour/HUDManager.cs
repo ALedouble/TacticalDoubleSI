@@ -29,7 +29,7 @@ public class HUDManager : MonoBehaviour
         canvas = FindObjectOfType<Canvas>();
 
         playerInfoGroup.alpha = 0;
-        //enemyInfoGroup.alpha = 0;
+        enemyInfoGroup.alpha = 0;
         tileInfoGroup.alpha = 0;
         roundHUDGroup.alpha = 0;
         finishPlacementButton.DOScale(0, 0);
@@ -133,6 +133,8 @@ public class HUDManager : MonoBehaviour
             return;
         }
 
+        if (entity.data.alignement == Alignement.Neutral) return;
+
         switch (entity.data.alignement)
         {
             case Alignement.Enemy:
@@ -157,8 +159,6 @@ public class HUDManager : MonoBehaviour
         {
             case Alignement.Enemy :
 
-                return;
-                
                 HPtextMesh = HPTextEnemy;
                 PAtextMesh = PATextEnemy;
 
