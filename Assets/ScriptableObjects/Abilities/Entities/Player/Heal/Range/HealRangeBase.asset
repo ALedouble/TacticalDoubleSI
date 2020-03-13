@@ -17,7 +17,7 @@ MonoBehaviour:
   displayName: Starfall
   description: A simple damaging falling  projectile
   cost: 4
-  multiplicator: 0.7
+  multiplicator: 0.8
   displaySprite: {fileID: 21300000, guid: d592e672f59750b46b0caa6308e902ca, type: 3}
   vfxCast: {fileID: 121291155246810588, guid: c8d798f640912004f8daa92838573652, type: 3}
   canCastOnEntityPosition: 1
