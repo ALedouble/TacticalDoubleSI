@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum RoundPhase
 {
@@ -142,13 +143,28 @@ public class RoundManager : MonoBehaviour
 
        if(ennemies.Count <= 0)
         {
-            //Win()
+            for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+            {
+                SaveManager.Instance.SaveEntitiesWin[
+                    SaveManager.Instance.SaveEntitiesWin.FindIndex(
+                        (x) => x.entityTag.Equals(PlayerTeamManager.Instance.playerEntitybehaviours[i].data.entityTag)
+                            )] = PlayerTeamManager.Instance.playerEntitybehaviours[i].data;
+            }
+
+            DOTween.KillAll();
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
             Debug.Log("you win");
         }
 
        if(PlayerTeamManager.Instance.playerEntitybehaviours.Count <= 1)
-       {
-            //Loose()
+        {
+            for (int i = 0; i < SaveManager.Instance.SaveEntitiesLose.Count; i++)
+            {
+                SaveManager.Instance.SaveEntitiesWin[i] = SaveManager.Instance.SaveEntitiesLose[i];
+            }
+
+            DOTween.KillAll();
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
             Debug.Log("you Loose");
         }
     }
