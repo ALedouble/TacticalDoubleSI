@@ -15,7 +15,9 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Blast Out
-  description: 
+  description: Inflicts [damages] damages to any enemy found on the tiles directly
+    next to him while awarding  [armor] armor points to any ally found in the same
+    zone.
   cost: 0
   multiplicator: 1.5
   displaySprite: {fileID: 0}

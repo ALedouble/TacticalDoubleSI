@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Dash
-  description: Increase range
+  displayName: Teleport
+  description: Upgrade I - Range +1
   cost: 4
   multiplicator: 0.6
   displaySprite: {fileID: 21300000, guid: 98049ef7d4fe6114eab4b9595e1e2610, type: 3}
