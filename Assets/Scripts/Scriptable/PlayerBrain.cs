@@ -139,6 +139,13 @@ public class PlayerBrain : Brain
 
         if (entityBehaviour.CurrentActionPoints < entityBehaviour.data.abilities[index].cost) return;
 
+        if (index == 3)
+        {
+            if (PlayerTeamManager.Instance.teamXp < 10)
+            {
+                return;
+            }
+        }
         selectedAbilityIndex = index;
 
         if(index<=2) HUDManager.Instance.SelectAbility(index);
@@ -184,6 +191,20 @@ public class PlayerBrain : Brain
     {
         if (hit.tile == null) return;
         if (!castableTiles.Contains(hit.position)) return;
+
+
+        if (selectedAbilityIndex == 3)
+        {
+            if (PlayerTeamManager.Instance.teamXp < 10)
+            {
+                return;
+            }
+            else
+            {
+                PlayerTeamManager.Instance.teamXp = 0;
+                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
+            }
+        }
 
         // TEMPORARY
         MapManager.SetCastableTilesPreview(null);

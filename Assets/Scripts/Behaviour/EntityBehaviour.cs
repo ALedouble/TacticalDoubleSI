@@ -279,22 +279,34 @@ public class EntityBehaviour : MonoBehaviour
         if (currentHealth <= 0)
         {
             SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
-            MapManager.GetListOfEntity().Remove(this);
-            RoundManager.Instance.CheckRemainingEntities();
-            MapManager.DeleteEntity(this);
-            Destroy(gameObject);
+
             if(this.GetAlignement() == Alignement.Enemy)
             {
                 PlayerTeamManager.Instance.teamXp += 2;
                 PlayerTeamManager.Instance.OnXPChanged?.Invoke();
             }
 
+            else if(this.GetAlignement() == Alignement.Player)
+            {
+                SaveManager.Instance.SaveEntitiesWin[
+                    SaveManager.Instance.SaveEntitiesWin.FindIndex(
+                        (x) => x.entityTag.Equals(this.data.entityTag)
+                            )] = PlayerTeamManager.Instance.playerEntitybehaviours[
+                                PlayerTeamManager.Instance.playerEntitybehaviours.FindIndex(
+                                    (x) => x.data.entityTag.Equals(this.data.entityTag)
+                                        )].data;
+            }
+
+            MapManager.GetListOfEntity().Remove(this);
+            RoundManager.Instance.CheckRemainingEntities();
+            MapManager.DeleteEntity(this);
+            Destroy(gameObject);
         }
     }
     
     public void Shake()
     {
-        transform.GetChild(0).DOShakePosition(.5f, new Vector3(.8f, 0, 0), 30, 90, false, true);
+        transform.DOShakePosition(.5f, Quaternion.AngleAxis(-45, Vector3.up) * new Vector3(.8f, 0, 0), 30, 90, false, true);
     }
 
     public void Stretch()

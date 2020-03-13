@@ -19,16 +19,30 @@ public class PlayerTeamManager : MonoBehaviour
     {
         Instance = this;
 
-        for (int i = 0; i < playerEntities.Count; i++)
+        bool firstInit = false;
+        if (SaveManager.Instance.SaveEntitiesWin == null || SaveManager.Instance.SaveEntitiesWin.Count <= 0)
         {
-            playerEntities[i] = Instantiate(playerEntities[i]);
+            SaveManager.Instance.SaveEntitiesWin = new List<Entity>(playerEntities);
+            SaveManager.Instance.SaveEntitiesLose = new List<Entity>(playerEntities);
+            firstInit = true;
+        }
 
-            playerEntities[i].abilities.Clear();
-            for (int j = 0; j < 4; j++)
+        for (int i = 0; i < SaveManager.Instance.SaveEntitiesWin.Count; i++)
+        {
+            SaveManager.Instance.SaveEntitiesLose[i] = SaveManager.Instance.SaveEntitiesWin[i];
+            playerEntities[i] = Instantiate(SaveManager.Instance.SaveEntitiesWin[i]);
+
+            Debug.Log(playerEntities[i]);
+
+            if (firstInit)
             {
-                playerEntities[i].abilityLevels.Add(0);
+                playerEntities[i].abilities.Clear();
+                for (int j = 0; j < 4; j++)
+                {
+                    playerEntities[i].abilityLevels.Add(0);
 
-                playerEntities[i].abilities.Add(playerProgression[i].abilityProgression[j].abilities[0]);
+                    playerEntities[i].abilities.Add(playerProgression[i].abilityProgression[j].abilities[0]);
+                }
             }
         }
     }

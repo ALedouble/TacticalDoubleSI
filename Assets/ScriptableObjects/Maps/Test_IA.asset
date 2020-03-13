@@ -785,7 +785,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
     position: {x: 10, y: 4}
-    tileType: 1
+    tileType: 2
     canPlacePlayerEntity: 0
     color: {r: 0, g: 0, b: 0, a: 0}
   - entities: []
@@ -1151,5 +1151,8 @@ MonoBehaviour:
   - entity: {fileID: 11400000, guid: d4a644c2c4d397e4381a236992987542, type: 2}
     heldCrystalValue: -1
     position: {x: 10, y: 7}
+  - entity: {fileID: 11400000, guid: da51240ecdf23f7488df7320f65d65ce, type: 2}
+    heldCrystalValue: -1
+    position: {x: 8, y: 2}
   size: 15
   center: {x: 7, y: 7}
