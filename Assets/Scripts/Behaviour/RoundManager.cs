@@ -47,7 +47,7 @@ public class RoundManager : MonoBehaviour
                 PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
-                StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
+                //StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
             }
 
             PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
@@ -183,14 +183,12 @@ public class RoundManager : MonoBehaviour
         startStasis.AppendCallback(() =>
         {
             entity.animator.PlayAnimation(entity.data.animations.stasisStartAnimation);
-            Debug.Log("hello");
         });
 
         startStasis.AppendInterval(2.7f);
         startStasis.AppendCallback(() =>
         {
             entity.animator.PlayAnimation(entity.data.animations.stasisIdleAnimation);
-            Debug.Log("hello");
         });
 
         
