@@ -36,11 +36,11 @@ public class GrabEffect : AbilityEffect
         {
             PlayerTeamManager.Instance.teamXp += 1;
             entity.earnedXPThisAbility = true;
+            PlayerTeamManager.Instance.OnXPChanged?.Invoke();
         }
 
         entities.Sort((x, y) => Vector2Int.Distance(entity.GetPosition(), x.GetPosition()).
                 CompareTo(Vector2Int.Distance(entity.GetPosition(), y.GetPosition())));
-
 
         Vector2Int grabDirection = entity.GetPosition() - castTile.position;
         grabDirection.x = grabDirection.x == 0 ? 0 : (int)Mathf.Sign(grabDirection.x);
@@ -49,18 +49,12 @@ public class GrabEffect : AbilityEffect
 
         for (int i = 0; i < entities.Count; i++)
         {
-            Vector2Int finalTile = entities[i].GetPosition() + grabDirection;
-            
-            while (MapManager.GetTile(finalTile).IsWalkable)
+            Vector2Int finalTile = entities[i].GetPosition();
+
+            while (MapManager.GetTile(finalTile + grabDirection).IsWalkable)
             {
                 finalTile += grabDirection;
             }
-
-            if(MapManager.GetTile(finalTile).tileType != TileType.Solid)
-            {
-                finalTile -= grabDirection;
-            }
-            
 
             Grab(entities[i], finalTile);
         }

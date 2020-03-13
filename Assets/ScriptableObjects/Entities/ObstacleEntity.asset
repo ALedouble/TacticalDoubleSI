@@ -30,7 +30,7 @@ MonoBehaviour:
   power: 1
   xpPoint: 1
   totemValue: -1
-  isNotDestructible: 0
+  isNotDestructible: 1
   isFx: 1
   fxEntity: {fileID: 8732769065514567242, guid: 17fb56c02099e274bb51ef693f772777,
     type: 3}
