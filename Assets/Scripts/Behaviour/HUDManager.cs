@@ -238,6 +238,8 @@ public class HUDManager : MonoBehaviour
                         abilityDescriptions[j, x] = abilityDescriptions[j, x].Replace("[armor]", "1");
                     }
                     abilityTitles[j] = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[0].displayName;
+
+                    abilityCosts[j].text = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[j].abilities[0].cost.ToString();
                 }
 
                 for (int i = 0; i < 3; i++)
@@ -418,9 +420,18 @@ public class HUDManager : MonoBehaviour
     }
 
     List<Image> abilitySprites = new List<Image>();
+    List<TextMeshProUGUI> abilityCosts = new List<TextMeshProUGUI>();
 
     bool GetAbilityReferences(string tag, HUDReferencer reference)
     {
+        if (abilityCosts.Count == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                abilityCosts.Add(null);
+            }
+        }
+
         if (tag.Contains("Ability"))
         {
             string numberTag = tag.Replace("Ability", "");
@@ -452,7 +463,11 @@ public class HUDManager : MonoBehaviour
                 trigger.triggers.Add(entry);
 
 
-                if (abilityNumber <= 2) abilitySprites[abilityNumber] = reference.GetComponentInChildren<Image>();
+                if (abilityNumber <= 2)
+                {
+                    abilitySprites[abilityNumber] = reference.GetComponentInChildren<Image>();
+                    abilityCosts[abilityNumber] = reference.GetComponentInChildren<TextMeshProUGUI>();
+                }
 
                 return true;
             }
