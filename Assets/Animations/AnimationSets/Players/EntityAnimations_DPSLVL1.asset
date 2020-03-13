@@ -20,6 +20,11 @@ MonoBehaviour:
     type: 2}
   channelingIdleAnimation: {fileID: 11400000, guid: 6c2af01b4e3b88e4b8b1dde48272ca84,
     type: 2}
+  stasisStartAnimation: {fileID: 11400000, guid: 101502b530c97074aa178b3890608e88,
+    type: 2}
+  stasisIdleAnimation: {fileID: 11400000, guid: e223d8c376945ae4cb5277de91669e25,
+    type: 2}
+  stasisEndAnimation: {fileID: 11400000, guid: 658934a8c97eefe469f46b9c3e6981b7, type: 2}
   abilityAnimations:
   - {fileID: 11400000, guid: b568197d1b631d644ac24ce9aa45c23b, type: 2}
   - {fileID: 11400000, guid: f260f08f05155eb458e4457ea016c7fb, type: 2}

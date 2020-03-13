@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Precision Shot
-  description: Upgrade III - Area increased into a square!
+  description: Upgrade III - Area increased to a square!
   cost: 5
   multiplicator: 0.8
   displaySprite: {fileID: 21300000, guid: bc4e2d63ccbe65d46a36a41c73169e5d, type: 3}

@@ -18,6 +18,9 @@ MonoBehaviour:
   deathAnimation: {fileID: 11400000, guid: 22946d9c34bebbf44ba61fbfe7c394b4, type: 2}
   channelingStartAnimation: {fileID: 0}
   channelingIdleAnimation: {fileID: 0}
+  stasisStartAnimation: {fileID: 0}
+  stasisIdleAnimation: {fileID: 0}
+  stasisEndAnimation: {fileID: 0}
   abilityAnimations:
   - {fileID: 11400000, guid: 155c9eeb682962a4cba859bb93313555, type: 2}
   - {fileID: 11400000, guid: 155c9eeb682962a4cba859bb93313555, type: 2}

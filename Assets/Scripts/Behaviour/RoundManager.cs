@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum RoundPhase
 {
@@ -46,13 +47,15 @@ public class RoundManager : MonoBehaviour
                 PlayerTeamManager.Instance.playerEntitybehaviours[i].UseAbility(
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].channelingAbility,
                     PlayerTeamManager.Instance.playerEntitybehaviours[i].currentTile);
+                StasisAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i]);
             }
 
             PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft--;
+            
 
             if (PlayerTeamManager.Instance.playerEntitybehaviours[i].stasisRoundsLeft == 0)
             {
-
+                PlayerTeamManager.Instance.playerEntitybehaviours[i].animator.PlayAnimation(PlayerTeamManager.Instance.playerEntitybehaviours[i].data.animations.stasisEndAnimation);
             }
         }
 
@@ -73,6 +76,10 @@ public class RoundManager : MonoBehaviour
     {
         if (entity.data.alignement != Alignement.Player) return;
         if (entity.IsChannelingBurst || entity.stasis) return;
+
+        Debug.Log(entity.stasis);
+       
+
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
         entity.OnTurn();
@@ -142,14 +149,53 @@ public class RoundManager : MonoBehaviour
 
        if(ennemies.Count <= 0)
         {
-            //Win()
+            for (int i = 0; i < PlayerTeamManager.Instance.playerEntitybehaviours.Count; i++)
+            {
+                SaveManager.Instance.SaveEntitiesWin[
+                    SaveManager.Instance.SaveEntitiesWin.FindIndex(
+                        (x) => x.entityTag.Equals(PlayerTeamManager.Instance.playerEntitybehaviours[i].data.entityTag)
+                            )] = PlayerTeamManager.Instance.playerEntitybehaviours[i].data;
+            }
+
+            DOTween.KillAll();
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
             Debug.Log("you win");
         }
 
        if(PlayerTeamManager.Instance.playerEntitybehaviours.Count <= 1)
-       {
-            //Loose()
+        {
+            for (int i = 0; i < SaveManager.Instance.SaveEntitiesLose.Count; i++)
+            {
+                SaveManager.Instance.SaveEntitiesWin[i] = SaveManager.Instance.SaveEntitiesLose[i];
+            }
+
+            DOTween.KillAll();
+            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
             Debug.Log("you Loose");
         }
+    }
+
+    Sequence StasisAnimation(EntityBehaviour entity)
+    {
+        Sequence startStasis = DOTween.Sequence();
+
+        startStasis.AppendInterval(0.5f);
+        startStasis.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(entity.data.animations.stasisStartAnimation);
+            Debug.Log("hello");
+        });
+
+        startStasis.AppendInterval(2.7f);
+        startStasis.AppendCallback(() =>
+        {
+            entity.animator.PlayAnimation(entity.data.animations.stasisIdleAnimation);
+            Debug.Log("hello");
+        });
+
+        
+
+
+        return startStasis;
     }
 }
