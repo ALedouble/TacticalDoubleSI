@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Control
-  description: 'Grabs foes'' attention '
+  displayName: Grab
+  description: Attack on a line that deal X dmg and attract the ennemies
   cost: 4
   multiplicator: 0.7
-  displaySprite: {fileID: 0}
+  displaySprite: {fileID: 21300000, guid: 1f1e3d7dffdb7b24696213a6299fe07c, type: 3}
   vfxCast: {fileID: 8280404692662944193, guid: ac1e5b69eb6c45f40b6531c17d98ff04, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   - {fileID: 11400000, guid: a6535086c89a85a438f516d967cbac61, type: 2}
+  abilitySFX: {fileID: 11400000, guid: 153086573dac54973a14e4ec314ec094, type: 2}
   castArea:
     size: 5
     area:

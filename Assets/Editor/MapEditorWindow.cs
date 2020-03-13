@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using Rotorz.ReorderableList;
 
 public class MapEditorWindow : EditorWindow
 {
@@ -88,7 +89,19 @@ public class MapEditorWindow : EditorWindow
         {
             EditorUtility.SetDirty(map);
         }
+
+
+        EditorGUI.BeginChangeCheck();
+        //ReorderableListGUI.ListField(map.entityStartPositions,);
+        if (EditorGUI.EndChangeCheck())
+        {
+            //map.entityStartPositions = reorderableEnemyList.list as List<EntityRoundStartState>;
+            EditorUtility.SetDirty(map);
+        }
+
     }
+
+   
 
     void OnScene(SceneView scene)
     {

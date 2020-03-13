@@ -11,7 +11,7 @@ public class ArmorEffect : AbilityEffect
         {
             if (x.data.alignement == entity.data.alignement)
             {
-                int armor = UpgradeArmor(entity, ability);
+                int armor = 1;
                 x.CurrentArmor += armor;
                 x.Stretch();
                 HUDManager.DisplayValue("+" + armor.ToString(), Color.yellow, new Vector3(x.GetPosition().x, .5f, x.GetPosition().y));

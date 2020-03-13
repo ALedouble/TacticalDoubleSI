@@ -75,8 +75,6 @@ public class RoundManager : MonoBehaviour
         if (entity.IsChannelingBurst || entity.stasis) return;
         SelectionManager.Instance.OnEntitySelect -= StartPlayerTurn;
 
-        Debug.Log("suce");
-
         entity.OnTurn();
     }
 
@@ -105,7 +103,6 @@ public class RoundManager : MonoBehaviour
         else
         {
             currentEntityTurn++;
-
             // if all AIs have made their turn, launch another round
             if (currentEntityTurn == roundEntities.Count)
             {
@@ -119,6 +116,7 @@ public class RoundManager : MonoBehaviour
                 roundEntities[currentEntityTurn].OnTurn();
 
             }
+
         }
     }
 

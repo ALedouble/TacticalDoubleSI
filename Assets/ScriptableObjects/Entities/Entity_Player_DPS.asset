@@ -15,9 +15,9 @@ MonoBehaviour:
   displayName: DPS
   portrait: {fileID: 21300000, guid: d9d7f1c9beabd9645bd41f578ba7dd72, type: 3}
   animations: {fileID: 11400000, guid: f4e580c2003748e46840b75fd95b0162, type: 2}
-  walkSFX: {fileID: 0}
-  hitBySomeoneSFX: {fileID: 0}
-  deathSFX: {fileID: 0}
+  walkSFX: {fileID: 11400000, guid: 9679f20a156ec4afab14e043af2a1289, type: 2}
+  hitBySomeoneSFX: {fileID: 11400000, guid: bada178287b008e4b9368cb841dd80d8, type: 2}
+  deathSFX: {fileID: 11400000, guid: a39ea3d80f788a34c8633fbe81d40f9e, type: 2}
   pivot: {x: 0.5, y: 0.5}
   maxHealth: 35
   maxActionPoints: 12
@@ -32,3 +32,5 @@ MonoBehaviour:
   xpPoint: 1
   totemValue: -1
   isNotDestructible: 0
+  isFx: 0
+  fxEntity: {fileID: 0}

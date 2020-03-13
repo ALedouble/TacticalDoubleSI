@@ -70,15 +70,16 @@ public class EntityBehaviour : MonoBehaviour
     {
         data = Instantiate(data);
         name = data.name;
+        
+        // TODO : set armor
+        currentHealth = GetMaxHealth();
 
         if (data.isFx)
         {
-            GameObject go = Instantiate(data.fxEntity, transform.position, Quaternion.identity);
+            data.brain = Instantiate(data.brain);
+            GameObject go = Instantiate(data.fxEntity, transform.position, Quaternion.identity, this.transform);
+            return;
         }
-
-
-        // TODO : set armor
-        currentHealth = GetMaxHealth();
 
         InitAnimations();
     }
@@ -90,6 +91,7 @@ public class EntityBehaviour : MonoBehaviour
 
     private void OnDestroy()
     {
+        squishTween?.Kill(true);
         SelectionManager.Instance.OnHoveredEntityChanged -= Squish;
     }
 
@@ -122,17 +124,17 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (data.brain == null)
         {
-            if (data.entityTag == EntityTag.Totem)
-            {
-                RoundManager.Instance.EndTurn();
-                return;
-            }
+
+            RoundManager.Instance.EndTurn();
+            return;
+
             Debug.LogError("Entity " + name + " has no brain, please add a brain to its entity asset", this.gameObject);
             Debug.Break();
         }
         else
         {
             data.brain.OnTurnStart(this);
+            currentArmor = (int)data.armor;
         }
     }
 
@@ -149,8 +151,8 @@ public class EntityBehaviour : MonoBehaviour
             
             moveSequence.AppendCallback(() =>
             {
-                if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.moveAnimation);
-               // SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
+                animator.PlayAnimation(data.animations.moveAnimation);
+                if(data.walkSFX != null) SoundManager.Instance.PlaySound(data.walkSFX.sound, false);
             });
             
             moveSequence.Append(transform.DOMove(new Vector3(reachableTile.path[i].position.x, 0, reachableTile.path[i].position.y), data.alignement == Alignement.Player ? data.animations.moveAnimation.Length-.1f : .3f)
@@ -158,7 +160,7 @@ public class EntityBehaviour : MonoBehaviour
                 .SetDelay(data.alignement == Alignement.Player? .1f : 0)
                 .OnComplete(()=>
                 {
-                    if (data.alignement == Alignement.Player) animator.PlayAnimation(data.animations.idleAnimation);
+                    animator.PlayAnimation(data.animations.idleAnimation);
                 }));
 
             /*
@@ -183,13 +185,13 @@ public class EntityBehaviour : MonoBehaviour
     {
         CurrentActionPoints -= ability.cost;
         Sequence abilitySequence = DOTween.Sequence();
-       // SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
+        SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
 
         Debug.Log(name + " is using " + ability.name);
 
-        EntityAnimation anim = data.alignement == Alignement.Player ? data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability)) : null;
+        EntityAnimation anim = data.animations.GetAbilityAnimation(data.GetAbilityNumber(ability));
         float duration = (anim == null || anim.frames.Count == 0) ? 1 : anim.Length;
 
 
@@ -215,7 +217,7 @@ public class EntityBehaviour : MonoBehaviour
                 }
             }
         });
-
+        
         abilitySequence.AppendInterval(duration);
 
         abilitySequence.AppendCallback(() =>
@@ -267,7 +269,7 @@ public class EntityBehaviour : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-           // SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
+            SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
             MapManager.GetListOfEntity().Remove(this);
             MapManager.DeleteEntity(this);
             Destroy(gameObject);

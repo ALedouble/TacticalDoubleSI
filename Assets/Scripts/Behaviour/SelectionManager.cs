@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -43,7 +45,7 @@ public class SelectionManager : MonoBehaviour
         }
         entityHoveredLastFrame = entityHoveredThisFrame;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !IsPointerOverUIElement())
         {
             OnClick?.Invoke(SelectionUtils.MapRaycast());
 
@@ -63,5 +65,14 @@ public class SelectionManager : MonoBehaviour
         if (!drawDebug) return;
 
         DebugUtils.DrawTile(SelectionUtils.MapRaycast().position, new Color(.2f,.2f,.5f,.5f));
+    }
+
+    public static bool IsPointerOverUIElement()
+    {
+        var eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
     }
 }

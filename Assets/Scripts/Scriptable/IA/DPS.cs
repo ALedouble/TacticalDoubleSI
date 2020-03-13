@@ -63,7 +63,6 @@ public class DPS : Brain
      */
     private void IA_DPS()
     {
-        Debug.Log("pass");
         IAUtils.GetAllEntity(dps, ref playerHealer, ref playerDPS, ref playerTank, ref enemyTank, ref enemyHealer);
 
         listOfEntity = new List<EntityBehaviour>() { playerHealer, playerDPS, playerTank };
@@ -75,11 +74,11 @@ public class DPS : Brain
         if (GoToHealer()) return;
 
         if (GoToTank()) return;
-        Debug.Log("att");
+
         if (Attack()) return;
-        Debug.Log("WalkVersPrio");
+
         if (WalkVersPrio()) return;
-        Debug.Log("LastActionPossible");
+
         if (LastActionPossible()) return;
 
         IAUtils.CheckEndTurn(dps, CanMakeAction(), true);
@@ -198,6 +197,11 @@ public class DPS : Brain
                     return true;
                 }
             }
+
+            else
+            {
+                return true;
+            }
         }
 
         return false;
@@ -262,11 +266,7 @@ public class DPS : Brain
     {
         List<ReachableTile> tilesToCastOnEntity;
         ReachableTile tileToWalkOnEntity;
-
-        Debug.Log("find");
-        Debug.Log(entity);
-        Debug.Log((!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)));
-
+        
         if (entity != null && (!haveAConditionOnEntity || entity.CurrentHealth < ((entity.GetMaxHealth() * percentOfLifeNeedForAttackPrio) / 100)))
         {
             if (walkOnly)
@@ -277,9 +277,7 @@ public class DPS : Brain
 
             else
             {
-                Debug.Log("else");
                 tilesToCastOnEntity = IAUtils.ValidCastFromTile(ability1, reachableTiles, entity.GetPosition());
-                Debug.Log(tilesToCastOnEntity);
                 if (tilesToCastOnEntity.Count > 0)
                 {
                     return new Tuple<ReachableTile, EntityBehaviour>(tilesToCastOnEntity[0], entity);
@@ -302,7 +300,7 @@ public class DPS : Brain
         EntityBehaviour entityCac;
 
         listOfPathToEntityCac.Deconstruct(out pathToEntityCac, out entityCac);
-
+        Debug.Log(ability2);
         if (ability2Use) return false;
 
         List<TileData> zoneCastDist = null;
@@ -313,7 +311,7 @@ public class DPS : Brain
             {
                 TileData tileToCast = null;
 
-                if (listOfEntity[j] != null) IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
+                if (listOfEntity[j] != null) tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCastDist, listOfEntity[j].currentTile.GetCoordPosition());
                 if (tileToCast != null)
                 {
                     return UseAbilityDuringThePathToTarget(pathToEntityCac, tileToCast, zoneCastDist, priorityOnRun);
@@ -337,7 +335,10 @@ public class DPS : Brain
         int deplacementCost;
         if (priorityOnRun) deplacementCost = pathToEntityCac.cost;
         else deplacementCost = intermediateTile.cost;
-
+        Debug.Log(deplacementCost);
+        Debug.Log(deplacementCost);
+        Debug.Log(ability2.cost);
+        Debug.Log(dps.CurrentActionPoints);
         if (deplacementCost + ability2.cost <= dps.CurrentActionPoints)
         {
             if(IAUtils.MoveAndTriggerAbilityIfNeed(dps, intermediateTile, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast))

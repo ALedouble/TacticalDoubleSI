@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: RangeDPSElite
   m_EditorClassIdentifier: 
   animationType: 0
+  alignementXP: 0
   displayName: Explosive arrow
   description: Arrow that explode dealing area dmg to ennemies
   cost: 4
   multiplicator: 0.8
   displaySprite: {fileID: 0}
   vfxCast: {fileID: 0}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 0
+  playEffectsAtStart: 0
+  Channeling: 0
   cooldown: 1
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
+  abilitySFX: {fileID: 11400000, guid: 7bf023a7689d443258f755f85cafe996, type: 2}
   castArea:
     size: 7
     area:

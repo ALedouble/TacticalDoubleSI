@@ -14,67 +14,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frames:
   - texture: {fileID: 2800000, guid: 22a82653bfc75c44ea23be533c60b7fc, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: dd7c72cfe97ec4d4e983e5e7759caf97, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: af0a01c04d68581418ec8f1a8c221c09, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: bf51c89cdbdbc574cab64390e14699f0, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 4972ec9c434a3444ea27c3efe2a3003b, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: cc076a3885c929a4a9751d184c4dd9f1, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: f3d46ae0612163448ab1ddebac6d01d7, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 51788345c9cd572469ef47065fc105f0, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 429dda12a0eaf0c47ac19c5778d8c00c, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: f87678b14454c04458493475364aeb49, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 4af0a225362d15d49bc9e9058e9d213d, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: ad6c82b2f6697dc48834b53200fbb27f, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 26d2df36a5492334fb29ef122fe84791, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: ac2907b261045de43bb559cb61b488fb, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: ee9543eafb32a004b8186f3a381454d3, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: dee92c1f116fa5849a76ba7e5d20db57, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 1cccc36487de5ab42afb84d996f86c32, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: e026313ccc338374d8f66c47547313cb, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: f67b03635e8eaa04c97db2de9ff5afb6, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 044cf65418e61224cb03cb7a74d4b91b, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: b49be844fe5fdec4caf1ea1d26726158, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: bba14e1682caafc4ca38ef0e3c89c3f2, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 50c821d2e0620cc4cb85817efaa4111a, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: dec2eb9a6ff36a2488d107b054b212f9, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 2bc18cef21994024db96b6b940960917, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 9398fc23bca33a34283aeb3003015079, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: a01cc95a9b74f144c9e9db436c8b4a0d, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 34fa756e024df9f4fbcd438a884cfcc0, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 649d9856c9a1dd44eadee10e3a4a52c9, type: 3}
-    length: 0.08
+    length: 0.1
   - texture: {fileID: 2800000, guid: 267f6fcca22bc134e92b066d86365675, type: 3}
-    length: 0.08
-  - texture: {fileID: 2800000, guid: 707ad0eb830ce8149b6a52a596faeb15, type: 3}
-    length: 0.08
-  - texture: {fileID: 2800000, guid: d526ea66ec80c064e8321ad17553776d, type: 3}
-    length: 0.08
+    length: 0.1
   loopMode: 0

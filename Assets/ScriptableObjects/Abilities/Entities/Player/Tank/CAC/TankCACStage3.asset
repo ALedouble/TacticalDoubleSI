@@ -15,18 +15,19 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Bash
-  description: Pushes the ennemy away
+  description: Increase area effect
   cost: 5
   multiplicator: 1
-  displaySprite: {fileID: 0}
+  displaySprite: {fileID: 21300000, guid: abd8b7da1b851f34d8599817ca33b089, type: 3}
   vfxCast: {fileID: 8329912737801096584, guid: 45d861d47abc42148be7a3972caaafe5, type: 3}
-  sfxCast: {fileID: 0}
   canCastOnEntityPosition: 1
+  playEffectsAtStart: 0
   Channeling: 0
   cooldown: 0
   abilityEffect:
   - {fileID: 11400000, guid: a279b1cae01ae4e49b6f0ecca4bf60f8, type: 2}
   - {fileID: 11400000, guid: be1d7f3a61156174c913c0689d3d64d7, type: 2}
+  abilitySFX: {fileID: 11400000, guid: e5bca1cc6eda04dd7af6e64128370360, type: 2}
   castArea:
     size: 3
     area:

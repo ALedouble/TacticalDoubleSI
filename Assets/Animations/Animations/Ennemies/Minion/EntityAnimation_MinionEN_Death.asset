@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 140221965eed7f34f93d82d8226646fc, type: 3}
   m_Name: EntityAnimation_MinionEN_Death
   m_EditorClassIdentifier: 
-  frames: []
+  frames:
+  - texture: {fileID: 2800000, guid: a00985560cbeb88448c8f2432939716c, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: ff5b384671c8d5c4289624ecacfa7a21, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: db5da5855f99050409c6dcf4590ebedb, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: 4253591c297b23549b785a9452443487, type: 3}
+    length: 0.1
+  - texture: {fileID: 2800000, guid: bb42a77c00255394583ab310c0ee71f3, type: 3}
+    length: 0.1
   loopMode: 1
