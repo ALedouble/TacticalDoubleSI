@@ -204,6 +204,8 @@ public class HUDManager : MonoBehaviour
                     else abilitySprites[i].color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
                 }
 
+                blastoutDescription = PlayerTeamManager.Instance.playerProgression[playerIndex].abilityProgression[3].abilities[0].description;
+
                 //if (inspectedPlayer != null) return;
 
                 break;
@@ -257,6 +259,8 @@ public class HUDManager : MonoBehaviour
         }
         else
         {
+            blastoutDescriptionText.text = blastoutDescription;
+
             blastoutPopupFade?.Kill();
             blastoutPopupFade = blastoutPopupGroup.DOFade(1, .1f);
         }
@@ -322,6 +326,11 @@ public class HUDManager : MonoBehaviour
             if (tag == "PopupBlastoutGroup")
             {
                 blastoutPopupGroup = HUDReferences[i].GetComponent<CanvasGroup>();
+                continue;
+            }
+            if (tag == "BlastoutDescription")
+            {
+                blastoutDescriptionText = HUDReferences[i].GetComponent<TextMeshProUGUI>();
                 continue;
             }
 
@@ -398,6 +407,8 @@ public class HUDManager : MonoBehaviour
     CanvasGroup abilityPopupGroup;
     Image abilityGlow;
     CanvasGroup blastoutPopupGroup;
+    TextMeshProUGUI blastoutDescriptionText;
+    string blastoutDescription;
 
     bool GetAbilityPopupReferences(string tag, HUDReferencer reference)
     {
