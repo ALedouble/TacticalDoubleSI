@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 1
   alignementXP: 1
   displayName: Melee Attack
-  description: Powerful melee attack! - Deals [damage] to enemies.
+  description: Powerful melee attack! - Deals [damage] damage to enemies.
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 21300000, guid: fdcf1db02338f0c4e9641bb7c7986745, type: 3}
