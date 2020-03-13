@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 1
   alignementXP: 1
-  displayName: Blow
-  description: Melee Attack that deal X DMG
+  displayName: Melee Attack
+  description: Powerful melee attack! - Deals [damage] to enemies.
   cost: 4
   multiplicator: 1
   displaySprite: {fileID: 21300000, guid: fdcf1db02338f0c4e9641bb7c7986745, type: 3}
-  vfxCast: {fileID: 1971691301407850121, guid: f102c9ba0e4b6e74683cc54e165d7aff, type: 3}
+  vfxCast: {fileID: 8736565778734743533, guid: 163d986ba2c867b4989a6c4af81ff793, type: 3}
   canCastOnEntityPosition: 1
   playEffectsAtStart: 0
   Channeling: 0

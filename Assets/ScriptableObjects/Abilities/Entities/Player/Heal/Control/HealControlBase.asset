@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationType: 0
   alignementXP: 0
-  displayName: Wall
-  description: Create an obtacle that stay 1 turn
+  displayName: Obstacle
+  description: Creates an obstacle in a range that lasts 1 round
   cost: 6
   multiplicator: 1
   displaySprite: {fileID: 21300000, guid: 27b65b853f69e8042a36654265274d12, type: 3}
