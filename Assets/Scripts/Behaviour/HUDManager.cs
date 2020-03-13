@@ -39,6 +39,8 @@ public class HUDManager : MonoBehaviour
         blastoutPopupGroup.alpha = 0;
         finishPlacementButton.DOScale(0, 0);
         abilityOutline.gameObject.SetActive(false);
+        hpDisplay.transform.parent.gameObject.SetActive(false);
+        PADisplay.gameObject.SetActive(false);
 
         SelectionManager.Instance.OnEntitySelect += UpdateEntityInfo;
 
@@ -52,6 +54,7 @@ public class HUDManager : MonoBehaviour
         };
 
         SelectionManager.Instance.OnHoveredTileChanged += UpdateTileInfo;
+        SelectionManager.Instance.OnHoveredTileChanged += UpdateHPDisplay;
 
         PlayerTeamManager.Instance.OnPlacedAllPlayers += ShowFinishPlacementButton;
         PlayerTeamManager.Instance.OnFinishPlacement += OnFinishPlacementConfirmed;
@@ -99,6 +102,33 @@ public class HUDManager : MonoBehaviour
     {
         endTurnButtonTween?.Kill();
         endTurnButtonTween = endTurnButton.DOScale(0, .2f).SetEase(Ease.InBack);
+    }
+
+    void UpdateHPDisplay(MapRaycastHit mapHit)
+    {
+        if (mapHit.tile == null || mapHit.tile.entities.Count <= 0 || mapHit.tile.entities[0].data.alignement == Alignement.Neutral)
+        {
+            hpDisplay.transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            hpDisplay.transform.parent.gameObject.SetActive(true);
+
+            currentHoveredTile = mapHit.tile;
+            hpDisplay.transform.parent.GetComponent<RectTransform>().anchoredPosition = canvas.WorldToCanvas(new Vector3(mapHit.position.x, 2, mapHit.position.y));
+        }
+    }
+
+    TileData currentHoveredTile;
+    TextMeshProUGUI hpDisplay;
+
+    [HideInInspector] public TextMeshProUGUI PADisplay;
+
+    private void Update()
+    {
+        hpDisplay.text = currentHoveredTile != null ? 
+            currentHoveredTile.entities.Count > 0 ?
+            currentHoveredTile.entities[0].CurrentHealth.ToString() : "/" : "/";
     }
 
     EntityBehaviour inspectedEnemy;
@@ -331,6 +361,16 @@ public class HUDManager : MonoBehaviour
             if (tag == "BlastoutDescription")
             {
                 blastoutDescriptionText = HUDReferences[i].GetComponent<TextMeshProUGUI>();
+                continue;
+            }
+            if (tag == "HPDisplay")
+            {
+                hpDisplay = HUDReferences[i].GetComponentInChildren<TextMeshProUGUI>();
+                continue;
+            }
+            if (tag == "PADisplay")
+            {
+                PADisplay = HUDReferences[i].GetComponent<TextMeshProUGUI>();
                 continue;
             }
 

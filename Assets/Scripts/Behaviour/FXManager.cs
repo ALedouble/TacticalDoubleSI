@@ -85,6 +85,8 @@ public class FXManager : MonoBehaviour
         {
             pathRenderer.positionCount = 0;
             hoverTile.SetActive(false);
+
+            HUDManager.Instance.PADisplay.gameObject.SetActive(false);
         }
         else
         {
@@ -96,6 +98,7 @@ public class FXManager : MonoBehaviour
             if (MapManager.Instance.reachableTiles == null)
             {
                 pathRenderer.positionCount = 0;
+                HUDManager.Instance.PADisplay.gameObject.SetActive(false);
                 return;
             }
 
@@ -105,6 +108,12 @@ public class FXManager : MonoBehaviour
             {
                 if (MapManager.Instance.reachableTiles[i].GetCoordPosition() == mapHit.position)
                 {
+                    HUDManager.Instance.PADisplay.gameObject.SetActive(true);
+
+                    HUDManager.Instance.PADisplay.text = "-" + MapManager.Instance.reachableTiles[i].cost.ToString();
+                    HUDManager.Instance.PADisplay.GetComponent<RectTransform>().anchoredPosition = HUDManager.Instance.canvas.WorldToCanvas(
+                        new Vector3(mapHit.position.x, 1, mapHit.position.y));
+
                     pathExists = true;
                     float lineHeight = 0.02f;
 
@@ -120,7 +129,12 @@ public class FXManager : MonoBehaviour
                     pathRenderer.SetPosition(pathRenderer.positionCount-1, new Vector3(position.x, lineHeight, position.y));
                 }
             }
-            if (!pathExists) pathRenderer.positionCount = 0;
+            if (!pathExists)
+            {
+                pathRenderer.positionCount = 0;
+
+                HUDManager.Instance.PADisplay.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -175,7 +189,11 @@ public class FXManager : MonoBehaviour
         }
         movementTiles.Clear();
 
-        if (obj == null) return;
+        if (obj == null)
+        {
+            HUDManager.Instance.PADisplay.gameObject.SetActive(false);
+            return;
+        }
 
         for (int i = 0; i < obj.Count; i++)
         {
