@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Heal
-  description: Upgrade II - Area increased into a cross!
+  description: Upgrade II - Area increased to a cross!
   cost: 5
   multiplicator: 1
   displaySprite: {fileID: 21300000, guid: 3a2afbfcdb6c7884eb4e8d394ba095d0, type: 3}

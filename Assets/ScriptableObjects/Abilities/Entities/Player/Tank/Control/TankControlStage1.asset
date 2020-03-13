@@ -15,7 +15,7 @@ MonoBehaviour:
   animationType: 0
   alignementXP: 0
   displayName: Grab
-  description: Upgrade I - Attracts ennemies behind you aswell!
+  description: Upgrade I - Attracts ennemies behind you as well!
   cost: 4
   multiplicator: 0.7
   displaySprite: {fileID: 21300000, guid: 1f1e3d7dffdb7b24696213a6299fe07c, type: 3}
