@@ -16,8 +16,8 @@ MonoBehaviour:
   alignementXP: 0
   displayName: Harden
   description: 'Increase range '
-  cost: 5
-  multiplicator: 1
+  cost: 6
+  multiplicator: 2
   displaySprite: {fileID: 21300000, guid: e3b3117966ebe2e4bab09b1bc3d01ad1, type: 3}
   vfxCast: {fileID: 6439881731162528523, guid: 6ff12f42296e62e4ca356baff79cab5f, type: 3}
   canCastOnEntityPosition: 1

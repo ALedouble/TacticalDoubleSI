@@ -122,6 +122,7 @@ public class RoundManager : MonoBehaviour
 
     public void CheckRemainingEntities()
     {
+        Debug.Log(PlayerTeamManager.Instance.playerEntitybehaviours.Count);
         List<EntityBehaviour> ennemies = new List<EntityBehaviour>();
         List<EntityBehaviour> allies = new List<EntityBehaviour>();
 
@@ -145,7 +146,7 @@ public class RoundManager : MonoBehaviour
             Debug.Log("you win");
         }
 
-       if(allies.Count <= 0)
+       if(PlayerTeamManager.Instance.playerEntitybehaviours.Count <= 1)
        {
             //Loose()
             Debug.Log("you Loose");

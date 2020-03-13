@@ -40,6 +40,8 @@ public class Entity : ScriptableObject
     public bool isFx = false;
     public GameObject fxEntity;
 
+    public SoundReference placedEntitiesSFX;
+
     public int GetAbilityNumber(Ability ability)
     {
         return abilities.FindIndex(x => x == ability);

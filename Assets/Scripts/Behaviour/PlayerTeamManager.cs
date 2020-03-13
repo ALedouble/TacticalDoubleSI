@@ -13,6 +13,7 @@ public class PlayerTeamManager : MonoBehaviour
     [HideInInspector] public int teamXp = 0;
 
     public List<EntityBehaviour> playerEntitybehaviours = new List<EntityBehaviour>();
+    public Action OnXPChanged;
 
     private void Awake()
     {
@@ -54,7 +55,7 @@ public class PlayerTeamManager : MonoBehaviour
         EntityBehaviour entityBehaviour = MapManager.SpawnEntity(playerEntities[placedEntities], hit.position, -1);
 
         playerEntitybehaviours.Add(entityBehaviour);
-
+        SoundManager.Instance.PlaySound(playerEntities[placedEntities].placedEntitiesSFX.sound, false);
         placedEntities++;
 
         if (placedEntities == playerEntities.Count)

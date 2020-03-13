@@ -35,6 +35,7 @@ public class DamageEffect : AbilityEffect
             {
                 PlayerTeamManager.Instance.teamXp += 1;
                 entity.earnedXPThisAbility = true;
+                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
             }
         }
 
