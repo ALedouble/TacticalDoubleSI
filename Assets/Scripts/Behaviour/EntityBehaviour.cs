@@ -280,9 +280,15 @@ public class EntityBehaviour : MonoBehaviour
         {
             SoundManager.Instance.PlaySound(data.deathSFX.sound, false);
             MapManager.GetListOfEntity().Remove(this);
+            RoundManager.Instance.CheckRemainingEntities();
             MapManager.DeleteEntity(this);
             Destroy(gameObject);
-            RoundManager.Instance.CheckRemainingEntities();
+            if(this.GetAlignement() == Alignement.Enemy)
+            {
+                PlayerTeamManager.Instance.teamXp += 2;
+                PlayerTeamManager.Instance.OnXPChanged?.Invoke();
+            }
+
         }
     }
     

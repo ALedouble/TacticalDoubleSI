@@ -36,6 +36,7 @@ public class GrabEffect : AbilityEffect
         {
             PlayerTeamManager.Instance.teamXp += 1;
             entity.earnedXPThisAbility = true;
+            PlayerTeamManager.Instance.OnXPChanged?.Invoke();
         }
 
         entities.Sort((x, y) => Vector2Int.Distance(entity.GetPosition(), x.GetPosition()).
