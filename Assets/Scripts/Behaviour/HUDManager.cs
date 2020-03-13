@@ -319,6 +319,11 @@ public class HUDManager : MonoBehaviour
                 abilityOutline = HUDReferences[i].GetComponent<RectTransform>();
                 continue;
             }
+            if (tag == "PopupBlastoutGroup")
+            {
+                blastoutPopupGroup = HUDReferences[i].GetComponent<CanvasGroup>();
+                continue;
+            }
 
             if (GetAbilityPopupReferences(tag, HUDReferences[i])) continue;
 
@@ -337,7 +342,6 @@ public class HUDManager : MonoBehaviour
             if (tag == "TileName") tileName = HUDReferences[i].GetComponent<TextMeshProUGUI>();
             if (tag == "TileEffect") tileDescription = HUDReferences[i].GetComponent<TextMeshProUGUI>();
 
-            if (tag == "PopupBlastoutGroup") blastoutPopupGroup = HUDReferences[i].GetComponent<CanvasGroup>();
         }
     }
 
