@@ -154,8 +154,13 @@ public class RoundManager : MonoBehaviour
                             )] = PlayerTeamManager.Instance.playerEntitybehaviours[i].data;
             }
 
-            DOTween.KillAll();
-            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
+            DOTween.KillAll(true);
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(5);
+            seq.AppendCallback(() =>
+            {
+                SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings);
+            });
         }
 
        if(PlayerTeamManager.Instance.playerEntitybehaviours.Count <= 1)
@@ -165,8 +170,13 @@ public class RoundManager : MonoBehaviour
                 SaveManager.Instance.SaveEntitiesWin[i] = SaveManager.Instance.SaveEntitiesLose[i];
             }
 
-            DOTween.KillAll();
-            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
+            DOTween.KillAll(true);
+            Sequence seq = DOTween.Sequence();
+            seq.AppendInterval(5);
+            seq.AppendCallback(() =>
+            {
+                SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex) % SceneManager.sceneCountInBuildSettings);
+            });
         }
     }
 
