@@ -119,7 +119,8 @@ public class DPS : Brain
 
                 for (int i = 0; i < listOfEntity.Count; i++)
                 {
-                    TileData tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
+                    TileData tileToCast = null;
+                    if (listOfEntity[i] != null) tileToCast = IAUtils.ValidCastFromTile(ability2, zoneCast, listOfEntity[i].currentTile.GetCoordPosition());
                     if (tileToCast != null)
                     {
                         canCast = IAUtils.MoveAndTriggerAbilityIfNeed(dps, pathToHealer, iaEntityFunction, true, dpsAbilityCall, ability2, tileToCast);
@@ -330,7 +331,8 @@ public class DPS : Brain
      */
     private bool UseAbilityDuringThePathToTarget(ReachableTile pathToEntityCac, TileData tileToCast, List<TileData> zoneCastDist, bool priorityOnRun)
     {
-        ReachableTile intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
+        ReachableTile intermediateTile = null;
+        if (zoneCastDist[0] != null) intermediateTile = IAUtils.FindShortestPath(false, dps.GetPosition(), zoneCastDist[0].GetCoordPosition());
 
         int deplacementCost;
         if (priorityOnRun) deplacementCost = pathToEntityCac.cost;

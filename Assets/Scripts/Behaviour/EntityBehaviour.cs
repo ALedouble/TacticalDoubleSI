@@ -185,6 +185,8 @@ public class EntityBehaviour : MonoBehaviour
     {
         CurrentActionPoints -= ability.cost;
         Sequence abilitySequence = DOTween.Sequence();
+        Debug.Log(ability);
+        Debug.Log(ability.displayName);
         SoundManager.Instance.PlaySound(ability.abilitySFX.sound, false);
         Ease attackEase = Ease.InBack;
         Ease returnAttackEase = Ease.InOutExpo;
